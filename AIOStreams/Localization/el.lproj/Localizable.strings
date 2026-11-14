@@ -1,0 +1,6 @@
+/* The app's own alerts; the page has its own translations. */
+
+"Picture in Picture" = "Εικόνα σε εικόνα";
+"Picture in Picture isn't available for this video right now." = "Η λειτουργία Εικόνα σε εικόνα δεν είναι διαθέσιμη για αυτό το βίντεο αυτή τη στιγμή.";
+"OK" = "Εντάξει";
+"Cancel" = "Ακύρωση";

@@ -19,14 +19,14 @@ struct PersonView: View {
                 if !loaded {
                     ProgressView().frame(maxWidth: .infinity)
                 } else if movies.isEmpty && shows.isEmpty {
-                    Text("Nothing with \(person.name ?? "them") on this server.")
+                    Text(L("Nothing with %@ on this server.", person.name ?? L("them")))
                         .font(Theme.font(Theme.base))
                         .foregroundStyle(Theme.gray400)
                         .pagePadding()
                         .focusable()
                 }
-                if !movies.isEmpty { section("Movies", movies) }
-                if !shows.isEmpty { section("Shows", shows) }
+                if !movies.isEmpty { section(L("Movies"), movies) }
+                if !shows.isEmpty { section(L("Shows"), shows) }
             }
             .padding(.bottom, Theme.px(64))
         }
@@ -50,7 +50,7 @@ struct PersonView: View {
             VStack(alignment: .leading, spacing: Theme.px(8)) {
                 Text(person.name ?? "").font(Theme.font(Theme.xl3, .bold))
                 if let born = parseDate(details?.premiereDate) {
-                    Text("Born \(born.formatted(date: .long, time: .omitted))")
+                    Text(L("Born %@", born.formatted(Date.FormatStyle(date: .long, time: .omitted, locale: AppLanguage.locale))))
                         .font(Theme.font(Theme.sm))
                         .foregroundStyle(Theme.gray400)
                 }

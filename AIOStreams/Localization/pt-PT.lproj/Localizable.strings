@@ -1,0 +1,6 @@
+/* The app's own alerts; the page has its own translations. */
+
+"Picture in Picture" = "Imagem na imagem";
+"Picture in Picture isn't available for this video right now." = "A Imagem na imagem não está disponível para este vídeo neste momento.";
+"OK" = "OK";
+"Cancel" = "Cancelar";

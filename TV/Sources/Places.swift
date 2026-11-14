@@ -6,10 +6,10 @@ import SwiftUI
 /// "Today", "Tomorrow", "Yesterday", or the weekday and date.
 private func dayName(_ date: Date) -> String {
     let calendar = Calendar.current
-    if calendar.isDateInToday(date) { return "Today" }
-    if calendar.isDateInTomorrow(date) { return "Tomorrow" }
-    if calendar.isDateInYesterday(date) { return "Yesterday" }
-    return date.formatted(.dateTime.weekday(.wide).day().month(.wide))
+    if calendar.isDateInToday(date) { return L("Today") }
+    if calendar.isDateInTomorrow(date) { return L("Tomorrow") }
+    if calendar.isDateInYesterday(date) { return L("Yesterday") }
+    return date.formatted(.dateTime.weekday(.wide).day().month(.wide).locale(AppLanguage.locale))
 }
 
 private let isoParser: ISO8601DateFormatter = {
@@ -69,9 +69,9 @@ struct CalendarView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.px(32)) {
-                PageTitle(text: "Calendar")
+                PageTitle(text: L("Calendar"))
                 if loaded && days.isEmpty {
-                    Text("Nothing airs in the next two weeks.")
+                    Text(L("Nothing airs in the next two weeks."))
                         .font(Theme.font(Theme.base))
                         .foregroundStyle(Theme.gray400)
                         .focusable()
@@ -79,7 +79,7 @@ struct CalendarView: View {
                 if !loaded { ProgressView().frame(maxWidth: .infinity) }
                 ForEach(days.indices, id: \.self) { index in
                     let items = days[index].1
-                    DayRow(title: dayName(days[index].0), detail: items.count == 1 ? "1 title" : "\(items.count) titles", items: items) { item in
+                    DayRow(title: dayName(days[index].0), detail: L("%ld titles", items.count), items: items) { item in
                         if item.playable && item.locationType != "Virtual" {
                             Task { choice = await playChoice(for: item, session: session) }
                         }
@@ -162,16 +162,16 @@ struct ActivityView: View {
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: Theme.px(32)) {
-                PageTitle(text: "Activity")
+                PageTitle(text: L("Activity"))
                 if loaded && entries.isEmpty {
-                    Text("What you watch shows here.")
+                    Text(L("What you watch shows here."))
                         .font(Theme.font(Theme.base))
                         .foregroundStyle(Theme.gray400)
                         .focusable()
                 }
                 if !loaded { ProgressView().frame(maxWidth: .infinity) }
                 ForEach(Array(days.enumerated()), id: \.offset) { index, day in
-                    DayRow(title: day.0.map(dayName) ?? "Earlier", detail: nil, items: day.1) { item in
+                    DayRow(title: day.0.map(dayName) ?? L("Earlier"), detail: nil, items: day.1) { item in
                         Task { choice = await playChoice(for: item, session: session) }
                     }
                     .onAppear { if index == days.count - 1 { Task { await more() } } }

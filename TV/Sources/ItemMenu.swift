@@ -52,16 +52,16 @@ struct ItemMenu: ViewModifier {
         content.contextMenu {
             if item.playable {
                 Button { play(item, .usual) } label: {
-                    Label(item.resumeMs != nil ? "Resume" : "Play", systemImage: "play.fill")
+                    Label(item.resumeMs != nil ? L("Resume") : L("Play"), systemImage: "play.fill")
                 }
                 // The other way to start, as holding Play does in the web app.
                 if playsStraight {
                     Button { play(item, .list) } label: {
-                        Label("Choose a version", systemImage: "list.bullet")
+                        Label(L("Choose a version"), systemImage: "list.bullet")
                     }
                 } else {
                     Button { play(item, .straight) } label: {
-                        Label("Play straight away", systemImage: "forward.end")
+                        Label(L("Play straight away"), systemImage: "forward.end")
                     }
                 }
             }
@@ -69,13 +69,13 @@ struct ItemMenu: ViewModifier {
                 Button {
                     openRoute(.item(Item(id: seriesId, name: item.seriesName, type: "Series")))
                 } label: {
-                    Label("Go to show", systemImage: "tv")
+                    Label(L("Go to show"), systemImage: "tv")
                 }
             } else if !onPage {
                 Button {
                     openRoute(item.isFolder ? .library(item) : .item(item))
                 } label: {
-                    Label("Open", systemImage: "info.circle")
+                    Label(L("Open"), systemImage: "info.circle")
                 }
             }
             if item.type != "BoxSet" {
@@ -86,7 +86,7 @@ struct ItemMenu: ViewModifier {
                             try await client.call("POST", "/UserPlayedItems/\(item.id)", ["userId": userId])
                         }
                     } label: {
-                        Label("Mark watched", systemImage: "checkmark")
+                        Label(L("Mark watched"), systemImage: "checkmark")
                     }
                 }
                 if played {
@@ -95,14 +95,14 @@ struct ItemMenu: ViewModifier {
                             try await client.call("DELETE", "/UserPlayedItems/\(item.id)", ["userId": userId])
                         }
                     } label: {
-                        Label("Mark unwatched", systemImage: "arrow.uturn.backward")
+                        Label(L("Mark unwatched"), systemImage: "arrow.uturn.backward")
                     }
                 }
                 if item.isEpisode, item.seriesId != nil {
                     Button {
                         act { client, userId in try await markUpTo(client: client, userId: userId) }
                     } label: {
-                        Label("Mark watched up to here", systemImage: "checkmark.circle")
+                        Label(L("Mark watched up to here"), systemImage: "checkmark.circle")
                     }
                 }
                 if item.resumeMs != nil {
@@ -115,7 +115,7 @@ struct ItemMenu: ViewModifier {
                             )
                         }
                     } label: {
-                        Label("Remove from continue watching", systemImage: "arrow.counterclockwise")
+                        Label(L("Remove from continue watching"), systemImage: "arrow.counterclockwise")
                     }
                 }
             }
@@ -125,7 +125,7 @@ struct ItemMenu: ViewModifier {
                         try await client.call(favourite ? "DELETE" : "POST", "/UserFavoriteItems/\(item.id)", ["userId": userId])
                     }
                 } label: {
-                    Label(favourite ? "Remove favourite" : "Add favourite", systemImage: favourite ? "heart.slash" : "heart")
+                    Label(favourite ? L("Remove favourite") : L("Add favourite"), systemImage: favourite ? "heart.slash" : "heart")
                 }
             }
         }

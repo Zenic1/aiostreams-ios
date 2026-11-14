@@ -126,7 +126,7 @@ struct SeeAllCard: View {
 
     var body: some View {
         NavigationLink(value: Route.library(library)) {
-            SeeAllFace(name: library.name ?? "Library")
+            SeeAllFace(name: library.name ?? L("Library"))
                 .frame(width: size.width, height: size.height)
         }
         .buttonStyle(CardStyle())
@@ -147,7 +147,7 @@ private struct SeeAllFace: View {
             }
             .frame(width: Theme.px(48), height: Theme.px(48))
             VStack(spacing: Theme.px(2)) {
-                Text("See all").font(Theme.font(Theme.sm, .semibold))
+                Text(L("See all")).font(Theme.font(Theme.sm, .semibold))
                 Text(name)
                     .font(Theme.font(Theme.xs))
                     .foregroundStyle(Theme.gray400)
@@ -369,11 +369,11 @@ struct LibrariesView: View {
 
     var body: some View {
         ScrollView {
-            PageTitle(text: "Discover")
+            PageTitle(text: L("Discover"))
             LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: Theme.px(16)), count: 4), spacing: Theme.px(16)) {
                 ForEach(views) { view in
                     NavigationLink(value: Route.library(view)) {
-                        Text(view.name ?? "Library")
+                        Text(view.name ?? L("Library"))
                             .font(Theme.font(Theme.lg, .semibold))
                             .multilineTextAlignment(.center)
                             .padding(Theme.px(16))
@@ -412,13 +412,13 @@ struct LibraryView: View {
 
     var body: some View {
         ScrollView {
-            PageTitle(text: view.name ?? "Library")
+            PageTitle(text: view.name ?? L("Library"))
             SortFilterBar(filters: session.isStock ? ItemFilter.allCases : [.unplayed], filter: $filter,
                           sorts: session.isStock ? SortKey.allCases : [], sort: $sort, descending: $descending)
             PosterGrid(items: items) { Task { await more() } }
             if loading { ProgressView().padding() }
             if !loading && started && items.isEmpty {
-                Text("Nothing in this library.").foregroundStyle(Theme.gray400)
+                Text(L("Nothing in this library.")).foregroundStyle(Theme.gray400)
             }
         }
         .edgeToEdge()
@@ -474,10 +474,10 @@ struct FavouritesView: View {
 
     var body: some View {
         ScrollView {
-            PageTitle(text: "Favourites")
+            PageTitle(text: L("Favourites"))
             SortFilterBar(filter: .constant(nil), sorts: [.added, .name, .released, .rating], sort: $sort, descending: $descending)
             if loaded && items.isEmpty {
-                Text("Titles you favourite show here.")
+                Text(L("Titles you favourite show here."))
                     .font(Theme.font(Theme.base))
                     .foregroundStyle(Theme.gray400)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -532,7 +532,7 @@ struct SearchView: View {
                 .onGeometryChange(for: CGFloat.self) { $0.safeAreaInsets.leading } action: { leadingInset = $0 }
             grid(in: sideKeyboard ? .trailing : .horizontal)
         }
-        .searchable(text: $term, prompt: "Movies, shows and channels")
+        .searchable(text: $term, prompt: L("Movies, shows and channels"))
         .playFlow($choice)
         .task(id: term) { await search() }
     }
@@ -543,7 +543,7 @@ struct SearchView: View {
             let channels = results.filter(\.isChannel)
             if !channels.isEmpty {
                 VStack(alignment: .leading, spacing: Theme.px(8)) {
-                    Text("Channels").font(Theme.font(Theme.xl, .semibold)).pagePadding()
+                    Text(L("Channels")).font(Theme.font(Theme.xl, .semibold)).pagePadding()
                     ScrollView(.horizontal) {
                         LazyHStack(alignment: .top, spacing: Theme.px(16)) {
                             ForEach(channels) { channel in
@@ -568,18 +568,18 @@ struct SearchView: View {
                 let shows = results.filter(\.isSeries)
                 VStack(alignment: .leading, spacing: Theme.px(8)) {
                     if !movies.isEmpty {
-                        Text("Movies").font(Theme.font(Theme.xl, .semibold)).pagePadding()
+                        Text(L("Movies")).font(Theme.font(Theme.xl, .semibold)).pagePadding()
                         PosterGrid(items: movies, fitting: true)
                     }
                     if !shows.isEmpty {
-                        Text("Shows").font(Theme.font(Theme.xl, .semibold)).pagePadding()
+                        Text(L("Shows")).font(Theme.font(Theme.xl, .semibold)).pagePadding()
                         PosterGrid(items: shows, fitting: true)
                     }
                 }
             }
             if searching { ProgressView() }
             if !searching && term.count >= 2 && results.isEmpty {
-                Text("No results for “\(term)”.").font(Theme.font(Theme.base)).foregroundStyle(Theme.gray400)
+                Text(L("No results for “%@”.", "\(term)")).font(Theme.font(Theme.base)).foregroundStyle(Theme.gray400)
             }
         }
         // Edge to edge across, but under the full keyboard, which takes the top of the screen:
@@ -617,11 +617,11 @@ enum SortKey: String, CaseIterable {
 
     var title: String {
         switch self {
-        case .name: return "Name"
-        case .added: return "Date added"
-        case .released: return "Release date"
-        case .rating: return "Rating"
-        case .runtime: return "Runtime"
+        case .name: return L("Name")
+        case .added: return L("Date added")
+        case .released: return L("Release date")
+        case .rating: return L("Rating")
+        case .runtime: return L("Runtime")
         }
     }
 
@@ -645,10 +645,10 @@ enum ItemFilter: String, CaseIterable {
 
     var title: String {
         switch self {
-        case .unplayed: return "Unwatched"
-        case .resumable: return "In progress"
-        case .played: return "Watched"
-        case .favorite: return "Favourites"
+        case .unplayed: return L("Unwatched")
+        case .resumable: return L("In progress")
+        case .played: return L("Watched")
+        case .favorite: return L("Favourites")
         }
     }
 
@@ -674,7 +674,7 @@ struct SortFilterBar: View {
         ScrollView(.horizontal) {
             HStack(spacing: Theme.px(8)) {
                 if !filters.isEmpty {
-                    Button("All") { filter = nil }
+                    Button(L("All")) { filter = nil }
                         .buttonStyle(SoftPillStyle(selected: filter == nil))
                     ForEach(filters, id: \.self) { option in
                         Button(option.title) { filter = option }

@@ -52,7 +52,7 @@ final class Session: ObservableObject {
     /// Checks the address answers as this kind of server before keeping it.
     func connect(to address: String) async throws {
         guard let base = JellyfinClient.normalize(address) else {
-            throw JellyfinError(status: 0, message: "That isn't an address.")
+            throw JellyfinError(status: 0, message: L("That is not a valid address."))
         }
         let client = Self.makeClient(base)
         let info: PublicSystemInfo = try await client.get("/System/Info/Public")

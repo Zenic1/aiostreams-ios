@@ -32,7 +32,7 @@ struct PlayerScreen: View {
             if let finding {
                 HStack(spacing: Theme.px(12)) {
                     ProgressView()
-                    Text("Finding a version of \(finding.displayTitle)…").font(Theme.font(Theme.base, .medium))
+                    Text(L("Finding a version of %@…", "\(finding.displayTitle)")).font(Theme.font(Theme.base, .medium))
                 }
                 .padding(.horizontal, Theme.px(20))
                 .padding(.vertical, Theme.px(12))
@@ -438,7 +438,7 @@ private struct PlayerChrome: View {
                 .buttonStyle(BigPlayStyle())
                 .focused($focus, equals: .play)
                 if model.isLive {
-                    Text("LIVE")
+                    Text(L("LIVE"))
                         .font(Theme.font(Theme.sm, .bold))
                         .padding(.horizontal, Theme.px(10))
                         .padding(.vertical, Theme.px(4))
@@ -544,7 +544,7 @@ private struct PlayerChrome: View {
                         if model.scrubSpeed != 0 {
                             HStack(spacing: Theme.px(4)) {
                                 Image(systemName: model.scrubSpeed > 0 ? "forward.fill" : "backward.fill")
-                                Text("\(abs(model.scrubSpeed))×").monospacedDigit()
+                                Text(verbatim: "\(abs(model.scrubSpeed))×").monospacedDigit()
                             }
                             .foregroundStyle(Theme.gray200)
                         }
@@ -564,9 +564,9 @@ private struct PlayerChrome: View {
 
     private func failureCard(_ failure: String) -> some View {
         VStack(spacing: Theme.px(12)) {
-            Text("This version didn't play").font(Theme.font(Theme.xl, .semibold))
+            Text(L("This version didn't play")).font(Theme.font(Theme.xl, .semibold))
             Text(failure).font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray300).multilineTextAlignment(.center)
-            Text("Press Back to pick another version.").font(Theme.font(Theme.xs)).foregroundStyle(Theme.gray400)
+            Text(L("Press Back to pick another version.")).font(Theme.font(Theme.xs)).foregroundStyle(Theme.gray400)
         }
         .padding(Theme.px(32))
         .frame(maxWidth: Theme.px(560))
@@ -656,13 +656,13 @@ private struct PlayerChrome: View {
     }
 
     private func skipLabel(_ type: String) -> String {
-        ["Intro": "Skip intro", "Recap": "Skip recap", "Outro": "Skip credits", "Preview": "Skip preview",
-         "Commercial": "Skip ad"][type] ?? "Skip"
+        ["Intro": L("Skip intro"), "Recap": L("Skip recap"), "Outro": L("Skip credits"), "Preview": L("Skip preview"),
+         "Commercial": L("Skip ad")][type] ?? L("Skip")
     }
 
     private func skippedLabel(_ type: String) -> String {
-        ["Intro": "Skipped intro", "Recap": "Skipped recap", "Outro": "Skipped credits", "Preview": "Skipped preview",
-         "Commercial": "Skipped ad"][type] ?? "Skipped"
+        ["Intro": L("Skipped intro"), "Recap": L("Skipped recap"), "Outro": L("Skipped credits"), "Preview": L("Skipped preview"),
+         "Commercial": L("Skipped ad")][type] ?? L("Skipped")
     }
 
     /// Moves on to the next episode; by itself, after a run of them, it asks first.
@@ -692,10 +692,10 @@ private struct PlayerChrome: View {
                     .clipShape(RoundedRectangle(cornerRadius: Theme.px(8), style: .continuous))
             }
             VStack(alignment: .leading, spacing: Theme.px(6)) {
-                Text("Next episode").font(Theme.font(Theme.xs, .medium)).foregroundStyle(Theme.gray400)
+                Text(L("Next episode")).font(Theme.font(Theme.xs, .medium)).foregroundStyle(Theme.gray400)
                 Text(next.displayTitle).font(Theme.font(Theme.base, .semibold)).lineLimit(1)
                 Button { playOn(auto: false) } label: {
-                    Label(counting ? "Playing in \(max(1, Int(countdownLeft.rounded(.up))))s" : "Play next",
+                    Label(counting ? L("Playing in %@s", "\(max(1, Int(countdownLeft.rounded(.up))))") : L("Play next"),
                           systemImage: "play.fill")
                         .monospacedDigit()
                 }
@@ -712,15 +712,15 @@ private struct PlayerChrome: View {
 
     private var stillWatchingCard: some View {
         VStack(alignment: .leading, spacing: Theme.px(12)) {
-            Text("Are you still watching?").font(Theme.font(Theme.lg, .semibold))
+            Text(L("Are you still watching?")).font(Theme.font(Theme.lg, .semibold))
             HStack(spacing: Theme.px(8)) {
-                Button("Keep watching") {
+                Button(L("Keep watching")) {
                     askingStill = false
                     playOn(auto: false)
                 }
                 .buttonStyle(SoftPillStyle(selected: true))
                 .focused($focus, equals: .keepWatching)
-                Button("Stop") { close() }
+                Button(L("Stop")) { close() }
                     .buttonStyle(SoftPillStyle())
                     .focused($focus, equals: .stop)
             }
@@ -897,16 +897,16 @@ private struct PlayerPanelView: View {
             VStack(alignment: .leading, spacing: Theme.px(20)) {
                 switch panel {
                 case .tracks:
-                    group("Subtitles") {
-                        row("Off", on: model.activeSubtitle == nil) { model.selectSubtitle(nil) }
+                    group(L("Subtitles")) {
+                        row(L("Off"), on: model.activeSubtitle == nil) { model.selectSubtitle(nil) }
                         ForEach(model.subtitleTracks) { track in
                             row(label(track), on: track.id == model.activeSubtitle) { model.selectSubtitle(track.id) }
                         }
                     }
                 case .audio:
-                    group("Audio") {
+                    group(L("Audio")) {
                         if model.audioTracks.isEmpty {
-                            Text("This version has one audio track.")
+                            Text(L("This version has one audio track."))
                                 .font(Theme.font(Theme.sm))
                                 .foregroundStyle(Theme.gray400)
                                 .padding(.horizontal, Theme.px(12))
@@ -919,7 +919,7 @@ private struct PlayerPanelView: View {
                         }
                     }
                 case .chapters:
-                    group("Chapters") {
+                    group(L("Chapters")) {
                         ForEach(model.chapters, id: \.id) { chapter in
                             ChapterRow(model: model, chapter: chapter, time: clock(chapter.start)) {
                                 model.seek(to: chapter.start)
@@ -928,29 +928,29 @@ private struct PlayerPanelView: View {
                         }
                     }
                 case .speed:
-                    group("Speed") {
+                    group(L("Speed")) {
                         ForEach(Self.speeds, id: \.self) { value in
-                            row(value == 1 ? "Normal" : String(format: "%g×", value), on: abs(model.speed - value) < 0.01) {
+                            row(value == 1 ? L("Normal") : String(format: "%g×", value), on: abs(model.speed - value) < 0.01) {
                                 model.setSpeed(value)
                             }
                         }
                     }
                 case .sync:
-                    group("Subtitles") {
+                    group(L("Subtitles")) {
                         stepper(model.subtitleDelay, step: 0.1) { model.setSubtitleDelay($0) }
                     }
-                    group("Audio") {
+                    group(L("Audio")) {
                         stepper(model.audioDelay, step: 0.05) { model.setAudioDelay($0) }
                     }
-                    Text("Later shows subtitles, or plays the sound, after the picture; earlier, before it. Kept for this title.")
+                    Text(L("Later shows subtitles, or plays the sound, after the picture; earlier, before it. Kept for this title."))
                         .font(Theme.font(Theme.xs))
                         .foregroundStyle(Theme.gray400)
                         .padding(.horizontal, Theme.px(12))
                 case .episodes:
-                    group(model.request.item.parentIndexNumber.map { "Season \($0)" } ?? "Episodes") {
+                    group(model.request.item.parentIndexNumber.map { L("Season %@", "\($0)") } ?? L("Episodes")) {
                         if episodes.isEmpty { ProgressView().frame(maxWidth: .infinity) }
                         ForEach(episodes) { episode in
-                            row(episode.displayTitle, detail: episode.userData?.played == true ? "Watched" : episode.timeLeft,
+                            row(episode.displayTitle, detail: episode.userData?.played == true ? L("Watched") : episode.timeLeft,
                                 on: episode.id == model.request.item.id) {
                                 if episode.id != model.request.item.id { play(episode) }
                             }
@@ -982,13 +982,13 @@ private struct PlayerPanelView: View {
         HStack(spacing: Theme.px(8)) {
             Button { set(value - step) } label: { Image(systemName: "minus") }
                 .buttonStyle(ControlIconStyle())
-            Text(value == 0 ? "In sync" : String(format: "%+.2f s", value))
+            Text(value == 0 ? L("In sync") : String(format: "%+.2f s", value))
                 .font(Theme.font(Theme.base, .semibold))
                 .monospacedDigit()
                 .frame(minWidth: Theme.px(110))
             Button { set(value + step) } label: { Image(systemName: "plus") }
                 .buttonStyle(ControlIconStyle())
-            Button("Reset") { set(0) }
+            Button(L("Reset")) { set(0) }
                 .buttonStyle(SoftPillStyle())
                 .disabled(value == 0)
         }
@@ -1034,15 +1034,15 @@ private struct PlayerPanelView: View {
         if let codec = codecs[track.codec.lowercased()] { parts.append(codec) }
         if track.isAtmos { parts.append("Atmos") } else if track.isDTSX { parts.append("DTS:X") }
         switch track.channels {
-        case 1: parts.append("Mono")
-        case 2: parts.append("Stereo")
+        case 1: parts.append(L("Mono"))
+        case 2: parts.append(L("Stereo"))
         case 6: parts.append("5.1")
         case 8: parts.append("7.1")
-        case let count where count > 2: parts.append("\(count) ch")
+        case let count where count > 2: parts.append(L("%@ ch", "\(count)"))
         default: break
         }
-        if track.isCommentary { parts.append("Commentary") }
-        if track.isVisualImpaired { parts.append("Audio description") }
+        if track.isCommentary { parts.append(L("Commentary")) }
+        if track.isVisualImpaired { parts.append(L("Audio description")) }
         return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 
@@ -1050,11 +1050,11 @@ private struct PlayerPanelView: View {
         var parts: [String] = []
         if !track.name.isEmpty { parts.append(track.name) }
         if let language = track.language, !language.isEmpty, !track.name.localizedCaseInsensitiveContains(language) {
-            parts.append(Locale.current.localizedString(forLanguageCode: language) ?? language)
+            parts.append(AppLanguage.locale.localizedString(forLanguageCode: language) ?? language)
         }
-        if track.isForced { parts.append("Forced") }
-        if track.isExternal { parts.append("Addon") }
-        return parts.isEmpty ? "Track \(track.id)" : parts.joined(separator: " · ")
+        if track.isForced { parts.append(L("Forced")) }
+        if track.isExternal { parts.append(L("Addon")) }
+        return parts.isEmpty ? L("Track %@", "\(track.id)") : parts.joined(separator: " · ")
     }
 
     private func clock(_ seconds: Double) -> String {
@@ -1109,7 +1109,7 @@ private struct ChapterRow: View {
                 .frame(width: Theme.px(112), height: Theme.px(63))
                 .clipShape(RoundedRectangle(cornerRadius: Theme.px(6), style: .continuous))
                 VStack(alignment: .leading, spacing: Theme.px(2)) {
-                    Text(chapter.name.isEmpty ? "Chapter \(chapter.id + 1)" : chapter.name)
+                    Text(chapter.name.isEmpty ? L("Chapter %@", "\(chapter.id + 1)") : chapter.name)
                         .font(Theme.font(15)).lineLimit(2)
                     Text(time).font(Theme.font(Theme.xs)).foregroundStyle(Theme.gray400).monospacedDigit()
                 }

@@ -85,7 +85,7 @@ struct PlayFlow: ViewModifier {
                 if let finding {
                     HStack(spacing: Theme.px(12)) {
                         ProgressView()
-                        Text("Finding a version of \(finding.isEpisode ? finding.displayTitle : finding.name ?? "this")…")
+                        Text(L("Finding a version of %@…", finding.isEpisode ? finding.displayTitle : finding.name ?? L("this")))
                             .font(Theme.font(Theme.base, .medium))
                     }
                     .padding(.horizontal, Theme.px(20))

@@ -128,12 +128,13 @@ struct Item: Decodable, Identifiable, Hashable {
         guard let total = runTimeTicks, let at = userData?.playbackPositionTicks, at > 0, total > at else { return nil }
         let minutes = Int((total - at) / 600_000_000)
         guard minutes > 0 else { return nil }
-        return minutes >= 60 ? "\(minutes / 60)h \(minutes % 60)m left" : "\(minutes)m left"
+        let left = minutes >= 60 ? L("%@h %@m", "\(minutes / 60)", "\(minutes % 60)") : L("%@m", "\(minutes)")
+        return L("%@ left", left)
     }
 
     var runtimeText: String? {
         guard let minutes = runtimeMinutes else { return nil }
-        return minutes >= 60 ? "\(minutes / 60)h \(minutes % 60)m" : "\(minutes)m"
+        return minutes >= 60 ? L("%@h %@m", "\(minutes / 60)", "\(minutes % 60)") : L("%@m", "\(minutes)")
     }
 }
 
@@ -328,7 +329,7 @@ struct MediaSource: Decodable, Identifiable, Hashable {
 
     /// The web app keys every version by its own id.
     var ownId: String { aiostreams?.id ?? id }
-    var label: String { aiostreams?.name ?? name ?? "Version" }
+    var label: String { aiostreams?.name ?? name ?? L("Version") }
 }
 
 struct PlaybackInfo: Decodable {
@@ -471,7 +472,7 @@ struct JellyfinClient: Sendable {
             return try Self.decoder.decode(T.self, from: data.isEmpty ? Data("{}".utf8) : data)
         } catch {
             AppLog.warn("api", "\(path): could not read the answer: \(error)")
-            throw JellyfinError(status: 0, message: "The server sent something unexpected.")
+            throw JellyfinError(status: 0, message: L("The server sent something unexpected."))
         }
     }
 
@@ -490,17 +491,17 @@ struct JellyfinClient: Sendable {
         do {
             (data, response) = try await URLSession.shared.data(for: request)
         } catch {
-            throw JellyfinError(status: 0, message: "Can't reach the server.")
+            throw JellyfinError(status: 0, message: L("Can't reach the server"))
         }
         let status = (response as? HTTPURLResponse)?.statusCode ?? 0
         guard (200..<300).contains(status) else {
             let message: String
             switch status {
-            case 401: message = "Signed out. Sign in again."
-            case 403: message = "The server refused this."
-            case 404: message = "Not found on this server."
-            case 429: message = "Too many requests. Try again shortly."
-            default: message = "Request failed (\(status))."
+            case 401: message = L("Signed out. Sign in again.")
+            case 403: message = L("The server refused this.")
+            case 404: message = L("Not found on this server.")
+            case 429: message = L("Too many requests. Try again shortly.")
+            default: message = L("Request failed (%@)", "\(status)")
             }
             throw JellyfinError(status: status, message: message)
         }

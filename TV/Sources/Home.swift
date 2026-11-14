@@ -92,22 +92,22 @@ struct HomeView: View {
                 let continuing = merging ? mergeRows(resume, nextUp) : resume
                 if !continuing.isEmpty {
                     // Activity is in the rail, so the row needs no button of its own.
-                    WideRow(title: "Continue watching", items: continuing, play: play) { EmptyView() }
+                    WideRow(title: L("Continue watching"), items: continuing, play: play) { EmptyView() }
                 }
                 if !merging && !nextUp.isEmpty {
-                    WideRow(title: "Next up", items: nextUp, play: play) { EmptyView() }
+                    WideRow(title: L("Next up"), items: nextUp, play: play) { EmptyView() }
                 }
                 if !channels.isEmpty {
                     LiveRow(channels: channels, airing: airing, play: playChannel) {
                         Button { openPlace(.live) } label: {
-                            Label("All channels", systemImage: "play.tv")
+                            Label(L("All channels"), systemImage: "play.tv")
                         }
                         .buttonStyle(SoftPillStyle())
                     }
                 }
                 if !upcoming.isEmpty {
                     // Nothing to play yet, so a card opens its show.
-                    WideRow(title: "Upcoming", items: upcoming, upcoming: true, play: openShow) { EmptyView() }
+                    WideRow(title: L("Upcoming"), items: upcoming, upcoming: true, play: openShow) { EmptyView() }
                 }
                 ForEach(libraries) { row in
                     ItemRow(row: row)
@@ -117,10 +117,10 @@ struct HomeView: View {
                 }
                 if !loading && hero.isEmpty && resume.isEmpty && libraries.isEmpty {
                     VStack(spacing: Theme.px(16)) {
-                        Text(error ?? "Nothing here yet. Add catalogs to your configuration.")
+                        Text(error ?? L("Nothing here yet. Add catalogs to your configuration."))
                             .font(Theme.font(Theme.base))
                             .foregroundStyle(Theme.gray400)
-                        Button("Try again") { Task { await load() } }
+                        Button(L("Try again")) { Task { await load() } }
                             .buttonStyle(SoftPillStyle())
                     }
                     .frame(maxWidth: .infinity)
@@ -213,7 +213,7 @@ struct HomeView: View {
                     heads[index] = (view, items)
                     libraries = heads.keys.sorted().compactMap { key in
                         guard let entry = heads[key], !entry.1.isEmpty else { return nil }
-                        return HomeRow(id: entry.0.id, title: entry.0.name ?? "Library", items: entry.1, library: entry.0)
+                        return HomeRow(id: entry.0.id, title: entry.0.name ?? L("Library"), items: entry.1, library: entry.0)
                     }
                 }
             }
@@ -411,13 +411,13 @@ struct HeroCarousel: View {
                 slip(.previous, enabled: items.count > 1 && followed == nil && index > 0)
                 if item.playable {
                     Button { play(item) } label: {
-                        Label("Play", systemImage: "play.fill")
+                        Label(L("Play"), systemImage: "play.fill")
                     }
                     .buttonStyle(PrimaryPillStyle())
                     .focused($focus, equals: .play)
                 }
                 NavigationLink(value: Route.item(item)) {
-                    Label("More info", systemImage: "info.circle")
+                    Label(L("More info"), systemImage: "info.circle")
                 }
                 .buttonStyle(item.playable ? AnyButtonStyle(SecondaryPillStyle()) : AnyButtonStyle(PrimaryPillStyle()))
                 .focused($focus, equals: .info)
@@ -579,7 +579,7 @@ struct WideCard: View {
                         .animation(.easeOut(duration: 0.3), value: hidden)
                         .overlay(alignment: .topLeading) {
                             if let airs {
-                                Text(airs.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day()))
+                                Text(airs.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day().locale(AppLanguage.locale)))
                                     .font(Theme.font(Theme.xs, .semibold))
                                     .padding(.horizontal, Theme.px(8))
                                     .padding(.vertical, Theme.px(3))
@@ -632,10 +632,10 @@ func untilLabel(_ date: Date) -> String {
     let calendar = Calendar.current
     let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: Date()), to: calendar.startOfDay(for: date)).day ?? 0
     switch days {
-    case ..<1: return "today"
-    case 1: return "tomorrow"
-    case ..<14: return "in \(days) days"
-    default: return "in \(Int((Double(days) / 7).rounded())) weeks"
+    case ..<1: return L("today")
+    case 1: return L("tomorrow")
+    case ..<14: return L("in %ld days", days)
+    default: return L("in %ld weeks", Int((Double(days) / 7).rounded()))
     }
 }
 
@@ -650,7 +650,7 @@ struct LiveRow<Action: View>: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Theme.px(12)) {
             HStack {
-                Text("Live TV").font(Theme.font(Theme.xl, .semibold))
+                Text(L("Live TV")).font(Theme.font(Theme.xl, .semibold))
                 Spacer()
                 action()
             }
@@ -716,7 +716,7 @@ struct ChannelCard: View {
                     Text(channel.name ?? "").lineLimit(1)
                 }
                 .font(Theme.font(15, .semibold))
-                Text(programme?.name ?? "Live")
+                Text(programme?.name ?? L("Live"))
                     .font(Theme.font(13))
                     .foregroundStyle(Theme.gray400)
                     .lineLimit(1)

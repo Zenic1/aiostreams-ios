@@ -21,8 +21,9 @@ struct AIOStreamsTVApp: App {
                 case .signedIn: MainView()
                 }
             }
-            // The web app's theme colours, once they've loaded.
+            // The web app's theme colours and language, once they've loaded.
             .id(prefs.themeKey)
+            .environment(\.locale, AppLanguage.locale)
             .environmentObject(session)
             .environmentObject(prefs)
             .environmentObject(wash)
@@ -75,15 +76,15 @@ struct ServerView: View {
             WelcomeBackground()
             VStack(spacing: Theme.px(24)) {
                 BrandLogo(height: Theme.px(64))
-                Text("Connect to your server")
+                Text(L("Connect to your server"))
                     .font(Theme.font(Theme.xl2, .semibold))
                     .foregroundStyle(Theme.gray200)
-                Text("Use the address from your configure page: Save & Install → Jellyfin apps → Connect. With a share alias it's short, like your-instance/jellyfin/u/alias.")
+                Text(L("Use the address from your configure page: Save & Install → Jellyfin apps → Connect. With a share alias it's short, like your-instance/jellyfin/u/alias."))
                     .font(Theme.font(Theme.sm))
                     .foregroundStyle(Theme.gray400)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: Theme.px(560))
-                TextField("Server address", text: $address)
+                TextField(L("Server address"), text: $address)
                     .textContentType(.URL)
                     .keyboardType(.URL)
                     .autocorrectionDisabled()
@@ -91,7 +92,7 @@ struct ServerView: View {
                     .font(Theme.font(Theme.base))
                     .frame(maxWidth: Theme.px(560))
                     .onSubmit(connect)
-                Button(working ? "Connecting…" : "Connect", action: connect)
+                Button(working ? L("Connecting…") : L("Connect"), action: connect)
                     .buttonStyle(PrimaryPillStyle())
                     .disabled(working || address.trimmingCharacters(in: .whitespaces).isEmpty)
                 ErrorText(text: error)
@@ -163,7 +164,7 @@ struct SignInView: View {
 
     private var picker: some View {
         VStack(spacing: Theme.px(28)) {
-            Text(users.isEmpty && loaded ? "Sign in" : "Who's watching?")
+            Text(users.isEmpty && loaded ? L("Sign in") : L("Who's watching?"))
                 .font(Theme.font(Theme.xl2, .semibold))
                 .foregroundStyle(Theme.gray200)
             if !users.isEmpty {
@@ -184,9 +185,9 @@ struct SignInView: View {
                 ProgressView()
             }
             HStack(spacing: Theme.px(8)) {
-                Button("Other user") { name = ""; password = ""; mode = .manual }
-                if quickConnectEnabled { Button("Quick Connect") { mode = .quickConnect } }
-                Button("Change server") { session.forgetServer() }
+                Button(L("Other user")) { name = ""; password = ""; mode = .manual }
+                if quickConnectEnabled { Button(L("Quick Connect")) { mode = .quickConnect } }
+                Button(L("Change server")) { session.forgetServer() }
             }
             .buttonStyle(SoftPillStyle())
             .padding(.top, Theme.px(8))
@@ -197,51 +198,51 @@ struct SignInView: View {
     private func passwordForm(_ user: PublicUser) -> some View {
         VStack(spacing: Theme.px(20)) {
             UserAvatar(user: user, url: avatarURL(user))
-            Text("Password for \(user.name ?? "this user")")
+            Text(L("Password for %@", user.name ?? L("this user")))
                 .font(Theme.font(Theme.xl, .semibold))
                 .foregroundStyle(Theme.gray200)
-            Text("If the user has a PIN, add it after the password with a /, like password/1234.")
+            Text(L("If the user has a PIN, add it after the password with a /, like password/1234."))
                 .font(Theme.font(Theme.sm))
                 .foregroundStyle(Theme.gray400)
-            SecureField("Password", text: $password)
+            SecureField(L("Password"), text: $password)
                 .font(Theme.font(Theme.base))
                 .frame(maxWidth: Theme.px(440))
                 .onSubmit(signIn)
             HStack(spacing: Theme.px(12)) {
-                Button(working ? "Signing in…" : "Sign in", action: signIn)
+                Button(working ? L("Signing in…") : L("Sign in"), action: signIn)
                     .buttonStyle(PrimaryPillStyle())
                     .disabled(working)
-                Button("Back") { mode = .pick }.buttonStyle(SecondaryPillStyle())
+                Button(L("Back")) { mode = .pick }.buttonStyle(SecondaryPillStyle())
             }
         }
     }
 
     private var manualForm: some View {
         VStack(spacing: Theme.px(20)) {
-            Text("Sign in")
+            Text(L("Sign in"))
                 .font(Theme.font(Theme.xl2, .semibold))
                 .foregroundStyle(Theme.gray200)
-            TextField("Name", text: $name)
+            TextField(L("Name"), text: $name)
                 .autocorrectionDisabled()
                 .textInputAutocapitalization(.never)
                 .font(Theme.font(Theme.base))
                 .frame(maxWidth: Theme.px(440))
-            SecureField("Password, and /PIN if the user has one", text: $password)
+            SecureField(L("Password, and /PIN if the user has one"), text: $password)
                 .font(Theme.font(Theme.base))
                 .frame(maxWidth: Theme.px(440))
                 .onSubmit(signIn)
             HStack(spacing: Theme.px(12)) {
-                Button(working ? "Signing in…" : "Sign in", action: signIn)
+                Button(working ? L("Signing in…") : L("Sign in"), action: signIn)
                     .buttonStyle(PrimaryPillStyle())
                     .disabled(working || name.isEmpty)
-                Button("Back") { mode = .pick }.buttonStyle(SecondaryPillStyle())
+                Button(L("Back")) { mode = .pick }.buttonStyle(SecondaryPillStyle())
             }
         }
     }
 
     private var quickConnectPanel: some View {
         VStack(spacing: Theme.px(20)) {
-            Text("Quick Connect")
+            Text(L("Quick Connect"))
                 .font(Theme.font(Theme.xl2, .semibold))
                 .foregroundStyle(Theme.gray200)
             if let code {
@@ -252,12 +253,12 @@ struct SignInView: View {
             } else {
                 ProgressView().frame(height: Theme.px(80))
             }
-            Text("On your configure page, open Save & Install → Jellyfin apps → Connect, type this code into the Quick Connect box and approve it.")
+            Text(L("On your configure page, open Save & Install → Jellyfin apps → Connect, type this code into the Quick Connect box and approve it."))
                 .font(Theme.font(Theme.sm))
                 .foregroundStyle(Theme.gray400)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: Theme.px(560))
-            Button("Back") { mode = .pick }.buttonStyle(SoftPillStyle())
+            Button(L("Back")) { mode = .pick }.buttonStyle(SoftPillStyle())
         }
     }
 
@@ -320,7 +321,7 @@ struct SignInView: View {
                 poll?.cancel()
                 session.signIn(result)
             } catch let failure as JellyfinError where failure.status == 401 {
-                error = "That password doesn't match."
+                error = L("That password doesn't match.")
             } catch {
                 self.error = error.localizedDescription
             }
@@ -355,7 +356,7 @@ struct UserAvatar: View {
             }
             .frame(width: Theme.px(112), height: Theme.px(112))
             .clipShape(Circle())
-            Text(user.name ?? "User")
+            Text(user.name ?? L("User"))
                 .font(Theme.font(15))
                 .foregroundStyle(Theme.gray200)
         }

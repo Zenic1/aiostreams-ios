@@ -13,15 +13,15 @@ enum Place: String, CaseIterable, Identifiable {
 
     var name: String {
         switch self {
-        case .account: return "You"
-        case .home: return "Home"
-        case .discover: return "Discover"
-        case .live: return "Live TV"
-        case .search: return "Search"
-        case .favourites: return "Favourites"
-        case .calendar: return "Calendar"
-        case .activity: return "Activity"
-        case .settings: return "Settings"
+        case .account: return L("You")
+        case .home: return L("Home")
+        case .discover: return L("Discover")
+        case .live: return L("Live TV")
+        case .search: return L("Search")
+        case .favourites: return L("Favourites")
+        case .calendar: return L("Calendar")
+        case .activity: return L("Activity")
+        case .settings: return L("Settings")
         }
     }
 
@@ -148,7 +148,7 @@ struct MainView: View {
         .onExitCommand(perform: exitAction)
         .overlay(alignment: .bottom) {
             if exitArmed {
-                Text("Press Back again to leave")
+                Text(L("Press Back again to leave"))
                     .font(Theme.font(Theme.base, .medium))
                     .padding(.horizontal, Theme.px(20))
                     .padding(.vertical, Theme.px(12))
@@ -394,7 +394,7 @@ struct ComingSoonView: View {
         VStack(alignment: .leading, spacing: Theme.px(12)) {
             Text(title).font(Theme.font(Theme.xl3, .bold))
             Text(text).font(Theme.font(Theme.base)).foregroundStyle(Theme.gray400)
-            Text("Coming in a later build.").font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray500)
+            Text(L("Coming in a later build.")).font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray500)
         }
         .padding(Theme.px(40))
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)

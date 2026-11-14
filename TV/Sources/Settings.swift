@@ -29,6 +29,7 @@ final class Preferences: ObservableObject {
             custom = saved.compactMapValues { $0 as? String }
         }
         Theme.apply(accent: accentColor, background: backgroundColor)
+        AppLanguage.apply(text("language", "auto"))
         if let me = try? await client.json("GET", "/Users/Me") {
             configuration = me["Configuration"] as? [String: Any] ?? [:]
         }
@@ -45,6 +46,7 @@ final class Preferences: ObservableObject {
     func set(_ key: String, _ value: String?, fallback: String) {
         if let value, value != fallback { custom[key] = value } else { custom.removeValue(forKey: key) }
         if key == "accentColor" || key == "backgroundColor" { Theme.apply(accent: accentColor, background: backgroundColor) }
+        if key == "language" { AppLanguage.apply(text("language", "auto")) }
         // Settles before it saves, as a run of presses would otherwise send each.
         pushTask?.cancel()
         pushTask = Task { [weak self] in
@@ -124,8 +126,8 @@ final class Preferences: ObservableObject {
     /// The theme's colours, `#rrggbb`, where the web app's theme set them.
     var accentColor: String? { custom["accentColor"].flatMap { $0.isEmpty ? nil : $0 } }
     var backgroundColor: String? { custom["backgroundColor"].flatMap { $0.isEmpty ? nil : $0 } }
-    /// Changes when the theme does, so the app draws itself again in its colours.
-    var themeKey: String { "\(accentColor ?? "")|\(backgroundColor ?? "")" }
+    /// Changes when the theme or the language does, so the app draws itself again in them.
+    var themeKey: String { "\(accentColor ?? "")|\(backgroundColor ?? "")|\(AppLanguage.resolve(text("language", "auto")))" }
 
     // MARK: Skipping and the next episode, under the web app's keys (lib/settings)
 
@@ -220,9 +222,11 @@ final class Preferences: ObservableObject {
     /// A time of day in the chosen format.
     func time(_ date: Date) -> String {
         switch timeFormat {
-        case "12": return Self.twelve.string(from: date)
+        case "12":
+            Self.twelve.locale = AppLanguage.locale
+            return Self.twelve.string(from: date)
         case "24": return Self.twentyFour.string(from: date)
-        default: return date.formatted(date: .omitted, time: .shortened)
+        default: return date.formatted(Date.FormatStyle(date: .omitted, time: .shortened, locale: AppLanguage.locale))
         }
     }
 
@@ -269,22 +273,28 @@ private struct Chooser: Identifiable {
     let choose: (String) -> Void
 }
 
-/// Jellyfin's three-letter codes, as its language settings take them.
-private let languageOptions: [(String, String)] = [
-    ("eng", "English"), ("spa", "Spanish"), ("fre", "French"), ("ger", "German"), ("ita", "Italian"),
-    ("por", "Portuguese"), ("dut", "Dutch"), ("swe", "Swedish"), ("nor", "Norwegian"), ("dan", "Danish"),
-    ("fin", "Finnish"), ("pol", "Polish"), ("cze", "Czech"), ("hun", "Hungarian"), ("rum", "Romanian"),
-    ("gre", "Greek"), ("tur", "Turkish"), ("rus", "Russian"), ("ukr", "Ukrainian"), ("ara", "Arabic"),
-    ("heb", "Hebrew"), ("hin", "Hindi"), ("tam", "Tamil"), ("tel", "Telugu"), ("tha", "Thai"),
-    ("vie", "Vietnamese"), ("ind", "Indonesian"), ("may", "Malay"), ("fil", "Filipino"),
-    ("jpn", "Japanese"), ("kor", "Korean"), ("chi", "Chinese"),
+/// Jellyfin's three-letter codes, as its language settings take them, with each language's English
+/// name and its two-letter code, for its name in the app's language.
+private let languageOptions: [(String, String, String)] = [
+    ("eng", "English", "en"), ("spa", "Spanish", "es"), ("fre", "French", "fr"), ("ger", "German", "de"),
+    ("ita", "Italian", "it"), ("por", "Portuguese", "pt"), ("dut", "Dutch", "nl"), ("swe", "Swedish", "sv"),
+    ("nor", "Norwegian", "no"), ("dan", "Danish", "da"), ("fin", "Finnish", "fi"), ("pol", "Polish", "pl"),
+    ("cze", "Czech", "cs"), ("hun", "Hungarian", "hu"), ("rum", "Romanian", "ro"), ("gre", "Greek", "el"),
+    ("tur", "Turkish", "tr"), ("rus", "Russian", "ru"), ("ukr", "Ukrainian", "uk"), ("ara", "Arabic", "ar"),
+    ("heb", "Hebrew", "he"), ("hin", "Hindi", "hi"), ("tam", "Tamil", "ta"), ("tel", "Telugu", "te"),
+    ("tha", "Thai", "th"), ("vie", "Vietnamese", "vi"), ("ind", "Indonesian", "id"), ("may", "Malay", "ms"),
+    ("fil", "Filipino", "fil"), ("jpn", "Japanese", "ja"), ("kor", "Korean", "ko"), ("chi", "Chinese", "zh"),
 ]
 
+/// A language's name: the list's English one in English, else the system's name for it in the
+/// app's language, as the web app names them (languageName in lib/languages.ts).
 private func languageName(_ code: String) -> String {
-    if code == "OriginalLanguage" { return "Original language" }
-    return languageOptions.first { $0.0 == code }?.1
-        ?? Locale.current.localizedString(forLanguageCode: code)
-        ?? code
+    if code == "OriginalLanguage" { return L("Original language") }
+    let english = languageOptions.first { $0.0 == code }
+    if AppLanguage.current.hasPrefix("en"), let english { return english.1 }
+    return AppLanguage.locale.localizedString(forLanguageCode: english?.2 ?? code)
+        .map { $0.prefix(1).uppercased(with: AppLanguage.locale) + $0.dropFirst() }
+        ?? english?.1 ?? code
 }
 
 struct SettingsView: View {
@@ -298,103 +308,103 @@ struct SettingsView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: Theme.px(28)) {
-                PageTitle(text: "Settings")
-                section("Playback", note: "Saved to your account, so the web app and your other devices use them too.") {
-                    row("Audio language", value: listLabel(prefs.languages(list: "AudioLanguages", one: "AudioLanguagePreference"), none: "The file's default")) {
-                        chooseLanguage("Audio language", list: "AudioLanguages", one: "AudioLanguagePreference", original: true)
+                PageTitle(text: L("Settings"))
+                section(L("Playback"), note: L("Saved to your account, so the web app and your other devices use them too.")) {
+                    row(L("Audio language"), value: listLabel(prefs.languages(list: "AudioLanguages", one: "AudioLanguagePreference"), none: L("The file's default"))) {
+                        chooseLanguage(L("Audio language"), list: "AudioLanguages", one: "AudioLanguagePreference", original: true)
                     }
-                    row("Subtitle language", value: listLabel(prefs.languages(list: "SubtitleLanguages", one: "SubtitleLanguagePreference"), none: "Any")) {
-                        chooseLanguage("Subtitle language", list: "SubtitleLanguages", one: "SubtitleLanguagePreference", original: false)
+                    row(L("Subtitle language"), value: listLabel(prefs.languages(list: "SubtitleLanguages", one: "SubtitleLanguagePreference"), none: L("Any"))) {
+                        chooseLanguage(L("Subtitle language"), list: "SubtitleLanguages", one: "SubtitleLanguagePreference", original: false)
                     }
-                    toggle("Auto-play the first version", key: "autoPlayFirst", fallback: false)
+                    toggle(L("Auto-play the first version"), key: "autoPlayFirst", fallback: false)
                     Text(prefs.autoPlayFirst
-                        ? "Play starts the first version, and resuming goes back to the version you were watching. Hold select on a title and choose Choose a version to pick instead."
-                        : "Play lists the versions to choose from, but resuming goes back to the version you were watching. Hold select on a title and choose Play straight away to start the first.")
+                        ? L("Play starts the first version, and resuming goes back to the version you were watching. Hold select on a title and choose Choose a version to pick instead.")
+                        : L("Play lists the versions to choose from, but resuming goes back to the version you were watching. Hold select on a title and choose Play straight away to start the first."))
                         .font(Theme.font(Theme.sm))
                         .foregroundStyle(Theme.gray400)
                         .padding(.horizontal, Theme.px(16))
-                    row("Subtitles", value: modeName(prefs.subtitleMode)) {
+                    row(L("Subtitles"), value: modeName(prefs.subtitleMode)) {
                         chooser = Chooser(
-                            title: "Subtitles",
+                            title: L("Subtitles"),
                             options: ["Default", "Smart", "Always", "OnlyForced", "None"].map { (modeName($0), $0) },
                             current: prefs.subtitleMode
                         ) { prefs.configure(["SubtitleMode": $0]) }
                     }
                 }
-                section("Skipping and the next episode", note: "Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration.") {
-                    ForEach([("Intro", "Intros"), ("Recap", "Recaps"), ("Outro", "Credits"), ("Preview", "Previews"), ("Commercial", "Ads")], id: \.0) { entry in
+                section(L("Skipping and the next episode"), note: L("Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration.")) {
+                    ForEach([("Intro", L("Intros")), ("Recap", L("Recaps")), ("Outro", L("Credits")), ("Preview", L("Previews")), ("Commercial", L("Ads"))], id: \.0) { entry in
                         synced(entry.1, key: "segment\(entry.0)", fallback: "ask",
-                               options: [("Show a skip button", "ask"), ("Skip automatically", "skip"), ("Don't skip", "none")])
+                               options: [(L("Show a skip button"), "ask"), (L("Skip automatically"), "skip"), (L("Don't skip"), "none")])
                     }
-                    row("Play the next episode automatically", value: prefs.autoplayNext ? "On" : "Off") {
+                    row(L("Play the next episode automatically"), value: prefs.autoplayNext ? L("On") : L("Off")) {
                         prefs.configure(["EnableNextEpisodeAutoPlay": !prefs.autoplayNext])
                     }
-                    synced("Offer the next episode", key: "nextPrompt", fallback: "credits",
-                           options: [("At the credits", "credits"), ("Near the end", "end"), ("Never", "off")])
-                    synced("Without credits, offer it", key: "nextLead", fallback: "30",
-                           options: [15, 30, 45, 60, 90, 120].map { ("\($0) seconds before the end", String($0)) })
-                    synced("Countdown", key: "nextCountdown", fallback: "15",
-                           options: [5, 10, 15, 30].map { ("\($0) seconds", String($0)) })
-                    toggle("Skip by the file's chapters", key: "chapterSkips", fallback: true)
-                    toggle("Play the first version when none matches", key: "nextFallbackFirst", fallback: true)
-                    toggle("Skip filler episodes", key: "skipFillers", fallback: true)
-                    toggle("Skip recap episodes", key: "skipRecaps", fallback: true)
-                    toggle("Wait for episodes to air", key: "markUnaired", fallback: true)
-                    synced("Ask if you're still watching", key: "stillWatching", fallback: "3",
-                           options: [("Never", "0")] + [2, 3, 4, 5, 8].map { ("After \($0) episodes", String($0)) })
-                    Text("The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer.")
+                    synced(L("Offer the next episode"), key: "nextPrompt", fallback: "credits",
+                           options: [(L("At the credits"), "credits"), (L("Near the end"), "end"), (L("Never"), "off")])
+                    synced(L("Without credits, offer it"), key: "nextLead", fallback: "30",
+                           options: [15, 30, 45, 60, 90, 120].map { (L("%ld seconds before the end", $0), String($0)) })
+                    synced(L("Countdown"), key: "nextCountdown", fallback: "15",
+                           options: [5, 10, 15, 30].map { (L("%ld seconds", $0), String($0)) })
+                    toggle(L("Skip by the file's chapters"), key: "chapterSkips", fallback: true)
+                    toggle(L("Play the first version when none matches"), key: "nextFallbackFirst", fallback: true)
+                    toggle(L("Skip filler episodes"), key: "skipFillers", fallback: true)
+                    toggle(L("Skip recap episodes"), key: "skipRecaps", fallback: true)
+                    toggle(L("Wait for episodes to air"), key: "markUnaired", fallback: true)
+                    synced(L("Ask if you are still watching"), key: "stillWatching", fallback: "3",
+                           options: [(L("Never"), "0")] + [2, 3, 4, 5, 8].map { (L("After %ld episodes", $0), String($0)) })
+                    Text(L("The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer."))
                         .font(Theme.font(Theme.sm))
                         .foregroundStyle(Theme.gray400)
                         .padding(.horizontal, Theme.px(16))
                 }
-                section("Theme", note: "Shared with the web app.") {
-                    synced("Accent colour", key: "accentColor", fallback: "",
-                           options: [("Default", ""), ("Blue", "#3b82f6"), ("Sky", "#0ea5e9"), ("Teal", "#14b8a6"),
-                                     ("Green", "#22c55e"), ("Amber", "#f59e0b"), ("Orange", "#f97316"), ("Red", "#ef4444"),
-                                     ("Pink", "#ec4899"), ("Violet", "#8b5cf6")])
-                    toggle("Background from artwork", key: "artBackground", fallback: false)
-                    synced("Background", key: "backgroundColor", fallback: "",
-                           options: [("Default", ""), ("Black", "#000000"), ("Charcoal", "#1c1c1f"), ("Slate", "#1e2836"),
-                                     ("Navy", "#0a1846"), ("Plum", "#24102e"), ("Forest", "#0c2018"), ("Maroon", "#2a0c12")])
+                section(L("Theme"), note: L("Shared with the web app.")) {
+                    synced(L("Accent colour"), key: "accentColor", fallback: "",
+                           options: [(L("Default"), ""), (L("Blue"), "#3b82f6"), (L("Sky"), "#0ea5e9"), (L("Teal"), "#14b8a6"),
+                                     (L("Green"), "#22c55e"), (L("Amber"), "#f59e0b"), (L("Orange"), "#f97316"), (L("Red"), "#ef4444"),
+                                     (L("Pink"), "#ec4899"), (L("Violet"), "#8b5cf6")])
+                    toggle(L("Background from artwork"), key: "artBackground", fallback: false)
+                    synced(L("Background"), key: "backgroundColor", fallback: "",
+                           options: [(L("Default"), ""), (L("Black"), "#000000"), (L("Charcoal"), "#1c1c1f"), (L("Slate"), "#1e2836"),
+                                     (L("Navy"), "#0a1846"), (L("Plum"), "#24102e"), (L("Forest"), "#0c2018"), (L("Maroon"), "#2a0c12")])
                 }
-                section("Player controls", note: "Kept on this Apple TV.") {
-                    row("Skip step", value: "\(prefs.seekStep) seconds") {
-                        chooser = Chooser(title: "Skip step", options: [5, 10, 15, 30].map { ("\($0) seconds", String($0)) },
+                section(L("Player controls"), note: L("Kept on this Apple TV.")) {
+                    row(L("Skip step"), value: L("%ld seconds", prefs.seekStep)) {
+                        chooser = Chooser(title: L("Skip step"), options: [5, 10, 15, 30].map { (L("%ld seconds", $0), String($0)) },
                                           current: String(prefs.seekStep)) { prefs.seekStep = Int($0) ?? 10 }
                     }
-                    row("Show the time left", value: prefs.showTimeLeft ? "On" : "Off") { prefs.showTimeLeft.toggle() }
-                    row("Show the clock", value: prefs.showClock ? "On" : "Off") { prefs.showClock.toggle() }
-                    row("Show the controls on pause and skip", value: prefs.showOnPauseAndSkip ? "On" : "Off") {
+                    row(L("Show time left"), value: prefs.showTimeLeft ? L("On") : L("Off")) { prefs.showTimeLeft.toggle() }
+                    row(L("Show the clock"), value: prefs.showClock ? L("On") : L("Off")) { prefs.showClock.toggle() }
+                    row(L("Show the controls on pause and skip"), value: prefs.showOnPauseAndSkip ? L("On") : L("Off")) {
                         prefs.showOnPauseAndSkip.toggle()
                     }
                 }
-                section("Video", note: nil) {
-                    row("Anime upscaling", value: prefs.animeUpscaling ? "On" : "Off") {
+                section(L("Video"), note: nil) {
+                    row(L("Anime upscaling"), value: prefs.animeUpscaling ? L("On") : L("Off")) {
                         prefs.animeUpscaling.toggle()
                     }
-                    Text("Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title.")
+                    Text(L("Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title."))
                         .font(Theme.font(Theme.sm))
                         .foregroundStyle(Theme.gray400)
                         .padding(.horizontal, Theme.px(16))
                 }
-                section("Subtitle style", note: "The same style as the web app's, on every device you sign in to.") {
-                    synced("Size", key: "subtitleSize", fallback: "normal",
-                           options: [("Small", "small"), ("Normal", "normal"), ("Large", "large"), ("Huge", "huge")])
-                    synced("Font", key: "subtitleFont", fallback: "default",
-                           options: [("The player's own", "default"), ("Sans serif", "sans-serif"), ("Serif", "serif"),
-                                     ("Monospace", "monospace"), ("Casual", "casual"), ("Cursive", "cursive")])
-                    synced("Text colour", key: "subtitleColor", fallback: "#ffffff",
-                           options: [("White", "#ffffff"), ("Yellow", "#ffff00"), ("Light grey", "#d1d1d1"),
-                                     ("Cyan", "#00ffff"), ("Green", "#00ff00")])
-                    toggle("Bold", key: "subtitleBold", fallback: false)
-                    synced("Outline", key: "subtitleOutline", fallback: "normal",
-                           options: [("None", "none"), ("Thin", "thin"), ("Normal", "normal"), ("Thick", "thick")])
-                    toggle("Shadow", key: "subtitleShadow", fallback: false)
-                    synced("Background", key: "subtitleBackgroundOpacity", fallback: "0",
-                           options: [("None", "0"), ("Faint", "25"), ("Half", "50"), ("Strong", "75"), ("Solid", "100")])
-                    synced("Height", key: "subtitlePosition", fallback: "0",
-                           options: [("Lowest", "-3"), ("Normal", "0"), ("Raised a little", "5"), ("Raised", "10"), ("High", "20")])
-                    toggle("Override styled subtitles", key: "subtitleOverrideStyled", fallback: false)
+                section(L("Subtitle style"), note: L("The same style as the web app's, on every device you sign in to.")) {
+                    synced(L("Size"), key: "subtitleSize", fallback: "normal",
+                           options: [(L("Small"), "small"), (L("Normal"), "normal"), (L("Large"), "large"), (L("Huge"), "huge")])
+                    synced(L("Font"), key: "subtitleFont", fallback: "default",
+                           options: [(L("The player's own"), "default"), (L("Sans serif"), "sans-serif"), (L("Serif"), "serif"),
+                                     (L("Monospace"), "monospace"), (L("Casual"), "casual"), (L("Cursive"), "cursive")])
+                    synced(L("Text colour"), key: "subtitleColor", fallback: "#ffffff",
+                           options: [(L("White"), "#ffffff"), (L("Yellow"), "#ffff00"), (L("Light grey"), "#d1d1d1"),
+                                     (L("Cyan"), "#00ffff"), (L("Green"), "#00ff00")])
+                    toggle(L("Bold"), key: "subtitleBold", fallback: false)
+                    synced(L("Outline"), key: "subtitleOutline", fallback: "normal",
+                           options: [(L("None"), "none"), (L("Thin"), "thin"), (L("Normal"), "normal"), (L("Thick"), "thick")])
+                    toggle(L("Shadow"), key: "subtitleShadow", fallback: false)
+                    synced(L("Background"), key: "subtitleBackgroundOpacity", fallback: "0",
+                           options: [(L("None"), "0"), (L("Faint"), "25"), (L("Half"), "50"), (L("Strong"), "75"), (L("Solid"), "100")])
+                    synced(L("Height"), key: "subtitlePosition", fallback: "0",
+                           options: [(L("Lowest"), "-3"), (L("Normal"), "0"), (L("Raised a little"), "5"), (L("Raised"), "10"), (L("High"), "20")])
+                    toggle(L("Override styled subtitles"), key: "subtitleOverrideStyled", fallback: false)
                     SubtitlePreview(look: prefs.subtitleLook)
                         .frame(width: Theme.px(480), height: Theme.px(270))
                         .clipShape(RoundedRectangle(cornerRadius: Theme.px(12), style: .continuous))
@@ -402,71 +412,78 @@ struct SettingsView: View {
                 }
                 // Only a build with the height channel components has anything to set here.
                 if AetherEngine.OptionalComponent.trueHDObjectAudio.isBuiltIn || AetherEngine.OptionalComponent.dtsxObjectAudio.isBuiltIn {
-                    section("Audio", note: "TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6.") {
-                        row("Atmos and DTS:X speakers", value: speakerName(prefs.speakerChoice)) {
-                            var options: [(label: String, value: String)] = [(label: "Off: play the 7.1 channels", value: "off")]
+                    section(L("Audio"), note: L("TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6.")) {
+                        row(L("Atmos and DTS:X speakers"), value: speakerName(prefs.speakerChoice)) {
+                            var options: [(label: String, value: String)] = [(label: L("Off: play the 7.1 channels"), value: "off")]
                             for layout in SpatialSpeakerLayout.allCases {
                                 options.append((label: speakerName(layout.rawValue), value: layout.rawValue))
                             }
-                            chooser = Chooser(title: "Atmos and DTS:X speakers", options: options, current: prefs.speakerChoice) {
+                            chooser = Chooser(title: L("Atmos and DTS:X speakers"), options: options, current: prefs.speakerChoice) {
                                 prefs.speakerChoice = $0
                             }
                         }
                     }
                 }
-                section("Interface", note: nil) {
-                    row("Start page", value: Place(rawValue: prefs.startPage)?.name ?? "Home") {
+                // The web app's Language card: its language and clock, synced.
+                section(L("Language"), note: L("Titles, synopses and version names stay in the language the server sends.")) {
+                    synced(L("App language"), key: "language", fallback: "auto",
+                           options: [(L("System (%@)", AppLanguage.name(AppLanguage.system)), "auto")]
+                               + AppLanguage.catalogues.map { (AppLanguage.name($0.id), $0.id) }
+                                   .sorted { $0.0.localizedCompare($1.0) == .orderedAscending })
+                    synced(L("Time format"), key: "timeFormat", fallback: "auto",
+                           options: [(L("Automatic"), "auto"), (L("12-hour"), "12"), (L("24-hour"), "24")])
+                }
+                section(L("Interface"), note: nil) {
+                    row(L("Start page"), value: Place(rawValue: prefs.startPage)?.name ?? Place.home.name) {
                         chooser = Chooser(
-                            title: "Start page",
+                            title: L("Start page"),
                             options: Place.startPages.map { ($0.name, $0.rawValue) },
                             current: prefs.startPage
                         ) { prefs.startPage = $0 }
                     }
-                    toggle("Merge continue watching and next up", key: "mergeNextUp", fallback: false)
-                    row("Card previews", value: prefs.cardPreviews ? "On" : "Off") { prefs.cardPreviews.toggle() }
+                    toggle(L("Merge continue watching and next up"), key: "mergeNextUp", fallback: false)
+                    row(L("Card previews"), value: prefs.cardPreviews ? L("On") : L("Off")) { prefs.cardPreviews.toggle() }
                     if prefs.cardPreviews {
-                        row("Trailers in card previews", value: prefs.cardTrailers ? "On" : "Off") { prefs.cardTrailers.toggle() }
-                        row("Trailer sound", value: prefs.trailerSound ? "On" : "Off") { prefs.trailerSound.toggle() }
+                        row(L("Trailers in card previews"), value: prefs.cardTrailers ? L("On") : L("Off")) { prefs.cardTrailers.toggle() }
+                        row(L("Trailer sound"), value: prefs.trailerSound ? L("On") : L("Off")) { prefs.trailerSound.toggle() }
                     }
-                    toggle("Combine movie and show results", key: "combineSearch", fallback: false)
-                    toggle("Blur episodes not started", key: "blurSpoilers", fallback: false)
-                    synced("Hero", key: "heroMode", fallback: "rotate",
-                           options: [("Rotates through featured titles", "rotate"), ("Follows the selected card", "follow"),
-                                     ("Follows the selected card, compact", "corner")])
-                    synced("Poster size", key: "posterSize", fallback: "medium",
-                           options: [("Small", "small"), ("Medium", "medium"), ("Large", "large")])
-                    synced("Poster text", key: "posterText", fallback: "title,year",
-                           options: [("Title and year", "title,year"), ("Title", "title"), ("Year", "year"), ("None", "none")])
-                    synced("Time format", key: "timeFormat", fallback: "auto",
-                           options: [("Automatic", "auto"), ("12-hour", "12"), ("24-hour", "24")])
-                    row("Prevent accidental exit", value: prefs.preventAccidentalExit ? "On" : "Off") {
+                    toggle(L("Combine movie and show results"), key: "combineSearch", fallback: false)
+                    toggle(L("Blur episodes you haven't started"), key: "blurSpoilers", fallback: false)
+                    synced(L("Hero"), key: "heroMode", fallback: "rotate",
+                           options: [(L("Rotates through featured titles"), "rotate"), (L("Follows the selected card"), "follow"),
+                                     (L("Follows the selected card, compact"), "corner")])
+                    synced(L("Poster size"), key: "posterSize", fallback: "medium",
+                           options: [(L("Small"), "small"), (L("Medium"), "medium"), (L("Large"), "large")])
+                    synced(L("Poster text"), key: "posterText", fallback: "title,year",
+                           options: [(L("Title and year"), "title,year"), (L("Title"), "title"), (L("Year"), "year"), (L("None"), "none")])
+                    row(L("Prevent accidental exit"), value: prefs.preventAccidentalExit ? L("On") : L("Off")) {
                         prefs.preventAccidentalExit.toggle()
                     }
                     Text(prefs.preventAccidentalExit
-                        ? "Back on Home shows “Press Back again to leave”, and only a second press leaves the app."
-                        : "Back on Home leaves the app straight away.")
+                        ? L("Back on Home shows “Press Back again to leave”, and only a second press leaves the app.")
+                        : L("Back on Home leaves the app straight away."))
                         .font(Theme.font(Theme.sm))
                         .foregroundStyle(Theme.gray400)
                         .padding(.horizontal, Theme.px(16))
-                    synced("Hero turns every", key: "heroSeconds", fallback: "9",
-                           options: [5, 7, 9, 12, 15, 20, 30].map { ("\($0) seconds", String($0)) })
+                    synced(L("Hero turns every"), key: "heroSeconds", fallback: "9",
+                           options: [5, 7, 9, 12, 15, 20, 30].map { (L("%ld seconds", $0), String($0)) })
                 }
-                section("Account", note: nil) {
-                    fact("Server", session.serverName ?? session.client?.base.host ?? "")
-                    fact("Signed in as", session.userName ?? "")
+                section(L("Account"), note: nil) {
+                    fact(L("Server"), session.serverName ?? session.client?.base.host ?? "")
+                    fact(L("Signed in as"), session.userName ?? "")
                     if quickConnect {
-                        row("Approve a Quick Connect code", value: "") { approving = true }
+                        row(L("Approve a Quick Connect code"), value: "") { approving = true }
                     }
                     HStack(spacing: Theme.px(8)) {
-                        Button("Switch user") { session.signOut() }.buttonStyle(SoftPillStyle())
-                        Button("Change server") { session.forgetServer() }.buttonStyle(SoftPillStyle())
+                        Button(L("Switch user")) { session.signOut() }.buttonStyle(SoftPillStyle())
+                        Button(L("Change server")) { session.forgetServer() }.buttonStyle(SoftPillStyle())
                     }
                     .padding(.top, Theme.px(4))
                 }
-                section("About", note: nil) {
-                    fact("App", "AIOStreams tvOS \(AppInfo.version)")
-                    fact("Player", AppInfo.player)
-                    Text("An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License.")
+                section(L("About"), note: nil) {
+                    fact(L("App"), "AIOStreams tvOS \(AppInfo.version)")
+                    fact(L("Player"), AppInfo.player)
+                    Text(L("An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License."))
                         .font(Theme.font(Theme.sm))
                         .foregroundStyle(Theme.gray400)
                 }
@@ -530,7 +547,7 @@ struct SettingsView: View {
 
     private func toggle(_ title: String, key: String, fallback: Bool) -> some View {
         let on = prefs.flag(key, fallback)
-        return row(title, value: on ? "On" : "Off") {
+        return row(title, value: on ? L("On") : L("Off")) {
             prefs.set(key, on ? "0" : "1", fallback: fallback ? "1" : "0")
         }
     }
@@ -553,9 +570,9 @@ struct SettingsView: View {
     /// Puts the chosen language first, keeping the others the web app may have listed after it.
     private func chooseLanguage(_ title: String, list: String, one: String, original: Bool) {
         let current = prefs.languages(list: list, one: one)
-        var options: [(label: String, value: String)] = [(original ? "The file's default" : "Any", "")]
-        if original { options.append(("Original language", "OriginalLanguage")) }
-        options += languageOptions.map { ($0.1, $0.0) }
+        var options: [(label: String, value: String)] = [(original ? L("The file's default") : L("Any"), "")]
+        if original { options.append((L("Original language"), "OriginalLanguage")) }
+        options += languageOptions.map { (languageName($0.0), $0.0) }
         chooser = Chooser(title: title, options: options, current: current.first ?? "") { code in
             if code.isEmpty {
                 prefs.configure([list: [String](), one: NSNull()])
@@ -567,16 +584,16 @@ struct SettingsView: View {
     }
 
     private func speakerName(_ value: String) -> String {
-        value == "off" ? "Off" : value + (value == SpatialSpeakerLayout.l714.rawValue ? " (most Atmos setups)" : "")
+        value == "off" ? L("Off") : value == SpatialSpeakerLayout.l714.rawValue ? L("%@ (most Atmos setups)", value) : value
     }
 
     private func modeName(_ mode: String) -> String {
         switch mode {
-        case "Smart": return "Smart: when the audio isn't in your language"
-        case "Always": return "Always"
-        case "OnlyForced": return "Only forced"
-        case "None": return "Off"
-        default: return "Default"
+        case "Smart": return L("Smart: when the audio isn't in your language")
+        case "Always": return L("Always")
+        case "OnlyForced": return L("Only forced")
+        case "None": return L("Off")
+        default: return L("Default")
         }
     }
 }
@@ -600,7 +617,7 @@ private struct SubtitlePreview: UIViewRepresentable {
 
 /// The preview's one line, showing for as long as the preview does.
 private enum SubtitleCuePreview {
-    static let cue = SubtitleCue(id: 0, startTime: 0, endTime: .greatestFiniteMagnitude, body: .text("This is how subtitles will look."))
+    static let cue = SubtitleCue(id: 0, startTime: 0, endTime: .greatestFiniteMagnitude, body: .text(L("This is how subtitles will look.")))
 }
 
 /// A list of choices over the dimmed page.
@@ -672,21 +689,21 @@ private struct QuickConnectApproval: View {
         ZStack {
             Color.black.opacity(0.6).ignoresSafeArea()
             VStack(alignment: .leading, spacing: Theme.px(14)) {
-                Text("Approve a Quick Connect code").font(Theme.font(Theme.xl, .semibold))
-                Text("Enter the code the other device shows to sign it in to this account.")
+                Text(L("Approve a Quick Connect code")).font(Theme.font(Theme.xl, .semibold))
+                Text(L("Enter the code the other device shows to sign it in to this account."))
                     .font(Theme.font(Theme.sm))
                     .foregroundStyle(Theme.gray400)
-                TextField("Code", text: $code)
+                TextField(L("Code"), text: $code)
                     .keyboardType(.numberPad)
                     .font(Theme.font(Theme.lg))
                 if let state {
                     Text(state).font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray300)
                 }
                 HStack(spacing: Theme.px(8)) {
-                    Button(working ? "Approving…" : "Approve") { Task { await approve() } }
+                    Button(working ? L("Approving…") : L("Approve")) { Task { await approve() } }
                         .buttonStyle(SoftPillStyle(selected: true))
                         .disabled(code.trimmingCharacters(in: .whitespaces).isEmpty || working)
-                    Button("Close", action: done).buttonStyle(SoftPillStyle())
+                    Button(L("Close"), action: done).buttonStyle(SoftPillStyle())
                 }
             }
             .padding(Theme.px(24))
@@ -705,10 +722,10 @@ private struct QuickConnectApproval: View {
         let entered = code.filter { !$0.isWhitespace }
         do {
             try await client.call("POST", "/QuickConnect/Authorize", ["code": entered, "userId": session.userId])
-            state = "Approved. The other device is signing in."
+            state = L("Approved. The other device is signing in.")
             code = ""
         } catch {
-            state = "That code wasn't approved. Check it and try again."
+            state = L("That code wasn't approved. Check it and try again.")
         }
     }
 }

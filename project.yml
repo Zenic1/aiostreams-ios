@@ -5,6 +5,7 @@ options:
     iOS: "18.0"
     tvOS: "18.0"
   createIntermediateGroups: true
+  developmentLanguage: en
 settings:
   base:
     SWIFT_VERSION: "5.0"
@@ -22,6 +23,8 @@ targets:
     sources:
       - path: AIOStreams/Sources
       - path: AIOStreams/Assets.xcassets
+      # The app's own alerts and permission prompts, in the web app's languages.
+      - path: AIOStreams/Localization
       # The web app's standalone build, copied in by scripts/build-web.sh, kept as a folder.
       - path: AIOStreams/Resources/web
         type: folder
@@ -35,6 +38,10 @@ targets:
         CFBundleDisplayName: AIOStreams
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        # The languages the web app lists. On iOS, they're what lets the page's Automatic language
+        # follow the system: a web view reports only the languages its app declares.
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations: [en, de, el, es, fr, id, it, ms, pl, pt-BR, pt-PT, tr, zh-Hans]
         LSRequiresIPhoneOS: true
         UILaunchScreen:
           UIColorName: ""
@@ -86,6 +93,8 @@ targets:
     sources:
       - path: TV/Sources
       - path: TV/Assets.xcassets
+      # The app's strings in the web app's languages, from scripts/localization/build.py.
+      - path: TV/Localization
       # Inter, the web app's typeface (SIL Open Font License, TV/Fonts/OFL.txt).
       - path: TV/Fonts
         buildPhase: resources
@@ -102,6 +111,8 @@ targets:
         CFBundleDisplayName: AIOStreams
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleDevelopmentRegion: en
+        CFBundleLocalizations: [en, de, el, es, fr, id, it, ms, pl, pt-BR, pt-PT, tr, zh-Hans]
         LSRequiresIPhoneOS: true
         UILaunchScreen:
           UIColorName: ""

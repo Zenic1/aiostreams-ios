@@ -78,7 +78,7 @@ struct VersionsView: View {
                 }
             }
             HStack(spacing: Theme.px(8)) {
-                Text(info == nil ? "Finding versions" : sources.count == 1 ? "1 version" : "\(sources.count) versions")
+                Text(info == nil ? L("Finding versions") : L("%ld versions", sources.count))
                     .font(Theme.font(Theme.sm))
                     .foregroundStyle(Theme.gray400)
                 Spacer()
@@ -93,9 +93,9 @@ struct VersionsView: View {
             .focusSection()
             if let resumeMs {
                 HStack(spacing: Theme.px(4)) {
-                    Button("Resume from \(clock(resumeMs))") { fromStart = false }
+                    Button(L("Resume from %@", "\(clock(resumeMs))")) { fromStart = false }
                         .buttonStyle(SegmentStyle(selected: !fromStart))
-                    Button("From the start") { fromStart = true }
+                    Button(L("From the start")) { fromStart = true }
                         .buttonStyle(SegmentStyle(selected: fromStart))
                 }
                 .padding(Theme.px(4))
@@ -132,22 +132,22 @@ struct VersionsView: View {
         } else if let error {
             VStack(spacing: Theme.px(16)) {
                 ErrorText(text: error)
-                Button("Try again") { Task { await load(refresh: true) } }.buttonStyle(SoftPillStyle())
+                Button(L("Try again")) { Task { await load(refresh: true) } }.buttonStyle(SoftPillStyle())
             }
             .padding(Theme.px(40))
         } else if info != nil {
             VStack(spacing: Theme.px(16)) {
-                Text("No playable versions found. Only streams with a link play: use debrid or Usenet.")
+                Text(L("No playable versions found. Only streams with a link play: use debrid or Usenet."))
                     .font(Theme.font(Theme.base))
                     .foregroundStyle(Theme.gray400)
                     .multilineTextAlignment(.center)
-                Button("Search again") { Task { await load(refresh: true) } }.buttonStyle(SoftPillStyle())
+                Button(L("Search again")) { Task { await load(refresh: true) } }.buttonStyle(SoftPillStyle())
             }
             .padding(Theme.px(40))
         } else {
             VStack(spacing: Theme.px(12)) {
                 ProgressView()
-                Text("Searching your addons…").font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray400)
+                Text(L("Searching your addons…")).font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray400)
             }
             .padding(Theme.px(48))
         }

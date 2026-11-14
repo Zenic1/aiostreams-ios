@@ -1,0 +1,6 @@
+/* The app's own alerts; the page has its own translations. */
+
+"Picture in Picture" = "Resim İçinde Resim";
+"Picture in Picture isn't available for this video right now." = "Resim İçinde Resim şu anda bu video için kullanılamıyor.";
+"OK" = "Tamam";
+"Cancel" = "İptal et";

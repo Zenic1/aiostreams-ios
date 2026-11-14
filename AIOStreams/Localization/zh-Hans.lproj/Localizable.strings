@@ -1,0 +1,6 @@
+/* The app's own alerts; the page has its own translations. */
+
+"Picture in Picture" = "画中画";
+"Picture in Picture isn't available for this video right now." = "此视频目前无法使用画中画。";
+"OK" = "好";
+"Cancel" = "取消";

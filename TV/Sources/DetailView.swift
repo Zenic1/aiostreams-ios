@@ -36,7 +36,7 @@ struct DetailView: View {
                     if shown.isSeries { seasonsSection }
                     castSection
                     if !similar.isEmpty {
-                        ItemRow(row: HomeRow(id: "similar", title: "More like this", items: similar))
+                        ItemRow(row: HomeRow(id: "similar", title: L("More like this"), items: similar))
                     }
                 }
                 // 26% down a 720-line screen.
@@ -53,8 +53,8 @@ struct DetailView: View {
                 .environmentObject(session)
                 .environmentObject(prefs)
         }
-        .alert("This trailer couldn't be played.", isPresented: $trailerFailed) {
-            Button("OK", role: .cancel) {}
+        .alert(L("This trailer didn't load."), isPresented: $trailerFailed) {
+            Button(L("OK"), role: .cancel) {}
         }
         .onAppear { playFocused = true }
         // Background from artwork: this title's.
@@ -117,7 +117,7 @@ struct DetailView: View {
         }
         if !shown.isSeries, let runtime = shown.runtimeText { parts.append(AnyView(Text(runtime))) }
         if shown.isSeries, let status = shown.status, status == "Continuing" || status == "Ended" {
-            parts.append(AnyView(Text(status)))
+            parts.append(AnyView(Text(status == "Ended" ? L("Ended") : L("Continuing"))))
         }
         if let score = shown.communityRating, score > 0 {
             parts.append(AnyView(HStack(spacing: Theme.px(4)) {
@@ -134,9 +134,9 @@ struct DetailView: View {
     private var playLabel: String {
         let code = shown.isSeries ? target?.episodeCode : nil
         if let resume = target?.resumeMs {
-            return code.map { "Resume \($0)" } ?? "Resume from \(clock(resume))"
+            return code.map { L("Resume %@", "\($0)") } ?? L("Resume from %@", "\(clock(resume))")
         }
-        return code.map { "Play \($0)" } ?? "Play"
+        return code.map { L("Play %@", "\($0)") } ?? L("Play")
     }
 
     private var actions: some View {
@@ -191,7 +191,7 @@ struct DetailView: View {
                 ScrollView(.horizontal) {
                     HStack(spacing: Theme.px(8)) {
                         ForEach(seasons) { candidate in
-                            Button(candidate.name ?? "Season") {
+                            Button(candidate.name ?? L("Season")) {
                                 season = candidate
                                 Task { await loadEpisodes() }
                             }
@@ -204,7 +204,7 @@ struct DetailView: View {
                 .edgeToEdge()
                 .focusSection()
             } else if let only = seasons.first {
-                Text(only.name ?? "Episodes").font(Theme.font(Theme.xl, .semibold))
+                Text(only.name ?? L("Episodes")).font(Theme.font(Theme.xl, .semibold))
             }
             ScrollView(.horizontal) {
                 LazyHStack(alignment: .top, spacing: Theme.px(16)) {
@@ -228,7 +228,7 @@ struct DetailView: View {
         let cast = Array((shown.people ?? []).filter { $0.type == "Actor" || $0.type == nil }.prefix(30))
         if !cast.isEmpty {
             VStack(alignment: .leading, spacing: Theme.px(16)) {
-                Text("Cast").font(Theme.font(Theme.xl, .semibold))
+                Text(L("Cast")).font(Theme.font(Theme.xl, .semibold))
                 ScrollView(.horizontal) {
                     LazyHStack(alignment: .top, spacing: Theme.px(16)) {
                         ForEach(cast) { person in
@@ -279,7 +279,7 @@ struct DetailView: View {
         if languages.isEmpty, let original = found.language { languages = [original] }
         trailer = PlayRequest(
             item: shown,
-            source: MediaSource(id: "trailer", name: "Trailer", path: found.url),
+            source: MediaSource(id: "trailer", name: L("Trailer"), path: found.url),
             playSessionId: nil,
             startMs: nil,
             isTrailer: true,

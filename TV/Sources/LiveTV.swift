@@ -21,7 +21,7 @@ struct LiveTVView: View {
 
     @EnvironmentObject private var session: Session
     @EnvironmentObject private var prefs: Preferences
-    @State private var groups: [ChannelGroup] = [ChannelGroup(id: ChannelGroup.all, name: "All channels")]
+    @State private var groups: [ChannelGroup] = [ChannelGroup(id: ChannelGroup.all, name: L("All channels"))]
     @State private var group = UserDefaults.standard.string(forKey: "live.group") ?? ChannelGroup.all
     @State private var guide = UserDefaults.standard.string(forKey: "live.view") == "guide"
     @State private var channels: [Item] = []
@@ -38,12 +38,12 @@ struct LiveTVView: View {
     var body: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: Theme.px(20)) {
-                PageTitle(text: "Live TV")
+                PageTitle(text: L("Live TV"))
                 controls
                 if !loaded {
                     ProgressView().frame(maxWidth: .infinity).padding(.top, Theme.px(40))
                 } else if channels.isEmpty {
-                    Text("No channels in this group.")
+                    Text(L("No channels in this group."))
                         .font(Theme.font(Theme.base))
                         .foregroundStyle(Theme.gray400)
                         .pagePadding()
@@ -54,7 +54,7 @@ struct LiveTVView: View {
                         choice = VersionChoice(item: programme, startMs: 0, mode: .straight)
                     }
                     if channels.count < total {
-                        Button("More channels") { Task { await more() } }
+                        Button(L("More channels")) { Task { await more() } }
                             .buttonStyle(SoftPillStyle())
                             .pagePadding()
                     }
@@ -85,9 +85,9 @@ struct LiveTVView: View {
     private var controls: some View {
         ScrollView(.horizontal) {
             HStack(spacing: Theme.px(8)) {
-                Button { setGuide(false) } label: { Label("List", systemImage: "list.bullet") }
+                Button { setGuide(false) } label: { Label(L("List"), systemImage: "list.bullet") }
                     .buttonStyle(SoftPillStyle(selected: !guide))
-                Button { setGuide(true) } label: { Label("Guide", systemImage: "calendar.day.timeline.left") }
+                Button { setGuide(true) } label: { Label(L("Guide"), systemImage: "calendar.day.timeline.left") }
                     .buttonStyle(SoftPillStyle(selected: guide))
                 Rectangle().fill(.white.opacity(0.15)).frame(width: Theme.px(1), height: Theme.px(24))
                     .padding(.horizontal, Theme.px(8))
@@ -123,9 +123,9 @@ struct LiveTVView: View {
             "userId": userId, "ParentId": view.id, "SortBy": "SortName",
         ])
         var list: [ChannelGroup] = []
-        if (await favourites?.totalRecordCount ?? 0) > 0 { list.append(ChannelGroup(id: ChannelGroup.favourites, name: "Favourites")) }
-        if !RecentChannels.ids.isEmpty { list.append(ChannelGroup(id: ChannelGroup.recent, name: "Recent")) }
-        list.append(ChannelGroup(id: ChannelGroup.all, name: "All channels"))
+        if (await favourites?.totalRecordCount ?? 0) > 0 { list.append(ChannelGroup(id: ChannelGroup.favourites, name: L("Favourites"))) }
+        if !RecentChannels.ids.isEmpty { list.append(ChannelGroup(id: ChannelGroup.recent, name: L("Recent"))) }
+        list.append(ChannelGroup(id: ChannelGroup.all, name: L("All channels")))
         list += (await genres?.items ?? []).map { ChannelGroup(id: $0.id, name: $0.name ?? "") }
         groups = list
         // A group that's gone, such as Favourites emptied elsewhere, goes back to all channels.
@@ -296,7 +296,7 @@ private struct ChannelRow: View {
                         Text(current.name).font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray200).lineLimit(1)
                     }
                     if let next = slots.next {
-                        Text("Next" + (next.start.map { " \(prefs.time($0))" } ?? "") + ": " + next.name)
+                        Text(next.start.map { L("Next %@: %@", prefs.time($0), next.name) } ?? L("Next: %@", next.name))
                             .font(Theme.font(Theme.xs))
                             .foregroundStyle(Theme.gray400)
                             .lineLimit(1)
@@ -306,7 +306,7 @@ private struct ChannelRow: View {
                 if let current = slots.now {
                     VStack(alignment: .trailing, spacing: Theme.px(6)) {
                         if let start = current.start, let end = current.end {
-                            Text("\(prefs.time(start)) – \(prefs.time(end))")
+                            Text(verbatim: "\(prefs.time(start)) – \(prefs.time(end))")
                                 .font(Theme.font(Theme.xs))
                                 .foregroundStyle(Theme.gray400)
                                 .monospacedDigit()
@@ -419,7 +419,7 @@ private struct GuideView: View {
                 HStack(spacing: Theme.px(10)) {
                     Text(programme.name ?? "").font(Theme.font(Theme.lg, .semibold)).lineLimit(1)
                     if let start = programme.starts, let end = programme.ends {
-                        Text("\(prefs.time(start)) – \(prefs.time(end))")
+                        Text(verbatim: "\(prefs.time(start)) – \(prefs.time(end))")
                             .font(Theme.font(Theme.sm))
                             .foregroundStyle(Theme.gray400)
                     }
@@ -432,7 +432,7 @@ private struct GuideView: View {
                 }
             }
         } else {
-            Text("Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start.")
+            Text(L("Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start."))
                 .font(Theme.font(Theme.sm))
                 .foregroundStyle(Theme.gray400)
         }
@@ -513,7 +513,7 @@ private struct GuideView: View {
                 .fill(.white.opacity(0.02))
                 .frame(width: width, height: Self.rowHeight)
             if programmes.isEmpty {
-                Text("No guide for this channel")
+                Text(L("No guide for this channel"))
                     .font(Theme.font(Theme.sm))
                     .foregroundStyle(Theme.gray500)
                     .padding(.horizontal, Theme.px(12))

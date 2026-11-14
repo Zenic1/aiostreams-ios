@@ -173,7 +173,7 @@ final class PlayerModel: ObservableObject {
     func start() {
         guard loadTask == nil else { return }
         guard let url = client.streamURL(itemId: request.item.id, source: request.source) else {
-            failure = "This version has no address to play."
+            failure = L("This version has no address to play.")
             return
         }
         var options = LoadOptions()

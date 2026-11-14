@@ -123,10 +123,10 @@ final class RootViewController: UIViewController, WKNavigationDelegate, WKUIDele
         pictureInPicture.failed = { [weak self] in
             guard let self, self.presentedViewController == nil,
                   UIApplication.shared.applicationState == .active else { return }
-            let alert = UIAlertController(title: "Picture in Picture",
-                                          message: "Picture in Picture isn't available for this video right now.",
+            let alert = UIAlertController(title: String(localized: "Picture in Picture"),
+                                          message: String(localized: "Picture in Picture isn't available for this video right now."),
                                           preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            alert.addAction(UIAlertAction(title: String(localized: "OK"), style: .default))
             self.present(alert, animated: true)
         }
         DownloadQueue.shared.send = { [weak self] message in self?.bridge.send(message) }
@@ -373,7 +373,7 @@ final class RootViewController: UIViewController, WKNavigationDelegate, WKUIDele
         completionHandler: @escaping @MainActor @Sendable () -> Void
     ) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in completionHandler() })
+        alert.addAction(UIAlertAction(title: String(localized: "OK"), style: .default) { _ in completionHandler() })
         present(alert, animated: true)
     }
 
@@ -384,8 +384,8 @@ final class RootViewController: UIViewController, WKNavigationDelegate, WKUIDele
         completionHandler: @escaping @MainActor @Sendable (Bool) -> Void
     ) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in completionHandler(false) })
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in completionHandler(true) })
+        alert.addAction(UIAlertAction(title: String(localized: "Cancel"), style: .cancel) { _ in completionHandler(false) })
+        alert.addAction(UIAlertAction(title: String(localized: "OK"), style: .default) { _ in completionHandler(true) })
         present(alert, animated: true)
     }
 
@@ -398,8 +398,8 @@ final class RootViewController: UIViewController, WKNavigationDelegate, WKUIDele
     ) {
         let alert = UIAlertController(title: nil, message: prompt, preferredStyle: .alert)
         alert.addTextField { $0.text = defaultText }
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in completionHandler(nil) })
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { [weak alert] _ in
+        alert.addAction(UIAlertAction(title: String(localized: "Cancel"), style: .cancel) { _ in completionHandler(nil) })
+        alert.addAction(UIAlertAction(title: String(localized: "OK"), style: .default) { [weak alert] _ in
             completionHandler(alert?.textFields?.first?.text)
         })
         present(alert, animated: true)
