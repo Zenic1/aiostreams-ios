@@ -2,19 +2,17 @@ import UIKit
 import WebKit
 
 /**
- * The page's web view, which gives the page the whole screen where iOS keeps its status bar in a
- * column down one side, as iPhone Duo does. iOS reports that column as a safe-area margin, and the
- * page keeps its content out of a margin (CSS `env(safe-area-inset-*)`), which left a dark strip down
- * that side. Without the column, the page draws under it, as it draws under a status bar across the
- * top; the clock and Wi-Fi sit over the artwork there. Every other margin (a notch, the home
- * indicator, a status bar across the top) is left as iOS reports it.
+ * The page's web view, which fits the page to a status bar in a column down one side, as iPhone Duo
+ * has. iOS reports that column as a safe-area margin, and the page keeps out of it as it keeps out of
+ * a notch (CSS `env(safe-area-inset-*)`): the column is a keep-out zone, so nothing the page shows can
+ * sit under the clock. Two things go into it on purpose: the page's bar, docked there as a vertical
+ * bar as Duo apps put their tab bar, and the hero's art, which runs under it to the edge rather than
+ * leaving a dark strip.
  */
 final class FullBleedWebView: WKWebView {
-    /// The page's bottom bar, docked in the status column as a vertical bar where there is one, as
-    /// apps on iPhone Duo put their tab bar there. Only under `data-status-column`, which the app sets
-    /// on the page's root, so a screen with its status bar across the top keeps the bar at the bottom.
-    /// Pages then keep the column free, as they keep the bottom bar's room, with the hero's art
-    /// still running under it.
+    /// What goes into the status column, and the few layers that don't read the safe area. Only
+    /// under `data-status-column`, which the app sets on the page's root, so a screen with its status
+    /// bar across the top keeps the bar at the bottom.
     static let columnStyle = """
     (() => {
       if (window.top !== window) return;
@@ -37,29 +35,21 @@ final class FullBleedWebView: WKWebView {
         html[data-status-column] [data-ui='mobile-nav-item'] > span {
           position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
         }
-        /* Pages keep the column free for the bar, as they keep the bottom bar's room free, so its
-           buttons and rows stop short of it; the hero's art still runs under it to the edge. */
+        /* The bar no longer takes room at the foot of the page. */
         html[data-status-column] { --nav-bar: env(safe-area-inset-bottom) !important; }
-        html[data-status-column='right'] [data-page] { padding-right: var(--status-column-width) !important; }
-        html[data-status-column='left'] [data-page] { padding-left: var(--status-column-width) !important; }
+        /* The hero's art runs on under the column, its text and dots kept out of it. */
         html[data-status-column] [data-page] [data-ui='hero'] { width: calc(100% + var(--status-column-width)) !important; }
         html[data-status-column='right'] [data-page] [data-ui='hero'] { margin-right: calc(-1 * var(--status-column-width)) !important; }
         html[data-status-column='left'] [data-page] [data-ui='hero'] { margin-left: calc(-1 * var(--status-column-width)) !important; }
         html[data-status-column='right'] [data-ui='hero'] [data-ui='hero-content'] { padding-right: var(--status-column-width) !important; }
         html[data-status-column='left'] [data-ui='hero'] [data-ui='hero-content'] { padding-left: var(--status-column-width) !important; }
         html[data-status-column='right'] [data-ui='hero'] [data-ui='hero-dots'] { right: calc(1rem + var(--status-column-width)) !important; }
-        /* Dialogs, sheets and the player's bars keep it free too: a full-screen sheet's header and
-           close button would otherwise sit under the clock. The dimming still covers it. */
+        /* Dialogs and sheets lay themselves out over the whole screen without reading the safe area
+           (a phone's has none at its sides), so they're kept out of the column here. */
         html[data-status-column='right'] .UI-Modal__overlay > div { right: var(--status-column-width) !important; }
         html[data-status-column='left'] .UI-Modal__overlay > div { left: var(--status-column-width) !important; }
         html[data-status-column='right'] .UI-Drawer__content:not([data-side='left']) { right: var(--status-column-width) !important; }
         html[data-status-column='left'] .UI-Drawer__content:not([data-side='right']) { left: var(--status-column-width) !important; }
-        html[data-status-column='right'] :is([data-ui='player-top-bar'], [data-ui='player-bottom-bar']) {
-          padding-right: calc(0.75rem + var(--status-column-width)) !important;
-        }
-        html[data-status-column='left'] :is([data-ui='player-top-bar'], [data-ui='player-bottom-bar']) {
-          padding-left: calc(0.75rem + var(--status-column-width)) !important;
-        }
         @media (min-width: 1024px) {
           html[data-status-column] [data-page] [data-ui='hero'] {
             width: calc(100% + var(--side-bar, 0px) + var(--status-column-width)) !important;
@@ -83,26 +73,13 @@ final class FullBleedWebView: WKWebView {
     private var column: (side: String, width: CGFloat)?
 
     private var lastLogged: String?
-    /// The margins last handed to the page, so a change is passed on once.
-    private var lastGiven: UIEdgeInsets?
-
-    override var safeAreaInsets: UIEdgeInsets {
-        var insets = super.safeAreaInsets
-        guard let column = currentColumn else { return insets }
-        if column.side == "right" {
-            insets.right = max(0, insets.right - column.width)
-        } else {
-            insets.left = max(0, insets.left - column.width)
-        }
-        return insets
-    }
 
     /// Records the margins as they change, with the status bar's place, for a problem report from a
     /// device whose screen is new to the app.
-    private func note(_ given: UIEdgeInsets) {
+    private func note() {
         let bar = window?.windowScene?.statusBarManager?.statusBarFrame ?? .zero
         let found = currentColumn.map { "\($0.side) \(Int($0.width))" } ?? "none"
-        let line = "size \(bounds.size), status bar \(bar.integral), margins \(super.safeAreaInsets), column \(found), given as \(given)"
+        let line = "size \(bounds.size), status bar \(bar.integral), margins \(safeAreaInsets), column \(found)"
         guard line != lastLogged else { return }
         lastLogged = line
         AppLog.info("layout", line)
@@ -110,15 +87,9 @@ final class FullBleedWebView: WKWebView {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        // A fold, a turn or Split View can move the status column; the page reads the margins again,
-        // only when they've changed, so it can't lay itself out over and over.
-        let given = safeAreaInsets
-        note(given)
+        // A fold, a turn or Split View can move the status column.
+        note()
         updateColumn()
-        guard given != lastGiven else { return }
-        let first = lastGiven == nil
-        lastGiven = given
-        if !first { safeAreaInsetsDidChange() }
     }
 
     /// Where the status column is now, and how far it reaches in. A vertical status bar at one side,
@@ -132,7 +103,7 @@ final class FullBleedWebView: WKWebView {
                 ? ("right", max(0, bounds.maxX - place.minX))
                 : ("left", max(0, place.maxX - bounds.minX))
         }
-        let margins = super.safeAreaInsets
+        let margins = safeAreaInsets
         let difference = margins.right - margins.left
         guard abs(difference) > 20 else { return nil }
         return difference > 0 ? ("right", difference) : ("left", -difference)
