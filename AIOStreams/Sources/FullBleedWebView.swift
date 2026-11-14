@@ -48,6 +48,18 @@ final class FullBleedWebView: WKWebView {
         html[data-status-column='right'] [data-ui='hero'] [data-ui='hero-content'] { padding-right: var(--status-column-width) !important; }
         html[data-status-column='left'] [data-ui='hero'] [data-ui='hero-content'] { padding-left: var(--status-column-width) !important; }
         html[data-status-column='right'] [data-ui='hero'] [data-ui='hero-dots'] { right: calc(1rem + var(--status-column-width)) !important; }
+        /* Dialogs, sheets and the player's bars keep it free too: a full-screen sheet's header and
+           close button would otherwise sit under the clock. The dimming still covers it. */
+        html[data-status-column='right'] .UI-Modal__overlay > div { right: var(--status-column-width) !important; }
+        html[data-status-column='left'] .UI-Modal__overlay > div { left: var(--status-column-width) !important; }
+        html[data-status-column='right'] .UI-Drawer__content:not([data-side='left']) { right: var(--status-column-width) !important; }
+        html[data-status-column='left'] .UI-Drawer__content:not([data-side='right']) { left: var(--status-column-width) !important; }
+        html[data-status-column='right'] :is([data-ui='player-top-bar'], [data-ui='player-bottom-bar']) {
+          padding-right: calc(0.75rem + var(--status-column-width)) !important;
+        }
+        html[data-status-column='left'] :is([data-ui='player-top-bar'], [data-ui='player-bottom-bar']) {
+          padding-left: calc(0.75rem + var(--status-column-width)) !important;
+        }
         @media (min-width: 1024px) {
           html[data-status-column] [data-page] [data-ui='hero'] {
             width: calc(100% + var(--side-bar, 0px) + var(--status-column-width)) !important;
