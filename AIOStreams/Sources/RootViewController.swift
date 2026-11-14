@@ -62,7 +62,7 @@ final class RootViewController: UIViewController, WKNavigationDelegate, WKUIDele
             )
         }
 
-        let webView = WKWebView(frame: .zero, configuration: configuration)
+        let webView = FullBleedWebView(frame: .zero, configuration: configuration)
         webView.isOpaque = false
         webView.backgroundColor = .clear
         webView.scrollView.backgroundColor = .clear
