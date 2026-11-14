@@ -100,12 +100,27 @@ struct MainView: View {
             })
             .padding(.leading, Theme.px(80))
 
-            // The rail's own column, which rows scrolled under it disappear beneath; over the
-            // artwork it's a shade of it, so the art runs under the rail too.
-            Theme.background.opacity(prefs.flag("artBackground", false) ? 0.55 : 1)
-                .frame(width: Theme.px(80))
-                .ignoresSafeArea()
-                .allowsHitTesting(false)
+            // The rail's own column, which rows scrolled under it disappear beneath. Over the
+            // artwork it's a soft dark fade instead, which keeps the icons clear without a band
+            // across the art; opened, the rail's shade covers the page as before.
+            Group {
+                if prefs.flag("artBackground", false) {
+                    LinearGradient(
+                        stops: [
+                            .init(color: .black.opacity(0.55), location: 0),
+                            .init(color: .black.opacity(0.35), location: 0.55),
+                            .init(color: .clear, location: 1),
+                        ],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                    .frame(width: Theme.px(128))
+                } else {
+                    Theme.background.frame(width: Theme.px(80))
+                }
+            }
+            .ignoresSafeArea()
+            .allowsHitTesting(false)
 
             // The open rail's shade over the page beside it: solid under the names, so the page's
             // own text can't show through them, then fading out across the page.

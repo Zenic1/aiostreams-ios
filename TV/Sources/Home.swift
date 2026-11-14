@@ -262,6 +262,8 @@ struct HeroCarousel: View {
 
     @State private var index = 0
     @FocusState private var focus: HeroAction?
+    /// When the hero last turned, as the new title's details take a moment to take focus.
+    @State private var turnedAt = Date.distantPast
 
     /// `max(36rem, 53vh)` on a 720-line TV.
     static let height = Theme.px(576)
@@ -296,16 +298,24 @@ struct HeroCarousel: View {
         // Right past More info, or left past the first button, focus lands on a slip beside them,
         // which turns the hero and hands focus back; a press can't skip the button it lands on.
         .onChange(of: focus) { _, now in
-            switch now {
-            case .next:
-                index = (index + 1) % items.count
-                focus = items[index].playable ? .play : .info
-            case .previous:
-                index = (index - 1 + items.count) % items.count
-                focus = .info
-            default:
-                break
+            guard now == .next || now == .previous else { return }
+            // Right after a turn, the new details are still arriving and focus can fall on a slip
+            // by itself, which isn't a press: it goes to the new title's first button instead.
+            if Date().timeIntervalSince(turnedAt) < 0.8 {
+                settle(on: items[index].playable ? .play : .info)
+                return
             }
+            index = now == .next ? (index + 1) % items.count : (index - 1 + items.count) % items.count
+            turnedAt = Date()
+            settle(on: now == .next ? (items[index].playable ? .play : .info) : .info)
+        }
+    }
+
+    /// Puts focus on a button of the title now showing, once its details are in place.
+    private func settle(on target: HeroAction) {
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(50))
+            focus = target
         }
     }
 
