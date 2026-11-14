@@ -804,7 +804,7 @@ private struct ProgressTrack: View {
                     Rectangle()
                         .fill(Color.black)
                         .frame(width: Theme.px(3))
-                        .offset(x: share(chapter.startSeconds) - Theme.px(1.5))
+                        .offset(x: share(chapter.start) - Theme.px(1.5))
                 }
                 Circle()
                     .fill(.white)
@@ -921,10 +921,8 @@ private struct PlayerPanelView: View {
                 case .chapters:
                     group("Chapters") {
                         ForEach(model.chapters, id: \.id) { chapter in
-                            row(chapter.name.isEmpty ? "Chapter \(chapter.id + 1)" : chapter.name,
-                                detail: clock(chapter.startSeconds),
-                                on: false) {
-                                model.seek(to: chapter.startSeconds)
+                            ChapterRow(model: model, chapter: chapter, time: clock(chapter.start)) {
+                                model.seek(to: chapter.start)
                                 done()
                             }
                         }
@@ -1083,6 +1081,47 @@ private struct PanelRowStyle: ButtonStyle {
                     RoundedRectangle(cornerRadius: Theme.px(8), style: .continuous)
                         .fill(focused ? Color.white : Color.clear)
                 )
+        }
+    }
+}
+
+/// A chapter with its picture: the server's, else a frame or trickplay thumbnail the model makes.
+private struct ChapterRow: View {
+    @ObservedObject var model: PlayerModel
+    let chapter: PlayerChapter
+    let time: String
+    let action: () -> Void
+    @State private var picture: CGImage?
+
+    var body: some View {
+        Button(action: action) {
+            HStack(spacing: Theme.px(12)) {
+                ZStack {
+                    Color(white: 0.12)
+                    if let url = chapter.image {
+                        AsyncImage(url: url) { phase in
+                            if case .success(let image) = phase { image.resizable().aspectRatio(contentMode: .fill) }
+                        }
+                    } else if let picture {
+                        Image(decorative: picture, scale: 1).resizable().aspectRatio(contentMode: .fill)
+                    }
+                }
+                .frame(width: Theme.px(112), height: Theme.px(63))
+                .clipShape(RoundedRectangle(cornerRadius: Theme.px(6), style: .continuous))
+                VStack(alignment: .leading, spacing: Theme.px(2)) {
+                    Text(chapter.name.isEmpty ? "Chapter \(chapter.id + 1)" : chapter.name)
+                        .font(Theme.font(15)).lineLimit(2)
+                    Text(time).font(Theme.font(Theme.xs)).foregroundStyle(Theme.gray400).monospacedDigit()
+                }
+                Spacer(minLength: 0)
+            }
+            .padding(Theme.px(8))
+            .frame(maxWidth: .infinity, alignment: .leading)
+        }
+        .buttonStyle(PanelRowStyle())
+        .task(id: chapter.id) {
+            // A little in, past a chapter's opening black.
+            if chapter.image == nil { picture = await model.picture(at: chapter.start + 2) }
         }
     }
 }

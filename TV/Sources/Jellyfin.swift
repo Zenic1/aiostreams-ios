@@ -19,6 +19,8 @@ struct ItemExtension: Decodable, Hashable {
     /// Marks a server with the fillers feature puts on an episode, which playing on can skip.
     var filler: Bool?
     var recap: Bool?
+    /// A programme its channel keeps after it airs, which plays from its start (server v2.38).
+    var catchup: Bool?
 }
 
 struct Item: Decodable, Identifiable, Hashable {
@@ -64,6 +66,10 @@ struct Item: Decodable, Identifiable, Hashable {
     var currentProgram: Programme?
     var providerIds: [String: String]?
     var remoteTrailers: [RemoteTrailer]?
+    /// The server's chapters, where the file has none of its own to read.
+    var chapters: [ServerChapter]?
+    /// The server's trickplay sheets by version id, then by width.
+    var trickplay: [String: [String: TrickplaySheet]]?
 
     /// An image tag by Jellyfin's type name. The decoder's key strategy also lowers the first
     /// letter of dictionary keys, so `ImageTags.Primary` arrives as `primary`.
@@ -129,6 +135,24 @@ struct Item: Decodable, Identifiable, Hashable {
         guard let minutes = runtimeMinutes else { return nil }
         return minutes >= 60 ? "\(minutes / 60)h \(minutes % 60)m" : "\(minutes)m"
     }
+}
+
+/// A chapter as the server lists it, with its picture where it has one.
+struct ServerChapter: Decodable, Hashable {
+    var startPositionTicks: Int64?
+    var name: String?
+    var imageTag: String?
+}
+
+/// One width of a version's trickplay pictures: sheets of `tileWidth` by `tileHeight` thumbnails,
+/// one every `interval` milliseconds.
+struct TrickplaySheet: Decodable, Hashable {
+    var width: Int?
+    var height: Int?
+    var tileWidth: Int?
+    var tileHeight: Int?
+    var thumbnailCount: Int?
+    var interval: Int?
 }
 
 /// A trailer the server knows for a title, usually on YouTube.

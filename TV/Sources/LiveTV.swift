@@ -49,7 +49,10 @@ struct LiveTVView: View {
                         .pagePadding()
                         .focusable()
                 } else if guide {
-                    GuideView(channels: channels, schedules: schedules, window: window, now: now, play: play)
+                    GuideView(channels: channels, schedules: schedules, window: window, now: now, play: play) { programme in
+                        // An earlier programme the channel keeps plays from its start.
+                        choice = VersionChoice(item: programme, startMs: 0, mode: .straight)
+                    }
                     if channels.count < total {
                         Button("More channels") { Task { await more() } }
                             .buttonStyle(SoftPillStyle())
@@ -172,11 +175,12 @@ struct LiveTVView: View {
         await loadSchedules(for: found.map(\.id))
     }
 
-    /// The window the guide shows, from the last half hour.
+    /// The window the guide shows: two hours back, for programmes a channel keeps, to six on.
     private var window: (start: Date, end: Date) {
         let step = 30.0 * 60
-        let start = Date(timeIntervalSince1970: (now.timeIntervalSince1970 / step).rounded(.down) * step)
-        return (start, start.addingTimeInterval(6 * 3600))
+        let halfHour = Date(timeIntervalSince1970: (now.timeIntervalSince1970 / step).rounded(.down) * step)
+        let start = halfHour.addingTimeInterval(-GuideView.hoursBack * 3600)
+        return (start, halfHour.addingTimeInterval(6 * 3600))
     }
 
     private func loadSchedules(for ids: [String]) async {
@@ -335,8 +339,18 @@ private struct GuideView: View {
     let window: (start: Date, end: Date)
     let now: Date
     let play: (Item) -> Void
+    let playFromStart: (Item) -> Void
 
     @FocusState private var focused: String?
+
+    /// How far back the guide reaches, for catch-up; it opens at now.
+    static let hoursBack: Double = 2
+
+    /// Where now falls across the window, which the guide opens at.
+    private var nowShare: CGFloat {
+        let total = window.end.timeIntervalSince(window.start)
+        return total > 0 ? CGFloat(now.timeIntervalSince(window.start) / total) : 0
+    }
 
     private static let minute = Theme.px(4)
     private static let rowHeight = Theme.px(56)
@@ -391,6 +405,8 @@ private struct GuideView: View {
                     .padding(.trailing, pageMargin)
                     .padding(.vertical, Theme.px(4))
                 }
+                // Opens at now, with the earlier programmes a channel keeps to the left.
+                .defaultScrollAnchor(UnitPoint(x: nowShare, y: 0))
                 .scrollClipDisabled()
             }
         }
@@ -416,7 +432,7 @@ private struct GuideView: View {
                 }
             }
         } else {
-            Text("Choose a programme on now to watch its channel.")
+            Text("Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start.")
                 .font(Theme.font(Theme.sm))
                 .foregroundStyle(Theme.gray400)
         }
@@ -425,7 +441,7 @@ private struct GuideView: View {
     /// The half hours across the top, with a line where now is.
     private var timeline: some View {
         ZStack(alignment: .topLeading) {
-            ForEach(0..<12, id: \.self) { index in
+            ForEach(0..<Int((window.end.timeIntervalSince(window.start)) / 1800), id: \.self) { index in
                 let time = window.start.addingTimeInterval(Double(index) * 1800)
                 Text(prefs.time(time))
                     .font(Theme.font(Theme.xs, .medium))
@@ -461,11 +477,17 @@ private struct GuideView: View {
 
     private func cell(_ programme: Item, channel: Item, width: CGFloat) -> some View {
         let airing = (programme.starts ?? .distantFuture) <= now && now < (programme.ends ?? .distantPast)
+        let ended = (programme.ends ?? .distantFuture) <= now
+        let kept = ended && programme.aiostreams?.catchup == true
         return Button {
-            if airing { play(channel) }
+            if airing { play(channel) } else if kept { playFromStart(programme) }
         } label: {
             VStack(alignment: .leading, spacing: Theme.px(2)) {
-                Text(programme.name ?? "").font(Theme.font(Theme.sm, .medium)).lineLimit(1)
+                HStack(spacing: Theme.px(4)) {
+                    if kept { Image(systemName: "arrow.counterclockwise").font(.system(size: Theme.px(10), weight: .semibold)) }
+                    Text(programme.name ?? "").font(Theme.font(Theme.sm, .medium)).lineLimit(1)
+                }
+                .opacity(ended && !kept ? 0.45 : 1)
                 if let begins = programme.starts {
                     Text(prefs.time(begins)).font(Theme.font(Theme.xs)).foregroundStyle(Theme.gray400)
                 }

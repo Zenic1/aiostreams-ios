@@ -34,7 +34,13 @@ final class PlayerModel: ObservableObject {
     @Published private(set) var activeSubtitle: Int?
     @Published private(set) var failure: String?
     @Published private(set) var finished = false
-    @Published private(set) var chapters: [ChapterInfo] = []
+    /// The file's chapters, or the server's where the file has none, with pictures where there are.
+    @Published private(set) var chapters: [PlayerChapter] = []
+    private var fileChapters: [ChapterInfo] = []
+    private var serverChapters: [PlayerChapter] = []
+    /// The server's trickplay sheet for this version, and the sheets fetched so far.
+    private var trickplay: (sheet: TrickplaySheet, width: Int)?
+    private var sheets: [Int: CGImage] = [:]
     /// How far ahead of the start the stream is held, in seconds.
     @Published private(set) var buffered: Double = 0
     @Published private(set) var speed: Double = 1
@@ -142,8 +148,8 @@ final class PlayerModel: ObservableObject {
             self?.combineSegments()
         }.store(in: &bag)
         engine.$mediaChapters.sink { [weak self] in
-            self?.chapters = $0
-            self?.combineSegments()
+            self?.fileChapters = $0
+            self?.mergeChapters()
         }.store(in: &bag)
         engine.clock.$bufferedPosition
             .throttle(for: .seconds(1), scheduler: RunLoop.main, latest: true)
@@ -225,12 +231,30 @@ final class PlayerModel: ObservableObject {
     private func loadExtras() async {
         guard !isLive, !request.isTrailer, let userId else { return }
         let item = request.item
-        if overview == nil {
-            let full: ItemsResult? = try? await client.get("/Items", ["userId": userId, "Ids": item.id, "Fields": "Overview"])
-            overview = full?.items?.first?.overview
+        // The overview for the pause screen, and the server's chapters and trickplay pictures.
+        let found: ItemsResult? = try? await client.get("/Items", ["userId": userId, "Ids": item.id, "Fields": "Overview,Chapters,Trickplay"])
+        if let full = found?.items?.first {
+            if overview == nil { overview = full.overview }
+            serverChapters = (full.chapters ?? []).enumerated().map { index, chapter in
+                PlayerChapter(
+                    id: index,
+                    name: chapter.name ?? "",
+                    start: Double(chapter.startPositionTicks ?? 0) / 10_000_000,
+                    image: chapter.imageTag.map { client.url("/Items/\(item.id)/Images/Chapter/\(index)", ["tag": $0, "maxWidth": "480"]) }
+                )
+            }
+            mergeChapters()
+            // The narrowest sheet at least 320 wide, as the web app picks, for this version.
+            let widths = full.trickplay?.first { $0.key.lowercased() == request.source.id.lowercased() }?.value ?? [:]
+            let sorted = widths.values.sorted { ($0.width ?? 0) < ($1.width ?? 0) }
+            if let sheet = sorted.first(where: { ($0.width ?? 0) >= 320 }) ?? sorted.last,
+               let width = sheet.width, width > 0, (sheet.tileWidth ?? 0) > 0, (sheet.tileHeight ?? 0) > 0,
+               (sheet.interval ?? 0) > 0 {
+                trickplay = (sheet, width)
+            }
         }
-        let found: SegmentsResult? = try? await client.get("/MediaSegments/\(item.id)", ["userId": userId])
-        serverSegments = (found?.items ?? []).filter { $0.end > $0.start }
+        let marked: SegmentsResult? = try? await client.get("/MediaSegments/\(item.id)", ["userId": userId])
+        serverSegments = (marked?.items ?? []).filter { $0.end > $0.start }
         combineSegments()
         // The episode after this one, as the web app finds it; one not yet out isn't offered.
         guard item.isEpisode, let series = item.seriesId else { return }
@@ -259,10 +283,53 @@ final class PlayerModel: ObservableObject {
         }
     }
 
+    /// The file's chapters where it has them, else the server's (as the web app uses them since v0.15.0).
+    private func mergeChapters() {
+        if fileChapters.isEmpty {
+            chapters = serverChapters
+        } else {
+            chapters = fileChapters.map { PlayerChapter(id: $0.id, name: $0.name, start: $0.startSeconds, image: nil) }
+        }
+        combineSegments()
+    }
+
+    /// A picture of the video at `seconds`: a frame from the engine where it can make one, else the
+    /// server's trickplay thumbnail.
+    func picture(at seconds: Double) async -> CGImage? {
+        if engine.supportsCacheBackedStills, let frame = await engine.scrubThumbnail(atSeconds: seconds, maxWidth: 480) {
+            return frame
+        }
+        return await trickplayPicture(at: seconds)
+    }
+
+    /// One thumbnail cut from the server's trickplay sheet that holds `seconds`.
+    private func trickplayPicture(at seconds: Double) async -> CGImage? {
+        guard let chosen = trickplay, let height = chosen.sheet.height, let across = chosen.sheet.tileWidth,
+              let down = chosen.sheet.tileHeight, let interval = chosen.sheet.interval, interval > 0 else { return nil }
+        let (sheet, width) = chosen
+        var index = Int(seconds * 1000) / interval
+        if let count = sheet.thumbnailCount, count > 0 { index = min(index, count - 1) }
+        let perSheet = across * down
+        let at = index / perSheet
+        if sheets[at] == nil {
+            let url = client.url("/Videos/\(request.item.id)/Trickplay/\(width)/\(at).jpg",
+                                 ["MediaSourceId": request.source.id, "ApiKey": client.token])
+            guard let fetched = try? await URLSession.shared.data(from: url),
+                  let image = UIImage(data: fetched.0)?.cgImage else { return nil }
+            sheets[at] = image
+        }
+        guard let image = sheets[at] else { return nil }
+        let tile = index % perSheet
+        let scale = CGFloat(image.width) / CGFloat(width * across)
+        let rect = CGRect(x: CGFloat((tile % across) * width) * scale, y: CGFloat((tile / across) * height) * scale,
+                          width: CGFloat(width) * scale, height: CGFloat(height) * scale)
+        return image.cropping(to: rect)
+    }
+
     /// The server's segments and the ones the file's chapters name: for each kind, the chapters'
     /// where Skip by the file's chapters is on, else the server's, the other filling what's left.
     private func combineSegments() {
-        let named = MediaSegment.named(chapters: chapters.map { (title: $0.name, start: $0.startSeconds) }, duration: duration)
+        let named = MediaSegment.named(chapters: chapters.map { (title: $0.name, start: $0.start) }, duration: duration)
         var kinds = Set<String>()
         var combined: [MediaSegment] = []
         for source in rules.chapterSkips ? [named, serverSegments] : [serverSegments, named] {
@@ -337,14 +404,14 @@ final class PlayerModel: ObservableObject {
 
     /// Asks the engine for a frame at `seconds`; while one is being made, only the latest ask waits.
     private func wantPreview(_ seconds: Double) {
-        // Only a session whose bytes the engine holds can make frames; others show the time alone.
-        guard engine.supportsCacheBackedStills else { return }
+        // From the engine where it holds the bytes, else the server's trickplay; else the time alone.
+        guard engine.supportsCacheBackedStills || trickplay != nil else { return }
         previewWanted = seconds
         guard !previewBusy else { return }
         previewBusy = true
         Task { [weak self] in
             guard let self else { return }
-            let image = await self.engine.scrubThumbnail(atSeconds: seconds, maxWidth: 480)
+            let image = await self.picture(at: seconds)
             self.previewBusy = false
             guard self.scrubTarget != nil else { return }
             if let image { self.preview = image }
@@ -572,4 +639,12 @@ enum ChannelTracks {
         all[channel] = entry
         UserDefaults.standard.set(all, forKey: key)
     }
+}
+
+/// A chapter as the player lists it: from the file, or from the server with its picture.
+struct PlayerChapter: Identifiable, Hashable {
+    let id: Int
+    let name: String
+    let start: Double
+    let image: URL?
 }
