@@ -33,11 +33,11 @@ struct DetailView: View {
             // darkened, behind the whole page.
             if prefs.flag("artBackground", false) {
                 RemoteImage(url: session.client?.backdrop(shown, height: 360))
-                    .blur(radius: Theme.px(60), opaque: true)
-                    .overlay(Color.black.opacity(0.55))
+                    .blur(radius: Theme.px(40), opaque: true)
+                    .overlay(Color.black.opacity(0.4))
                     .ignoresSafeArea()
             }
-            ItemBackdrop(item: shown)
+            ItemBackdrop(item: shown, overArtwork: prefs.flag("artBackground", false))
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.px(48)) {
                     header
@@ -354,6 +354,9 @@ struct DetailView: View {
 struct ItemBackdrop: View {
     @EnvironmentObject private var session: Session
     let item: Item
+    /// Over the background from artwork: the art fades out into it, rather than into the page's
+    /// colour, which would cover the blurred art beneath (as the web app's `data-art-wash` does).
+    var overArtwork = false
 
     private static let height = Theme.px(612)
 
@@ -370,7 +373,27 @@ struct ItemBackdrop: View {
                             endPoint: .trailing
                         )
                     )
+                    // Over the artwork, it fades out downwards and towards the details too.
+                    .mask(
+                        LinearGradient(
+                            stops: overArtwork
+                                ? [.init(color: .clear, location: 0), .init(color: .black, location: 0.5)]
+                                : [.init(color: .black, location: 0), .init(color: .black, location: 1)],
+                            startPoint: .bottom,
+                            endPoint: .top
+                        )
+                    )
+                    .mask(
+                        LinearGradient(
+                            stops: overArtwork
+                                ? [.init(color: .clear, location: 0), .init(color: .black, location: 0.5)]
+                                : [.init(color: .black, location: 0), .init(color: .black, location: 1)],
+                            startPoint: .leading,
+                            endPoint: .trailing
+                        )
+                    )
                     .frame(maxWidth: .infinity, alignment: .trailing)
+                if !overArtwork {
                 LinearGradient(
                     stops: [
                         .init(color: Theme.background, location: 0),
@@ -390,6 +413,7 @@ struct ItemBackdrop: View {
                     endPoint: .top
                 )
                 .frame(height: Self.height * 3 / 4)
+                }
             }
             .frame(height: Self.height)
         }

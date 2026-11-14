@@ -354,8 +354,8 @@ struct SettingsView: View {
                                      ("Pink", "#ec4899"), ("Violet", "#8b5cf6")])
                     toggle("Background from artwork", key: "artBackground", fallback: false)
                     synced("Background", key: "backgroundColor", fallback: "",
-                           options: [("Default", ""), ("Black", "#000000"), ("Charcoal", "#18181b"), ("Slate", "#0f172a"),
-                                     ("Navy", "#0b1026")])
+                           options: [("Default", ""), ("Black", "#000000"), ("Charcoal", "#1c1c1f"), ("Slate", "#1e2836"),
+                                     ("Navy", "#0a1846"), ("Plum", "#24102e"), ("Forest", "#0c2018"), ("Maroon", "#2a0c12")])
                 }
                 section("Player controls", note: "Kept on this Apple TV.") {
                     row("Skip step", value: "\(prefs.seekStep) seconds") {
