@@ -56,6 +56,9 @@ final class RootViewController: UIViewController, WKNavigationDelegate, WKUIDele
         configuration.userContentController.addUserScript(
             WKUserScript(source: LaunchLogo.script, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
         )
+        configuration.userContentController.addUserScript(
+            WKUserScript(source: FullBleedWebView.columnStyle, injectionTime: .atDocumentEnd, forMainFrameOnly: true)
+        )
         if let seed = DemoMode.storageScript {
             configuration.userContentController.addUserScript(
                 WKUserScript(source: seed, injectionTime: .atDocumentStart, forMainFrameOnly: true)
@@ -320,6 +323,11 @@ final class RootViewController: UIViewController, WKNavigationDelegate, WKUIDele
         }
         openExternally(url)
         decisionHandler(.cancel)
+    }
+
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        // A loaded page learns where the status column is again.
+        (webView as? FullBleedWebView)?.applyColumn()
     }
 
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
