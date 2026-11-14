@@ -29,6 +29,14 @@ struct DetailView: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
+            // Background from artwork (the web app's theme setting): the title's art, blurred and
+            // darkened, behind the whole page.
+            if prefs.flag("artBackground", false) {
+                RemoteImage(url: session.client?.backdrop(shown, height: 360))
+                    .blur(radius: Theme.px(60), opaque: true)
+                    .overlay(Color.black.opacity(0.55))
+                    .ignoresSafeArea()
+            }
             ItemBackdrop(item: shown)
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.px(48)) {

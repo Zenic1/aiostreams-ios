@@ -13,6 +13,9 @@ final class Session: ObservableObject {
 
     @Published private(set) var stage: Stage = .needsServer
     @Published private(set) var serverName: String?
+    /// A plain Jellyfin server rather than AIOStreams, as the web app tells: its libraries sort and
+    /// filter as asked, where an AIOStreams catalog keeps its own order.
+    @Published private(set) var isStock = false
     @Published private(set) var userName: String?
     private(set) var client: JellyfinClient?
     private(set) var userId: String?
@@ -36,6 +39,14 @@ final class Session: ObservableObject {
 
     private static func makeClient(_ base: URL) -> JellyfinClient {
         JellyfinClient(base: base, token: nil, deviceId: AppInfo.deviceId, deviceName: AppInfo.deviceName)
+    }
+
+    /// Reads whether the server is AIOStreams or plain Jellyfin.
+    func readServerKind() async {
+        guard let client else { return }
+        if let info: PublicSystemInfo = try? await client.get("/System/Info/Public") {
+            isStock = info.aiostreams == nil
+        }
     }
 
     /// Checks the address answers as this kind of server before keeping it.

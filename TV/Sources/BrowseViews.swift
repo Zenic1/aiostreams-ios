@@ -372,6 +372,11 @@ struct LibrariesView: View {
 struct LibraryView: View {
     @EnvironmentObject private var session: Session
     let view: Item
+    /// Unwatched on any server; the rest, and the sorts, on a plain Jellyfin server, as the web app
+    /// offers them: an AIOStreams catalog keeps its own order, and finds those few only page by page.
+    @State private var filter: ItemFilter?
+    @State private var sort: SortKey = .name
+    @State private var descending = false
     @State private var items: [Item] = []
     @State private var total = Int.max
     @State private var genre: String?
@@ -383,6 +388,8 @@ struct LibraryView: View {
     var body: some View {
         ScrollView {
             PageTitle(text: view.name ?? "Library")
+            SortFilterBar(filters: session.isStock ? ItemFilter.allCases : [.unplayed], filter: $filter,
+                          sorts: session.isStock ? SortKey.allCases : [], sort: $sort, descending: $descending)
             PosterGrid(items: items) { Task { await more() } }
             if loading { ProgressView().padding() }
             if !loading && started && items.isEmpty {
@@ -396,6 +403,15 @@ struct LibraryView: View {
             genre = await openingGenre(client, userId: userId, view: view)
             await more()
         }
+        .onChange(of: "\(filter?.rawValue ?? "")|\(sort.rawValue)|\(descending)") { _, _ in
+            Task { await reload() }
+        }
+    }
+
+    private func reload() async {
+        items = []
+        total = Int.max
+        await more()
     }
 
     private func more() async {
@@ -411,6 +427,9 @@ struct LibraryView: View {
             "GenreIds": genre,
             "Recursive": "true",
             "EnableTotalRecordCount": "true",
+            "Filters": filter?.jellyfin,
+            "SortBy": session.isStock ? sort.fields : nil,
+            "SortOrder": session.isStock ? (descending ? "Descending" : "Ascending") : nil,
         ])
         let page = result?.items ?? []
         items.append(contentsOf: page.filter { new in !items.contains { $0.id == new.id } })
@@ -422,12 +441,16 @@ struct LibraryView: View {
 
 struct FavouritesView: View {
     @EnvironmentObject private var session: Session
+    /// The web app's favourites sorts, newest added first.
+    @State private var sort: SortKey = .added
+    @State private var descending = true
     @State private var items: [Item] = []
     @State private var loaded = false
 
     var body: some View {
         ScrollView {
             PageTitle(text: "Favourites")
+            SortFilterBar(filter: .constant(nil), sorts: [.added, .name, .released, .rating], sort: $sort, descending: $descending)
             if loaded && items.isEmpty {
                 Text("Titles you favourite show here.")
                     .font(Theme.font(Theme.base))
@@ -443,6 +466,7 @@ struct FavouritesView: View {
         .task { await load() }
         .refreshOnReturn { await load() }
         .reloadOnWatchChange { await load() }
+        .onChange(of: "\(sort.rawValue)|\(descending)") { _, _ in Task { await load() } }
     }
 
     private func load() async {
@@ -452,8 +476,8 @@ struct FavouritesView: View {
             "Filters": "IsFavorite",
             "Recursive": "true",
             "IncludeItemTypes": "Movie,Series,Episode",
-            "SortBy": "DatePlayed,SortName",
-            "SortOrder": "Descending",
+            "SortBy": sort.fields,
+            "SortOrder": descending ? "Descending" : "Ascending",
         ])
         items = result?.items ?? []
         loaded = true
@@ -557,5 +581,107 @@ struct SearchView: View {
             "Limit": "48",
         ])
         if !Task.isCancelled { results = result?.items ?? [] }
+    }
+}
+
+// MARK: - Sorts and filters
+
+/// The web app's sorts (components/media/sort-picker.tsx), by Jellyfin's sort fields.
+enum SortKey: String, CaseIterable {
+    case name, added, released, rating, runtime
+
+    var title: String {
+        switch self {
+        case .name: return "Name"
+        case .added: return "Date added"
+        case .released: return "Release date"
+        case .rating: return "Rating"
+        case .runtime: return "Runtime"
+        }
+    }
+
+    var fields: String {
+        switch self {
+        case .name: return "SortName"
+        case .added: return "DateCreated,SortName"
+        case .released: return "PremiereDate,ProductionYear,SortName"
+        case .rating: return "CommunityRating,SortName"
+        case .runtime: return "Runtime,SortName"
+        }
+    }
+
+    /// Names read A to Z first; the rest newest, highest or longest first.
+    var startsDescending: Bool { self != .name }
+}
+
+/// The web app's library filters, by Jellyfin's filter names.
+enum ItemFilter: String, CaseIterable {
+    case unplayed, resumable, played, favorite
+
+    var title: String {
+        switch self {
+        case .unplayed: return "Unwatched"
+        case .resumable: return "In progress"
+        case .played: return "Watched"
+        case .favorite: return "Favourites"
+        }
+    }
+
+    var jellyfin: String {
+        switch self {
+        case .unplayed: return "IsUnplayed"
+        case .resumable: return "IsResumable"
+        case .played: return "IsPlayed"
+        case .favorite: return "IsFavorite"
+        }
+    }
+}
+
+/// Pills for a page's filters and sorts: choosing the sort it's on turns its direction round.
+struct SortFilterBar: View {
+    var filters: [ItemFilter] = []
+    @Binding var filter: ItemFilter?
+    var sorts: [SortKey] = []
+    @Binding var sort: SortKey
+    @Binding var descending: Bool
+
+    var body: some View {
+        ScrollView(.horizontal) {
+            HStack(spacing: Theme.px(8)) {
+                if !filters.isEmpty {
+                    Button("All") { filter = nil }
+                        .buttonStyle(SoftPillStyle(selected: filter == nil))
+                    ForEach(filters, id: \.self) { option in
+                        Button(option.title) { filter = option }
+                            .buttonStyle(SoftPillStyle(selected: filter == option))
+                    }
+                }
+                if !filters.isEmpty && !sorts.isEmpty {
+                    Rectangle().fill(.white.opacity(0.15)).frame(width: Theme.px(1), height: Theme.px(24))
+                        .padding(.horizontal, Theme.px(8))
+                }
+                ForEach(sorts, id: \.self) { option in
+                    Button {
+                        if sort == option { descending.toggle() } else {
+                            sort = option
+                            descending = option.startsDescending
+                        }
+                    } label: {
+                        HStack(spacing: Theme.px(4)) {
+                            Text(option.title)
+                            if sort == option {
+                                Image(systemName: descending ? "arrow.down" : "arrow.up")
+                                    .font(.system(size: Theme.px(11), weight: .semibold))
+                            }
+                        }
+                    }
+                    .buttonStyle(SoftPillStyle(selected: sort == option))
+                }
+            }
+            .pagePadding()
+            .padding(.vertical, Theme.px(8))
+        }
+        .scrollClipDisabled()
+        .focusSection()
     }
 }

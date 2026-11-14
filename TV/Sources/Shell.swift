@@ -131,6 +131,7 @@ struct MainView: View {
         .animation(.easeOut(duration: 0.2), value: open)
         .playFlow($choice) { NotificationCenter.default.post(name: .watchStateChanged, object: nil) }
         .task { await findLiveTV() }
+        .task { await session.readServerKind() }
         .task {
             await startOnPage()
             guard let client = session.client, let userId = session.userId else { return }

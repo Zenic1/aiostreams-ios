@@ -279,6 +279,9 @@ struct SettingsView: View {
     @EnvironmentObject private var session: Session
     @EnvironmentObject private var prefs: Preferences
     @State private var chooser: Chooser?
+    /// The server lets another device sign in with a code this account approves.
+    @State private var quickConnect = false
+    @State private var approving = false
 
     var body: some View {
         ScrollView {
@@ -337,6 +340,7 @@ struct SettingsView: View {
                            options: [("Default", ""), ("Blue", "#3b82f6"), ("Sky", "#0ea5e9"), ("Teal", "#14b8a6"),
                                      ("Green", "#22c55e"), ("Amber", "#f59e0b"), ("Orange", "#f97316"), ("Red", "#ef4444"),
                                      ("Pink", "#ec4899"), ("Violet", "#8b5cf6")])
+                    toggle("Background from artwork", key: "artBackground", fallback: false)
                     synced("Background", key: "backgroundColor", fallback: "",
                            options: [("Default", ""), ("Black", "#000000"), ("Charcoal", "#18181b"), ("Slate", "#0f172a"),
                                      ("Navy", "#0b1026")])
@@ -433,6 +437,9 @@ struct SettingsView: View {
                 section("Account", note: nil) {
                     fact("Server", session.serverName ?? session.client?.base.host ?? "")
                     fact("Signed in as", session.userName ?? "")
+                    if quickConnect {
+                        row("Approve a Quick Connect code", value: "") { approving = true }
+                    }
                     HStack(spacing: Theme.px(8)) {
                         Button("Switch user") { session.signOut() }.buttonStyle(SoftPillStyle())
                         Button("Change server") { session.forgetServer() }.buttonStyle(SoftPillStyle())
@@ -453,6 +460,16 @@ struct SettingsView: View {
             .padding(.bottom, Theme.px(64))
         }
         .edgeToEdge()
+        .task {
+            guard let client = session.client else { return }
+            let enabled: Bool? = try? await client.get("/QuickConnect/Enabled")
+            quickConnect = enabled == true
+        }
+        .fullScreenCover(isPresented: $approving) {
+            QuickConnectApproval { approving = false }
+                .environmentObject(session)
+                .presentationBackground(.clear)
+        }
         .fullScreenCover(item: $chooser) { chooser in
             ChooserPanel(chooser: chooser) { self.chooser = nil }
                 .presentationBackground(.clear)
@@ -623,4 +640,58 @@ struct PlayerRules {
     var skipFillers = true
     var skipRecaps = true
     var markUnaired = true
+}
+
+/// Signs another device in to this account: the code it shows, typed here, as the web app's Account
+/// settings approve it (POST /QuickConnect/Authorize).
+private struct QuickConnectApproval: View {
+    @EnvironmentObject private var session: Session
+    let done: () -> Void
+    @State private var code = ""
+    @State private var state: String?
+    @State private var working = false
+
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.6).ignoresSafeArea()
+            VStack(alignment: .leading, spacing: Theme.px(14)) {
+                Text("Approve a Quick Connect code").font(Theme.font(Theme.xl, .semibold))
+                Text("Enter the code the other device shows to sign it in to this account.")
+                    .font(Theme.font(Theme.sm))
+                    .foregroundStyle(Theme.gray400)
+                TextField("Code", text: $code)
+                    .keyboardType(.numberPad)
+                    .font(Theme.font(Theme.lg))
+                if let state {
+                    Text(state).font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray300)
+                }
+                HStack(spacing: Theme.px(8)) {
+                    Button(working ? "Approving…" : "Approve") { Task { await approve() } }
+                        .buttonStyle(SoftPillStyle(selected: true))
+                        .disabled(code.trimmingCharacters(in: .whitespaces).isEmpty || working)
+                    Button("Close", action: done).buttonStyle(SoftPillStyle())
+                }
+            }
+            .padding(Theme.px(24))
+            .frame(width: Theme.px(520), alignment: .leading)
+            .background(RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous).fill(Color(white: 17 / 255)))
+            .overlay(RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous).stroke(.white.opacity(0.1), lineWidth: Theme.px(1)))
+        }
+        .foregroundStyle(.white)
+        .onExitCommand(perform: done)
+    }
+
+    private func approve() async {
+        guard let client = session.client else { return }
+        working = true
+        defer { working = false }
+        let entered = code.filter { !$0.isWhitespace }
+        do {
+            try await client.call("POST", "/QuickConnect/Authorize", ["code": entered, "userId": session.userId])
+            state = "Approved. The other device is signing in."
+            code = ""
+        } catch {
+            state = "That code wasn't approved. Check it and try again."
+        }
+    }
 }

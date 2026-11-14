@@ -340,7 +340,12 @@ struct PlaybackInfo: Decodable {
 struct PublicSystemInfo: Decodable {
     var serverName: String?
     var version: String?
+    /// Present on an AIOStreams server; a plain Jellyfin server sends none.
+    var aiostreams: ServerExtension?
 }
+
+/// The AIOStreams server's own part of its public info; only its presence is read.
+struct ServerExtension: Decodable {}
 
 struct PublicUser: Decodable, Identifiable, Hashable {
     var id: String
