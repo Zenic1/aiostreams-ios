@@ -76,7 +76,8 @@ struct MainView: View {
 
     var body: some View {
         ZStack(alignment: .leading) {
-            Theme.background.ignoresSafeArea()
+            // The page colour, or the art of the title you're on (Background from artwork).
+            WashBackground()
 
             NavigationStack(path: path(place)) {
                 page(place)
@@ -99,8 +100,9 @@ struct MainView: View {
             })
             .padding(.leading, Theme.px(80))
 
-            // The rail's own column, which rows scrolled under it disappear beneath.
-            Theme.background
+            // The rail's own column, which rows scrolled under it disappear beneath; over the
+            // artwork it's a shade of it, so the art runs under the rail too.
+            Theme.background.opacity(prefs.flag("artBackground", false) ? 0.55 : 1)
                 .frame(width: Theme.px(80))
                 .ignoresSafeArea()
                 .allowsHitTesting(false)

@@ -248,7 +248,7 @@ struct HomeView: View {
 
 // MARK: - Hero
 
-private enum HeroAction: Hashable { case play, info }
+private enum HeroAction: Hashable { case play, info, next, previous }
 
 /// One title at a time over the top of Home, turning every 9 seconds while nothing in it has focus.
 /// Right past its last button turns to the next title; left past its first, to the one before.
@@ -291,6 +291,33 @@ struct HeroCarousel: View {
             index = (index + 1) % items.count
         }
         .onChange(of: items.map(\.id)) { _, _ in index = 0 }
+        // Background from artwork: the hero's title, turning with it.
+        .washed(by: item)
+        // Right past More info, or left past the first button, focus lands on a slip beside them,
+        // which turns the hero and hands focus back; a press can't skip the button it lands on.
+        .onChange(of: focus) { _, now in
+            switch now {
+            case .next:
+                index = (index + 1) % items.count
+                focus = items[index].playable ? .play : .info
+            case .previous:
+                index = (index - 1 + items.count) % items.count
+                focus = .info
+            default:
+                break
+            }
+        }
+    }
+
+    /// Over the background from artwork, the art fades out rather than under the page's colour.
+    private var overArtwork: Bool { prefs.flag("artBackground", false) }
+
+    /// A narrow, invisible stop beside the buttons that turns the hero when focus reaches it.
+    private func slip(_ action: HeroAction, enabled: Bool) -> some View {
+        Color.clear
+            .frame(width: Theme.px(8), height: Theme.px(40))
+            .focusable(enabled)
+            .focused($focus, equals: action)
     }
 
     /// The backdrop sits right, no wider than 2.6 times its height, fading in from the left.
@@ -306,6 +333,25 @@ struct HeroCarousel: View {
                         endPoint: .trailing
                     )
                 )
+                // Over the artwork, it fades out downwards and towards the details too.
+                .mask(
+                    LinearGradient(
+                        stops: overArtwork
+                            ? [.init(color: .clear, location: 0), .init(color: .black, location: 0.5)]
+                            : [.init(color: .black, location: 0), .init(color: .black, location: 1)],
+                        startPoint: .bottom,
+                        endPoint: .top
+                    )
+                )
+                .mask(
+                    LinearGradient(
+                        stops: overArtwork
+                            ? [.init(color: .clear, location: 0), .init(color: .black, location: 0.6)]
+                            : [.init(color: .black, location: 0), .init(color: .black, location: 1)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .id(item.id)
                 .transition(.opacity)
@@ -314,6 +360,7 @@ struct HeroCarousel: View {
 
     private var shade: some View {
         ZStack(alignment: .bottom) {
+            if !overArtwork {
             LinearGradient(
                 stops: [
                     .init(color: Theme.background, location: 0),
@@ -333,6 +380,7 @@ struct HeroCarousel: View {
                 endPoint: .top
             )
             .frame(height: height * 2 / 3)
+            }
         }
         .allowsHitTesting(false)
     }
@@ -349,6 +397,8 @@ struct HeroCarousel: View {
                     .frame(maxWidth: Theme.px(672), alignment: .leading)
             }
             HStack(spacing: Theme.px(8)) {
+                // Always there, so the buttons never shift; it takes focus only past the first title.
+                slip(.previous, enabled: items.count > 1 && followed == nil && index > 0)
                 if item.playable {
                     Button { play(item) } label: {
                         Label("Play", systemImage: "play.fill")
@@ -361,18 +411,10 @@ struct HeroCarousel: View {
                 }
                 .buttonStyle(item.playable ? AnyButtonStyle(SecondaryPillStyle()) : AnyButtonStyle(PrimaryPillStyle()))
                 .focused($focus, equals: .info)
+                slip(.next, enabled: items.count > 1 && followed == nil)
             }
-            .onMoveCommand { direction in
-                guard items.count > 1, followed == nil else { return }
-                let first: HeroAction = item.playable ? .play : .info
-                if direction == .right, focus == .info {
-                    index = (index + 1) % items.count
-                    focus = items[index].playable ? .play : .info
-                } else if direction == .left, focus == first, index > 0 {
-                    index -= 1
-                    focus = .info
-                }
-            }
+            // The left slip and its gap sit out past the edge, keeping the buttons under the title.
+            .padding(.leading, -Theme.px(16))
             .focusSection()
         }
         .frame(maxWidth: Theme.px(768), alignment: .leading)
