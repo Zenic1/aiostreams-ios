@@ -99,28 +99,17 @@ struct MainView: View {
                 Task { choice = await playChoice(for: item, session: session, mode: mode) }
             })
             .padding(.leading, Theme.px(80))
+            .mask { pageEdge }
 
             // The rail's own column, which rows scrolled under it disappear beneath. Over the
-            // artwork it's a soft dark fade instead, which keeps the icons clear without a band
-            // across the art; opened, the rail's shade covers the page as before.
-            Group {
-                if prefs.flag("artBackground", false) {
-                    LinearGradient(
-                        stops: [
-                            .init(color: .black.opacity(0.55), location: 0),
-                            .init(color: .black.opacity(0.35), location: 0.55),
-                            .init(color: .clear, location: 1),
-                        ],
-                        startPoint: .leading,
-                        endPoint: .trailing
-                    )
-                    .frame(width: Theme.px(128))
-                } else {
-                    Theme.background.frame(width: Theme.px(80))
-                }
+            // artwork there's none, as in the web app: the icons sit on the art, and the page
+            // fades out before reaching them instead (pageEdge).
+            if !prefs.flag("artBackground", false) {
+                Theme.background
+                    .frame(width: Theme.px(80))
+                    .ignoresSafeArea()
+                    .allowsHitTesting(false)
             }
-            .ignoresSafeArea()
-            .allowsHitTesting(false)
 
             // The open rail's shade over the page beside it: solid under the names, so the page's
             // own text can't show through them, then fading out across the page.
@@ -170,6 +159,22 @@ struct MainView: View {
             }
         }
         .animation(.easeOut(duration: 0.2), value: exitArmed)
+    }
+
+    /// Over the artwork, the page fades out across the rail's edge, so rows scrolled left dissolve
+    /// before the icons rather than passing under them; elsewhere the rail's column covers them.
+    @ViewBuilder private var pageEdge: some View {
+        if prefs.flag("artBackground", false) {
+            HStack(spacing: 0) {
+                Color.clear.frame(width: Theme.px(40))
+                LinearGradient(colors: [.clear, .black], startPoint: .leading, endPoint: .trailing)
+                    .frame(width: Theme.px(40))
+                Color.black
+            }
+            .ignoresSafeArea()
+        } else {
+            Color.black.ignoresSafeArea()
+        }
     }
 
     @ViewBuilder private func page(_ place: Place) -> some View {
