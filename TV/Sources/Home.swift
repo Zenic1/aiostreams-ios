@@ -619,7 +619,7 @@ struct LiveRow<Action: View>: View {
     }
 }
 
-private struct ChannelCard: View {
+struct ChannelCard: View {
     let channel: Item
     let airing: Item?
     let action: () -> Void

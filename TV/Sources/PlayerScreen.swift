@@ -84,7 +84,7 @@ struct PlayerScreen: View {
             chosen = match
             playSession = named.playSessionId ?? playSession
         }
-        LastVersions.set(next.id, chosen.ownId)
+        LastVersions.set(next.id, chosen)
         current.stop()
         let startMs = next.userData?.played == true ? nil : next.resumeMs
         start(PlayRequest(item: next, source: chosen, playSessionId: playSession, startMs: startMs))

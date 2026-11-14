@@ -194,6 +194,8 @@ struct SourceExtension: Decodable, Hashable {
     var ytId: String?
     /// Versions of one release across episodes share it, which the next episode carries on in.
     var bingeGroup: String?
+    /// The file's release, the same from every addon that lists it, which outlives the version's id.
+    var release: String?
 }
 
 /// A stretch of a title the server knows: an intro, recap, credits, preview or ad (Jellyfin's
@@ -535,6 +537,8 @@ struct JellyfinClient: Sendable {
             "UserId": userId,
             "DeviceProfile": Self.deviceProfile,
             "EnableRequiredHttpHeaders": true,
+            // Every version, past the server's limit for a list, as the web app asks (server v2.38).
+            "AllVersions": true,
         ]
         if let sourceId {
             body["MediaSourceId"] = sourceId

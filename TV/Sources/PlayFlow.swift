@@ -16,17 +16,31 @@ struct VersionChoice: Identifiable {
 /// The version each title last played in, kept on this device, which resuming goes back to.
 enum LastVersions {
     private static let key = "playback.lastVersions"
+    private static let releasesKey = "playback.lastReleases"
     private static let limit = 500
 
     static func get(_ itemId: String) -> String? {
         (UserDefaults.standard.dictionary(forKey: key) as? [String: String])?[itemId]
     }
 
-    static func set(_ itemId: String, _ sourceId: String) {
-        var all = (UserDefaults.standard.dictionary(forKey: key) as? [String: String]) ?? [:]
-        all[itemId] = sourceId
+    static func set(_ itemId: String, _ source: MediaSource) {
+        store(key, itemId, source.ownId)
+        if let release = source.aiostreams?.release { store(releasesKey, itemId, release) }
+    }
+
+    /// The version last played: by its id, else (as the web app does since server v2.38) the one
+    /// with its release, which keeps when the version's id doesn't.
+    static func find(_ itemId: String, in sources: [MediaSource]) -> MediaSource? {
+        if let id = get(itemId), let same = sources.first(where: { $0.ownId == id }) { return same }
+        guard let release = (UserDefaults.standard.dictionary(forKey: releasesKey) as? [String: String])?[itemId] else { return nil }
+        return sources.first { $0.aiostreams?.release == release }
+    }
+
+    private static func store(_ name: String, _ itemId: String, _ value: String) {
+        var all = (UserDefaults.standard.dictionary(forKey: name) as? [String: String]) ?? [:]
+        all[itemId] = value
         if all.count > limit { all.removeValue(forKey: all.keys.first { $0 != itemId }!) }
-        UserDefaults.standard.set(all, forKey: key)
+        UserDefaults.standard.set(all, forKey: name)
     }
 }
 
@@ -92,7 +106,7 @@ struct PlayFlow: ViewModifier {
                 }
             }) { choice in
                 VersionsView(choice: choice) { request in
-                    LastVersions.set(request.item.id, request.source.ownId)
+                    LastVersions.set(request.item.id, request.source)
                     pendingPlay = request
                     self.choice = nil
                 }
@@ -125,8 +139,8 @@ struct PlayFlow: ViewModifier {
         defer { finding = nil }
         let info = try? await client.playbackInfo(userId: userId, itemId: choice.item.id)
         let sources = (info?.mediaSources ?? []).filter { $0.aiostreams?.ytId == nil }
-        let last = (choice.startMs ?? 0) > 0 ? LastVersions.get(choice.item.id) : nil
-        guard let source = sources.first(where: { $0.ownId == last }) ?? sources.first else {
+        let last = (choice.startMs ?? 0) > 0 ? LastVersions.find(choice.item.id, in: sources) : nil
+        guard let source = last ?? sources.first else {
             self.choice = VersionChoice(item: choice.item, startMs: choice.startMs, mode: .list)
             return
         }
@@ -138,7 +152,7 @@ struct PlayFlow: ViewModifier {
             chosen = match
             playSession = named.playSessionId ?? playSession
         }
-        LastVersions.set(choice.item.id, chosen.ownId)
+        LastVersions.set(choice.item.id, chosen)
         playing = PlayRequest(item: choice.item, source: chosen, playSessionId: playSession, startMs: choice.startMs)
     }
 }

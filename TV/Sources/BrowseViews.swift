@@ -465,6 +465,8 @@ struct FavouritesView: View {
 struct SearchView: View {
     @EnvironmentObject private var session: Session
     @EnvironmentObject private var prefs: Preferences
+    /// A channel picked from the results, which plays live.
+    @State private var choice: VersionChoice?
     @State private var term = ""
     @State private var results: [Item] = []
     @State private var searching = false
@@ -481,14 +483,36 @@ struct SearchView: View {
                 .onGeometryChange(for: CGFloat.self) { $0.safeAreaInsets.leading } action: { leadingInset = $0 }
             grid(in: sideKeyboard ? .trailing : .horizontal)
         }
-        .searchable(text: $term, prompt: "Movies and shows")
+        .searchable(text: $term, prompt: "Movies, shows and channels")
+        .playFlow($choice)
         .task(id: term) { await search() }
     }
 
     private func grid(in edges: Edge.Set) -> some View {
         ScrollView {
+            // Live TV channels the search finds (server v2.38), which play rather than open a page.
+            let channels = results.filter(\.isChannel)
+            if !channels.isEmpty {
+                VStack(alignment: .leading, spacing: Theme.px(8)) {
+                    Text("Channels").font(Theme.font(Theme.xl, .semibold)).pagePadding()
+                    ScrollView(.horizontal) {
+                        LazyHStack(alignment: .top, spacing: Theme.px(16)) {
+                            ForEach(channels) { channel in
+                                ChannelCard(channel: channel, airing: nil) {
+                                    RecentChannels.note(channel.id)
+                                    choice = VersionChoice(item: channel, startMs: nil, mode: .straight)
+                                }
+                            }
+                        }
+                        .pagePadding()
+                        .padding(.vertical, Theme.px(8))
+                    }
+                    .scrollClipDisabled()
+                }
+                .focusSection()
+            }
             if prefs.combineSearch {
-                PosterGrid(items: results, fitting: true)
+                PosterGrid(items: results.filter { !$0.isChannel }, fitting: true)
             } else {
                 // A section each, as the web app's search shows them unless they're combined.
                 let movies = results.filter { $0.type == "Movie" }
@@ -529,7 +553,7 @@ struct SearchView: View {
             "userId": userId,
             "SearchTerm": term,
             "Recursive": "true",
-            "IncludeItemTypes": "Movie,Series",
+            "IncludeItemTypes": "Movie,Series,TvChannel",
             "Limit": "48",
         ])
         if !Task.isCancelled { results = result?.items ?? [] }

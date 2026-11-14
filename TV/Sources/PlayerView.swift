@@ -180,6 +180,12 @@ final class PlayerModel: ObservableObject {
         // The account's languages and subtitle mode, as the web app passes them to its players.
         options.preferredAudioLanguages = audioLanguages
         options.preferredSubtitleLanguages = subtitleLanguages
+        // A channel starts without subtitles, and with the tracks picked on it before (as the web app).
+        if request.item.isChannel {
+            let picked = ChannelTracks.get(request.item.id)
+            if let audio = picked.audio { options.preferredAudioLanguages = [audio] + audioLanguages.filter { $0 != audio } }
+            options.preferredSubtitleLanguages = picked.subtitle.map { [$0] } ?? []
+        }
         // TrueHD Atmos and DTS:X with their heights, rendered for the receiver's speakers and sent to it
         // as Dolby MAT (tvOS 26 and later); off, they play as their 7.1 channels.
         options.objectAudioRendering = speakers.map { .render($0) } ?? .off
@@ -468,11 +474,17 @@ final class PlayerModel: ObservableObject {
 
     func selectAudio(_ id: Int) {
         engine.selectAudioTrack(index: id)
+        if request.item.isChannel, let language = audioTracks.first(where: { $0.id == id })?.language {
+            ChannelTracks.setAudio(request.item.id, language)
+        }
         report("/Sessions/Playing/Progress", event: "AudioTrackChange")
     }
 
     func selectSubtitle(_ id: Int?) {
         if let id { engine.selectSubtitleTrack(index: id) } else { engine.clearSubtitle() }
+        if request.item.isChannel {
+            ChannelTracks.setSubtitle(request.item.id, id.flatMap { id in subtitleTracks.first { $0.id == id }?.language })
+        }
         report("/Sessions/Playing/Progress", event: "SubtitleTrackChange")
     }
 
@@ -485,6 +497,10 @@ final class PlayerModel: ObservableObject {
             "CanSeek": !isLive,
             "PlayMethod": "DirectPlay",
         ]
+        // The length the player measured, for a title whose runtime the server doesn't know (v2.38).
+        if !isLive, duration.isFinite, duration > 0 {
+            body["RunTimeTicks"] = Int64(duration * 1000 * JellyfinClient.ticksPerMs)
+        }
         if let session = request.playSessionId { body["PlaySessionId"] = session }
         return body.merging(extra) { _, new in new }
     }
@@ -535,3 +551,25 @@ struct VideoSurface: UIViewRepresentable {
     func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
+
+/// The audio and subtitle languages picked on each channel, kept on this Apple TV, which the
+/// channel starts with next time; without a pick, it starts without subtitles.
+enum ChannelTracks {
+    private static let key = "live.tracks"
+
+    static func get(_ channel: String) -> (audio: String?, subtitle: String?) {
+        let saved = (UserDefaults.standard.dictionary(forKey: key) as? [String: [String: String]])?[channel] ?? [:]
+        return (saved["audio"], saved["subtitle"])
+    }
+
+    static func setAudio(_ channel: String, _ language: String) { set(channel, "audio", language) }
+    static func setSubtitle(_ channel: String, _ language: String?) { set(channel, "subtitle", language) }
+
+    private static func set(_ channel: String, _ field: String, _ value: String?) {
+        var all = (UserDefaults.standard.dictionary(forKey: key) as? [String: [String: String]]) ?? [:]
+        var entry = all[channel] ?? [:]
+        entry[field] = value
+        all[channel] = entry
+        UserDefaults.standard.set(all, forKey: key)
+    }
+}
