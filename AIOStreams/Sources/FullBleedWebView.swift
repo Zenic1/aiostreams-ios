@@ -13,6 +13,8 @@ final class FullBleedWebView: WKWebView {
     /// The page's bottom bar, docked in the status column as a vertical bar where there is one, as
     /// apps on iPhone Duo put their tab bar there. Only under `data-status-column`, which the app sets
     /// on the page's root, so a screen with its status bar across the top keeps the bar at the bottom.
+    /// Pages then keep the column free, as they keep the bottom bar's room, with the hero's art
+    /// still running under it.
     static let columnStyle = """
     (() => {
       if (window.top !== window) return;
@@ -34,6 +36,26 @@ final class FullBleedWebView: WKWebView {
         }
         html[data-status-column] [data-ui='mobile-nav-item'] > span {
           position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+        }
+        /* Pages keep the column free for the bar, as they keep the bottom bar's room free, so its
+           buttons and rows stop short of it; the hero's art still runs under it to the edge. */
+        html[data-status-column] { --nav-bar: env(safe-area-inset-bottom) !important; }
+        html[data-status-column='right'] [data-page] { padding-right: var(--status-column-width) !important; }
+        html[data-status-column='left'] [data-page] { padding-left: var(--status-column-width) !important; }
+        html[data-status-column] [data-page] [data-ui='hero'] { width: calc(100% + var(--status-column-width)) !important; }
+        html[data-status-column='right'] [data-page] [data-ui='hero'] { margin-right: calc(-1 * var(--status-column-width)) !important; }
+        html[data-status-column='left'] [data-page] [data-ui='hero'] { margin-left: calc(-1 * var(--status-column-width)) !important; }
+        html[data-status-column='right'] [data-ui='hero'] [data-ui='hero-content'] { padding-right: var(--status-column-width) !important; }
+        html[data-status-column='left'] [data-ui='hero'] [data-ui='hero-content'] { padding-left: var(--status-column-width) !important; }
+        html[data-status-column='right'] [data-ui='hero'] [data-ui='hero-dots'] { right: calc(1rem + var(--status-column-width)) !important; }
+        @media (min-width: 1024px) {
+          html[data-status-column] [data-page] [data-ui='hero'] {
+            width: calc(100% + var(--side-bar, 0px) + var(--status-column-width)) !important;
+          }
+        }
+        @media (max-width: 639px) {
+          html[data-status-column='right'] [data-ui='hero'] [data-ui='hero-dots'] { right: var(--status-column-width) !important; }
+          html[data-status-column='left'] [data-ui='hero'] [data-ui='hero-dots'] { left: var(--status-column-width) !important; }
         }`;
       const add = () => {
         const style = document.createElement('style');
