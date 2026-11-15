@@ -342,6 +342,7 @@ private struct GuideView: View {
     let playFromStart: (Item) -> Void
 
     @FocusState private var focused: String?
+    @ObservedObject private var reminders = LiveReminders.shared
 
     /// How far back the guide reaches, for catch-up; it opens at now.
     static let hoursBack: Double = 2
@@ -432,7 +433,7 @@ private struct GuideView: View {
                 }
             }
         } else {
-            Text(L("Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start."))
+            Text(L("Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start. Choosing one still to come reminds you as it starts."))
                 .font(Theme.font(Theme.sm))
                 .foregroundStyle(Theme.gray400)
         }
@@ -479,12 +480,21 @@ private struct GuideView: View {
         let airing = (programme.starts ?? .distantFuture) <= now && now < (programme.ends ?? .distantPast)
         let ended = (programme.ends ?? .distantFuture) <= now
         let kept = ended && programme.aiostreams?.catchup == true
+        let reminded = reminders.isSet(programme.id)
         return Button {
-            if airing { play(channel) } else if kept { playFromStart(programme) }
+            if airing {
+                play(channel)
+            } else if kept {
+                playFromStart(programme)
+            } else if !ended {
+                // One still to come: a reminder as it starts, or not.
+                reminders.toggle(programme, on: channel)
+            }
         } label: {
             VStack(alignment: .leading, spacing: Theme.px(2)) {
                 HStack(spacing: Theme.px(4)) {
                     if kept { Image(systemName: "arrow.counterclockwise").font(.system(size: Theme.px(10), weight: .semibold)) }
+                    if reminded { Image(systemName: "bell.fill").font(.system(size: Theme.px(10), weight: .semibold)).accessibilityLabel(L("Reminder")) }
                     Text(programme.name ?? "").font(Theme.font(Theme.sm, .medium)).lineLimit(1)
                 }
                 .opacity(ended && !kept ? 0.45 : 1)

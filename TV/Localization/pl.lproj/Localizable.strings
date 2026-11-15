@@ -3,6 +3,7 @@
 "%@ (most Atmos setups)" = "%@ (większość zestawów Atmos)";
 "%@ ch" = "%@ kan.";
 "%@ left" = "Pozostało %@";
+"%@ on %@" = "%1$@ na %2$@";
 "%@h %@m" = "%1$@h %2$@min";
 "%@m" = "%@ min";
 "%@×" = "%@×";
@@ -21,6 +22,7 @@
 "Ads" = "Reklamy";
 "All" = "Wszystko";
 "All channels" = "Wszystkie kanały";
+"Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "Również po powrocie do niej po pół godzinie. Osoba, która oglądała, kontynuuje bez podawania kodu PIN.";
 "Always" = "Zawsze";
 "Amber" = "Bursztynowy";
 "An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "Ręcznie wybrana ścieżka audio obowiązuje również w kolejnych odcinkach. Wybór ścieżki dźwiękowej zgodnej z powyższymi ustawieniami spowoduje usunięcie zapamiętanego wyboru.";
@@ -36,6 +38,7 @@
 "Approving…" = "Zatwierdzanie…";
 "Are you still watching?" = "Nadal oglądasz?";
 "Ask if you are still watching" = "Pytaj czy nadal oglądasz";
+"Ask when the app opens" = "Pytaj podczas otwierania aplikacji";
 "At the credits" = "Przy napisach końcowych";
 "Atmos and DTS:X" = "Atmos i DTS:X";
 "Atmos and DTS:X speakers" = "Głośniki dla Atmos i DTS:X";
@@ -70,7 +73,7 @@
 "Chapter %@" = "Rozdział %@";
 "Chapters" = "Rozdziały";
 "Charcoal" = "Grafitowy";
-"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start." = "Wybierz program nadawany teraz, aby oglądać jego kanał, lub wcześniejszy oznaczony ↺, aby obejrzeć go od początku.";
+"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start. Choosing one still to come reminds you as it starts." = "Wybierz program nadawany teraz, aby oglądać jego kanał, lub wcześniejszy oznaczony ↺, aby obejrzeć go od początku. Wybranie nadchodzącego przypomni ci o nim, gdy się zacznie.";
 "Choose a version" = "Wybierz wersję";
 "Close" = "Zamknij";
 "Code" = "Kod";
@@ -92,6 +95,7 @@
 "Delay: %@" = "Opóźnienie: %@";
 "Dialogue boost" = "Wzmocnienie dialogów";
 "Discover" = "Odkrywaj";
+"Dismiss" = "Odrzuć";
 "Don't skip" = "Nie pomijaj";
 "Earlier" = "Wcześniej";
 "Ended" = "Zakończony";
@@ -160,6 +164,7 @@
 "Movies" = "Filmy";
 "Movies, shows and channels" = "Filmy, seriale i kanały";
 "Name" = "Nazwa";
+"Navigation" = "Nawigacja";
 "Navy" = "Granatowy";
 "Near the end" = "Pod koniec";
 "Never" = "Nigdy";
@@ -217,6 +222,7 @@
 "Prevent accidental exit" = "Zapobiegaj przypadkowemu wyjściu";
 "Previews" = "Zapowiedzi";
 "Quick Connect" = "Szybkie łączenie (Quick Connect)";
+"Rail" = "Pasek boczny";
 "Raised" = "Wyżej";
 "Raised a little" = "Nieco wyżej";
 "Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "Wzmacnia kanał centralny, w którym dźwięk przestrzenny umieszcza dialogi. Nie działa przy przekazywaniu dźwięku (passthrough).";
@@ -226,8 +232,10 @@
 "Red" = "Czerwony";
 "Release date" = "Data wydania";
 "Remember picks per show" = "Zapamiętaj wybory dla serialu";
+"Reminder" = "Przypomnienie";
 "Remove favourite" = "Usuń z ulubionych";
 "Remove from continue watching" = "Usuń z „Kontynuuj oglądanie”";
+"Report a problem" = "Zgłoś problem";
 "Request failed (%@)" = "Żądanie nie powiodło się (%@)";
 "Reset" = "Zresetuj";
 "Resume" = "Wznów";
@@ -246,6 +254,9 @@
 "Season %@" = "Sezon %@";
 "See all" = "Pokaż wszystko";
 "Seek bar previews" = "Podgląd na pasku postępu";
+"Sending…" = "Wysyłanie…";
+"Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out." = "Wysyła dane tego Apple TV i najnowszy dziennik aplikacji na twój serwer, gdzie jego administrator znajdzie je wśród dzienników. Hasła i tokeny są pomijane.";
+"Sent as %@" = "Wysłano jako %@";
 "Serif" = "Szeryfowa (Serif)";
 "Server" = "Serwer";
 "Server address" = "Adres serwera";
@@ -328,6 +339,7 @@
 "Today" = "Dzisiaj";
 "Tomorrow" = "Jutro";
 "Too many requests. Try again shortly." = "Zbyt wiele żądań. Spróbuj ponownie za chwilę.";
+"Top bar" = "Górny pasek";
 "Track %@" = "Ścieżka %@";
 "Trailer" = "Zwiastun";
 "Trailer sound" = "Dźwięk zwiastunów";
@@ -343,6 +355,7 @@
 "Video" = "Wideo";
 "Violet" = "Fioletowy";
 "Wait for episodes to air" = "Czekaj na emisję odcinków";
+"Watch" = "Oglądaj";
 "Watched" = "Obejrzane";
 "What you watch shows here." = "Tu pojawi się to, co oglądasz.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Co biorą Twoje głośniki lub odbiornik. Dźwięk przestrzenny z większą liczbą kanałów jest miksowany w dół z zachowaniem dialogów.";

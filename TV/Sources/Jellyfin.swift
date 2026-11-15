@@ -458,6 +458,12 @@ struct JellyfinClient: Sendable {
         return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any] ?? [:]
     }
 
+    /// Text sent as it is (Jellyfin's client log upload), with the answer as plain JSON.
+    func postText(_ path: String, _ text: String) async throws -> [String: Any] {
+        let data = try await raw("POST", path, query: [:], body: nil, text: text)
+        return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any] ?? [:]
+    }
+
     /// A request whose answer has no body worth reading.
     func call(_ method: String, _ path: String, _ query: [String: String?] = [:]) async throws {
         _ = try await raw(method, path, query: query, body: nil)
@@ -478,7 +484,7 @@ struct JellyfinClient: Sendable {
         }
     }
 
-    private func raw(_ method: String, _ path: String, query: [String: String?], body: [String: Any]?) async throws -> Data {
+    private func raw(_ method: String, _ path: String, query: [String: String?], body: [String: Any]?, text: String? = nil) async throws -> Data {
         var request = URLRequest(url: url(path, query))
         request.httpMethod = method
         request.timeoutInterval = 60
@@ -487,6 +493,9 @@ struct JellyfinClient: Sendable {
         if let body {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             request.httpBody = try JSONSerialization.data(withJSONObject: body)
+        } else if let text {
+            request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
+            request.httpBody = Data(text.utf8)
         }
         let data: Data
         let response: URLResponse

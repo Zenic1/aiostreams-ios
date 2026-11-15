@@ -3,6 +3,7 @@
 "%@ (most Atmos setups)" = "%@ (çoğu Atmos kurulumu)";
 "%@ ch" = "%@ kanal";
 "%@ left" = "%@ kaldı";
+"%@ on %@" = "%2$@ kanalında %1$@";
 "%@h %@m" = "%1$@sa %2$@dk";
 "%@m" = "%@dk";
 "%@×" = "x%@";
@@ -21,6 +22,7 @@
 "Ads" = "Reklamlar";
 "All" = "Hepsi";
 "All channels" = "Tüm kanallar";
+"Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "Yarım saat sonra uygulamaya döndüğünde de sorulur. İzleyen kişi PIN girmeden devam eder.";
 "Always" = "Her zaman";
 "Amber" = "Kehribar";
 "An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "Bir diziyi izlerken seçtiğin ses parçasının dili, diğer bölümlerde de kullanılır. Yukarıdaki ayarların seçeceği parçayı seçersen bu tercih sıfırlanır.";
@@ -36,6 +38,7 @@
 "Approving…" = "Onaylanıyor…";
 "Are you still watching?" = "Hâlâ izliyor musun?";
 "Ask if you are still watching" = "Hâlâ izlenip izlenmediğini sor";
+"Ask when the app opens" = "Uygulama açıldığı zaman sor";
 "At the credits" = "Jenerikte";
 "Atmos and DTS:X" = "Atmos ve DTS:X";
 "Atmos and DTS:X speakers" = "Atmos ve DTS:X hoparlörleri";
@@ -70,7 +73,7 @@
 "Chapter %@" = "Bölüm %@";
 "Chapters" = "Bölümler";
 "Charcoal" = "Kömür";
-"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start." = "Kanalını izlemek için şu an yayında olan bir programı, baştan izlemek için ↺ işaretli daha önceki bir programı seç.";
+"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start. Choosing one still to come reminds you as it starts." = "Kanalını izlemek için şu an yayında olan bir programı, baştan izlemek için ↺ işaretli daha önceki bir programı seç. Henüz başlamamış birini seçmek, başladığında sana hatırlatır.";
 "Choose a version" = "Sürüm seç";
 "Close" = "Kapat";
 "Code" = "Kod";
@@ -92,6 +95,7 @@
 "Delay: %@" = "Gecikme: %@";
 "Dialogue boost" = "Diyalogları güçlendir";
 "Discover" = "Keşfet";
+"Dismiss" = "Kapat";
 "Don't skip" = "Atlama";
 "Earlier" = "Daha önce";
 "Ended" = "Bitti";
@@ -160,6 +164,7 @@
 "Movies" = "Filmler";
 "Movies, shows and channels" = "Filmler, diziler ve kanallar";
 "Name" = "İsim";
+"Navigation" = "Navigasyon";
 "Navy" = "Lacivert";
 "Near the end" = "Sona doğru";
 "Never" = "Asla";
@@ -217,6 +222,7 @@
 "Prevent accidental exit" = "Yanlışlıkla çıkmayı önle";
 "Previews" = "Önizlemeler";
 "Quick Connect" = "Hızlı bağlantı";
+"Rail" = "Yan menü";
 "Raised" = "Yukarıda";
 "Raised a little" = "Biraz yukarıda";
 "Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "Çevresel seste diyalogların bulunduğu merkez kanalın sesini yükseltir. Doğrudan aktarılan sese uygulanmaz.";
@@ -226,8 +232,10 @@
 "Red" = "Kırmızı";
 "Release date" = "Çıkış tarihi";
 "Remember picks per show" = "Dil seçimini diziye göre hatırla";
+"Reminder" = "Hatırlatıcı";
 "Remove favourite" = "Favorilerden kaldır";
 "Remove from continue watching" = "İzlemeye devam et listesinden kaldır";
+"Report a problem" = "Sorun bildir";
 "Request failed (%@)" = "İstek başarısız (%@)";
 "Reset" = "Sıfırla";
 "Resume" = "Devam et";
@@ -246,6 +254,9 @@
 "Season %@" = "%@. sezon";
 "See all" = "Tümünü gör";
 "Seek bar previews" = "İlerleme çubuğu önizlemeleri";
+"Sending…" = "Gönderiliyor…";
+"Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out." = "Bu Apple TV'nin bilgilerini ve uygulamanın son günlüğünü sunucuna gönderir; sunucuyu yöneten kişi bunları günlükleri arasında bulur. Şifreler ve belirteçler dahil edilmez.";
+"Sent as %@" = "%@ olarak gönderildi";
 "Serif" = "Serifli";
 "Server" = "Sunucu";
 "Server address" = "Sunucu adresi";
@@ -328,6 +339,7 @@
 "Today" = "Bugün";
 "Tomorrow" = "Yarın";
 "Too many requests. Try again shortly." = "Çok fazla istek. Birazdan tekrar dene.";
+"Top bar" = "Üst çubuk";
 "Track %@" = "%@. parça";
 "Trailer" = "Fragman";
 "Trailer sound" = "Fragman sesi";
@@ -343,6 +355,7 @@
 "Video" = "Video";
 "Violet" = "Mor";
 "Wait for episodes to air" = "Bölümlerin yayınlanmasını bekle";
+"Watch" = "İzle";
 "Watched" = "İzlendi";
 "What you watch shows here." = "İzlediklerin burada görünür.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Hoparlörlerinin veya alıcının desteklediği kanal sayısı. Daha fazla kanallı çevresel ses, diyaloglar korunarak bu sayıya indirilir.";

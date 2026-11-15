@@ -6,6 +6,7 @@ struct AIOStreamsTVApp: App {
     @StateObject private var session = Session()
     @StateObject private var prefs = Preferences()
     @StateObject private var wash = ArtWash()
+    @Environment(\.scenePhase) private var scenePhase
 
     init() {
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .moviePlayback)
@@ -18,7 +19,8 @@ struct AIOStreamsTVApp: App {
                 switch session.stage {
                 case .needsServer: ServerView()
                 case .needsSignIn: SignInView()
-                case .signedIn: MainView()
+                case .signedIn:
+                    if session.asking { SignInView() } else { MainView() }
                 }
             }
             // The web app's theme colours and language, once they've loaded.
@@ -33,6 +35,9 @@ struct AIOStreamsTVApp: App {
             .task { await DemoMode.start(session) }
             // From Top Shelf: a title's page, or playing it.
             .onOpenURL { DeepLink.open($0) }
+            .onChange(of: scenePhase) { _, phase in
+                if phase == .background { session.left() } else if phase == .active { session.returned() }
+            }
             .tint(Theme.ring)
         }
     }
@@ -174,6 +179,8 @@ struct SignInView: View {
                 HStack(spacing: Theme.px(40)) {
                     ForEach(users) { user in
                         Button {
+                            // Asked who's watching, whoever was carries on as they were.
+                            if session.asking && user.id == session.userId { session.carryOn(); return }
                             name = user.name ?? ""
                             password = ""
                             if user.hasPassword == false { signIn() } else { mode = .password(user) }

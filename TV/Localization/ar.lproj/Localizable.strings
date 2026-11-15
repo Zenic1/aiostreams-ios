@@ -3,6 +3,7 @@
 "%@ (most Atmos setups)" = "%@ (معظم أنظمة Atmos)";
 "%@ ch" = "%@ قنوات";
 "%@ left" = "المتبقي %@";
+"%@ on %@" = "%1$@ على %2$@";
 "%@h %@m" = "%1$@ س %2$@ د";
 "%@m" = "%@ د";
 "%@×" = "%@×";
@@ -21,6 +22,7 @@
 "Ads" = "الإعلانات";
 "All" = "الكل";
 "All channels" = "كل القنوات";
+"Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "وأيضًا عند العودة إليه بعد نصف ساعة. يتابع من كان يشاهد دون رقمه السري.";
 "Always" = "دائمًا";
 "Amber" = "كهرماني";
 "An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "المسار الصوتي الذي تختاره أثناء مشاهدة مسلسل يحدد اللغة لبقية حلقاته. اختيار ما ستشغّله الإعدادات أعلاه ينسيه.";
@@ -36,6 +38,7 @@
 "Approving…" = "جارٍ الموافقة…";
 "Are you still watching?" = "هل ما زلت تشاهد؟";
 "Ask if you are still watching" = "اسأل إن كنت ما زلت تشاهد";
+"Ask when the app opens" = "اسأل عند فتح التطبيق";
 "At the credits" = "عند شارة النهاية";
 "Atmos and DTS:X" = "Atmos وDTS:X";
 "Atmos and DTS:X speakers" = "سماعات Atmos وDTS:X";
@@ -70,7 +73,7 @@
 "Chapter %@" = "الفصل %@";
 "Chapters" = "الفصول";
 "Charcoal" = "فحمي";
-"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start." = "اختر برنامجًا يُعرض الآن لمشاهدة قناته، أو برنامجًا سابقًا عليه ↺ لمشاهدته من البداية.";
+"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start. Choosing one still to come reminds you as it starts." = "اختر برنامجًا يُعرض الآن لمشاهدة قناته، أو برنامجًا سابقًا عليه ↺ لمشاهدته من البداية. واختيار برنامج قادم يذكّرك به عند بدايته.";
 "Choose a version" = "اختر نسخة";
 "Close" = "إغلاق";
 "Code" = "الرمز";
@@ -92,6 +95,7 @@
 "Delay: %@" = "التأخير: %@";
 "Dialogue boost" = "تعزيز الحوار";
 "Discover" = "استكشاف";
+"Dismiss" = "تجاهل";
 "Don't skip" = "عدم التخطي";
 "Earlier" = "سابقًا";
 "Ended" = "منتهٍ";
@@ -160,6 +164,7 @@
 "Movies" = "الأفلام";
 "Movies, shows and channels" = "أفلام ومسلسلات وقنوات";
 "Name" = "الاسم";
+"Navigation" = "التنقل";
 "Navy" = "كحلي";
 "Near the end" = "قرب النهاية";
 "Never" = "أبدًا";
@@ -217,6 +222,7 @@
 "Prevent accidental exit" = "منع الخروج غير المقصود";
 "Previews" = "المعاينات";
 "Quick Connect" = "الاتصال السريع";
+"Rail" = "شريط ضيق";
 "Raised" = "مرفوع";
 "Raised a little" = "مرفوع قليلًا";
 "Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "يرفع القناة المركزية، حيث يضع الصوت المحيطي الحوار. لا ينطبق على الصوت الممرَّر كما هو.";
@@ -226,8 +232,10 @@
 "Red" = "أحمر";
 "Release date" = "تاريخ الإصدار";
 "Remember picks per show" = "تذكّر الاختيارات لكل مسلسل";
+"Reminder" = "تذكير";
 "Remove favourite" = "إزالة من المفضلة";
 "Remove from continue watching" = "إزالة من متابعة المشاهدة";
+"Report a problem" = "الإبلاغ عن مشكلة";
 "Request failed (%@)" = "فشل الطلب (%@)";
 "Reset" = "إعادة ضبط";
 "Resume" = "استئناف";
@@ -246,6 +254,9 @@
 "Season %@" = "الموسم %@";
 "See all" = "عرض الكل";
 "Seek bar previews" = "معاينات شريط التقدم";
+"Sending…" = "جارٍ الإرسال…";
+"Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out." = "يرسل تفاصيل جهاز Apple TV هذا وسجل التطبيق الأخير إلى خادمك، حيث يجدها من يديره بين سجلاته. لا تُرسل كلمات المرور والرموز.";
+"Sent as %@" = "أُرسل باسم %@";
 "Serif" = "خط بزوائد";
 "Server" = "الخادم";
 "Server address" = "عنوان الخادم";
@@ -328,6 +339,7 @@
 "Today" = "اليوم";
 "Tomorrow" = "غدًا";
 "Too many requests. Try again shortly." = "طلبات كثيرة جدًا. حاول مجددًا بعد قليل.";
+"Top bar" = "الشريط العلوي";
 "Track %@" = "المسار %@";
 "Trailer" = "إعلان تشويقي";
 "Trailer sound" = "صوت الإعلان التشويقي";
@@ -343,6 +355,7 @@
 "Video" = "الفيديو";
 "Violet" = "بنفسجي";
 "Wait for episodes to air" = "انتظار بث الحلقات";
+"Watch" = "مشاهدة";
 "Watched" = "تمت مشاهدته";
 "What you watch shows here." = "يظهر هنا ما تشاهده.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "ما تستقبله مكبرات الصوت أو جهاز الاستقبال. أما الصوت المحيطي الأكثر قنوات فيُدمج في عدد أقل، مع الإبقاء على الحوار.";

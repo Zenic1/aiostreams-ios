@@ -98,13 +98,18 @@ struct MainView: View {
             .environment(\.playItem, { item, mode in
                 Task { choice = await playChoice(for: item, session: session, mode: mode) }
             })
-            .padding(.leading, Theme.px(80))
+            .padding(.leading, Theme.railInset)
+            .padding(.top, Theme.topBarInset)
             .mask { pageEdge }
+
+            if top {
+                topTabs
+            }
 
             // The rail's own column, which rows scrolled under it disappear beneath. Over the
             // artwork there's none, as in the web app: the icons sit on the art, and the page
             // fades out before reaching them instead (pageEdge).
-            if !prefs.flag("artBackground", false) {
+            if !top && !prefs.flag("artBackground", false) {
                 Theme.background
                     .frame(width: Theme.px(80))
                     .ignoresSafeArea()
@@ -124,11 +129,18 @@ struct MainView: View {
                 endPoint: .end
             )
             .frame(width: Theme.px(576))
-            .opacity(open ? 1 : 0)
+            .opacity(open && !top ? 1 : 0)
             .allowsHitTesting(false)
             .ignoresSafeArea()
 
-            rail
+            if !top {
+                rail
+            }
+
+            // Live TV reminders, asked over whatever page is open.
+            ReminderHost { channel in
+                Task { choice = await playChoice(for: channel, session: session) }
+            }
         }
         .ignoresSafeArea()
         .focusScope(shellScope)
@@ -145,6 +157,7 @@ struct MainView: View {
             await startOnPage()
             await followLink()
             guard let client = session.client, let userId = session.userId else { return }
+            LiveReminders.shared.load(userId: userId)
             await prefs.load(client: client, userId: userId)
             await openDemoScreen()
         }
@@ -168,7 +181,7 @@ struct MainView: View {
     /// Over the artwork, the page fades out across the rail's edge, so rows scrolled left dissolve
     /// before the icons rather than passing under them; elsewhere the rail's column covers them.
     @ViewBuilder private var pageEdge: some View {
-        if prefs.flag("artBackground", false) {
+        if prefs.flag("artBackground", false) && !top {
             HStack(spacing: 0) {
                 Color.clear.frame(width: Theme.px(40))
                 LinearGradient(colors: [.clear, .black], startPoint: .start, endPoint: .end)
@@ -263,6 +276,43 @@ struct MainView: View {
             try? await Task.sleep(for: .milliseconds(300))
             railLocked = false
         }
+    }
+
+    /// Tabs across the top in place of the rail (Navigation: Top bar), as the web app's TV top bar:
+    /// the places in a pill, with Settings and you at the end.
+    private var top: Bool { prefs.tvNavigation == "top" }
+
+    private var topTabs: some View {
+        HStack(spacing: Theme.px(6)) {
+            BrandLogo(height: Theme.px(28))
+                .frame(height: Theme.px(28))
+                .padding(.trailing, Theme.px(18))
+            HStack(spacing: Theme.px(4)) {
+                ForEach(Place.main.filter { $0 != .live || liveView != nil }) { tab($0) }
+            }
+            .padding(Theme.px(6))
+            .background(Capsule().fill(Color(white: 17 / 255).opacity(0.85)))
+            Spacer(minLength: Theme.px(16))
+            tab(.settings)
+            tab(.account)
+        }
+        .padding(.horizontal, Theme.px(40))
+        .padding(.top, Theme.px(24))
+        .frame(height: Theme.topBarInset, alignment: .top)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .focusSection()
+        .disabled(DemoMode.keepsRailShut)
+    }
+
+    private func tab(_ item: Place) -> some View {
+        Button {
+            if item == place { paths[item] = NavigationPath() }
+            place = item
+        } label: {
+            TopTab(item: item, current: item == place, avatar: avatarURL)
+        }
+        .buttonStyle(RailButtonStyle())
+        .focused($railFocus, equals: item)
     }
 
     private var rail: some View {
@@ -397,6 +447,46 @@ private struct RailEntry: View {
                     .fixedSize()
                     .offset(x: Theme.px(56))
                     .transition(.opacity)
+            }
+        }
+    }
+}
+
+/// One tab across the top: its icon and name in a pill, the current one filled, the focused one ringed.
+private struct TopTab: View {
+    @Environment(\.isFocused) private var focused
+    let item: Place
+    let current: Bool
+    let avatar: URL?
+
+    var body: some View {
+        HStack(spacing: Theme.px(8)) {
+            if item == .account {
+                AsyncImage(url: avatar) { phase in
+                    if case .success(let image) = phase {
+                        image.resizable().aspectRatio(contentMode: .fill)
+                    } else {
+                        Image(systemName: "person.crop.circle.fill").resizable()
+                    }
+                }
+                .frame(width: Theme.px(26), height: Theme.px(26))
+                .clipShape(Circle())
+            } else {
+                Image(systemName: item.icon).font(.system(size: Theme.px(16), weight: current ? .semibold : .regular))
+                if item != .settings {
+                    Text(item.name).font(Theme.font(Theme.base, .medium)).lineLimit(1).fixedSize()
+                }
+            }
+        }
+        .padding(.horizontal, item == .account || item == .settings ? Theme.px(10) : Theme.px(16))
+        .frame(height: Theme.px(44))
+        .foregroundStyle(current || focused ? Color.white : Theme.gray400)
+        .background(Capsule().fill(Color.white.opacity(current ? 0.14 : 0)))
+        .overlay {
+            if focused {
+                Capsule()
+                    .strokeBorder(Theme.ring, lineWidth: Theme.ringWidth)
+                    .padding(-(Theme.ringWidth + Theme.ringOffset))
             }
         }
     }

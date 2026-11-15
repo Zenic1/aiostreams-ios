@@ -10,6 +10,12 @@ enum Theme {
     /// CSS pixels to points.
     static func px(_ value: CGFloat) -> CGFloat { value * scale }
 
+    /// The docked rail's width, which pages start beside and the hero's art runs under; nothing
+    /// with the tabs across the top (Navigation: Top bar).
+    static var railInset: CGFloat { UserDefaults.standard.string(forKey: "interface.tvNavigation") == "top" ? 0 : px(80) }
+    /// The tabs' height across the top, which pages start below.
+    static var topBarInset: CGFloat { UserDefaults.standard.string(forKey: "interface.tvNavigation") == "top" ? px(84) : 0 }
+
     /// The page's colour; the theme's background where the web app's theme set one.
     static var background: Color { custom.background ?? Color(red: 7 / 255, green: 7 / 255, blue: 7 / 255) }
     /// `--ring`, brand-400: the one focus mark everywhere, a step lighter than the accent.

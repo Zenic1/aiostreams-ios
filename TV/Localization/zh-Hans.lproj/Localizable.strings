@@ -3,6 +3,7 @@
 "%@ (most Atmos setups)" = "%@（大多数 Atmos 配置）";
 "%@ ch" = "%@ 声道";
 "%@ left" = "剩余 %@";
+"%@ on %@" = "%1$@ · %2$@";
 "%@h %@m" = "%1$@ 小时 %2$@ 分钟";
 "%@m" = "%@ 分钟";
 "%@×" = "%@×";
@@ -21,6 +22,7 @@
 "Ads" = "广告";
 "All" = "全部";
 "All channels" = "所有频道";
+"Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "即使你在半小时后重新打开应用也会询问。继续观看的人无需输入 PIN 码。";
 "Always" = "始终";
 "Amber" = "琥珀";
 "An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "观看剧集时手动选择的音轨语言会应用于该剧的其他集数。若选择与上述设置自动选择的音轨相同，则会清除这项手动选择。";
@@ -36,6 +38,7 @@
 "Approving…" = "正在批准…";
 "Are you still watching?" = "你还在观看吗？";
 "Ask if you are still watching" = "询问是否仍在观看";
+"Ask when the app opens" = "应用打开时询问";
 "At the credits" = "片尾时";
 "Atmos and DTS:X" = "Atmos 和 DTS:X";
 "Atmos and DTS:X speakers" = "Atmos 和 DTS:X 扬声器";
@@ -70,7 +73,7 @@
 "Chapter %@" = "第 %@ 章";
 "Chapters" = "章节";
 "Charcoal" = "炭灰";
-"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start." = "选择正在播出的节目以观看其频道，或选择标有 ↺ 的较早节目以从头观看。";
+"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start. Choosing one still to come reminds you as it starts." = "选择正在播出的节目以观看其频道，或选择标有 ↺ 的较早节目以从头观看。选择尚未开始的节目会在其开始时提醒你。";
 "Choose a version" = "选择版本";
 "Close" = "关闭";
 "Code" = "代码";
@@ -92,6 +95,7 @@
 "Delay: %@" = "延迟：%@";
 "Dialogue boost" = "对白增强";
 "Discover" = "发现";
+"Dismiss" = "关闭";
 "Don't skip" = "不跳过";
 "Earlier" = "更早";
 "Ended" = "已完结";
@@ -160,6 +164,7 @@
 "Movies" = "电影";
 "Movies, shows and channels" = "电影、剧集和频道";
 "Name" = "名称";
+"Navigation" = "导航";
 "Navy" = "海军蓝";
 "Near the end" = "接近结尾时";
 "Never" = "从不";
@@ -217,6 +222,7 @@
 "Prevent accidental exit" = "防止误退出";
 "Previews" = "预告";
 "Quick Connect" = "快速连接";
+"Rail" = "侧栏";
 "Raised" = "较高";
 "Raised a little" = "稍高";
 "Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "提高中置声道音量；环绕声通常会将对白放在中置声道。不适用于直通音频。";
@@ -226,8 +232,10 @@
 "Red" = "红色";
 "Release date" = "上映日期";
 "Remember picks per show" = "为每部剧集记住选择";
+"Reminder" = "提醒";
 "Remove favourite" = "取消收藏";
 "Remove from continue watching" = "从「继续观看」中移除";
+"Report a problem" = "报告问题";
 "Request failed (%@)" = "请求失败（%@）";
 "Reset" = "重置";
 "Resume" = "继续播放";
@@ -246,6 +254,9 @@
 "Season %@" = "第 %@ 季";
 "See all" = "查看全部";
 "Seek bar previews" = "进度条预览";
+"Sending…" = "正在发送…";
+"Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out." = "将此 Apple TV 的信息和应用的近期日志发送到你的服务器，服务器管理员可在其日志中找到。密码和令牌不会包含在内。";
+"Sent as %@" = "已发送为 %@";
 "Serif" = "衬线体";
 "Server" = "服务器";
 "Server address" = "服务器地址";
@@ -328,6 +339,7 @@
 "Today" = "今天";
 "Tomorrow" = "明天";
 "Too many requests. Try again shortly." = "请求过多。请稍后再试。";
+"Top bar" = "顶部栏";
 "Track %@" = "音轨 %@";
 "Trailer" = "预告片";
 "Trailer sound" = "预告片声音";
@@ -343,6 +355,7 @@
 "Video" = "视频";
 "Violet" = "紫罗兰";
 "Wait for episodes to air" = "等待剧集播出";
+"Watch" = "观看";
 "Watched" = "已观看";
 "What you watch shows here." = "你观看的内容会显示在这里。";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "扬声器或接收器接收的音频格式。声道数更多的环绕声会混音降级，同时保留对白。";

@@ -161,6 +161,12 @@ final class Preferences: ObservableObject {
         didSet { UserDefaults.standard.set(seekPreviews, forKey: "controls.thumbnails") }
     }
 
+    /// The TV's navigation: `rail`, the docked rail down the side, or `top`, tabs across the top,
+    /// as the web app's TV navigation setting offers (kept on this Apple TV).
+    @Published var tvNavigation: String = UserDefaults.standard.string(forKey: "interface.tvNavigation") ?? "rail" {
+        didSet { UserDefaults.standard.set(tvNavigation, forKey: "interface.tvNavigation") }
+    }
+
     /// Milliseconds, -1000 to 1000; positive plays the sound later than the picture.
     @Published var audioDelayMs: Int = UserDefaults.standard.integer(forKey: "audio.delayMs") {
         didSet { UserDefaults.standard.set(audioDelayMs, forKey: "audio.delayMs") }
@@ -207,7 +213,9 @@ final class Preferences: ObservableObject {
     var accentColor: String? { custom["accentColor"].flatMap { $0.isEmpty ? nil : $0 } }
     var backgroundColor: String? { custom["backgroundColor"].flatMap { $0.isEmpty ? nil : $0 } }
     /// Changes when the theme or the language does, so the app draws itself again in them.
-    var themeKey: String { "\(accentColor ?? "")|\(backgroundColor ?? "")|\(AppLanguage.resolve(text("language", "auto")))" }
+    var themeKey: String {
+        "\(accentColor ?? "")|\(backgroundColor ?? "")|\(AppLanguage.resolve(text("language", "auto")))|\(tvNavigation)"
+    }
 
     // MARK: Skipping and the next episode, under the web app's keys (lib/settings)
 
@@ -384,6 +392,9 @@ struct SettingsView: View {
     @State private var picker: MultiChooser?
     /// The server lets another device sign in with a code this account approves.
     @State private var quickConnect = false
+    @State private var askWho = Session.askWho
+    /// Where sending a problem report got to.
+    @State private var report: String?
     @State private var approving = false
 
     var body: some View {
@@ -573,6 +584,10 @@ struct SettingsView: View {
                            options: [(L("Automatic"), "auto"), (L("12-hour"), "12"), (L("24-hour"), "24")])
                 }
                 section(L("Interface"), note: nil) {
+                    row(L("Navigation"), value: prefs.tvNavigation == "top" ? L("Top bar") : L("Rail")) {
+                        chooser = Chooser(title: L("Navigation"), options: [(L("Rail"), "rail"), (L("Top bar"), "top")],
+                                          current: prefs.tvNavigation) { prefs.tvNavigation = $0 }
+                    }
                     row(L("Start page"), value: Place(rawValue: prefs.startPage)?.name ?? Place.home.name) {
                         chooser = Chooser(
                             title: L("Start page"),
@@ -614,6 +629,11 @@ struct SettingsView: View {
                     if quickConnect {
                         row(L("Approve a Quick Connect code"), value: "") { approving = true }
                     }
+                    row(L("Ask when the app opens"), value: askWho ? L("On") : L("Off")) {
+                        askWho.toggle()
+                        Session.askWho = askWho
+                    }
+                    note(L("Also when you come back to it after half an hour. Whoever was watching carries on without their PIN."))
                     HStack(spacing: Theme.px(8)) {
                         Button(L("Switch user")) { session.signOut() }.buttonStyle(SoftPillStyle())
                         Button(L("Change server")) { session.forgetServer() }.buttonStyle(SoftPillStyle())
@@ -623,6 +643,8 @@ struct SettingsView: View {
                 section(L("About"), note: nil) {
                     fact(L("App"), "AIOStreams tvOS \(AppInfo.version)")
                     fact(L("Player"), AppInfo.player)
+                    row(L("Report a problem"), value: report ?? "") { Task { await sendReport() } }
+                    note(L("Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out."))
                     Text(L("An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License."))
                         .font(Theme.font(Theme.sm))
                         .foregroundStyle(Theme.gray400)
@@ -725,6 +747,29 @@ struct SettingsView: View {
                 let next = [code] + current.filter { $0 != code }
                 prefs.configure([list: next, one: code])
             }
+        }
+    }
+
+    // MARK: Problem report
+
+    /// The app's details and recent log, as a client log on the server (Jellyfin's client log upload).
+    private func sendReport() async {
+        guard let client = session.client else { return }
+        report = L("Sending…")
+        let text = [
+            "App: AIOStreams tvOS \(AppInfo.version)",
+            "Device: \(AppInfo.deviceModel), tvOS \(UIDevice.current.systemVersion)",
+            "Server: \(session.serverName ?? "?")\(session.isStock ? " (Jellyfin)" : " (AIOStreams)")",
+            "Engine: \(AppInfo.player)",
+            "Language: \(AppLanguage.current)",
+            "",
+            AppLog.recent,
+        ].joined(separator: "\n")
+        do {
+            let answer = try await client.postText("/ClientLog/Document", text)
+            report = L("Sent as %@", answer["FileName"] as? String ?? "?")
+        } catch {
+            report = error.localizedDescription
         }
     }
 

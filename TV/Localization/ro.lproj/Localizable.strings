@@ -3,6 +3,7 @@
 "%@ (most Atmos setups)" = "%@ (majoritatea sistemelor Atmos)";
 "%@ ch" = "%@ canale";
 "%@ left" = "%@ rămas";
+"%@ on %@" = "%1$@ pe %2$@";
 "%@h %@m" = "%1$@ ore %2$@ minute";
 "%@m" = "%@ minute";
 "%@×" = "%@×";
@@ -21,6 +22,7 @@
 "Ads" = "Reclame";
 "All" = "Toate";
 "All channels" = "Toate canalele";
+"Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "La fel și când revii la el după o jumătate de oră. Cine se uita continuă fără PIN.";
 "Always" = "Întotdeauna";
 "Amber" = "Chihlimbar";
 "An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "O pistă audio aleasă în timp ce urmărești un serial stabilește limba pentru celelalte episoade ale acestuia. Dacă schimbi setările de mai sus, această alegere se pierde.";
@@ -36,6 +38,7 @@
 "Approving…" = "Se aprobă…";
 "Are you still watching?" = "Mai urmărești?";
 "Ask if you are still watching" = "Întreabă dacă mai urmărești";
+"Ask when the app opens" = "Întreabă la deschiderea aplicației";
 "At the credits" = "La generic";
 "Atmos and DTS:X" = "Atmos și DTS:X";
 "Atmos and DTS:X speakers" = "Boxe pentru Atmos și DTS:X";
@@ -70,7 +73,7 @@
 "Chapter %@" = "Capitolul %@";
 "Chapters" = "Capitole";
 "Charcoal" = "Cărbune";
-"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start." = "Alege un program difuzat acum pentru a-i viziona canalul sau unul anterior marcat cu ↺ pentru a-l viziona de la început.";
+"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start. Choosing one still to come reminds you as it starts." = "Alege un program difuzat acum pentru a-i viziona canalul sau unul anterior marcat cu ↺ pentru a-l viziona de la început. Dacă alegi unul care urmează, ți se amintește când începe.";
 "Choose a version" = "Alege o versiune";
 "Close" = "Închide";
 "Code" = "Cod";
@@ -92,6 +95,7 @@
 "Delay: %@" = "Întârziere: %@";
 "Dialogue boost" = "Amplificare dialog";
 "Discover" = "Descoperă";
+"Dismiss" = "Închide";
 "Don't skip" = "Nu sări";
 "Earlier" = "Mai devreme";
 "Ended" = "Încheiat";
@@ -160,6 +164,7 @@
 "Movies" = "Filme";
 "Movies, shows and channels" = "Filme, seriale și canale";
 "Name" = "Nume";
+"Navigation" = "Navigare";
 "Navy" = "Bleumarin";
 "Near the end" = "Spre final";
 "Never" = "Niciodată";
@@ -217,6 +222,7 @@
 "Prevent accidental exit" = "Previne ieșirea accidentală";
 "Previews" = "Previzualizări";
 "Quick Connect" = "Conectare rapidă";
+"Rail" = "Bară laterală";
 "Raised" = "Mai sus";
 "Raised a little" = "Puțin mai sus";
 "Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "Ridică nivelul canalului central, unde sunetul surround pune dialogul. Nu se aplică sunetului transmis mai departe.";
@@ -226,8 +232,10 @@
 "Red" = "Roșu";
 "Release date" = "Data lansării";
 "Remember picks per show" = "Reține alegerile pe serial";
+"Reminder" = "Memento";
 "Remove favourite" = "Elimină din favorite";
 "Remove from continue watching" = "Elimină din Continuă vizionarea";
+"Report a problem" = "Raportează o problemă";
 "Request failed (%@)" = "Cererea a eșuat (%@)";
 "Reset" = "Resetează";
 "Resume" = "Reia";
@@ -246,6 +254,9 @@
 "Season %@" = "Sezonul %@";
 "See all" = "Vezi tot";
 "Seek bar previews" = "Previzualizări pe bara de derulare";
+"Sending…" = "Se trimite…";
+"Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out." = "Trimite detaliile acestui Apple TV și jurnalul recent al aplicației la serverul tău, unde cine îl administrează le găsește printre jurnale. Parolele și tokenurile sunt omise.";
+"Sent as %@" = "Trimis ca %@";
 "Serif" = "Cu serife";
 "Server" = "Server";
 "Server address" = "Adresa serverului";
@@ -328,6 +339,7 @@
 "Today" = "Astăzi";
 "Tomorrow" = "Mâine";
 "Too many requests. Try again shortly." = "Prea multe cereri. Încearcă din nou în curând.";
+"Top bar" = "Bara de sus";
 "Track %@" = "Pista %@";
 "Trailer" = "Trailer";
 "Trailer sound" = "Sunetul trailerelor";
@@ -343,6 +355,7 @@
 "Video" = "Video";
 "Violet" = "Violet";
 "Wait for episodes to air" = "Așteaptă difuzarea episoadelor";
+"Watch" = "Vizionează";
 "Watched" = "Văzut";
 "What you watch shows here." = "Ce vizionezi apare aici.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Ce acceptă boxele sau receiverul tău. Sunetul surround cu mai multe canale este redus, păstrând dialogul.";

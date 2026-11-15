@@ -3,6 +3,7 @@
 "%@ (most Atmos setups)" = "%@ (kebanyakan pengaturan Atmos)";
 "%@ ch" = "%@ kanal";
 "%@ left" = "%@ tersisa";
+"%@ on %@" = "%1$@ di %2$@";
 "%@h %@m" = "%1$@j %2$@m";
 "%@m" = "%@m";
 "%@×" = "%@×";
@@ -21,6 +22,7 @@
 "Ads" = "Iklan";
 "All" = "Semua";
 "All channels" = "Semua saluran";
+"Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "Juga saat Anda kembali setelah setengah jam. Pengguna yang sebelumnya menonton dapat melanjutkan tanpa memasukkan PIN.";
 "Always" = "Selalu";
 "Amber" = "Kuning amber";
 "An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "Trek audio yang Anda pilih saat menonton serial akan menentukan bahasa untuk episode lainnya. Memilih trek yang sesuai dengan pengaturan di atas akan menghapus preferensi khusus tersebut.";
@@ -36,6 +38,7 @@
 "Approving…" = "Menyetujui…";
 "Are you still watching?" = "Apakah Anda masih menonton?";
 "Ask if you are still watching" = "Tanyakan apakah Anda masih menonton";
+"Ask when the app opens" = "Tanyakan saat aplikasi dibuka";
 "At the credits" = "Saat kredit";
 "Atmos and DTS:X" = "Atmos dan DTS:X";
 "Atmos and DTS:X speakers" = "Speaker Atmos dan DTS:X";
@@ -70,7 +73,7 @@
 "Chapter %@" = "Bab %@";
 "Chapters" = "Bab";
 "Charcoal" = "Arang";
-"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start." = "Pilih acara yang sedang tayang untuk menonton salurannya, atau acara sebelumnya bertanda ↺ untuk menontonnya dari awal.";
+"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start. Choosing one still to come reminds you as it starts." = "Pilih acara yang sedang tayang untuk menonton salurannya, atau acara sebelumnya bertanda ↺ untuk menontonnya dari awal. Memilih acara yang akan datang mengingatkanmu saat dimulai.";
 "Choose a version" = "Pilih versi";
 "Close" = "Tutup";
 "Code" = "Kode";
@@ -92,6 +95,7 @@
 "Delay: %@" = "Jeda: %@";
 "Dialogue boost" = "Penguatan dialog";
 "Discover" = "Jelajahi";
+"Dismiss" = "Tutup";
 "Don't skip" = "Jangan lewati";
 "Earlier" = "Sebelumnya";
 "Ended" = "Selesai";
@@ -160,6 +164,7 @@
 "Movies" = "Film";
 "Movies, shows and channels" = "Film, serial, dan saluran";
 "Name" = "Nama";
+"Navigation" = "Navigasi";
 "Navy" = "Biru laut";
 "Near the end" = "Menjelang akhir";
 "Never" = "Tidak pernah";
@@ -217,6 +222,7 @@
 "Prevent accidental exit" = "Cegah keluar tanpa sengaja";
 "Previews" = "Pratinjau";
 "Quick Connect" = "Koneksi Cepat";
+"Rail" = "Bilah samping";
 "Raised" = "Dinaikkan";
 "Raised a little" = "Sedikit dinaikkan";
 "Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "Meningkatkan volume saluran tengah, tempat dialog ditempatkan dalam audio surround. Tidak berlaku untuk audio passthrough.";
@@ -226,8 +232,10 @@
 "Red" = "Merah";
 "Release date" = "Tanggal rilis";
 "Remember picks per show" = "Ingat pilihan untuk setiap serial";
+"Reminder" = "Pengingat";
 "Remove favourite" = "Hapus favorit";
 "Remove from continue watching" = "Hapus dari Lanjutkan menonton";
+"Report a problem" = "Laporkan masalah";
 "Request failed (%@)" = "Permintaan gagal (%@)";
 "Reset" = "Atur ulang";
 "Resume" = "Lanjutkan";
@@ -246,6 +254,9 @@
 "Season %@" = "Musim %@";
 "See all" = "Lihat semua";
 "Seek bar previews" = "Pratinjau bilah pencarian posisi";
+"Sending…" = "Mengirim…";
+"Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out." = "Mengirim detail Apple TV ini dan log terbaru aplikasi ke servermu, tempat pengelolanya menemukannya di antara log server. Kata sandi dan token tidak disertakan.";
+"Sent as %@" = "Terkirim sebagai %@";
 "Serif" = "Serif";
 "Server" = "Server";
 "Server address" = "Alamat server";
@@ -328,6 +339,7 @@
 "Today" = "Hari ini";
 "Tomorrow" = "Besok";
 "Too many requests. Try again shortly." = "Terlalu banyak permintaan. Coba lagi sebentar lagi.";
+"Top bar" = "Bilah atas";
 "Track %@" = "Trek %@";
 "Trailer" = "Cuplikan";
 "Trailer sound" = "Suara trailer";
@@ -343,6 +355,7 @@
 "Video" = "Video";
 "Violet" = "Violet";
 "Wait for episodes to air" = "Tunggu episode tayang";
+"Watch" = "Tonton";
 "Watched" = "Sudah ditonton";
 "What you watch shows here." = "Yang kamu tonton muncul di sini.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Format yang didukung speaker atau penerima audio Anda. Audio surround dengan lebih banyak saluran akan dicampur ke jumlah saluran yang didukung, dengan dialog tetap dipertahankan.";

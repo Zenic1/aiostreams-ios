@@ -321,7 +321,7 @@ struct HeroCarousel: View {
         .frame(height: height)
         .frame(maxWidth: .infinity)
         // Under the rail, as the web app's hero is.
-        .padding(.leading, -Theme.px(80))
+        .padding(.leading, -Theme.railInset)
         .clipped()
         .animation(.easeInOut(duration: 0.6), value: index)
         .task(id: "\(index)-\(focus == nil)") {
@@ -466,7 +466,7 @@ struct HeroCarousel: View {
             .focusSection()
         }
         .frame(maxWidth: Theme.px(768), alignment: .leading)
-        .padding(.leading, Theme.px(80) + pageInset)
+        .padding(.leading, Theme.railInset + pageInset)
         .padding(.bottom, Theme.px(56))
     }
 

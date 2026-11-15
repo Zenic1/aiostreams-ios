@@ -2431,6 +2431,71 @@
     "Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it.": {
       "pt": "Procura versões assim que a página de um título abre, para que Reproduzir e a lista de versões não esperem. Cada título que abre é procurado, mesmo que não o reproduza.",
       "zh-Hans": "影片页面一打开就查找版本，这样播放和版本列表无需等待。你打开的每部影片都会被查找，即使你不播放。"
+    },
+    "Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start. Choosing one still to come reminds you as it starts.": {
+      "de": "Wähle eine laufende Sendung, um ihren Sender zu schauen, oder eine frühere mit ↺, um sie von Anfang an zu sehen. Eine kommende zu wählen, erinnert dich, wenn sie beginnt.",
+      "el": "Επίλεξε ένα πρόγραμμα που προβάλλεται τώρα για να δεις το κανάλι του, ή ένα προηγούμενο με ↺ για να το δεις από την αρχή. Αν επιλέξεις ένα που έρχεται, θα σου το θυμίσει όταν ξεκινήσει.",
+      "es": "Elige un programa en emisión para ver su canal, o uno anterior marcado con ↺ para verlo desde el principio. Elegir uno que aún no ha empezado te lo recuerda cuando empiece.",
+      "fr": "Choisissez un programme en cours pour regarder sa chaîne, ou un précédent marqué ↺ pour le regarder depuis le début. Choisir un programme à venir vous le rappelle à son début.",
+      "id": "Pilih acara yang sedang tayang untuk menonton salurannya, atau acara sebelumnya bertanda ↺ untuk menontonnya dari awal. Memilih acara yang akan datang mengingatkanmu saat dimulai.",
+      "it": "Scegli un programma in onda per guardarne il canale, o uno precedente segnato con ↺ per guardarlo dall'inizio. Sceglierne uno in arrivo te lo ricorda quando inizia.",
+      "ms": "Pilih rancangan yang sedang bersiaran untuk menonton salurannya, atau yang lebih awal bertanda ↺ untuk menontonnya dari awal. Memilih rancangan yang akan datang mengingatkan anda apabila ia bermula.",
+      "pl": "Wybierz program nadawany teraz, aby oglądać jego kanał, lub wcześniejszy oznaczony ↺, aby obejrzeć go od początku. Wybranie nadchodzącego przypomni ci o nim, gdy się zacznie.",
+      "pt-BR": "Escolha um programa no ar para assistir ao canal, ou um anterior marcado com ↺ para assisti-lo desde o início. Escolher um que ainda vai começar lembra você quando começar.",
+      "pt": "Escolha um programa em exibição para ver o respetivo canal, ou um anterior marcado com ↺ para o ver desde o início. Escolher um que ainda vai começar lembra-o quando começar.",
+      "tr": "Kanalını izlemek için şu an yayında olan bir programı, baştan izlemek için ↺ işaretli daha önceki bir programı seç. Henüz başlamamış birini seçmek, başladığında sana hatırlatır.",
+      "zh-Hans": "选择正在播出的节目以观看其频道，或选择标有 ↺ 的较早节目以从头观看。选择尚未开始的节目会在其开始时提醒你。",
+      "ar": "اختر برنامجًا يُعرض الآن لمشاهدة قناته، أو برنامجًا سابقًا عليه ↺ لمشاهدته من البداية. واختيار برنامج قادم يذكّرك به عند بدايته.",
+      "ro": "Alege un program difuzat acum pentru a-i viziona canalul sau unul anterior marcat cu ↺ pentru a-l viziona de la început. Dacă alegi unul care urmează, ți se amintește când începe."
+    },
+    "Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out.": {
+      "ar": "يرسل تفاصيل جهاز Apple TV هذا وسجل التطبيق الأخير إلى خادمك، حيث يجدها من يديره بين سجلاته. لا تُرسل كلمات المرور والرموز.",
+      "de": "Sendet die Details dieses Apple TV und das aktuelle Protokoll der App an deinen Server, wo der Betreiber sie unter seinen Protokollen findet. Passwörter und Tokens werden weggelassen.",
+      "el": "Στέλνει τα στοιχεία αυτού του Apple TV και το πρόσφατο αρχείο καταγραφής της εφαρμογής στον διακομιστή σου, όπου τα βρίσκει όποιος τον διαχειρίζεται στα αρχεία του. Οι κωδικοί και τα tokens παραλείπονται.",
+      "es": "Envía los detalles de este Apple TV y el registro reciente de la app a tu servidor, donde quien lo gestione los encontrará entre sus registros. Las contraseñas y los tokens se omiten.",
+      "fr": "Envoie les informations de cette Apple TV et le journal récent de l'application à votre serveur, où son administrateur les trouve parmi ses journaux. Les mots de passe et jetons sont exclus.",
+      "id": "Mengirim detail Apple TV ini dan log terbaru aplikasi ke servermu, tempat pengelolanya menemukannya di antara log server. Kata sandi dan token tidak disertakan.",
+      "it": "Invia i dettagli di questa Apple TV e il registro recente dell'app al tuo server, dove chi lo gestisce li trova tra i suoi log. Password e token sono esclusi.",
+      "ms": "Menghantar butiran Apple TV ini dan log terkini apl ke pelayan anda, tempat pengendalinya menemuinya dalam lognya. Kata laluan dan token tidak disertakan.",
+      "pl": "Wysyła dane tego Apple TV i najnowszy dziennik aplikacji na twój serwer, gdzie jego administrator znajdzie je wśród dzienników. Hasła i tokeny są pomijane.",
+      "pt-BR": "Envia os detalhes desta Apple TV e o log recente do app para o seu servidor, onde quem o administra os encontra entre os logs. Senhas e tokens ficam de fora.",
+      "pt": "Envia os detalhes desta Apple TV e o registo recente da app para o seu servidor, onde quem o gere os encontra entre os registos. Palavras-passe e tokens ficam de fora.",
+      "ro": "Trimite detaliile acestui Apple TV și jurnalul recent al aplicației la serverul tău, unde cine îl administrează le găsește printre jurnale. Parolele și tokenurile sunt omise.",
+      "tr": "Bu Apple TV'nin bilgilerini ve uygulamanın son günlüğünü sunucuna gönderir; sunucuyu yöneten kişi bunları günlükleri arasında bulur. Şifreler ve belirteçler dahil edilmez.",
+      "zh-Hans": "将此 Apple TV 的信息和应用的近期日志发送到你的服务器，服务器管理员可在其日志中找到。密码和令牌不会包含在内。"
+    },
+    "Sent as %@": {
+      "ar": "أُرسل باسم %@",
+      "de": "Gesendet als %@",
+      "el": "Στάλθηκε ως %@",
+      "es": "Enviado como %@",
+      "fr": "Envoyé sous %@",
+      "id": "Terkirim sebagai %@",
+      "it": "Inviato come %@",
+      "ms": "Dihantar sebagai %@",
+      "pl": "Wysłano jako %@",
+      "pt-BR": "Enviado como %@",
+      "pt": "Enviado como %@",
+      "ro": "Trimis ca %@",
+      "tr": "%@ olarak gönderildi",
+      "zh-Hans": "已发送为 %@"
+    },
+    "%@ on %@": {
+      "pt": "%@ em %@",
+      "tr": "%2$@ kanalında %1$@",
+      "zh-Hans": "%1$@ · %2$@"
+    },
+    "Reminder": {
+      "fr": "Rappel",
+      "pt": "Lembrete",
+      "tr": "Hatırlatıcı",
+      "zh-Hans": "提醒"
+    },
+    "Watch": {
+      "fr": "Regarder",
+      "pt": "Ver",
+      "tr": "İzle",
+      "zh-Hans": "观看"
     }
   },
   "plurals": {

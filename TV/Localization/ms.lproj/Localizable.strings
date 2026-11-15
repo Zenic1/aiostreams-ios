@@ -3,6 +3,7 @@
 "%@ (most Atmos setups)" = "%@ (kebanyakan susunan Atmos)";
 "%@ ch" = "%@ saluran";
 "%@ left" = "Baki %@";
+"%@ on %@" = "%1$@ di %2$@";
 "%@h %@m" = "%1$@j %2$@m";
 "%@m" = "%@m";
 "%@×" = "%@×";
@@ -21,6 +22,7 @@
 "Ads" = "Iklan";
 "All" = "Semua";
 "All channels" = "Semua saluran";
+"Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "Juga apabila anda kembali selepas setengah jam. Sesiapa yang menonton boleh meneruskan tanpa PIN mereka.";
 "Always" = "Sentiasa";
 "Amber" = "Ambar";
 "An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "Trek audio yang anda pilih semasa menonton rancangan menetapkan bahasa untuk episod yang lain. Pemilihan tetapan di atas akan melupakannya.";
@@ -36,6 +38,7 @@
 "Approving…" = "Meluluskan…";
 "Are you still watching?" = "Adakah anda masih menonton?";
 "Ask if you are still watching" = "Tanya jika anda masih menonton";
+"Ask when the app opens" = "Tanya apabila aplikasi dibuka";
 "At the credits" = "Semasa kredit";
 "Atmos and DTS:X" = "Atmos dan DTS:X";
 "Atmos and DTS:X speakers" = "Pembesar suara Atmos dan DTS:X";
@@ -70,7 +73,7 @@
 "Chapter %@" = "Bab %@";
 "Chapters" = "Bab";
 "Charcoal" = "Arang";
-"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start." = "Pilih rancangan yang sedang bersiaran untuk menonton salurannya, atau yang lebih awal bertanda ↺ untuk menontonnya dari awal.";
+"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start. Choosing one still to come reminds you as it starts." = "Pilih rancangan yang sedang bersiaran untuk menonton salurannya, atau yang lebih awal bertanda ↺ untuk menontonnya dari awal. Memilih rancangan yang akan datang mengingatkan anda apabila ia bermula.";
 "Choose a version" = "Pilih versi";
 "Close" = "Tutup";
 "Code" = "Kod";
@@ -92,6 +95,7 @@
 "Delay: %@" = "Lengah masa: %@";
 "Dialogue boost" = "Peningkatan Dialog";
 "Discover" = "Teroka";
+"Dismiss" = "Tutup";
 "Don't skip" = "Jangan langkau";
 "Earlier" = "Lebih awal";
 "Ended" = "Tamat";
@@ -160,6 +164,7 @@
 "Movies" = "Filem";
 "Movies, shows and channels" = "Filem, rancangan dan saluran";
 "Name" = "Nama";
+"Navigation" = "Navigasi";
 "Navy" = "Biru laut";
 "Near the end" = "Menjelang akhir";
 "Never" = "Tidak pernah";
@@ -217,6 +222,7 @@
 "Prevent accidental exit" = "Elak keluar secara tidak sengaja";
 "Previews" = "Pratonton";
 "Quick Connect" = "Sambungan Pantas";
+"Rail" = "Rel";
 "Raised" = "Dinaikkan";
 "Raised a little" = "Dinaikkan sedikit";
 "Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "Menaikkan saluran tengah, tempat bunyi keliling meletakkan dialog. Tidak terpakai untuk bunyi yang dilalui terus (passthrough).";
@@ -226,8 +232,10 @@
 "Red" = "Merah";
 "Release date" = "Tarikh keluaran";
 "Remember picks per show" = "Ingat pilihan mengikut rancangan";
+"Reminder" = "Peringatan";
 "Remove favourite" = "Keluarkan kegemaran";
 "Remove from continue watching" = "Keluarkan daripada teruskan menonton";
+"Report a problem" = "Laporkan masalah";
 "Request failed (%@)" = "Permintaan gagal (%@)";
 "Reset" = "Tetap semula";
 "Resume" = "Sambung semula";
@@ -246,6 +254,9 @@
 "Season %@" = "Musim %@";
 "See all" = "Lihat semua";
 "Seek bar previews" = "Pratonton bar kedudukan";
+"Sending…" = "Menghantar…";
+"Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out." = "Menghantar butiran Apple TV ini dan log terkini apl ke pelayan anda, tempat pengendalinya menemuinya dalam lognya. Kata laluan dan token tidak disertakan.";
+"Sent as %@" = "Dihantar sebagai %@";
 "Serif" = "Serif";
 "Server" = "Pelayan";
 "Server address" = "Alamat pelayan";
@@ -328,6 +339,7 @@
 "Today" = "Hari ini";
 "Tomorrow" = "Esok";
 "Too many requests. Try again shortly." = "Terlalu banyak permintaan. Cuba lagi sebentar nanti.";
+"Top bar" = "Bar atas";
 "Track %@" = "Trek %@";
 "Trailer" = "Treler";
 "Trailer sound" = "Bunyi treler";
@@ -343,6 +355,7 @@
 "Video" = "Video";
 "Violet" = "Ungu";
 "Wait for episodes to air" = "Tunggu episod disiarkan";
+"Watch" = "Tonton";
 "Watched" = "Ditonton";
 "What you watch shows here." = "Apa yang anda tonton dipaparkan di sini.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Kapasiti pembesar suara atau penerima anda.";

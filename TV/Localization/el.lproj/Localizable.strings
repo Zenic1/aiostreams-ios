@@ -3,6 +3,7 @@
 "%@ (most Atmos setups)" = "%@ (οι περισσότερες διατάξεις Atmos)";
 "%@ ch" = "%@ κανάλια";
 "%@ left" = "Υπόλοιπο: %@";
+"%@ on %@" = "%1$@ στο %2$@";
 "%@h %@m" = "%1$@ ώ. %2$@ λ.";
 "%@m" = "%@ λ.";
 "%@×" = "%@×";
@@ -21,6 +22,7 @@
 "Ads" = "Διαφημίσεις";
 "All" = "Όλα";
 "All channels" = "Όλα τα κανάλια";
+"Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "Επίσης, όταν επιστρέφεις μετά από μισή ώρα. Όποιος παρακολουθούσε συνεχίζει χωρίς να εισαγάγει PIN.";
 "Always" = "Πάντα";
 "Amber" = "Κεχριμπαρί";
 "An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "Το κομμάτι ήχου που επιλέγεις όσο παρακολουθείς μια σειρά ορίζει τη γλώσσα και για τα άλλα επεισόδιά της. Αν επιλέξεις αυτό που θα αναπαρήγαγαν οι παραπάνω ρυθμίσεις, η προτίμηση διαγράφεται.";
@@ -36,6 +38,7 @@
 "Approving…" = "Έγκριση…";
 "Are you still watching?" = "Συνεχίζεις να παρακολουθείς;";
 "Ask if you are still watching" = "Ερώτηση αν συνεχίζεις να παρακολουθείς";
+"Ask when the app opens" = "Ερώτηση κατά το άνοιγμα της εφαρμογής";
 "At the credits" = "Στους τίτλους τέλους";
 "Atmos and DTS:X" = "Atmos και DTS:X";
 "Atmos and DTS:X speakers" = "Ηχεία για Atmos και DTS:X";
@@ -70,7 +73,7 @@
 "Chapter %@" = "Κεφάλαιο %@";
 "Chapters" = "Κεφάλαια";
 "Charcoal" = "Ανθρακί";
-"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start." = "Επίλεξε ένα πρόγραμμα που προβάλλεται τώρα για να δεις το κανάλι του, ή ένα προηγούμενο με ↺ για να το δεις από την αρχή.";
+"Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start. Choosing one still to come reminds you as it starts." = "Επίλεξε ένα πρόγραμμα που προβάλλεται τώρα για να δεις το κανάλι του, ή ένα προηγούμενο με ↺ για να το δεις από την αρχή. Αν επιλέξεις ένα που έρχεται, θα σου το θυμίσει όταν ξεκινήσει.";
 "Choose a version" = "Επίλεξε έκδοση";
 "Close" = "Κλείσιμο";
 "Code" = "Κωδικός";
@@ -92,6 +95,7 @@
 "Delay: %@" = "Καθυστέρηση: %@";
 "Dialogue boost" = "Ενίσχυση διαλόγων";
 "Discover" = "Ανακάλυψη";
+"Dismiss" = "Απόρριψη";
 "Don't skip" = "Χωρίς παράλειψη";
 "Earlier" = "Νωρίτερα";
 "Ended" = "Ολοκληρώθηκε";
@@ -160,6 +164,7 @@
 "Movies" = "Ταινίες";
 "Movies, shows and channels" = "Ταινίες, σειρές και κανάλια";
 "Name" = "Όνομα";
+"Navigation" = "Πλοήγηση";
 "Navy" = "Ναυτικό μπλε";
 "Near the end" = "Κοντά στο τέλος";
 "Never" = "Ποτέ";
@@ -217,6 +222,7 @@
 "Prevent accidental exit" = "Αποτροπή κατά λάθος εξόδου";
 "Previews" = "Προεπισκοπήσεις";
 "Quick Connect" = "Γρήγορη σύνδεση";
+"Rail" = "Πλευρική στήλη";
 "Raised" = "Ψηλότερα";
 "Raised a little" = "Λίγο ψηλότερα";
 "Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "Ενισχύει το κεντρικό κανάλι, όπου βρίσκονται οι διάλογοι στον περιβάλλοντα ήχο. Δεν εφαρμόζεται στον ήχο που μεταβιβάζεται απευθείας.";
@@ -226,8 +232,10 @@
 "Red" = "Κόκκινο";
 "Release date" = "Ημερομηνία κυκλοφορίας";
 "Remember picks per show" = "Απομνημόνευση επιλογών ανά σειρά";
+"Reminder" = "Υπενθύμιση";
 "Remove favourite" = "Αφαίρεση από τα αγαπημένα";
 "Remove from continue watching" = "Αφαίρεση από τη συνέχεια παρακολούθησης";
+"Report a problem" = "Αναφορά προβλήματος";
 "Request failed (%@)" = "Το αίτημα απέτυχε (%@)";
 "Reset" = "Επαναφορά";
 "Resume" = "Συνέχιση";
@@ -246,6 +254,9 @@
 "Season %@" = "Σεζόν %@";
 "See all" = "Προβολή όλων";
 "Seek bar previews" = "Προεπισκοπήσεις στη γραμμή αναπαραγωγής";
+"Sending…" = "Γίνεται αποστολή…";
+"Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out." = "Στέλνει τα στοιχεία αυτού του Apple TV και το πρόσφατο αρχείο καταγραφής της εφαρμογής στον διακομιστή σου, όπου τα βρίσκει όποιος τον διαχειρίζεται στα αρχεία του. Οι κωδικοί και τα tokens παραλείπονται.";
+"Sent as %@" = "Στάλθηκε ως %@";
 "Serif" = "Με πατούρες";
 "Server" = "Διακομιστής";
 "Server address" = "Διεύθυνση διακομιστή";
@@ -328,6 +339,7 @@
 "Today" = "Σήμερα";
 "Tomorrow" = "Αύριο";
 "Too many requests. Try again shortly." = "Πάρα πολλά αιτήματα. Δοκίμασε ξανά σε λίγο.";
+"Top bar" = "Επάνω γραμμή";
 "Track %@" = "Κομμάτι %@";
 "Trailer" = "Τρέιλερ";
 "Trailer sound" = "Ήχος τρέιλερ";
@@ -343,6 +355,7 @@
 "Video" = "Βίντεο";
 "Violet" = "Βιολετί";
 "Wait for episodes to air" = "Αναμονή για την προβολή επεισοδίων";
+"Watch" = "Παρακολούθηση";
 "Watched" = "Τα έχω δει";
 "What you watch shows here." = "Ό,τι παρακολουθείς εμφανίζεται εδώ.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Τι υποστηρίζουν τα ηχεία ή ο ενισχυτής σου. Ο περιβάλλων ήχος με περισσότερα κανάλια μετατρέπεται σε λιγότερα, διατηρώντας τους διαλόγους.";

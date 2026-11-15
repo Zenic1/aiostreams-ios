@@ -362,7 +362,7 @@ struct ItemBackdrop: View {
 
     var body: some View {
         GeometryReader { geometry in
-            let width = min(geometry.size.width + Theme.px(80), Self.height * 2.6)
+            let width = min(geometry.size.width + Theme.railInset, Self.height * 2.6)
             ZStack(alignment: .bottom) {
                 RemoteImage(url: session.client?.backdrop(item, height: 1080))
                     .frame(width: width, height: Self.height)
@@ -418,7 +418,7 @@ struct ItemBackdrop: View {
             .frame(height: Self.height)
         }
         .frame(height: Self.height)
-        .padding(.leading, -Theme.px(80))
+        .padding(.leading, -Theme.railInset)
         .ignoresSafeArea()
         .allowsHitTesting(false)
     }
