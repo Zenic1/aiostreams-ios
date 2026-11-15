@@ -158,8 +158,12 @@ struct VersionsView: View {
         error = nil
         if refresh { info = nil }
         do {
-            var result = try await (refresh ? nil : VersionSearches.take(item.id))?.value
-                ?? client.playbackInfo(userId: userId, itemId: item.id, refresh: refresh)
+            var result: PlaybackInfo
+            if !refresh, let started = VersionSearches.take(item.id), let found = try? await started.value {
+                result = found
+            } else {
+                result = try await client.playbackInfo(userId: userId, itemId: item.id, refresh: refresh)
+            }
             // Versions only the app's own player could open from YouTube aren't offered here.
             result.mediaSources = result.mediaSources?.filter { $0.aiostreams?.ytId == nil }
             info = result
