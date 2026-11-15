@@ -31,7 +31,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/superuser404notfound/AetherEngine",
-            exact: "7.67.1",
+            exact: "7.68.0",
             traits: ["DolbyVisionFelCurves"]
         ),
     ],
