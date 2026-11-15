@@ -106,6 +106,67 @@ final class Preferences: ObservableObject {
         return languages(list: "SubtitleLanguages", one: "SubtitleLanguagePreference")
     }
 
+    // MARK: Track choice, in the user's configuration as the web app keeps it
+
+    /// The type rankings, where the server keeps them (nil where it doesn't, as the web app hides them then).
+    var audioTypes: [AudioKind]? {
+        (configuration["AudioTypes"] as? [String]).map { saved in
+            let ranked = saved.compactMap(AudioKind.init(rawValue:))
+            return ranked + AudioKind.allCases.filter { !ranked.contains($0) }
+        }
+    }
+
+    var subtitleTypes: [SubtitleKind]? {
+        (configuration["SubtitleTypes"] as? [String]).map { saved in
+            let ranked = saved.compactMap(SubtitleKind.init(rawValue:))
+            return ranked + SubtitleKind.allCases.filter { !ranked.contains($0) }
+        }
+    }
+
+    var rememberAudio: Bool { configuration["RememberAudioSelections"] as? Bool ?? true }
+    var rememberSubtitles: Bool { configuration["RememberSubtitleSelections"] as? Bool ?? true }
+    /// The player's subtitle list shows only the user's languages, where the server has the setting.
+    var listOnlyMyLanguages: Bool? { configuration["ListPreferredSubtitlesOnly"] as? Bool }
+
+    /// The account's track rules, before a show's pick.
+    func trackRules(audioLanguages: [String]? = nil) -> TrackRules {
+        TrackRules(
+            audioLanguages: audioLanguages ?? self.audioLanguages,
+            subtitleLanguages: languages(list: "SubtitleLanguages", one: "SubtitleLanguagePreference"),
+            subtitleMode: subtitleMode,
+            audioTypes: audioTypes ?? AudioKind.allCases,
+            subtitleTypes: subtitleTypes ?? SubtitleKind.allCases,
+            playDefaultAudio: configuration["PlayDefaultAudioTrack"] as? Bool ?? true
+        )
+    }
+
+    // MARK: Sound, kept on this Apple TV (the web app's device settings)
+
+    /// `auto`, `stereo`, `5.1` or `7.1`: what the speakers or receiver take.
+    @Published var audioChannels: String = UserDefaults.standard.string(forKey: "audio.channels") ?? "auto" {
+        didSet { UserDefaults.standard.set(audioChannels, forKey: "audio.channels") }
+    }
+    /// Raises the centre channel by this many dB: 0, 3, 6, 9 or 12.
+    @Published var dialogueBoost: Int = UserDefaults.standard.integer(forKey: "audio.dialogueBoost") {
+        didSet { UserDefaults.standard.set(dialogueBoost, forKey: "audio.dialogueBoost") }
+    }
+    @Published var nightMode: Bool = UserDefaults.standard.bool(forKey: "audio.nightMode") {
+        didSet { UserDefaults.standard.set(nightMode, forKey: "audio.nightMode") }
+    }
+    /// Milliseconds, -1000 to 1000; positive plays the sound later than the picture.
+    @Published var audioDelayMs: Int = UserDefaults.standard.integer(forKey: "audio.delayMs") {
+        didSet { UserDefaults.standard.set(audioDelayMs, forKey: "audio.delayMs") }
+    }
+
+    /// What the engine shapes the sound with, for these settings.
+    var audioShaping: AudioShaping {
+        AudioShaping(
+            maxChannels: ["stereo": 2, "5.1": 6, "7.1": 8][audioChannels],
+            dialogueGainDB: Double(dialogueBoost),
+            compressor: nightMode ? .night : nil
+        )
+    }
+
     var heroSeconds: Double { number("heroSeconds", 9) }
 
     // MARK: Interface, under the web app's keys (lib/settings)
@@ -322,12 +383,6 @@ struct SettingsView: View {
             VStack(alignment: .leading, spacing: Theme.px(28)) {
                 PageTitle(text: L("Settings"))
                 section(L("Playback"), note: L("Saved to your account, so the web app and your other devices use them too.")) {
-                    row(L("Audio language"), value: listLabel(prefs.languages(list: "AudioLanguages", one: "AudioLanguagePreference"), none: L("The file's default"))) {
-                        chooseLanguage(L("Audio language"), list: "AudioLanguages", one: "AudioLanguagePreference", original: true)
-                    }
-                    row(L("Subtitle language"), value: listLabel(prefs.languages(list: "SubtitleLanguages", one: "SubtitleLanguagePreference"), none: L("Any"))) {
-                        chooseLanguage(L("Subtitle language"), list: "SubtitleLanguages", one: "SubtitleLanguagePreference", original: false)
-                    }
                     toggle(L("Auto-play the first version"), key: "autoPlayFirst", fallback: false)
                     Text(prefs.autoPlayFirst
                         ? L("Play starts the first version, and resuming goes back to the version you were watching. Hold select on a title and choose Choose a version to pick instead.")
@@ -335,6 +390,25 @@ struct SettingsView: View {
                         .font(Theme.font(Theme.sm))
                         .foregroundStyle(Theme.gray400)
                         .padding(.horizontal, Theme.px(16))
+                }
+                // The web app's Audio and Subtitles pages: the account's languages and track choice.
+                section(L("Audio"), note: L("Saved to your account, so the web app and your other devices use them too.")) {
+                    row(L("Audio language"), value: listLabel(prefs.languages(list: "AudioLanguages", one: "AudioLanguagePreference"), none: L("The file's default"))) {
+                        chooseLanguage(L("Audio language"), list: "AudioLanguages", one: "AudioLanguagePreference", original: true)
+                    }
+                    if let types = prefs.audioTypes {
+                        row(L("Audio types"), value: types.map(\.label).joined(separator: " › ")) {
+                            rank(L("Audio types"), types.map { ($0.label, $0.rawValue) }) { prefs.configure(["AudioTypes": $0]) }
+                        }
+                        note(L("When a version has more than one kind of audio track, the first of these it has plays."))
+                    }
+                    configToggle(L("Remember picks per show"), key: "RememberAudioSelections", on: prefs.rememberAudio)
+                    note(L("An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it."))
+                }
+                section(L("Subtitles"), note: nil) {
+                    row(L("Subtitle language"), value: listLabel(prefs.languages(list: "SubtitleLanguages", one: "SubtitleLanguagePreference"), none: L("Any"))) {
+                        chooseLanguage(L("Subtitle language"), list: "SubtitleLanguages", one: "SubtitleLanguagePreference", original: false)
+                    }
                     row(L("Subtitles"), value: modeName(prefs.subtitleMode)) {
                         chooser = Chooser(
                             title: L("Subtitles"),
@@ -342,6 +416,18 @@ struct SettingsView: View {
                             current: prefs.subtitleMode
                         ) { prefs.configure(["SubtitleMode": $0]) }
                     }
+                    if let types = prefs.subtitleTypes {
+                        row(L("Subtitle types"), value: types.map(\.label).joined(separator: " › ")) {
+                            rank(L("Subtitle types"), types.map { ($0.label, $0.rawValue) }) { prefs.configure(["SubtitleTypes": $0]) }
+                        }
+                        note(L("When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last."))
+                    }
+                    if let only = prefs.listOnlyMyLanguages {
+                        configToggle(L("List only my languages"), key: "ListPreferredSubtitlesOnly", on: only)
+                        note(L("The player's subtitle menu lists subtitles in your languages, ones without a language and the one on. The rest wait under More languages."))
+                    }
+                    configToggle(L("Remember picks per show"), key: "RememberSubtitleSelections", on: prefs.rememberSubtitles)
+                    note(L("Subtitles you pick or turn off while watching a show stay that way for its other episodes. Picking what the settings above would show forgets it."))
                 }
                 section(L("Skipping and the next episode"), note: L("Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration.")) {
                     ForEach([("Intro", L("Intros")), ("Recap", L("Recaps")), ("Outro", L("Credits")), ("Preview", L("Previews")), ("Commercial", L("Ads"))], id: \.0) { entry in
@@ -411,9 +497,13 @@ struct SettingsView: View {
                     toggle(L("Bold"), key: "subtitleBold", fallback: false)
                     synced(L("Outline"), key: "subtitleOutline", fallback: "normal",
                            options: [(L("None"), "none"), (L("Thin"), "thin"), (L("Normal"), "normal"), (L("Thick"), "thick")])
+                    synced(L("Outline colour"), key: "subtitleOutlineColor", fallback: "#000000", options: subtitleColours)
                     toggle(L("Shadow"), key: "subtitleShadow", fallback: false)
                     synced(L("Background"), key: "subtitleBackgroundOpacity", fallback: "0",
                            options: [(L("None"), "0"), (L("Faint"), "25"), (L("Half"), "50"), (L("Strong"), "75"), (L("Solid"), "100")])
+                    if prefs.number("subtitleBackgroundOpacity", 0) > 0 {
+                        synced(L("Background colour"), key: "subtitleBackgroundColor", fallback: "#000000", options: subtitleColours)
+                    }
                     synced(L("Height"), key: "subtitlePosition", fallback: "0",
                            options: [(L("Lowest"), "-3"), (L("Normal"), "0"), (L("Raised a little"), "5"), (L("Raised"), "10"), (L("High"), "20")])
                     toggle(L("Override styled subtitles"), key: "subtitleOverrideStyled", fallback: false)
@@ -423,8 +513,29 @@ struct SettingsView: View {
                         .padding(.top, Theme.px(8))
                 }
                 // Only a build with the height channel components has anything to set here.
+                // The web app's Output and Sound cards, kept on this Apple TV.
+                section(L("Sound"), note: L("Kept on this Apple TV.")) {
+                    row(L("Channels"), value: channelName(prefs.audioChannels)) {
+                        chooser = Chooser(title: L("Channels"), options: ["auto", "stereo", "5.1", "7.1"].map { (channelName($0), $0) },
+                                          current: prefs.audioChannels) { prefs.audioChannels = $0 }
+                    }
+                    note(L("What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in."))
+                    row(L("Dialogue boost"), value: boostName(prefs.dialogueBoost)) {
+                        chooser = Chooser(title: L("Dialogue boost"), options: [0, 3, 6, 9, 12].map { (boostName($0), String($0)) },
+                                          current: String(prefs.dialogueBoost)) { prefs.dialogueBoost = Int($0) ?? 0 }
+                    }
+                    note(L("Raises the centre channel, where surround sound puts dialogue. Not for sound passed through."))
+                    row(L("Night mode"), value: prefs.nightMode ? L("On") : L("Off")) { prefs.nightMode.toggle() }
+                    note(L("Evens out loud and quiet scenes, for listening at a low volume. Not for sound passed through."))
+                    row(L("Delay: %@", delayName(prefs.audioDelayMs)), value: "") {
+                        chooser = Chooser(title: L("Delay: %@", delayName(prefs.audioDelayMs)),
+                                          options: stride(from: -1000, through: 1000, by: 50).map { (delayName($0), String($0)) },
+                                          current: String(prefs.audioDelayMs)) { prefs.audioDelayMs = Int($0) ?? 0 }
+                    }
+                    note(L("Below zero plays the sound earlier, as for wireless headphones that lag behind the picture."))
+                }
                 if AetherEngine.OptionalComponent.trueHDObjectAudio.isBuiltIn || AetherEngine.OptionalComponent.dtsxObjectAudio.isBuiltIn {
-                    section(L("Audio"), note: L("TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6.")) {
+                    section(L("Atmos and DTS:X"), note: L("TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6.")) {
                         row(L("Atmos and DTS:X speakers"), value: speakerName(prefs.speakerChoice)) {
                             var options: [(label: String, value: String)] = [(label: L("Off: play the 7.1 channels"), value: "off")]
                             for layout in SpatialSpeakerLayout.allCases {
@@ -628,6 +739,42 @@ struct SettingsView: View {
         let views: ItemsResult? = try? await client.get("/UserViews", ["userId": userId])
         featuredOptions = [(L("Continue watching"), "resume"), (L("Next up"), "next-up")]
             + (views?.items ?? []).filter(isBrowsable).map { ($0.name ?? L("Library"), "view:\($0.id)") }
+    }
+
+    private func note(_ text: String) -> some View {
+        Text(text)
+            .font(Theme.font(Theme.sm))
+            .foregroundStyle(Theme.gray400)
+            .padding(.horizontal, Theme.px(16))
+    }
+
+    /// A switch in the user's Jellyfin configuration, which the web app shares.
+    private func configToggle(_ title: String, key: String, on: Bool) -> some View {
+        row(title, value: on ? L("On") : L("Off")) { prefs.configure([key: !on]) }
+    }
+
+    /// An order to pick from: the one chosen goes first, the rest keep theirs.
+    private func rank(_ title: String, _ items: [(label: String, value: String)], save: @escaping ([String]) -> Void) {
+        chooser = Chooser(
+            title: title,
+            options: items.enumerated().map { ("\($0.offset + 1). \($0.element.label)", $0.element.value) },
+            current: items.first?.value ?? ""
+        ) { first in save([first] + items.map(\.value).filter { $0 != first }) }
+    }
+
+    private var subtitleColours: [(String, String)] {
+        [(L("Black"), "#000000"), (L("White"), "#ffffff"), (L("Light grey"), "#d1d1d1"), (L("Yellow"), "#ffff00"),
+         (L("Cyan"), "#00ffff"), (L("Green"), "#00ff00")]
+    }
+
+    private func channelName(_ value: String) -> String {
+        ["stereo": L("Stereo"), "5.1": L("5.1 surround"), "7.1": L("7.1 surround")][value] ?? L("Automatic")
+    }
+
+    private func boostName(_ db: Int) -> String { db == 0 ? L("Off") : L("+%@ dB", String(db)) }
+
+    private func delayName(_ ms: Int) -> String {
+        ms == 0 ? L("In sync") : ms > 0 ? L("+%@ ms", String(ms)) : L("−%@ ms", String(-ms))
     }
 
     private func speakerName(_ value: String) -> String {

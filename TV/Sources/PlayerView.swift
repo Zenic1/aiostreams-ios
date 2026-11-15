@@ -90,8 +90,14 @@ final class PlayerModel: ObservableObject {
     private var reported = false
     private var stopped = false
 
-    private let audioLanguages: [String]
-    private let subtitleLanguages: [String]
+    /// The account's track rules with the show's pick, and whether a pick here is remembered.
+    let tracks: TrackRules
+    private let baseTracks: TrackRules
+    private let remember: (audio: Bool, subtitles: Bool)
+    private let audioShaping: AudioShaping
+    private let defaultAudioDelay: Double
+    /// The audio stream picked before the load, where the server describes the streams.
+    private var audioStreamIndex: Int32?
     private let speakers: SpatialSpeakerLayout?
     private let animeUpscaling: Bool
     private let rules: PlayerRules
@@ -99,14 +105,19 @@ final class PlayerModel: ObservableObject {
     private var serverSegments: [MediaSegment] = []
     private let userId: String?
 
-    init(request: PlayRequest, client: JellyfinClient, audioLanguages: [String] = [], subtitleLanguages: [String] = [],
+    init(request: PlayRequest, client: JellyfinClient, tracks: TrackRules = TrackRules(), baseTracks: TrackRules = TrackRules(),
+         remember: (audio: Bool, subtitles: Bool) = (true, true), audioShaping: AudioShaping = AudioShaping(),
+         audioDelay: Double = 0,
          look: SubtitleLook = SubtitleLook(), speakers: SpatialSpeakerLayout? = .l714, animeUpscaling: Bool = false,
          userId: String? = nil, rules: PlayerRules = PlayerRules()) {
         self.request = request
         isLive = request.source.isInfiniteStream == true || request.item.isChannel
         self.client = client
-        self.audioLanguages = audioLanguages
-        self.subtitleLanguages = subtitleLanguages
+        self.tracks = tracks
+        self.baseTracks = baseTracks
+        self.remember = remember
+        self.audioShaping = audioShaping
+        defaultAudioDelay = audioDelay
         self.speakers = speakers
         self.animeUpscaling = animeUpscaling
         self.rules = rules
@@ -183,22 +194,37 @@ final class PlayerModel: ObservableObject {
         // Serves Dolby Vision profile 8 as profile 5 on a TV without Dolby Vision; ignored on one with it.
         options.forceDolbyVisionOnNonDVDisplay = true
         options.externalSubtitles = serverSubtitles()
-        // The account's languages and subtitle mode, as the web app passes them to its players.
-        options.preferredAudioLanguages = audioLanguages
-        options.preferredSubtitleLanguages = subtitleLanguages
-        // A channel starts without subtitles, and with the tracks picked on it before (as the web app).
-        if request.item.isChannel {
-            let picked = ChannelTracks.get(request.item.id)
-            if let audio = picked.audio { options.preferredAudioLanguages = [audio] + audioLanguages.filter { $0 != audio } }
-            options.preferredSubtitleLanguages = picked.subtitle.map { [$0] } ?? []
+        // The tracks the web app would start with: the account's languages and track types, with
+        // the show's pick first. Where the server describes the version's streams, the pick is made
+        // here; otherwise the engine matches the languages itself.
+        let streams = request.source.mediaStreams ?? []
+        options.preferredAudioLanguages = tracks.audioLanguages
+        let audio = tracks.audioStream(in: streams)
+        audioStreamIndex = audio?.index.map(Int32.init)
+        let heard = (audio ?? streams.first { $0.type == "Audio" && $0.isDefault == true }
+                     ?? streams.first { $0.type == "Audio" })?.language
+        if streams.contains(where: { $0.type == "Subtitle" }) {
+            options.preferredSubtitleLanguages = []
+            if let subtitle = tracks.subtitleStream(in: streams, audioLanguage: heard), let index = subtitle.index {
+                let external = serverStreams()
+                options.initialSubtitleTrackID = subtitle.isExternal == true
+                    ? external.firstIndex(of: subtitle).map { AetherEngine.externalSubtitleTrackIDBase + $0 }
+                    : index
+                options.preferredSubtitleLanguages = subtitle.language.map { [$0] } ?? []
+            }
+        } else {
+            options.preferredSubtitleLanguages = ["None", "OnlyForced"].contains(tracks.subtitleMode) ? [] : tracks.subtitleLanguages
         }
+        // Sound shaped as the Apple TV's settings ask, and its usual delay.
+        options.audioShaping = audioShaping
+        options.audioDelaySeconds = defaultAudioDelay
         // TrueHD Atmos and DTS:X with their heights, rendered for the receiver's speakers and sent to it
         // as Dolby MAT (tvOS 26 and later); off, they play as their 7.1 channels.
         options.objectAudioRendering = speakers.map { .render($0) } ?? .off
         options.isLive = isLive
 
-        // The engine is shared: a title starts in sync, whatever the last one was set to.
-        engine.setAudioDelay(0)
+        // The engine is shared: a title starts at the usual delay, whatever the last one was set to.
+        audioDelay = defaultAudioDelay
         overview = request.item.overview
         Task { [weak self] in await self?.loadExtras() }
         AppLog.info("player", "load \(request.item.id) source=\(request.source.ownId) host=\(url.host ?? "?")")
@@ -213,7 +239,8 @@ final class PlayerModel: ObservableObject {
                     AppLog.info("player", "anime upscaling on")
                 }
                 let start = self.isLive ? nil : self.request.startMs.map { $0 / 1000 }
-                try await self.engine.load(url: url, startPosition: start, options: loadOptions)
+                try await self.engine.load(url: url, startPosition: start, options: loadOptions,
+                                           audioSourceStreamIndex: self.audioStreamIndex)
                 self.engine.play()
                 self.report("/Sessions/Playing")
                 self.progressTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
@@ -352,11 +379,18 @@ final class PlayerModel: ObservableObject {
         return (result?.items ?? []).contains(where: \.hasAnimeIds)
     }
 
+    /// The server's external subtitle streams, in the order they're registered with the engine.
+    private func serverStreams() -> [MediaStream] {
+        (request.source.mediaStreams ?? []).filter { stream in
+            stream.type == "Subtitle" && stream.isExternal == true
+                && stream.deliveryUrl.flatMap { client.absolute($0) } != nil
+        }
+    }
+
     /// The configuration's subtitle addons' files, registered as tracks the user can pick.
     private func serverSubtitles() -> [ExternalSubtitleTrack] {
-        (request.source.mediaStreams ?? []).compactMap { stream in
-            guard stream.type == "Subtitle", stream.isExternal == true,
-                  let address = stream.deliveryUrl, let url = client.absolute(address) else { return nil }
+        serverStreams().compactMap { stream in
+            guard let address = stream.deliveryUrl, let url = client.absolute(address) else { return nil }
             return ExternalSubtitleTrack(
                 url: url,
                 name: stream.displayTitle ?? stream.title,
@@ -541,16 +575,32 @@ final class PlayerModel: ObservableObject {
 
     func selectAudio(_ id: Int) {
         engine.selectAudioTrack(index: id)
-        if request.item.isChannel, let language = audioTracks.first(where: { $0.id == id })?.language {
-            ChannelTracks.setAudio(request.item.id, language)
+        // Kept for the show's other episodes; picking what the settings would play forgets it.
+        if remember.audio, let userId, let language = LanguageCodes.normal(audioTracks.first(where: { $0.id == id })?.language) {
+            let usual = LanguageCodes.normal(LanguageCodes.first(baseTracks.audioLanguages, in: audioTracks, language: \.language)?.first?.language)
+            ShowPicks.shared.save(for: request.item, audio: .some(language == usual ? nil : language), subtitle: nil,
+                                  client: client, userId: userId)
         }
         report("/Sessions/Playing/Progress", event: "AudioTrackChange")
     }
 
     func selectSubtitle(_ id: Int?) {
         if let id { engine.selectSubtitleTrack(index: id) } else { engine.clearSubtitle() }
-        if request.item.isChannel {
-            ChannelTracks.setSubtitle(request.item.id, id.flatMap { id in subtitleTracks.first { $0.id == id }?.language })
+        if remember.subtitles, let userId {
+            let track = id.flatMap { id in subtitleTracks.first { $0.id == id } }
+            let pick: String?
+            if let track {
+                let language = LanguageCodes.normal(track.language) ?? ""
+                let kind = SubtitleKind.of(title: track.name, forced: track.isForced, hearingImpaired: track.isHearingImpaired)
+                pick = kind.map { $0 == .normal ? language : "\(language):\($0.rawValue)" } ?? language
+            } else {
+                pick = "off"
+            }
+            // Picking what the settings would show forgets the pick.
+            let usual = LanguageCodes.first(baseTracks.subtitleLanguages, in: subtitleTracks, language: \.language)?.first
+            let wouldShow = !["None", "OnlyForced"].contains(baseTracks.subtitleMode)
+            let same = track.map { $0.id == usual?.id && wouldShow } ?? !wouldShow
+            ShowPicks.shared.save(for: request.item, audio: nil, subtitle: .some(same ? nil : pick), client: client, userId: userId)
         }
         report("/Sessions/Playing/Progress", event: "SubtitleTrackChange")
     }
@@ -618,28 +668,6 @@ struct VideoSurface: UIViewRepresentable {
     func updateUIView(_ uiView: UIView, context: Context) {}
 }
 
-
-/// The audio and subtitle languages picked on each channel, kept on this Apple TV, which the
-/// channel starts with next time; without a pick, it starts without subtitles.
-enum ChannelTracks {
-    private static let key = "live.tracks"
-
-    static func get(_ channel: String) -> (audio: String?, subtitle: String?) {
-        let saved = (UserDefaults.standard.dictionary(forKey: key) as? [String: [String: String]])?[channel] ?? [:]
-        return (saved["audio"], saved["subtitle"])
-    }
-
-    static func setAudio(_ channel: String, _ language: String) { set(channel, "audio", language) }
-    static func setSubtitle(_ channel: String, _ language: String?) { set(channel, "subtitle", language) }
-
-    private static func set(_ channel: String, _ field: String, _ value: String?) {
-        var all = (UserDefaults.standard.dictionary(forKey: key) as? [String: [String: String]]) ?? [:]
-        var entry = all[channel] ?? [:]
-        entry[field] = value
-        all[channel] = entry
-        UserDefaults.standard.set(all, forKey: key)
-    }
-}
 
 /// A chapter as the player lists it: from the file, or from the server with its picture.
 struct PlayerChapter: Identifiable, Hashable {

@@ -5,8 +5,12 @@
 "%@ left" = "Baki %@";
 "%@h %@m" = "%1$@j %2$@m";
 "%@m" = "%@m";
+"+%@ dB" = "+%@ dB";
+"+%@ ms" = "+%@ ms";
 "12-hour" = "12 jam";
 "24-hour" = "24 jam";
+"5.1 surround" = "Bunyi sekeliling 5.1";
+"7.1 surround" = "Bunyi sekeliling 7.1";
 "About" = "Perihal";
 "Accent colour" = "Warna aksen";
 "Account" = "Akaun";
@@ -18,6 +22,7 @@
 "All channels" = "Semua saluran";
 "Always" = "Sentiasa";
 "Amber" = "Ambar";
+"An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "Trek audio yang anda pilih semasa menonton rancangan menetapkan bahasa untuk episod yang lain. Pemilihan tetapan di atas akan melupakannya.";
 "An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License." = "Apl tidak rasmi, tidak bergabung dengan AIOStreams atau AetherEngine. AGPL-3.0; AetherEngine ialah LGPL-3.0, FFmpeg LGPL-2.1+, libdovi dan Anime4K (Copyright (c) 2019-2021 bloc97) MIT, dan fon Inter di bawah SIL Open Font License.";
 "Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title." = "Anime sehingga 1080p dipertingkatkan untuk TV anda dengan rangkaian line-art Anime4K, untuk garisan yang lebih tajam. Terpakai pada tajuk dengan ID pangkalan data anime, dan hanya video SDR. Perubahan berkuat kuasa dari tajuk seterusnya.";
 "Anime upscaling" = "Peningkatan skala anime";
@@ -31,17 +36,22 @@
 "Are you still watching?" = "Adakah anda masih menonton?";
 "Ask if you are still watching" = "Tanya jika anda masih menonton";
 "At the credits" = "Semasa kredit";
+"Atmos and DTS:X" = "Atmos dan DTS:X";
 "Atmos and DTS:X speakers" = "Pembesar suara Atmos dan DTS:X";
 "Audio" = "Audio";
 "Audio description" = "Penerangan audio";
+"Audio description, narrating what is on screen" = "Penerangan audio, menceritakan apa yang ada pada skrin";
 "Audio language" = "Bahasa audio";
+"Audio types" = "Jenis audio";
 "Auto-play the first version" = "Main secara automatik versi pertama";
 "Automatic" = "Automatik";
 "Back" = "Kembali";
 "Back on Home leaves the app straight away." = "Kembali di Laman utama terus keluar daripada apl.";
 "Back on Home shows “Press Back again to leave”, and only a second press leaves the app." = "Kembali di Laman utama memaparkan “Tekan Kembali sekali lagi untuk keluar”, dan hanya tekanan kedua yang keluar daripada apl.";
 "Background" = "Latar Belakang";
+"Background colour" = "Warna latar belakang";
 "Background from artwork" = "Latar belakang daripada karya seni";
+"Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "Nilai bawah kosong memainkan bunyi lebih awal, sesuai untuk fon kepala tanpa wayar yang mengalami lengah masa.";
 "Black" = "Hitam";
 "Blue" = "Biru";
 "Blur episodes you haven't started" = "Kaburkan episod yang belum anda tonton";
@@ -75,12 +85,15 @@
 "Cyan" = "Sian";
 "Date added" = "Tarikh ditambah";
 "Default" = "Lalai";
+"Delay: %@" = "Lengah masa: %@";
+"Dialogue boost" = "Peningkatan Dialog";
 "Discover" = "Teroka";
 "Don't skip" = "Jangan langkau";
 "Earlier" = "Lebih awal";
 "Ended" = "Tamat";
 "Enter the code the other device shows to sign it in to this account." = "Masukkan kod yang dipaparkan oleh peranti lain untuk melog masuknya ke akaun ini.";
 "Episodes" = "Episod";
+"Evens out loud and quiet scenes, for listening at a low volume. Not for sound passed through." = "Menseimbangkan babak kuat dan perlahan, untuk pendengaran pada kelantangan rendah.";
 "Faint" = "Samar";
 "Favourites" = "Kegemaran";
 "Featured on home" = "Ditampilkan di laman utama";
@@ -90,8 +103,10 @@
 "Follows the selected card, compact" = "Mengikut kad yang dipilih, padat";
 "Font" = "Fon";
 "Forced" = "Paksaan";
+"Forced, for foreign parts only" = "Paksaan, untuk bahagian bahasa asing sahaja";
 "Forest" = "Hutan";
 "From the start" = "Dari permulaan";
+"Full" = "Penuh";
 "Go to show" = "Pergi ke rancangan";
 "Green" = "Hijau";
 "Guide" = "Panduan";
@@ -116,9 +131,11 @@
 "Library" = "Pustaka";
 "Light grey" = "Kelabu cerah";
 "List" = "Senarai";
+"List only my languages" = "Senaraikan bahasa saya sahaja";
 "Live" = "Langsung";
 "Live TV" = "TV Langsung";
 "Lowest" = "Paling rendah";
+"Main" = "Utama";
 "Mark unwatched" = "Tanda belum ditonton";
 "Mark watched" = "Tanda telah ditonton";
 "Mark watched up to here" = "Tanda telah ditonton sehingga sini";
@@ -129,6 +146,7 @@
 "Monospace" = "Monospace";
 "More channels" = "Lagi saluran";
 "More info" = "Maklumat lanjut";
+"More languages" = "Lagi bahasa";
 "More like this" = "Lagi seperti ini";
 "Movies" = "Filem";
 "Movies, shows and channels" = "Filem, rancangan dan saluran";
@@ -140,6 +158,7 @@
 "Next episode" = "Episod seterusnya";
 "Next up" = "Seterusnya";
 "Next: %@" = "Seterusnya: %@";
+"Night mode" = "Mod malam";
 "No channels in this group." = "Tiada saluran dalam kumpulan ini.";
 "No guide for this channel" = "Tiada panduan untuk saluran ini";
 "No playable versions found. Only streams with a link play: use debrid or Usenet." = "Tiada versi yang boleh dimainkan ditemui. Hanya strim dengan pautan dimainkan: gunakan debrid atau Usenet.";
@@ -163,6 +182,7 @@
 "Original language" = "Bahasa asal";
 "Other user" = "Pengguna lain";
 "Outline" = "Garis luar";
+"Outline colour" = "Warna garis luar";
 "Override styled subtitles" = "Atasi sari kata bergaya";
 "Password" = "Kata laluan";
 "Password for %@" = "Kata laluan untuk %@";
@@ -190,11 +210,13 @@
 "Quick Connect" = "Sambungan Pantas";
 "Raised" = "Dinaikkan";
 "Raised a little" = "Dinaikkan sedikit";
+"Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "Menaikkan saluran tengah, tempat bunyi keliling meletakkan dialog. Tidak terpakai untuk bunyi yang dilalui terus (passthrough).";
 "Rating" = "Penilaian";
 "Recaps" = "Imbas Kembali";
 "Recent" = "Terkini";
 "Red" = "Merah";
 "Release date" = "Tarikh keluaran";
+"Remember picks per show" = "Ingat pilihan mengikut rancangan";
 "Remove favourite" = "Keluarkan kegemaran";
 "Remove from continue watching" = "Keluarkan daripada teruskan menonton";
 "Request failed (%@)" = "Permintaan gagal (%@)";
@@ -204,6 +226,7 @@
 "Resume from %@" = "Sambung dari %@";
 "Rotates through featured titles" = "Bertukar melalui tajuk pilihan";
 "Runtime" = "Tempoh tayangan";
+"SDH, with sounds described" = "SDH, dengan penerangan bunyi";
 "Sans serif" = "Sans serif";
 "Saved to your account, so the web app and your other devices use them too." = "Disimpan pada akaun anda, supaya apl web dan peranti anda yang lain turut menggunakannya.";
 "Search" = "Cari";
@@ -228,6 +251,7 @@
 "Signed in as" = "Log masuk sebagai";
 "Signed out. Sign in again." = "Telah log keluar. Log masuk semula.";
 "Signing in…" = "Log masuk…";
+"Signs and songs" = "Tanda dan lagu";
 "Size" = "Saiz";
 "Skip" = "Langkau";
 "Skip ad" = "Langkau iklan";
@@ -252,6 +276,7 @@
 "Small" = "Kecil";
 "Smart: when the audio isn't in your language" = "Pintar: apabila audio bukan dalam bahasa anda";
 "Solid" = "Padu";
+"Sound" = "Bunyi";
 "Speed" = "Kelajuan";
 "Start page" = "Halaman permulaan";
 "Stereo" = "Stereo";
@@ -259,7 +284,9 @@
 "Strong" = "Kuat";
 "Subtitle language" = "Bahasa sari kata";
 "Subtitle style" = "Gaya sari kata";
+"Subtitle types" = "Jenis sarikata";
 "Subtitles" = "Sarikata";
+"Subtitles you pick or turn off while watching a show stay that way for its other episodes. Picking what the settings above would show forgets it." = "Sari kata yang anda pilih atau matikan semasa menonton rancangan akan kekal sedemikian untuk episod yang lain. Pemilihan tetapan di atas akan melupakannya.";
 "Switch user" = "Tukar pengguna";
 "System (%@)" = "Sistem (%@)";
 "Teal" = "Hijau kebiruan";
@@ -270,6 +297,7 @@
 "The file's default" = "Lalai fail";
 "The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer." = "Episod seterusnya dimainkan dalam versi yang sepadan dengan yang anda tonton. Jika tiada yang sepadan, yang pertama dimainkan, atau jika itu dimatikan, versi-versi disenaraikan. Kembali menyembunyikan tawaran.";
 "The player's own" = "Lalai pemain";
+"The player's subtitle menu lists subtitles in your languages, ones without a language and the one on. The rest wait under More languages." = "Menu sarikata pemain menyenaraikan sarikata dalam bahasa anda.";
 "The same style as the web app's, on every device you sign in to." = "Gaya yang sama seperti apl web, pada setiap peranti yang anda log masuk.";
 "The server refused this." = "Pelayan menolak ini.";
 "The server sent something unexpected." = "Pelayan menghantar sesuatu yang tidak dijangka.";
@@ -306,6 +334,9 @@
 "Wait for episodes to air" = "Tunggu episod disiarkan";
 "Watched" = "Ditonton";
 "What you watch shows here." = "Apa yang anda tonton dipaparkan di sini.";
+"What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Kapasiti pembesar suara atau penerima anda.";
+"When a version has more than one kind of audio track, the first of these it has plays." = "Apabila sesuatu versi mempunyai lebih daripada satu jenis trek audio, trek pertama yang sepadan akan dimainkan.";
+"When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Apabila sesuatu versi mempunyai lebih daripada satu sarikata dalam bahasa anda, sarikata pertama yang sepadan akan dipaparkan.";
 "White" = "Putih";
 "Who's watching?" = "Siapa yang menonton?";
 "Without credits, offer it" = "Tanpa kredit, tawarkan";
@@ -318,3 +349,4 @@
 "this user" = "pengguna ini";
 "today" = "hari ini";
 "tomorrow" = "esok";
+"−%@ ms" = "−%@ ms";

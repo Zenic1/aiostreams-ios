@@ -40,16 +40,24 @@ struct PlayerScreen: View {
                 .padding(.bottom, Theme.px(40))
             }
         }
-        .onAppear { if model == nil { start(request) } }
+        .task { if model == nil { await start(request) } }
     }
 
-    private func start(_ request: PlayRequest) {
+    private func start(_ request: PlayRequest) async {
         guard let client = session.client else { return }
+        // The show's pick, as the web app keeps it, over the account's rules.
+        if let userId = session.userId { await ShowPicks.shared.load(client: client, userId: userId) }
+        let base = prefs.trackRules(audioLanguages: request.audioLanguages)
+        let tracks = request.isTrailer ? base
+            : ShowPicks.shared.rules(base, for: request.item, rememberAudio: prefs.rememberAudio, rememberSubtitles: prefs.rememberSubtitles)
         let player = PlayerModel(
             request: request,
             client: client,
-            audioLanguages: request.audioLanguages ?? prefs.audioLanguages,
-            subtitleLanguages: prefs.subtitleLanguages,
+            tracks: tracks,
+            baseTracks: base,
+            remember: (prefs.rememberAudio, prefs.rememberSubtitles),
+            audioShaping: prefs.audioShaping,
+            audioDelay: Double(prefs.audioDelayMs) / 1000,
             look: prefs.subtitleLook,
             speakers: prefs.speakers,
             animeUpscaling: prefs.animeUpscaling,
@@ -87,7 +95,7 @@ struct PlayerScreen: View {
         LastVersions.set(next.id, chosen)
         current.stop()
         let startMs = next.userData?.played == true ? nil : next.resumeMs
-        start(PlayRequest(item: next, source: chosen, playSessionId: playSession, startMs: startMs))
+        await start(PlayRequest(item: next, source: chosen, playSessionId: playSession, startMs: startMs))
     }
 
     private func finish() {
@@ -889,6 +897,20 @@ private struct PlayerPanelView: View {
     let play: (Item) -> Void
     let done: () -> Void
     @State private var episodes: [Item] = []
+    @EnvironmentObject private var prefs: Preferences
+    /// Subtitles in other languages, which List only my languages keeps under More languages.
+    @State private var allLanguages = false
+
+    /// The subtitles listed: with List only my languages, those in the user's languages, without a
+    /// language, and the one on; the rest wait under More languages.
+    private var listedSubtitles: [TrackInfo] {
+        guard prefs.listOnlyMyLanguages == true, !allLanguages else { return model.subtitleTracks }
+        let mine = model.tracks.subtitleLanguages
+        return model.subtitleTracks.filter { track in
+            track.id == model.activeSubtitle || LanguageCodes.normal(track.language) == nil
+                || mine.contains { LanguageCodes.same($0, track.language) }
+        }
+    }
 
     private static let speeds: [Double] = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2]
 
@@ -899,8 +921,11 @@ private struct PlayerPanelView: View {
                 case .tracks:
                     group(L("Subtitles")) {
                         row(L("Off"), on: model.activeSubtitle == nil) { model.selectSubtitle(nil) }
-                        ForEach(model.subtitleTracks) { track in
+                        ForEach(listedSubtitles) { track in
                             row(label(track), on: track.id == model.activeSubtitle) { model.selectSubtitle(track.id) }
+                        }
+                        if listedSubtitles.count < model.subtitleTracks.count {
+                            row(L("More languages"), on: false) { allLanguages = true }
                         }
                     }
                 case .audio:

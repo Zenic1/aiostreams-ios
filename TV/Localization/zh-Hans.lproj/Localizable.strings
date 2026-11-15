@@ -5,8 +5,12 @@
 "%@ left" = "剩余 %@";
 "%@h %@m" = "%1$@ 小时 %2$@ 分钟";
 "%@m" = "%@ 分钟";
+"+%@ dB" = "+%@ dB";
+"+%@ ms" = "+%@ 毫秒";
 "12-hour" = "12 小时制";
 "24-hour" = "24 小时制";
+"5.1 surround" = "5.1 环绕声";
+"7.1 surround" = "7.1 环绕声";
 "About" = "关于";
 "Accent colour" = "强调色";
 "Account" = "账户";
@@ -18,6 +22,7 @@
 "All channels" = "所有频道";
 "Always" = "始终";
 "Amber" = "琥珀";
+"An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "观看剧集时手动选择的音轨语言会应用于该剧的其他集数。若选择与上述设置自动选择的音轨相同，则会清除这项手动选择。";
 "An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License." = "非官方应用，与 AIOStreams 或 AetherEngine 无关。AGPL-3.0；AetherEngine 采用 LGPL-3.0，FFmpeg 采用 LGPL-2.1+，libdovi 和 Anime4K (Copyright (c) 2019-2021 bloc97) 采用 MIT，Inter 字体采用 SIL Open Font License。";
 "Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title." = "1080p 及以下的动画会使用 Anime4K 的线稿网络为你的电视放大，使线条更清晰。适用于带有动画数据库 ID 的影片，且仅限 SDR 视频。更改将从下一部影片开始生效。";
 "Anime upscaling" = "动画放大";
@@ -31,17 +36,22 @@
 "Are you still watching?" = "你还在观看吗？";
 "Ask if you are still watching" = "询问是否仍在观看";
 "At the credits" = "片尾时";
+"Atmos and DTS:X" = "Atmos 和 DTS:X";
 "Atmos and DTS:X speakers" = "Atmos 和 DTS:X 扬声器";
 "Audio" = "音频";
 "Audio description" = "口述影像";
+"Audio description, narrating what is on screen" = "音频描述，会讲述屏幕上显示的内容";
 "Audio language" = "音频语言";
+"Audio types" = "音频类型";
 "Auto-play the first version" = "自动播放第一个版本";
 "Automatic" = "自动";
 "Back" = "返回";
 "Back on Home leaves the app straight away." = "在首页按返回键会直接退出应用。";
 "Back on Home shows “Press Back again to leave”, and only a second press leaves the app." = "在首页按返回键会显示“再次按返回键退出”，只有再按一次才会退出应用。";
 "Background" = "背景";
+"Background colour" = "背景颜色";
 "Background from artwork" = "使用海报作为背景";
+"Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "设为负值会让声音提前播放，适用于声音比画面延迟的无线耳机。";
 "Black" = "黑色";
 "Blue" = "蓝色";
 "Blur episodes you haven't started" = "模糊尚未开始观看的剧集";
@@ -75,12 +85,15 @@
 "Cyan" = "青色";
 "Date added" = "添加日期";
 "Default" = "默认";
+"Delay: %@" = "延迟：%@";
+"Dialogue boost" = "对白增强";
 "Discover" = "发现";
 "Don't skip" = "不跳过";
 "Earlier" = "更早";
 "Ended" = "已完结";
 "Enter the code the other device shows to sign it in to this account." = "输入另一台设备显示的代码，让它登录此账户。";
 "Episodes" = "剧集";
+"Evens out loud and quiet scenes, for listening at a low volume. Not for sound passed through." = "平衡较大声和较小声的场景，方便低音量收听。不适用于直通音频。";
 "Faint" = "淡";
 "Favourites" = "收藏";
 "Featured on home" = "在首页精选展示";
@@ -90,8 +103,10 @@
 "Follows the selected card, compact" = "跟随所选卡片，紧凑";
 "Font" = "字体";
 "Forced" = "强制";
+"Forced, for foreign parts only" = "强制字幕，仅显示外语片段";
 "Forest" = "森林绿";
 "From the start" = "从头开始";
+"Full" = "完整";
 "Go to show" = "前往剧集";
 "Green" = "绿色";
 "Guide" = "节目指南";
@@ -116,9 +131,11 @@
 "Library" = "媒体库";
 "Light grey" = "浅灰";
 "List" = "列表";
+"List only my languages" = "仅列出我的语言";
 "Live" = "直播";
 "Live TV" = "电视直播";
 "Lowest" = "最低";
+"Main" = "主要";
 "Mark unwatched" = "标记为未观看";
 "Mark watched" = "标记为已观看";
 "Mark watched up to here" = "将此前内容标记为已观看";
@@ -129,6 +146,7 @@
 "Monospace" = "等宽字体";
 "More channels" = "更多频道";
 "More info" = "更多信息";
+"More languages" = "更多语言";
 "More like this" = "更多类似内容";
 "Movies" = "电影";
 "Movies, shows and channels" = "电影、剧集和频道";
@@ -140,6 +158,7 @@
 "Next episode" = "下一集";
 "Next up" = "接下来播放";
 "Next: %@" = "接下来：%@";
+"Night mode" = "夜间模式";
 "No channels in this group." = "此分组中没有频道。";
 "No guide for this channel" = "此频道没有节目指南";
 "No playable versions found. Only streams with a link play: use debrid or Usenet." = "没有找到可播放的版本。只有带链接的流才能播放：请使用 debrid 或 Usenet。";
@@ -163,6 +182,7 @@
 "Original language" = "原始语言";
 "Other user" = "其他用户";
 "Outline" = "描边";
+"Outline colour" = "描边颜色";
 "Override styled subtitles" = "覆盖带样式的字幕";
 "Password" = "密码";
 "Password for %@" = "%@ 的密码";
@@ -190,11 +210,13 @@
 "Quick Connect" = "快速连接";
 "Raised" = "较高";
 "Raised a little" = "稍高";
+"Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "提高中置声道音量；环绕声通常会将对白放在中置声道。不适用于直通音频。";
 "Rating" = "评分";
 "Recaps" = "剧情回顾";
 "Recent" = "最近";
 "Red" = "红色";
 "Release date" = "上映日期";
+"Remember picks per show" = "为每部剧集记住选择";
 "Remove favourite" = "取消收藏";
 "Remove from continue watching" = "从「继续观看」中移除";
 "Request failed (%@)" = "请求失败（%@）";
@@ -204,6 +226,7 @@
 "Resume from %@" = "从 %@ 继续播放";
 "Rotates through featured titles" = "轮播精选内容";
 "Runtime" = "时长";
+"SDH, with sounds described" = "SDH 字幕（包含声音描述）";
 "Sans serif" = "无衬线体";
 "Saved to your account, so the web app and your other devices use them too." = "保存在你的账户中，网页应用和你的其他设备也会使用。";
 "Search" = "搜索";
@@ -228,6 +251,7 @@
 "Signed in as" = "登录身份";
 "Signed out. Sign in again." = "已退出登录。请重新登录。";
 "Signing in…" = "正在登录…";
+"Signs and songs" = "标志与歌曲";
 "Size" = "大小";
 "Skip" = "跳过";
 "Skip ad" = "跳过广告";
@@ -252,6 +276,7 @@
 "Small" = "小";
 "Smart: when the audio isn't in your language" = "智能：音频不是你的语言时";
 "Solid" = "纯色";
+"Sound" = "声音";
 "Speed" = "速度";
 "Start page" = "启动页面";
 "Stereo" = "立体声";
@@ -259,7 +284,9 @@
 "Strong" = "浓";
 "Subtitle language" = "字幕语言";
 "Subtitle style" = "字幕样式";
+"Subtitle types" = "字幕类型";
 "Subtitles" = "字幕";
+"Subtitles you pick or turn off while watching a show stay that way for its other episodes. Picking what the settings above would show forgets it." = "观看剧集时手动选择或关闭的字幕设置会应用于该剧的其他集数。若选择与上述设置自动选择的字幕相同，则会清除这项手动选择。";
 "Switch user" = "切换用户";
 "System (%@)" = "系统（%@）";
 "Teal" = "青绿";
@@ -270,6 +297,7 @@
 "The file's default" = "文件默认";
 "The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer." = "下一集会以与你正在观看的版本相匹配的版本播放。没有匹配的版本时，会播放第一个版本；若关闭此选项，则列出各个版本。按返回键可隐藏提示。";
 "The player's own" = "播放器默认";
+"The player's subtitle menu lists subtitles in your languages, ones without a language and the one on. The rest wait under More languages." = "播放器的字幕菜单会列出你所用语言的字幕、未标注语言的字幕以及当前启用的字幕。其他字幕位于「更多语言」中。";
 "The same style as the web app's, on every device you sign in to." = "与网页应用相同的样式，在你登录的每台设备上生效。";
 "The server refused this." = "服务器拒绝了此请求。";
 "The server sent something unexpected." = "服务器返回了意外的内容。";
@@ -306,6 +334,9 @@
 "Wait for episodes to air" = "等待剧集播出";
 "Watched" = "已观看";
 "What you watch shows here." = "你观看的内容会显示在这里。";
+"What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "扬声器或接收器接收的音频格式。声道数更多的环绕声会混音降级，同时保留对白。";
+"When a version has more than one kind of audio track, the first of these it has plays." = "当某个版本包含多种音轨时，会播放列表中优先级最高且该版本具备的音轨。";
+"When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "当某个版本包含多条你所用语言的字幕时，会显示列表中优先级最高且该版本具备的字幕。评论字幕优先级最低。";
 "White" = "白色";
 "Who's watching?" = "谁在观看？";
 "Without credits, offer it" = "没有片尾时，提前提示";
@@ -318,3 +349,4 @@
 "this user" = "此用户";
 "today" = "今天";
 "tomorrow" = "明天";
+"−%@ ms" = "−%@ 毫秒";

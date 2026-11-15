@@ -5,8 +5,12 @@
 "%@ left" = "المتبقي %@";
 "%@h %@m" = "%1$@ س %2$@ د";
 "%@m" = "%@ د";
+"+%@ dB" = "+%@ ديسيبل";
+"+%@ ms" = "+%@ مللي ثانية";
 "12-hour" = "12 ساعة";
 "24-hour" = "24 ساعة";
+"5.1 surround" = "صوت محيطي 5.1";
+"7.1 surround" = "صوت محيطي 7.1";
 "About" = "حول";
 "Accent colour" = "لون التمييز";
 "Account" = "الحساب";
@@ -18,6 +22,7 @@
 "All channels" = "كل القنوات";
 "Always" = "دائمًا";
 "Amber" = "كهرماني";
+"An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "المسار الصوتي الذي تختاره أثناء مشاهدة مسلسل يحدد اللغة لبقية حلقاته. اختيار ما ستشغّله الإعدادات أعلاه ينسيه.";
 "An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License." = "تطبيق غير رسمي، لا يتبع AIOStreams ولا AetherEngine. AGPL-3.0؛ AetherEngine بترخيص LGPL-3.0، وFFmpeg بترخيص LGPL-2.1+، وlibdovi وAnime4K (Copyright (c) 2019-2021 bloc97) بترخيص MIT، وخط Inter بترخيص SIL Open Font License.";
 "Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title." = "تُكبَّر دقة الأنمي حتى 1080p لتلفازك باستخدام شبكة الخطوط في Anime4K، لخطوط أوضح. ينطبق على العناوين التي لها معرّف في قاعدة بيانات أنمي، وعلى فيديو SDR فقط. تسري التغييرات من العنوان التالي.";
 "Anime upscaling" = "تحسين دقة الأنمي";
@@ -31,17 +36,22 @@
 "Are you still watching?" = "هل ما زلت تشاهد؟";
 "Ask if you are still watching" = "اسأل إن كنت ما زلت تشاهد";
 "At the credits" = "عند شارة النهاية";
+"Atmos and DTS:X" = "Atmos وDTS:X";
 "Atmos and DTS:X speakers" = "سماعات Atmos وDTS:X";
 "Audio" = "الصوت";
 "Audio description" = "الوصف الصوتي";
+"Audio description, narrating what is on screen" = "الوصف الصوتي، يروي ما يظهر على الشاشة";
 "Audio language" = "لغة الصوت";
+"Audio types" = "أنواع الصوت";
 "Auto-play the first version" = "تشغيل أول نسخة تلقائيًا";
 "Automatic" = "تلقائي";
 "Back" = "رجوع";
 "Back on Home leaves the app straight away." = "زر الرجوع في الرئيسية يغلق التطبيق فورًا.";
 "Back on Home shows “Press Back again to leave”, and only a second press leaves the app." = "زر الرجوع في الرئيسية يعرض «اضغط رجوع مرة أخرى للمغادرة»، ولا يغلق التطبيق إلا الضغط الثاني.";
 "Background" = "الخلفية";
+"Background colour" = "لون الخلفية";
 "Background from artwork" = "خلفية من الصورة الفنية";
+"Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "القيمة الأقل من الصفر تشغّل الصوت أبكر، كما في سماعات الرأس اللاسلكية التي يتأخر صوتها عن الصورة.";
 "Black" = "أسود";
 "Blue" = "أزرق";
 "Blur episodes you haven't started" = "تمويه الحلقات التي لم تبدأها";
@@ -75,12 +85,15 @@
 "Cyan" = "سماوي";
 "Date added" = "تاريخ الإضافة";
 "Default" = "افتراضي";
+"Delay: %@" = "التأخير: %@";
+"Dialogue boost" = "تعزيز الحوار";
 "Discover" = "استكشاف";
 "Don't skip" = "عدم التخطي";
 "Earlier" = "سابقًا";
 "Ended" = "منتهٍ";
 "Enter the code the other device shows to sign it in to this account." = "أدخل الرمز الذي يعرضه الجهاز الآخر لتسجيل دخوله إلى هذا الحساب.";
 "Episodes" = "الحلقات";
+"Evens out loud and quiet scenes, for listening at a low volume. Not for sound passed through." = "يوازن بين المشاهد الصاخبة والهادئة، للاستماع بصوت منخفض. لا ينطبق على الصوت الممرَّر كما هو.";
 "Faint" = "خافت";
 "Favourites" = "المفضلة";
 "Featured on home" = "مميز في الرئيسية";
@@ -90,8 +103,10 @@
 "Follows the selected card, compact" = "يتبع البطاقة المحددة، مضغوط";
 "Font" = "الخط";
 "Forced" = "مفروضة";
+"Forced, for foreign parts only" = "مفروضة، للأجزاء الأجنبية فقط";
 "Forest" = "أخضر غابي";
 "From the start" = "من البداية";
+"Full" = "كامل";
 "Go to show" = "الانتقال إلى المسلسل";
 "Green" = "أخضر";
 "Guide" = "الدليل";
@@ -116,9 +131,11 @@
 "Library" = "المكتبة";
 "Light grey" = "رمادي فاتح";
 "List" = "قائمة";
+"List only my languages" = "عرض لغاتي فقط";
 "Live" = "مباشر";
 "Live TV" = "البث المباشر";
 "Lowest" = "الأدنى";
+"Main" = "الرئيسي";
 "Mark unwatched" = "وضع علامة غير مشاهد";
 "Mark watched" = "وضع علامة مشاهد";
 "Mark watched up to here" = "وضع علامة مشاهد حتى هنا";
@@ -129,6 +146,7 @@
 "Monospace" = "خط أحادي المسافة";
 "More channels" = "مزيد من القنوات";
 "More info" = "مزيد من المعلومات";
+"More languages" = "مزيد من اللغات";
 "More like this" = "المزيد المشابه";
 "Movies" = "الأفلام";
 "Movies, shows and channels" = "أفلام ومسلسلات وقنوات";
@@ -140,6 +158,7 @@
 "Next episode" = "الحلقة التالية";
 "Next up" = "التالي";
 "Next: %@" = "التالي: %@";
+"Night mode" = "الوضع الليلي";
 "No channels in this group." = "لا توجد قنوات في هذه المجموعة.";
 "No guide for this channel" = "لا يوجد دليل لهذه القناة";
 "No playable versions found. Only streams with a link play: use debrid or Usenet." = "لم يُعثر على نسخ قابلة للتشغيل. تُشغَّل فقط البثوث التي لها رابط: استخدم debrid أو Usenet.";
@@ -163,6 +182,7 @@
 "Original language" = "اللغة الأصلية";
 "Other user" = "مستخدم آخر";
 "Outline" = "الحد الخارجي";
+"Outline colour" = "لون الحد الخارجي";
 "Override styled subtitles" = "تجاوز الترجمات المنسّقة";
 "Password" = "كلمة المرور";
 "Password for %@" = "كلمة مرور %@";
@@ -190,11 +210,13 @@
 "Quick Connect" = "الاتصال السريع";
 "Raised" = "مرفوع";
 "Raised a little" = "مرفوع قليلًا";
+"Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "يرفع القناة المركزية، حيث يضع الصوت المحيطي الحوار. لا ينطبق على الصوت الممرَّر كما هو.";
 "Rating" = "التقييم";
 "Recaps" = "الملخصات";
 "Recent" = "الأحدث";
 "Red" = "أحمر";
 "Release date" = "تاريخ الإصدار";
+"Remember picks per show" = "تذكّر الاختيارات لكل مسلسل";
 "Remove favourite" = "إزالة من المفضلة";
 "Remove from continue watching" = "إزالة من متابعة المشاهدة";
 "Request failed (%@)" = "فشل الطلب (%@)";
@@ -204,6 +226,7 @@
 "Resume from %@" = "الاستئناف من %@";
 "Rotates through featured titles" = "يتنقل بين العناوين المميزة";
 "Runtime" = "مدة العرض";
+"SDH, with sounds described" = "SDH، مع وصف الأصوات";
 "Sans serif" = "خط بلا زوائد";
 "Saved to your account, so the web app and your other devices use them too." = "تُحفظ في حسابك، فيستخدمها تطبيق الويب وأجهزتك الأخرى أيضًا.";
 "Search" = "بحث";
@@ -228,6 +251,7 @@
 "Signed in as" = "مسجّل الدخول باسم";
 "Signed out. Sign in again." = "تم تسجيل الخروج. سجّل الدخول مجددًا.";
 "Signing in…" = "جارٍ تسجيل الدخول…";
+"Signs and songs" = "اللافتات والأغاني";
 "Size" = "الحجم";
 "Skip" = "تخطي";
 "Skip ad" = "تخطي الإعلان";
@@ -252,6 +276,7 @@
 "Small" = "صغير";
 "Smart: when the audio isn't in your language" = "ذكي: عندما لا يكون الصوت بلغتك";
 "Solid" = "مصمت";
+"Sound" = "الصوتيات";
 "Speed" = "السرعة";
 "Start page" = "صفحة البدء";
 "Stereo" = "ستيريو";
@@ -259,7 +284,9 @@
 "Strong" = "قوي";
 "Subtitle language" = "لغة الترجمة";
 "Subtitle style" = "نمط الترجمة";
+"Subtitle types" = "أنواع الترجمة";
 "Subtitles" = "الترجمة";
+"Subtitles you pick or turn off while watching a show stay that way for its other episodes. Picking what the settings above would show forgets it." = "الترجمة التي تختارها أو تُوقفها أثناء مشاهدة مسلسل تبقى كذلك لبقية حلقاته. اختيار ما ستعرضه الإعدادات أعلاه ينسيها.";
 "Switch user" = "تبديل المستخدم";
 "System (%@)" = "النظام (%@)";
 "Teal" = "أزرق مخضر";
@@ -270,6 +297,7 @@
 "The file's default" = "الافتراضي في الملف";
 "The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer." = "تُعرض الحلقة التالية بالنسخة المطابقة لما تشاهده. إن لم تطابقه أي نسخة، تُعرض الأولى، أو تُسرد النسخ إذا كان ذلك متوقفًا. زر الرجوع يخفي العرض.";
 "The player's own" = "خط المشغّل";
+"The player's subtitle menu lists subtitles in your languages, ones without a language and the one on. The rest wait under More languages." = "تعرض قائمة الترجمة في المشغّل الترجمة بلغاتك، والتي بلا لغة، والمفعّلة حاليًا. أما الباقي فينتظر تحت «المزيد من اللغات».";
 "The same style as the web app's, on every device you sign in to." = "النمط نفسه كما في تطبيق الويب، على كل جهاز تسجّل الدخول إليه.";
 "The server refused this." = "رفض الخادم هذا الطلب.";
 "The server sent something unexpected." = "أرسل الخادم شيئًا غير متوقع.";
@@ -306,6 +334,9 @@
 "Wait for episodes to air" = "انتظار بث الحلقات";
 "Watched" = "تمت مشاهدته";
 "What you watch shows here." = "يظهر هنا ما تشاهده.";
+"What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "ما تستقبله مكبرات الصوت أو جهاز الاستقبال. أما الصوت المحيطي الأكثر قنوات فيُدمج في عدد أقل، مع الإبقاء على الحوار.";
+"When a version has more than one kind of audio track, the first of these it has plays." = "عندما تحتوي النسخة على أكثر من نوع من المسارات الصوتية، يُشغَّل أول ما تملكه من هذه.";
+"When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "عندما تحتوي النسخة على أكثر من ترجمة بلغتك، يُعرض أول ما تملكه من هذه. ويأتي التعليق أخيرًا.";
 "White" = "أبيض";
 "Who's watching?" = "من يشاهد؟";
 "Without credits, offer it" = "دون شارة نهاية، اعرضها";
@@ -318,3 +349,4 @@
 "this user" = "هذا المستخدم";
 "today" = "اليوم";
 "tomorrow" = "غدًا";
+"−%@ ms" = "−%@ مللي ثانية";

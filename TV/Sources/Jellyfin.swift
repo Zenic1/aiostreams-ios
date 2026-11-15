@@ -312,6 +312,8 @@ struct MediaStream: Decodable, Hashable {
     var codec: String?
     var isExternal: Bool?
     var isForced: Bool?
+    var isDefault: Bool?
+    var isHearingImpaired: Bool?
     var deliveryUrl: String?
 }
 

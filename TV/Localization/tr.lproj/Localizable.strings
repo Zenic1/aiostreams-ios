@@ -5,8 +5,12 @@
 "%@ left" = "%@ kaldı";
 "%@h %@m" = "%1$@sa %2$@dk";
 "%@m" = "%@dk";
+"+%@ dB" = "+%@ dB";
+"+%@ ms" = "+%@ ms";
 "12-hour" = "12 saat";
 "24-hour" = "24 saat";
+"5.1 surround" = "5.1 Surround";
+"7.1 surround" = "7.1 Surround";
 "About" = "Hakkında";
 "Accent colour" = "Vurgu rengi";
 "Account" = "Hesap";
@@ -18,6 +22,7 @@
 "All channels" = "Tüm kanallar";
 "Always" = "Her zaman";
 "Amber" = "Kehribar";
+"An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "Bir diziyi izlerken seçtiğin ses parçasının dili, diğer bölümlerde de kullanılır. Yukarıdaki ayarların seçeceği parçayı seçersen bu tercih sıfırlanır.";
 "An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License." = "Resmî olmayan bir uygulama; AIOStreams veya AetherEngine ile bağlantısı yoktur. AGPL-3.0; AetherEngine LGPL-3.0, FFmpeg LGPL-2.1+, libdovi ve Anime4K (Copyright (c) 2019-2021 bloc97) MIT lisanslıdır ve Inter yazı tipi SIL Open Font License altındadır.";
 "Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title." = "1080p'ye kadar olan animeler, daha keskin çizgiler için Anime4K'nin line-art ağıyla televizyonun için büyütülür. Anime veritabanı kimliği olan içeriklerde ve yalnızca SDR videoda geçerlidir. Değişiklikler sonraki içerikten itibaren geçerli olur.";
 "Anime upscaling" = "Anime büyütme";
@@ -31,17 +36,22 @@
 "Are you still watching?" = "Hâlâ izliyor musun?";
 "Ask if you are still watching" = "Hâlâ izlenip izlenmediğini sor";
 "At the credits" = "Jenerikte";
+"Atmos and DTS:X" = "Atmos ve DTS:X";
 "Atmos and DTS:X speakers" = "Atmos ve DTS:X hoparlörleri";
 "Audio" = "Ses";
 "Audio description" = "Sesli betimleme";
+"Audio description, narrating what is on screen" = "Ekrandaki içerikleri anlatan sesli betimleme";
 "Audio language" = "Ses dili";
+"Audio types" = "Ses türleri";
 "Auto-play the first version" = "İlk sürümü otomatik oynat";
 "Automatic" = "Otomatik";
 "Back" = "Geri";
 "Back on Home leaves the app straight away." = "Ana sayfada Geri, uygulamadan hemen çıkar.";
 "Back on Home shows “Press Back again to leave”, and only a second press leaves the app." = "Ana sayfada Geri, “Çıkmak için Geri tuşuna tekrar bas” mesajını gösterir ve uygulamadan yalnızca ikinci basış çıkar.";
 "Background" = "Arkaplan";
+"Background colour" = "Arka plan rengi";
 "Background from artwork" = "Görselden arka plan";
+"Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "Sıfırın altı, görüntüye göre geciken kablosuz kulaklıklar için sesi daha erken çalar.";
 "Black" = "Siyah";
 "Blue" = "Mavi";
 "Blur episodes you haven't started" = "Başlamadığın bölümleri bulanıklaştır";
@@ -75,12 +85,15 @@
 "Cyan" = "Camgöbeği";
 "Date added" = "Eklenme tarihi";
 "Default" = "Varsayılan";
+"Delay: %@" = "Gecikme: %@";
+"Dialogue boost" = "Diyalogları güçlendir";
 "Discover" = "Keşfet";
 "Don't skip" = "Atlama";
 "Earlier" = "Daha önce";
 "Ended" = "Bitti";
 "Enter the code the other device shows to sign it in to this account." = "Diğer cihazı bu hesapla giriş yaptırmak için gösterdiği kodu gir.";
 "Episodes" = "Bölümler";
+"Evens out loud and quiet scenes, for listening at a low volume. Not for sound passed through." = "Düşük sesle dinlerken yüksek ve alçak sesli sahneleri dengeler. Doğrudan aktarılan sese uygulanmaz.";
 "Faint" = "Hafif";
 "Favourites" = "Favoriler";
 "Featured on home" = "Ana sayfada öne çıkanlar";
@@ -90,8 +103,10 @@
 "Follows the selected card, compact" = "Seçili kartı takip eder, kompakt";
 "Font" = "Yazı tipi";
 "Forced" = "Zorunlu";
+"Forced, for foreign parts only" = "Zorunlu, yalnızca yabancı dildeki kısımlar";
 "Forest" = "Orman";
 "From the start" = "Baştan";
+"Full" = "Tam";
 "Go to show" = "Diziye git";
 "Green" = "Yeşil";
 "Guide" = "Yayın akışı";
@@ -116,9 +131,11 @@
 "Library" = "Kütüphane";
 "Light grey" = "Açık gri";
 "List" = "Liste";
+"List only my languages" = "Yalnızca dillerimi listele";
 "Live" = "Canlı";
 "Live TV" = "Canlı TV";
 "Lowest" = "En alt";
+"Main" = "Ana";
 "Mark unwatched" = "İzlenmedi olarak işaretle";
 "Mark watched" = "İzlendi olarak işaretle";
 "Mark watched up to here" = "Buraya kadar izlendi olarak işaretle";
@@ -129,6 +146,7 @@
 "Monospace" = "Sabit genişlikli";
 "More channels" = "Daha fazla kanal";
 "More info" = "Daha fazla bilgi";
+"More languages" = "Daha fazla dil";
 "More like this" = "Benzer içerikler";
 "Movies" = "Filmler";
 "Movies, shows and channels" = "Filmler, diziler ve kanallar";
@@ -140,6 +158,7 @@
 "Next episode" = "Sonraki bölüm";
 "Next up" = "Sıradaki";
 "Next: %@" = "Sonra: %@";
+"Night mode" = "Gece modu";
 "No channels in this group." = "Bu grupta kanal yok.";
 "No guide for this channel" = "Bu kanal için yayın akışı yok";
 "No playable versions found. Only streams with a link play: use debrid or Usenet." = "Oynatılabilir sürüm bulunamadı. Yalnızca bağlantısı olan yayınlar oynatılır: debrid veya Usenet kullan.";
@@ -163,6 +182,7 @@
 "Original language" = "Özgün dil";
 "Other user" = "Başka kullanıcı";
 "Outline" = "Kenar çizgisi";
+"Outline colour" = "Kenar çizgisi rengi";
 "Override styled subtitles" = "Stilli altyazıları geçersiz kıl";
 "Password" = "Parola";
 "Password for %@" = "%@ için şifre";
@@ -190,11 +210,13 @@
 "Quick Connect" = "Hızlı bağlantı";
 "Raised" = "Yukarıda";
 "Raised a little" = "Biraz yukarıda";
+"Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "Çevresel seste diyalogların bulunduğu merkez kanalın sesini yükseltir. Doğrudan aktarılan sese uygulanmaz.";
 "Rating" = "Puan";
 "Recaps" = "Özetler";
 "Recent" = "Son izlenenler";
 "Red" = "Kırmızı";
 "Release date" = "Çıkış tarihi";
+"Remember picks per show" = "Dil seçimini diziye göre hatırla";
 "Remove favourite" = "Favorilerden kaldır";
 "Remove from continue watching" = "İzlemeye devam et listesinden kaldır";
 "Request failed (%@)" = "İstek başarısız (%@)";
@@ -204,6 +226,7 @@
 "Resume from %@" = "%@ konumundan devam et";
 "Rotates through featured titles" = "Öne çıkan içerikleri sırayla gösterir";
 "Runtime" = "Süre";
+"SDH, with sounds described" = "SDH, sesleri betimleyen altyazı";
 "Sans serif" = "Serifsiz";
 "Saved to your account, so the web app and your other devices use them too." = "Hesabına kaydedilir, böylece web uygulaması ve diğer cihazların da bunları kullanır.";
 "Search" = "Ara";
@@ -228,6 +251,7 @@
 "Signed in as" = "Giriş yapan";
 "Signed out. Sign in again." = "Oturum kapandı. Tekrar giriş yap.";
 "Signing in…" = "Giriş yapılıyor…";
+"Signs and songs" = "Yazılar ve şarkılar";
 "Size" = "Boyut";
 "Skip" = "Atla";
 "Skip ad" = "Reklamı atla";
@@ -252,6 +276,7 @@
 "Small" = "Küçük";
 "Smart: when the audio isn't in your language" = "Akıllı: ses senin dilinde olmadığında";
 "Solid" = "Düz";
+"Sound" = "Ses";
 "Speed" = "Hız";
 "Start page" = "Başlangıç sayfası";
 "Stereo" = "Stereo";
@@ -259,7 +284,9 @@
 "Strong" = "Güçlü";
 "Subtitle language" = "Altyazı dili";
 "Subtitle style" = "Altyazı stili";
+"Subtitle types" = "Altyazı türleri";
 "Subtitles" = "Altyazılar";
+"Subtitles you pick or turn off while watching a show stay that way for its other episodes. Picking what the settings above would show forgets it." = "Bir diziyi izlerken seçtiğin veya kapattığın altyazı ayarı, diğer bölümlerde de korunur. Yukarıdaki ayarların göstereceği altyazıyı seçersen bu tercih sıfırlanır.";
 "Switch user" = "Kullanıcı değiştir";
 "System (%@)" = "Sistem (%@)";
 "Teal" = "Camgöbeği";
@@ -270,6 +297,7 @@
 "The file's default" = "Dosyanın varsayılanı";
 "The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer." = "Sonraki bölüm, izlediğin sürümle eşleşen sürümde oynar. Eşleşen yoksa ilki oynar ya da bu kapalıysa sürümler listelenir. Geri, öneriyi gizler.";
 "The player's own" = "Oynatıcının kendi fontu";
+"The player's subtitle menu lists subtitles in your languages, ones without a language and the one on. The rest wait under More languages." = "Oynatıcının altyazı menüsünde tercih ettiğin dillerdeki altyazılar, dili belirtilmemiş altyazılar ve etkin altyazı listelenir. Diğerleri Diğer diller bölümünde bulunur.";
 "The same style as the web app's, on every device you sign in to." = "Web uygulamasındakiyle aynı stil, giriş yaptığın her cihazda.";
 "The server refused this." = "Sunucu bunu reddetti.";
 "The server sent something unexpected." = "Sunucu beklenmedik bir şey gönderdi.";
@@ -306,6 +334,9 @@
 "Wait for episodes to air" = "Bölümlerin yayınlanmasını bekle";
 "Watched" = "İzlendi";
 "What you watch shows here." = "İzlediklerin burada görünür.";
+"What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Hoparlörlerinin veya alıcının desteklediği kanal sayısı. Daha fazla kanallı çevresel ses, diyaloglar korunarak bu sayıya indirilir.";
+"When a version has more than one kind of audio track, the first of these it has plays." = "Bir sürümde birden fazla ses parçası türü varsa bu listedeki ilk mevcut tür oynatılır.";
+"When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Bir sürümde tercih ettiğin dilde birden fazla altyazı varsa bu listedeki ilk mevcut tür gösterilir. Yorum altyazıları en sona bırakılır.";
 "White" = "Beyaz";
 "Who's watching?" = "Kim izliyor?";
 "Without credits, offer it" = "Jenerik yoksa öner";
@@ -318,3 +349,4 @@
 "this user" = "bu kullanıcı";
 "today" = "bugün";
 "tomorrow" = "yarın";
+"−%@ ms" = "−%@ ms";

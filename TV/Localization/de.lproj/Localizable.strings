@@ -5,8 +5,12 @@
 "%@ left" = "%@ verbleibend";
 "%@h %@m" = "%1$@ Std. %2$@ Min.";
 "%@m" = "%@ Min.";
+"+%@ dB" = "+%@ dB";
+"+%@ ms" = "+%@ ms";
 "12-hour" = "12 Stunden";
 "24-hour" = "24 Stunden";
+"5.1 surround" = "5.1-Surround";
+"7.1 surround" = "7.1-Surround";
 "About" = "Über";
 "Accent colour" = "Akzentfarbe";
 "Account" = "Konto";
@@ -18,6 +22,7 @@
 "All channels" = "Alle Kanäle";
 "Always" = "Immer";
 "Amber" = "Bernstein";
+"An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "Manuell gewählte Tonspuren gelten auch für nachfolgende Episoden. Wechselst du die Spur wieder zu deiner Standardeinstellung, wird die Zuordnung verworfen.";
 "An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License." = "Eine inoffizielle App, nicht mit AIOStreams oder AetherEngine verbunden. AGPL-3.0; AetherEngine steht unter LGPL-3.0, FFmpeg unter LGPL-2.1+, libdovi und Anime4K (Copyright (c) 2019-2021 bloc97) unter MIT und die Schrift Inter unter der SIL Open Font License.";
 "Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title." = "Anime bis 1080p wird für deinen Fernseher mit dem Line-Art-Netz von Anime4K hochskaliert, für schärfere Linien. Gilt für Titel mit einer Anime-Datenbank-ID und nur für SDR-Video. Änderungen gelten ab dem nächsten Titel.";
 "Anime upscaling" = "Anime-Upscaling";
@@ -31,17 +36,22 @@
 "Are you still watching?" = "Bist du noch da?";
 "Ask if you are still watching" = "Fragen, ob du noch zuschaust";
 "At the credits" = "Beim Abspann";
+"Atmos and DTS:X" = "Atmos und DTS:X";
 "Atmos and DTS:X speakers" = "Lautsprecher für Atmos und DTS:X";
 "Audio" = "Audio";
 "Audio description" = "Audiodeskription";
+"Audio description, narrating what is on screen" = "Audiodeskription (beschreibt Bildinhalte)";
 "Audio language" = "Audiosprache";
+"Audio types" = "Tonspurtypen";
 "Auto-play the first version" = "Erste Version automatisch abspielen";
 "Automatic" = "Automatisch";
 "Back" = "Zurück";
 "Back on Home leaves the app straight away." = "„Zurück“ auf der Startseite beendet die App sofort.";
 "Back on Home shows “Press Back again to leave”, and only a second press leaves the app." = "„Zurück“ auf der Startseite zeigt „Erneut \"Zurück\" drücken zum Beenden“, und erst ein zweites Drücken beendet die App.";
 "Background" = "Hintergrund";
+"Background colour" = "Hintergrundfarbe";
 "Background from artwork" = "Titelmotiv als Hintergrund";
+"Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "Negative Werte ziehen die Tonspur vor, um Latenzen bei kabellosen Kopfhörern auszugleichen.";
 "Black" = "Schwarz";
 "Blue" = "Blau";
 "Blur episodes you haven't started" = "Noch nicht begonnene Episoden unkenntlich machen";
@@ -75,12 +85,15 @@
 "Cyan" = "Cyan";
 "Date added" = "Hinzugefügt am";
 "Default" = "Standard";
+"Delay: %@" = "Verzögerung: %@";
+"Dialogue boost" = "Dialogverstärkung";
 "Discover" = "Entdecken";
 "Don't skip" = "Nicht überspringen";
 "Earlier" = "Früher";
 "Ended" = "Beendet";
 "Enter the code the other device shows to sign it in to this account." = "Gib den Code ein, den das andere Gerät anzeigt, um es in diesem Konto anzumelden.";
 "Episodes" = "Folgen";
+"Evens out loud and quiet scenes, for listening at a low volume. Not for sound passed through." = "Passt Lautstärkeunterschiede für leise Umgebungen an. Funktioniert nicht bei aktiviertem Audio-Passthrough.";
 "Faint" = "Schwach";
 "Favourites" = "Favoriten";
 "Featured on home" = "Auf Startseite anzeigen";
@@ -90,8 +103,10 @@
 "Follows the selected card, compact" = "Folgt der ausgewählten Karte, kompakt";
 "Font" = "Schriftart";
 "Forced" = "Erzwungen";
+"Forced, for foreign parts only" = "Nur erzwungene (nur bei fremdsprachigen Szenen)";
 "Forest" = "Waldgrün";
 "From the start" = "Von Anfang an";
+"Full" = "Vollständig";
 "Go to show" = "Serie anzeigen";
 "Green" = "Grün";
 "Guide" = "Programm";
@@ -116,9 +131,11 @@
 "Library" = "Mediathek";
 "Light grey" = "Hellgrau";
 "List" = "Liste";
+"List only my languages" = "Nur meine Sprachen anzeigen";
 "Live" = "Live";
 "Live TV" = "Live-TV";
 "Lowest" = "Ganz unten";
+"Main" = "Hauptspur";
 "Mark unwatched" = "Als ungesehen markieren";
 "Mark watched" = "Als gesehen markieren";
 "Mark watched up to here" = "Bis hier als gesehen markieren";
@@ -129,6 +146,7 @@
 "Monospace" = "Nichtproportional";
 "More channels" = "Weitere Sender";
 "More info" = "Weitere Informationen";
+"More languages" = "Weitere Sprachen";
 "More like this" = "Ähnliche Titel";
 "Movies" = "Filme";
 "Movies, shows and channels" = "Filme, Serien und Sender";
@@ -140,6 +158,7 @@
 "Next episode" = "Nächste Folge";
 "Next up" = "Als Nächstes";
 "Next: %@" = "Danach: %@";
+"Night mode" = "Nachtmodus";
 "No channels in this group." = "Keine Kanäle in dieser Gruppe vorhanden.";
 "No guide for this channel" = "Kein Programm für diesen Sender";
 "No playable versions found. Only streams with a link play: use debrid or Usenet." = "Keine abspielbaren Versionen gefunden. Nur Streams mit einem Link werden abgespielt: Nutze Debrid oder Usenet.";
@@ -163,6 +182,7 @@
 "Original language" = "Originalsprache";
 "Other user" = "Anderer Benutzer";
 "Outline" = "Umriss";
+"Outline colour" = "Umrissfarbe";
 "Override styled subtitles" = "Gestaltete Untertitel überschreiben";
 "Password" = "Passwort";
 "Password for %@" = "Passwort für %@";
@@ -190,11 +210,13 @@
 "Quick Connect" = "Quick Connect";
 "Raised" = "Höher";
 "Raised a little" = "Etwas höher";
+"Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "Verstärkt den Center-Kanal, über den bei Surround-Ton die Dialoge ausgegeben werden. Gilt nicht bei Audio-Passthrough.";
 "Rating" = "Bewertung";
 "Recaps" = "Rückblicke";
 "Recent" = "Zuletzt gesehen";
 "Red" = "Rot";
 "Release date" = "Erscheinungsdatum";
+"Remember picks per show" = "Auswahl pro Serie merken";
 "Remove favourite" = "Aus Favoriten entfernen";
 "Remove from continue watching" = "Aus Weiterschauen entfernen";
 "Request failed (%@)" = "Anfrage fehlgeschlagen (%@)";
@@ -204,6 +226,7 @@
 "Resume from %@" = "Ab %@ fortsetzen";
 "Rotates through featured titles" = "Wechselt zwischen hervorgehobenen Titeln";
 "Runtime" = "Laufzeit";
+"SDH, with sounds described" = "SDH, mit Beschreibung von Geräuschen";
 "Sans serif" = "Serifenlos";
 "Saved to your account, so the web app and your other devices use them too." = "In deinem Konto gespeichert, sodass die Web-App und deine anderen Geräte sie auch verwenden.";
 "Search" = "Suche";
@@ -228,6 +251,7 @@
 "Signed in as" = "Angemeldet als";
 "Signed out. Sign in again." = "Abgemeldet. Melde dich erneut an.";
 "Signing in…" = "Melde an…";
+"Signs and songs" = "Schilder und Lieder";
 "Size" = "Größe";
 "Skip" = "Überspringen";
 "Skip ad" = "Werbung überspringen";
@@ -252,6 +276,7 @@
 "Small" = "Klein";
 "Smart: when the audio isn't in your language" = "Smart: wenn der Ton nicht in deiner Sprache ist";
 "Solid" = "Einfarbig";
+"Sound" = "Ton";
 "Speed" = "Geschwindigkeit";
 "Start page" = "Startseite";
 "Stereo" = "Stereo";
@@ -259,7 +284,9 @@
 "Strong" = "Kräftig";
 "Subtitle language" = "Untertitelsprache";
 "Subtitle style" = "Untertitelstil";
+"Subtitle types" = "Untertiteltypen";
 "Subtitles" = "Untertitel";
+"Subtitles you pick or turn off while watching a show stay that way for its other episodes. Picking what the settings above would show forgets it." = "Wählst du beim Schauen einer Serie Untertitel aus oder schaltest sie aus, gilt dies auch für die weiteren Folgen. Wählst du die Untertitel, die den obigen Einstellungen entsprechen, wird diese Ausnahme aufgehoben.";
 "Switch user" = "Benutzer wechseln";
 "System (%@)" = "System (%@)";
 "Teal" = "Blaugrün";
@@ -270,6 +297,7 @@
 "The file's default" = "Standard der Datei";
 "The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer." = "Die nächste Folge läuft in der Version, die zu der passt, die du schaust. Passt keine, läuft die erste, oder wenn das aus ist, werden die Versionen aufgelistet. „Zurück“ blendet das Angebot aus.";
 "The player's own" = "Der des Players";
+"The player's subtitle menu lists subtitles in your languages, ones without a language and the one on. The rest wait under More languages." = "Das Untertitelmenü des Players zeigt Untertitel in deinen Sprachen, solche ohne Sprachangabe und die aktive Spur. Die übrigen findest du unter Weitere Sprachen.";
 "The same style as the web app's, on every device you sign in to." = "Derselbe Stil wie in der Web-App, auf jedem Gerät, auf dem du dich anmeldest.";
 "The server refused this." = "Der Server hat das abgelehnt.";
 "The server sent something unexpected." = "Der Server hat etwas Unerwartetes gesendet.";
@@ -306,6 +334,9 @@
 "Wait for episodes to air" = "Auf die Ausstrahlung von Folgen warten";
 "Watched" = "Gesehen";
 "What you watch shows here." = "Was du schaust, erscheint hier.";
+"What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Kanalanzahl, die deine Lautsprecher oder dein Receiver unterstützen. Surround-Ton mit mehr Kanälen wird heruntergemischt, wobei Dialoge erhalten bleiben.";
+"When a version has more than one kind of audio track, the first of these it has plays." = "Enthält eine Version mehrere Tonspurtypen, wird der erste verfügbare Typ dieser Liste abgespielt.";
+"When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Enthält eine Version mehrere Untertitel in deiner Sprache, wird der erste verfügbare Typ dieser Liste angezeigt. Kommentarspuren kommen zuletzt.";
 "White" = "Weiß";
 "Who's watching?" = "Wer schaut?";
 "Without credits, offer it" = "Ohne Abspann anbieten";
@@ -318,3 +349,4 @@
 "this user" = "diesen Benutzer";
 "today" = "heute";
 "tomorrow" = "morgen";
+"−%@ ms" = "−%@ ms";

@@ -5,8 +5,12 @@
 "%@ left" = "%@ rămas";
 "%@h %@m" = "%1$@ ore %2$@ minute";
 "%@m" = "%@ minute";
+"+%@ dB" = "+%@ dB";
+"+%@ ms" = "+%@ ms";
 "12-hour" = "12 ore";
 "24-hour" = "24 de ore";
+"5.1 surround" = "5.1 surround";
+"7.1 surround" = "7.1 surround";
 "About" = "Despre";
 "Accent colour" = "Culoare de accent";
 "Account" = "Cont";
@@ -18,6 +22,7 @@
 "All channels" = "Toate canalele";
 "Always" = "Întotdeauna";
 "Amber" = "Chihlimbar";
+"An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "O pistă audio aleasă în timp ce urmărești un serial stabilește limba pentru celelalte episoade ale acestuia. Dacă schimbi setările de mai sus, această alegere se pierde.";
 "An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License." = "O aplicație neoficială, neafiliată cu AIOStreams sau AetherEngine. AGPL-3.0; AetherEngine este sub LGPL-3.0, FFmpeg sub LGPL-2.1+, libdovi și Anime4K (Copyright (c) 2019-2021 bloc97) sub MIT, iar fontul Inter sub SIL Open Font License.";
 "Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title." = "Anime-ul de până la 1080p este mărit pentru televizorul tău cu rețeaua line-art din Anime4K, pentru linii mai clare. Se aplică titlurilor cu un ID dintr-o bază de date anime și doar videoclipurilor SDR. Modificările se aplică de la următorul titlu.";
 "Anime upscaling" = "Mărește rezoluția anime";
@@ -31,17 +36,22 @@
 "Are you still watching?" = "Mai urmărești?";
 "Ask if you are still watching" = "Întreabă dacă mai urmărești";
 "At the credits" = "La generic";
+"Atmos and DTS:X" = "Atmos și DTS:X";
 "Atmos and DTS:X speakers" = "Boxe pentru Atmos și DTS:X";
 "Audio" = "Audio";
 "Audio description" = "Audiodescriere";
+"Audio description, narrating what is on screen" = "Descriere audio, care povestește ce se vede pe ecran";
 "Audio language" = "Limba audio";
+"Audio types" = "Tipuri de audio";
 "Auto-play the first version" = "Redă automat prima versiune";
 "Automatic" = "Automat";
 "Back" = "Înapoi";
 "Back on Home leaves the app straight away." = "Înapoi pe Acasă închide imediat aplicația.";
 "Back on Home shows “Press Back again to leave”, and only a second press leaves the app." = "Înapoi pe Acasă afișează „Apasă din nou Înapoi pentru a ieși”, iar aplicația se închide doar la a doua apăsare.";
 "Background" = "Fundal";
+"Background colour" = "Culoarea fundalului";
 "Background from artwork" = "Imagine de fundal preluată din ilustrație";
+"Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "La valori negative, sunetul este redat mai devreme pentru a compensa întârzierea căștilor wireless față de imagine.";
 "Black" = "Negru";
 "Blue" = "Albastru";
 "Blur episodes you haven't started" = "Estompează episoadele pe care nu le-ai început";
@@ -75,12 +85,15 @@
 "Cyan" = "Cyan";
 "Date added" = "Data adăugării";
 "Default" = "Implicit";
+"Delay: %@" = "Întârziere: %@";
+"Dialogue boost" = "Amplificare dialog";
 "Discover" = "Descoperă";
 "Don't skip" = "Nu sări";
 "Earlier" = "Mai devreme";
 "Ended" = "Încheiat";
 "Enter the code the other device shows to sign it in to this account." = "Introdu codul afișat de celălalt dispozitiv pentru a-l conecta la acest cont.";
 "Episodes" = "Episoade";
+"Evens out loud and quiet scenes, for listening at a low volume. Not for sound passed through." = "Echilibrează scenele zgomotoase și cele liniștite, pentru ascultare la volum mic. Nu se aplică sunetului transmis mai departe.";
 "Faint" = "Slab";
 "Favourites" = "Favorite";
 "Featured on home" = "Recomandat pe pagina principală";
@@ -90,8 +103,10 @@
 "Follows the selected card, compact" = "Urmează cardul selectat, compact";
 "Font" = "Font";
 "Forced" = "Forțate";
+"Forced, for foreign parts only" = "Forțate, doar pentru părțile în limbi străine";
 "Forest" = "Verde pădure";
 "From the start" = "De la început";
+"Full" = "Complet";
 "Go to show" = "Mergi la serial";
 "Green" = "Verde";
 "Guide" = "Ghid";
@@ -116,9 +131,11 @@
 "Library" = "Bibliotecă";
 "Light grey" = "Gri deschis";
 "List" = "Listă";
+"List only my languages" = "Afișează doar limbile mele";
 "Live" = "Direct";
 "Live TV" = "TV în direct";
 "Lowest" = "Cel mai jos";
+"Main" = "Principal";
 "Mark unwatched" = "Marchează ca nevăzut";
 "Mark watched" = "Marchează ca văzut";
 "Mark watched up to here" = "Marchează ca văzut până aici";
@@ -129,6 +146,7 @@
 "Monospace" = "Monospațiat";
 "More channels" = "Mai multe canale";
 "More info" = "Mai multe informații";
+"More languages" = "Mai multe limbi";
 "More like this" = "Mai multe asemănătoare";
 "Movies" = "Filme";
 "Movies, shows and channels" = "Filme, seriale și canale";
@@ -140,6 +158,7 @@
 "Next episode" = "Episodul următor";
 "Next up" = "Urmează";
 "Next: %@" = "Urmează: %@";
+"Night mode" = "Mod de noapte";
 "No channels in this group." = "Niciun canal în acest grup.";
 "No guide for this channel" = "Niciun ghid pentru acest canal";
 "No playable versions found. Only streams with a link play: use debrid or Usenet." = "Nu s-au găsit versiuni redabile. Se redau doar fluxurile cu link: folosește debrid sau Usenet.";
@@ -163,6 +182,7 @@
 "Original language" = "Limba originală";
 "Other user" = "Alt utilizator";
 "Outline" = "Contur";
+"Outline colour" = "Culoarea conturului";
 "Override styled subtitles" = "Suprascrie subtitrările stilizate";
 "Password" = "Parolă";
 "Password for %@" = "Parola pentru %@";
@@ -190,11 +210,13 @@
 "Quick Connect" = "Conectare rapidă";
 "Raised" = "Mai sus";
 "Raised a little" = "Puțin mai sus";
+"Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "Ridică nivelul canalului central, unde sunetul surround pune dialogul. Nu se aplică sunetului transmis mai departe.";
 "Rating" = "Evaluare";
 "Recaps" = "Recapitulări";
 "Recent" = "Recente";
 "Red" = "Roșu";
 "Release date" = "Data lansării";
+"Remember picks per show" = "Reține alegerile pe serial";
 "Remove favourite" = "Elimină din favorite";
 "Remove from continue watching" = "Elimină din Continuă vizionarea";
 "Request failed (%@)" = "Cererea a eșuat (%@)";
@@ -204,6 +226,7 @@
 "Resume from %@" = "Reia de la %@";
 "Rotates through featured titles" = "Se rotește între titlurile recomandate";
 "Runtime" = "Durată";
+"SDH, with sounds described" = "SDH, cu sunetele descrise";
 "Sans serif" = "Fără serife";
 "Saved to your account, so the web app and your other devices use them too." = "Salvate în contul tău, astfel încât aplicația web și celelalte dispozitive ale tale le folosesc și ele.";
 "Search" = "Caută";
@@ -228,6 +251,7 @@
 "Signed in as" = "Conectat ca";
 "Signed out. Sign in again." = "Deconectat. Conectează-te din nou.";
 "Signing in…" = "Se conectează…";
+"Signs and songs" = "Semne și cântece";
 "Size" = "Dimensiune";
 "Skip" = "Sari peste";
 "Skip ad" = "Sari peste reclamă";
@@ -252,6 +276,7 @@
 "Small" = "Mic";
 "Smart: when the audio isn't in your language" = "Inteligent: când audio nu este în limba ta";
 "Solid" = "Solid";
+"Sound" = "Sunet";
 "Speed" = "Viteză";
 "Start page" = "Pagina de start";
 "Stereo" = "Stereo";
@@ -259,7 +284,9 @@
 "Strong" = "Puternic";
 "Subtitle language" = "Limba subtitrărilor";
 "Subtitle style" = "Stilul subtitrărilor";
+"Subtitle types" = "Tipuri de subtitrări";
 "Subtitles" = "Subtitrări";
+"Subtitles you pick or turn off while watching a show stay that way for its other episodes. Picking what the settings above would show forgets it." = "Subtitrările pe care le alegi sau le oprești în timp ce urmărești un serial rămân așa pentru celelalte episoade ale acestuia. Dacă alegi ce ar afișa setările de mai sus, această alegere se uită.";
 "Switch user" = "Schimbă utilizatorul";
 "System (%@)" = "Sistem (%@)";
 "Teal" = "Verde-albastru";
@@ -270,6 +297,7 @@
 "The file's default" = "Implicita fișierului";
 "The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer." = "Episodul următor rulează în versiunea care se potrivește cu cea pe care o vizionezi. Dacă niciuna nu se potrivește, rulează prima sau, cu opțiunea dezactivată, sunt afișate versiunile. Înapoi ascunde propunerea.";
 "The player's own" = "Cel al playerului";
+"The player's subtitle menu lists subtitles in your languages, ones without a language and the one on. The rest wait under More languages." = "Meniul de subtitrări al playerului listează subtitrările în limbile tale, cele fără limbă și cea activă. Restul așteaptă la Mai multe limbi.";
 "The same style as the web app's, on every device you sign in to." = "Același stil ca în aplicația web, pe fiecare dispozitiv pe care te conectezi.";
 "The server refused this." = "Serverul a refuzat cererea.";
 "The server sent something unexpected." = "Serverul a trimis ceva neașteptat.";
@@ -306,6 +334,9 @@
 "Wait for episodes to air" = "Așteaptă difuzarea episoadelor";
 "Watched" = "Văzut";
 "What you watch shows here." = "Ce vizionezi apare aici.";
+"What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Ce acceptă boxele sau receiverul tău. Sunetul surround cu mai multe canale este redus, păstrând dialogul.";
+"When a version has more than one kind of audio track, the first of these it has plays." = "Când o versiune are mai multe tipuri de piste audio, se redă primul dintre acestea pe care îl are.";
+"When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Când o versiune are mai multe subtitrări în limba ta, se afișează prima dintre acestea pe care o are. Comentariul vine ultimul.";
 "White" = "Alb";
 "Who's watching?" = "Cine vizionează?";
 "Without credits, offer it" = "Fără generic, propune-l";
@@ -318,3 +349,4 @@
 "this user" = "acest utilizator";
 "today" = "azi";
 "tomorrow" = "mâine";
+"−%@ ms" = "−%@ ms";

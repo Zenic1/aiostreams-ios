@@ -5,8 +5,12 @@
 "%@ left" = "Υπόλοιπο: %@";
 "%@h %@m" = "%1$@ ώ. %2$@ λ.";
 "%@m" = "%@ λ.";
+"+%@ dB" = "+%@ dB";
+"+%@ ms" = "+%@ ms";
 "12-hour" = "12ωρη";
 "24-hour" = "24ωρη";
+"5.1 surround" = "Περιβάλλων ήχος 5.1";
+"7.1 surround" = "Περιβάλλων ήχος 7.1";
 "About" = "Σχετικά";
 "Accent colour" = "Χρώμα έμφασης";
 "Account" = "Λογαριασμός";
@@ -18,6 +22,7 @@
 "All channels" = "Όλα τα κανάλια";
 "Always" = "Πάντα";
 "Amber" = "Κεχριμπαρί";
+"An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it." = "Το κομμάτι ήχου που επιλέγεις όσο παρακολουθείς μια σειρά ορίζει τη γλώσσα και για τα άλλα επεισόδιά της. Αν επιλέξεις αυτό που θα αναπαρήγαγαν οι παραπάνω ρυθμίσεις, η προτίμηση διαγράφεται.";
 "An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License." = "Μια ανεπίσημη εφαρμογή, χωρίς σχέση με το AIOStreams ή το AetherEngine. AGPL-3.0· το AetherEngine είναι LGPL-3.0, το FFmpeg LGPL-2.1+, τα libdovi και Anime4K (Copyright (c) 2019-2021 bloc97) MIT, και η γραμματοσειρά Inter διατίθεται με την άδεια SIL Open Font License.";
 "Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title." = "Τα anime έως 1080p κλιμακώνονται για την τηλεόρασή σου με το δίκτυο line-art του Anime4K, για πιο καθαρές γραμμές. Ισχύει για τίτλους με αναγνωριστικό βάσης δεδομένων anime και μόνο για βίντεο SDR. Οι αλλαγές ισχύουν από τον επόμενο τίτλο.";
 "Anime upscaling" = "Αναβάθμιση εικόνας anime";
@@ -31,17 +36,22 @@
 "Are you still watching?" = "Συνεχίζεις να παρακολουθείς;";
 "Ask if you are still watching" = "Ερώτηση αν συνεχίζεις να παρακολουθείς";
 "At the credits" = "Στους τίτλους τέλους";
+"Atmos and DTS:X" = "Atmos και DTS:X";
 "Atmos and DTS:X speakers" = "Ηχεία για Atmos και DTS:X";
 "Audio" = "Ήχος";
 "Audio description" = "Ηχητική περιγραφή";
+"Audio description, narrating what is on screen" = "Ηχητική περιγραφή όσων εμφανίζονται στην οθόνη";
 "Audio language" = "Γλώσσα ήχου";
+"Audio types" = "Τύποι ήχου";
 "Auto-play the first version" = "Αυτόματη αναπαραγωγή της πρώτης έκδοσης";
 "Automatic" = "Αυτόματα";
 "Back" = "Πίσω";
 "Back on Home leaves the app straight away." = "Το «Πίσω» στην Αρχική κλείνει αμέσως την εφαρμογή.";
 "Back on Home shows “Press Back again to leave”, and only a second press leaves the app." = "Το «Πίσω» στην Αρχική εμφανίζει «Πάτησε ξανά «Πίσω» για έξοδο» και μόνο ένα δεύτερο πάτημα κλείνει την εφαρμογή.";
 "Background" = "Φόντο";
+"Background colour" = "Χρώμα φόντου";
 "Background from artwork" = "Φόντο από το artwork";
+"Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "Οι αρνητικές τιμές αναπαράγουν τον ήχο νωρίτερα, για παράδειγμα όταν τα ασύρματα ακουστικά έχουν καθυστέρηση σε σχέση με την εικόνα.";
 "Black" = "Μαύρο";
 "Blue" = "Μπλε";
 "Blur episodes you haven't started" = "Θόλωση επεισοδίων που δεν έχεις ξεκινήσει";
@@ -75,12 +85,15 @@
 "Cyan" = "Κυανό";
 "Date added" = "Ημερομηνία προσθήκης";
 "Default" = "Προεπιλογή";
+"Delay: %@" = "Καθυστέρηση: %@";
+"Dialogue boost" = "Ενίσχυση διαλόγων";
 "Discover" = "Ανακάλυψη";
 "Don't skip" = "Χωρίς παράλειψη";
 "Earlier" = "Νωρίτερα";
 "Ended" = "Ολοκληρώθηκε";
 "Enter the code the other device shows to sign it in to this account." = "Πληκτρολόγησε τον κωδικό που δείχνει η άλλη συσκευή για να συνδεθεί σε αυτόν τον λογαριασμό.";
 "Episodes" = "Επεισόδια";
+"Evens out loud and quiet scenes, for listening at a low volume. Not for sound passed through." = "Εξισορροπεί τις δυνατές και τις ήσυχες σκηνές, για ακρόαση σε χαμηλή ένταση. Δεν εφαρμόζεται στον ήχο που μεταβιβάζεται απευθείας.";
 "Faint" = "Αχνό";
 "Favourites" = "Αγαπημένα";
 "Featured on home" = "Προβεβλημένα στην αρχική";
@@ -90,8 +103,10 @@
 "Follows the selected card, compact" = "Ακολουθεί την επιλεγμένη κάρτα, συμπαγές";
 "Font" = "Γραμματοσειρά";
 "Forced" = "Αναγκαστικοί";
+"Forced, for foreign parts only" = "Αναγκαστικοί, μόνο για ξενόγλωσσα σημεία";
 "Forest" = "Δάσος";
 "From the start" = "Από την αρχή";
+"Full" = "Πλήρεις";
 "Go to show" = "Μετάβαση στη σειρά";
 "Green" = "Πράσινο";
 "Guide" = "Πρόγραμμα";
@@ -116,9 +131,11 @@
 "Library" = "Βιβλιοθήκη";
 "Light grey" = "Ανοιχτό γκρι";
 "List" = "Λίστα";
+"List only my languages" = "Εμφάνιση μόνο των γλωσσών μου";
 "Live" = "Ζωντανά";
 "Live TV" = "Ζωντανή τηλεόραση";
 "Lowest" = "Χαμηλότερα";
+"Main" = "Κύριο";
 "Mark unwatched" = "Δεν το έχω δει";
 "Mark watched" = "Το έχω δει";
 "Mark watched up to here" = "Τα έχω δει μέχρι εδώ";
@@ -129,6 +146,7 @@
 "Monospace" = "Σταθερού πλάτους";
 "More channels" = "Περισσότερα κανάλια";
 "More info" = "Περισσότερες πληροφορίες";
+"More languages" = "Περισσότερες γλώσσες";
 "More like this" = "Παρόμοιοι τίτλοι";
 "Movies" = "Ταινίες";
 "Movies, shows and channels" = "Ταινίες, σειρές και κανάλια";
@@ -140,6 +158,7 @@
 "Next episode" = "Επόμενο επεισόδιο";
 "Next up" = "Επόμενα επεισόδια";
 "Next: %@" = "Επόμενο: %@";
+"Night mode" = "Νυχτερινή λειτουργία";
 "No channels in this group." = "Δεν υπάρχουν κανάλια σε αυτή την ομάδα.";
 "No guide for this channel" = "Δεν υπάρχει πρόγραμμα για αυτό το κανάλι";
 "No playable versions found. Only streams with a link play: use debrid or Usenet." = "Δεν βρέθηκαν εκδόσεις για αναπαραγωγή. Παίζουν μόνο ροές με σύνδεσμο: χρησιμοποίησε debrid ή Usenet.";
@@ -163,6 +182,7 @@
 "Original language" = "Πρωτότυπη γλώσσα";
 "Other user" = "Άλλος χρήστης";
 "Outline" = "Περίγραμμα";
+"Outline colour" = "Χρώμα περιγράμματος";
 "Override styled subtitles" = "Αντικατάσταση μορφοποιημένων υποτίτλων";
 "Password" = "Κωδικός πρόσβασης";
 "Password for %@" = "Κωδικός πρόσβασης για %@";
@@ -190,11 +210,13 @@
 "Quick Connect" = "Γρήγορη σύνδεση";
 "Raised" = "Ψηλότερα";
 "Raised a little" = "Λίγο ψηλότερα";
+"Raises the centre channel, where surround sound puts dialogue. Not for sound passed through." = "Ενισχύει το κεντρικό κανάλι, όπου βρίσκονται οι διάλογοι στον περιβάλλοντα ήχο. Δεν εφαρμόζεται στον ήχο που μεταβιβάζεται απευθείας.";
 "Rating" = "Βαθμολογία";
 "Recaps" = "Ανακεφαλαιώσεις";
 "Recent" = "Πρόσφατα";
 "Red" = "Κόκκινο";
 "Release date" = "Ημερομηνία κυκλοφορίας";
+"Remember picks per show" = "Απομνημόνευση επιλογών ανά σειρά";
 "Remove favourite" = "Αφαίρεση από τα αγαπημένα";
 "Remove from continue watching" = "Αφαίρεση από τη συνέχεια παρακολούθησης";
 "Request failed (%@)" = "Το αίτημα απέτυχε (%@)";
@@ -204,6 +226,7 @@
 "Resume from %@" = "Συνέχιση από %@";
 "Rotates through featured titles" = "Εναλλαγή προβεβλημένων τίτλων";
 "Runtime" = "Διάρκεια";
+"SDH, with sounds described" = "SDH, με περιγραφή ήχων";
 "Sans serif" = "Χωρίς πατούρες";
 "Saved to your account, so the web app and your other devices use them too." = "Αποθηκεύονται στον λογαριασμό σου, ώστε να τις χρησιμοποιούν και η εφαρμογή web και οι άλλες συσκευές σου.";
 "Search" = "Αναζήτηση";
@@ -228,6 +251,7 @@
 "Signed in as" = "Συνδεδεμένος ως";
 "Signed out. Sign in again." = "Αποσυνδέθηκες. Συνδέσου ξανά.";
 "Signing in…" = "Σύνδεση…";
+"Signs and songs" = "Επιγραφές και τραγούδια";
 "Size" = "Μέγεθος";
 "Skip" = "Παράλειψη";
 "Skip ad" = "Παράλειψη διαφήμισης";
@@ -252,6 +276,7 @@
 "Small" = "Μικρό";
 "Smart: when the audio isn't in your language" = "Έξυπνα: όταν ο ήχος δεν είναι στη γλώσσα σου";
 "Solid" = "Αδιαφανές";
+"Sound" = "Ήχος";
 "Speed" = "Ταχύτητα";
 "Start page" = "Αρχική σελίδα";
 "Stereo" = "Στερεοφωνικός ήχος";
@@ -259,7 +284,9 @@
 "Strong" = "Έντονο";
 "Subtitle language" = "Γλώσσα υποτίτλων";
 "Subtitle style" = "Στυλ υποτίτλων";
+"Subtitle types" = "Τύποι υποτίτλων";
 "Subtitles" = "Υπότιτλοι";
+"Subtitles you pick or turn off while watching a show stay that way for its other episodes. Picking what the settings above would show forgets it." = "Οι υπότιτλοι που επιλέγεις ή απενεργοποιείς όσο παρακολουθείς μια σειρά παραμένουν έτσι και στα άλλα επεισόδιά της. Αν επιλέξεις αυτό που θα εμφάνιζαν οι παραπάνω ρυθμίσεις, η προτίμηση διαγράφεται.";
 "Switch user" = "Αλλαγή χρήστη";
 "System (%@)" = "Σύστημα (%@)";
 "Teal" = "Γαλαζοπράσινο";
@@ -270,6 +297,7 @@
 "The file's default" = "Η προεπιλογή του αρχείου";
 "The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer." = "Το επόμενο επεισόδιο παίζει στην έκδοση που ταιριάζει με αυτήν που βλέπεις. Όπου καμία δεν ταιριάζει, παίζει η πρώτη, ή με αυτό απενεργοποιημένο, εμφανίζονται οι εκδόσεις. Το «Πίσω» κρύβει την πρόταση.";
 "The player's own" = "Του προγράμματος αναπαραγωγής";
+"The player's subtitle menu lists subtitles in your languages, ones without a language and the one on. The rest wait under More languages." = "Το μενού υποτίτλων του προγράμματος αναπαραγωγής εμφανίζει υπότιτλους στις γλώσσες σου, όσους δεν έχουν δηλωμένη γλώσσα και τον ενεργό υπότιτλο. Οι υπόλοιποι βρίσκονται στις «Περισσότερες γλώσσες».";
 "The same style as the web app's, on every device you sign in to." = "Το ίδιο στυλ με της εφαρμογής web, σε κάθε συσκευή όπου συνδέεσαι.";
 "The server refused this." = "Ο διακομιστής το απέρριψε.";
 "The server sent something unexpected." = "Ο διακομιστής έστειλε κάτι απροσδόκητο.";
@@ -306,6 +334,9 @@
 "Wait for episodes to air" = "Αναμονή για την προβολή επεισοδίων";
 "Watched" = "Τα έχω δει";
 "What you watch shows here." = "Ό,τι παρακολουθείς εμφανίζεται εδώ.";
+"What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Τι υποστηρίζουν τα ηχεία ή ο ενισχυτής σου. Ο περιβάλλων ήχος με περισσότερα κανάλια μετατρέπεται σε λιγότερα, διατηρώντας τους διαλόγους.";
+"When a version has more than one kind of audio track, the first of these it has plays." = "Όταν μια έκδοση διαθέτει περισσότερους από έναν τύπους κομματιού ήχου, αναπαράγεται ο πρώτος διαθέσιμος από αυτή τη λίστα.";
+"When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Όταν μια έκδοση διαθέτει περισσότερους από έναν υπότιτλους στη γλώσσα σου, εμφανίζεται ο πρώτος διαθέσιμος από αυτή τη λίστα. Ο σχολιασμός έρχεται τελευταίος.";
 "White" = "Λευκό";
 "Who's watching?" = "Ποιος παρακολουθεί;";
 "Without credits, offer it" = "Χωρίς τίτλους τέλους, πρότεινέ το";
@@ -318,3 +349,4 @@
 "this user" = "αυτόν τον χρήστη";
 "today" = "σήμερα";
 "tomorrow" = "αύριο";
+"−%@ ms" = "−%@ ms";
