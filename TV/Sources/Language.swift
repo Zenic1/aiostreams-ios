@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 // The app's language, as the web app chooses it (lib/i18n.ts): its synced `language` setting, a
 // catalogue's locale or `auto` for the system's language among those the app has. Every string the
