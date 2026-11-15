@@ -264,10 +264,11 @@ struct HomeView: View {
         }
     }
 
-    /// Same rows, titles and titles' ids in the same order: nothing the screen would show differently.
+    /// Same rows, titles and titles in the same order, each as it was, its progress and watched
+    /// mark included: nothing the screen would show differently.
     private func sameRows(_ a: [HomeRow], _ b: [HomeRow]) -> Bool {
         a.count == b.count && zip(a, b).allSatisfy { x, y in
-            x.id == y.id && x.title == y.title && x.items.map(\.id) == y.items.map(\.id)
+            x.id == y.id && x.title == y.title && x.items == y.items
         }
     }
 
