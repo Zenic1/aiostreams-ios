@@ -358,7 +358,7 @@ struct ItemBackdrop: View {
     /// colour, which would cover the blurred art beneath (as the web app's `data-art-wash` does).
     var overArtwork = false
 
-    private static let height = Theme.px(612)
+    private static var height: CGFloat { Theme.px(612) + Theme.topBarInset }
 
     var body: some View {
         GeometryReader { geometry in
@@ -419,6 +419,8 @@ struct ItemBackdrop: View {
         }
         .frame(height: Self.height)
         .padding(.leading, -Theme.railInset)
+        // Up under the top bar too, where there is one.
+        .padding(.top, -Theme.topBarInset)
         .ignoresSafeArea()
         .allowsHitTesting(false)
     }

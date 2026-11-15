@@ -318,11 +318,13 @@ struct HeroCarousel: View {
                 .transition(.opacity)
             if items.count > 1 && followed == nil { dots }
         }
-        .frame(height: height)
+        .frame(height: height + Theme.topBarInset)
         .frame(maxWidth: .infinity)
-        // Under the rail, as the web app's hero is.
+        // Under the rail, or up under the top bar, as the web app's hero is: no band of the page's
+        // colour between the bar and the art.
         .padding(.leading, -Theme.railInset)
         .clipped()
+        .padding(.top, -Theme.topBarInset)
         .animation(.easeInOut(duration: 0.6), value: index)
         .task(id: "\(index)-\(focus == nil)") {
             guard focus == nil, items.count > 1, followed == nil else { return }

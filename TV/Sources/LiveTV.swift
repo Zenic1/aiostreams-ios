@@ -440,6 +440,7 @@ private struct GuideView: View {
                 .scrollIndicators(.hidden)
                 // Kept inside its frame: the page lets scroll views draw past theirs.
                 .scrollClipDisabled(false)
+                .clipped()
                 .scrollPosition($scroll)
                 .onScrollGeometryChange(for: CGRect.self) { geometry in
                     CGRect(origin: geometry.contentOffset, size: geometry.containerSize)
