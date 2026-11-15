@@ -395,6 +395,8 @@ struct SettingsView: View {
     @State private var askWho = Session.askWho
     /// Where sending a problem report got to.
     @State private var report: String?
+    /// A newer release than this copy, which a sideloaded copy doesn't update to by itself.
+    @State private var newer: String?
     @State private var approving = false
 
     var body: some View {
@@ -642,6 +644,9 @@ struct SettingsView: View {
                 }
                 section(L("About"), note: nil) {
                     fact(L("App"), "AIOStreams tvOS \(AppInfo.version)")
+                    if let newer {
+                        fact(L("Update"), L("Version %@ is out. Install it the way you installed this copy.", newer))
+                    }
                     fact(L("Player"), AppInfo.player)
                     row(L("Report a problem"), value: report ?? "") { Task { await sendReport() } }
                     note(L("Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out."))
@@ -657,6 +662,7 @@ struct SettingsView: View {
         }
         .edgeToEdge()
         .task { await loadFeaturedOptions() }
+        .task { if !DemoMode.active { newer = await UpdateCheck.newer() } }
         .task {
             guard let client = session.client else { return }
             let enabled: Bool? = try? await client.get("/QuickConnect/Enabled")

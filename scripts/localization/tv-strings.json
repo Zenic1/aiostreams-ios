@@ -2496,6 +2496,38 @@
       "pt": "Ver",
       "tr": "İzle",
       "zh-Hans": "观看"
+    },
+    "Version %@ is out. Install it the way you installed this copy.": {
+      "ar": "صدر الإصدار %@. ثبّته بالطريقة التي ثبّت بها هذه النسخة.",
+      "de": "Version %@ ist da. Installiere sie so, wie du diese installiert hast.",
+      "el": "Κυκλοφόρησε η έκδοση %@. Εγκατέστησέ τη όπως εγκατέστησες αυτό το αντίγραφο.",
+      "es": "Ya está la versión %@. Instálala igual que instalaste esta copia.",
+      "fr": "La version %@ est sortie. Installez-la comme vous avez installé cette copie.",
+      "id": "Versi %@ sudah rilis. Pasang dengan cara yang sama seperti salinan ini.",
+      "it": "È uscita la versione %@. Installala come hai installato questa copia.",
+      "ms": "Versi %@ telah keluar. Pasangnya seperti anda memasang salinan ini.",
+      "pl": "Wyszła wersja %@. Zainstaluj ją tak, jak tę kopię.",
+      "pt-BR": "Saiu a versão %@. Instale do mesmo jeito que instalou esta cópia.",
+      "pt": "Saiu a versão %@. Instale-a da mesma forma que instalou esta cópia.",
+      "ro": "A apărut versiunea %@. Instaleaz-o la fel cum ai instalat această copie.",
+      "tr": "%@ sürümü çıktı. Bu kopyayı nasıl kurduysan öyle kur.",
+      "zh-Hans": "版本 %@ 已发布。请用安装此副本的方式安装它。"
+    },
+    "Update": {
+      "ar": "تحديث",
+      "de": "Update",
+      "el": "Ενημέρωση",
+      "es": "Actualización",
+      "fr": "Mise à jour",
+      "id": "Pembaruan",
+      "it": "Aggiornamento",
+      "ms": "Kemas kini",
+      "pl": "Aktualizacja",
+      "pt-BR": "Atualização",
+      "pt": "Atualização",
+      "ro": "Actualizare",
+      "tr": "Güncelleme",
+      "zh-Hans": "更新"
     }
   },
   "plurals": {

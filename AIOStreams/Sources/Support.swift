@@ -81,6 +81,26 @@ enum AppLog {
     }
 }
 
+/// A newer release of the app, from the GitHub releases its IPAs are published to; sideloaded
+/// copies don't update themselves, so the app says when there's one.
+enum UpdateCheck {
+    static let page = URL(string: "https://github.com/wizaarddlabs/aiostreams-ios/releases/latest")!
+    private static let api = URL(string: "https://api.github.com/repos/wizaarddlabs/aiostreams-ios/releases/latest")!
+
+    /// The latest release's version, where it's newer than this copy.
+    static func newer() async -> String? {
+        var request = URLRequest(url: api)
+        request.setValue("application/vnd.github+json", forHTTPHeaderField: "Accept")
+        request.timeoutInterval = 15
+        guard let (data, _) = try? await URLSession.shared.data(for: request),
+              let json = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
+              let tag = json["tag_name"] as? String else { return nil }
+        let latest = tag.hasPrefix("v") ? String(tag.dropFirst()) : tag
+        let current = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
+        return latest.compare(current, options: .numeric) == .orderedDescending ? latest : nil
+    }
+}
+
 /// What the page reads about the app as it starts.
 enum AppInfo {
     static var version: String {

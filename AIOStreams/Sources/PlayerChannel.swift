@@ -15,6 +15,8 @@ final class PlayerChannel {
     /// Shows the video beneath the page, or hides it once nothing plays.
     var showVideo: (Bool) -> Void = { _ in }
     /// A title loaded or stopped, which changes whether Picture in Picture can be offered.
+    /// The page's player asks for the stats over the video, or for them to go.
+    var statsOverlay: (Bool) -> Void = { _ in }
     var mediaChanged: () -> Void = {}
 
     /// A title is loaded and hasn't ended.
@@ -274,7 +276,10 @@ final class PlayerChannel {
                 guard !Task.isCancelled, current == self.generation else { return }
                 self.send(["type": "player-subtitle-lines", "track": track, "lines": tracks?[track] ?? []])
             }
-        case "player-skips", "player-controls", "player-stats-overlay", "player-unqueue":
+        case "player-stats-overlay":
+            // A page of stats, or none; the app has the one page.
+            statsOverlay(message["page"] is String)
+        case "player-skips", "player-controls", "player-unqueue":
             break
         case "player-settings":
             if let delay = JSON.number(message["audioDelayMs"]) { engine.setAudioDelay(delay / 1000) }

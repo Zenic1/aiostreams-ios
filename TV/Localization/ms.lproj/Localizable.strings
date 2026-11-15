@@ -349,9 +349,11 @@
 "Unwatched" = "Belum ditonton";
 "Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "Sehingga %@, dicampur bersama. Jika dibiarkan kosong, pustaka filem dan rancangan pertama anda akan dipaparkan sebagai pilihan.";
 "Upcoming" = "Akan Datang";
+"Update" = "Kemas kini";
 "Use the address from your configure page: Save & Install → Jellyfin apps → Connect. With a share alias it's short, like your-instance/jellyfin/u/alias." = "Gunakan alamat dari halaman konfigurasi anda: Save & Install → Jellyfin apps → Connect. Dengan alias kongsi, ia pendek, seperti your-instance/jellyfin/u/alias.";
 "User" = "Pengguna";
 "Version" = "Versi";
+"Version %@ is out. Install it the way you installed this copy." = "Versi %@ telah keluar. Pasangnya seperti anda memasang salinan ini.";
 "Video" = "Video";
 "Violet" = "Ungu";
 "Wait for episodes to air" = "Tunggu episod disiarkan";

@@ -349,9 +349,11 @@
 "Unwatched" = "未观看";
 "Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "最多 %@ 个，混合展示。留空时展示你的第一个电影和剧集媒体库。";
 "Upcoming" = "即将播出";
+"Update" = "更新";
 "Use the address from your configure page: Save & Install → Jellyfin apps → Connect. With a share alias it's short, like your-instance/jellyfin/u/alias." = "使用配置页面中的地址：Save & Install → Jellyfin apps → Connect。使用分享别名时地址很短，例如 your-instance/jellyfin/u/alias。";
 "User" = "用户";
 "Version" = "版本";
+"Version %@ is out. Install it the way you installed this copy." = "版本 %@ 已发布。请用安装此副本的方式安装它。";
 "Video" = "视频";
 "Violet" = "紫罗兰";
 "Wait for episodes to air" = "等待剧集播出";

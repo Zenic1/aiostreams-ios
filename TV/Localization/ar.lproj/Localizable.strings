@@ -349,9 +349,11 @@
 "Unwatched" = "غير مشاهد";
 "Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "حتى %@، مختلطة معًا. وعند تركه فارغًا، تُعرض أولى مكتباتك للأفلام والمسلسلات.";
 "Upcoming" = "القادمة";
+"Update" = "تحديث";
 "Use the address from your configure page: Save & Install → Jellyfin apps → Connect. With a share alias it's short, like your-instance/jellyfin/u/alias." = "استخدم العنوان من صفحة الإعداد: Save & Install → Jellyfin apps → Connect. مع اسم مستعار للمشاركة يكون قصيرًا، مثل your-instance/jellyfin/u/alias.";
 "User" = "المستخدم";
 "Version" = "الإصدار";
+"Version %@ is out. Install it the way you installed this copy." = "صدر الإصدار %@. ثبّته بالطريقة التي ثبّت بها هذه النسخة.";
 "Video" = "الفيديو";
 "Violet" = "بنفسجي";
 "Wait for episodes to air" = "انتظار بث الحلقات";

@@ -349,9 +349,11 @@
 "Unwatched" = "İzlenmedi";
 "Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "En fazla %@, karışık. Boş bırakılırsa ilk film ve dizi kütüphanelerin öne çıkarılır.";
 "Upcoming" = "Yakında";
+"Update" = "Güncelleme";
 "Use the address from your configure page: Save & Install → Jellyfin apps → Connect. With a share alias it's short, like your-instance/jellyfin/u/alias." = "Yapılandırma sayfandaki adresi kullan: Save & Install → Jellyfin apps → Connect. Paylaşım takma adıyla kısadır, örneğin your-instance/jellyfin/u/alias.";
 "User" = "Kullanıcı";
 "Version" = "Sürüm";
+"Version %@ is out. Install it the way you installed this copy." = "%@ sürümü çıktı. Bu kopyayı nasıl kurduysan öyle kur.";
 "Video" = "Video";
 "Violet" = "Mor";
 "Wait for episodes to air" = "Bölümlerin yayınlanmasını bekle";

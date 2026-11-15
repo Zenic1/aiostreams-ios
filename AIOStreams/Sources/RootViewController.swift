@@ -14,6 +14,9 @@ final class RootViewController: UIViewController, WKNavigationDelegate, WKUIDele
     /// Where a drag of the small video started.
     private var dragFrom: CGPoint?
     private let thumbnails = ThumbnailStore()
+    /// The stats the page's player asks for, over the video.
+    private let stats = StatsLabel()
+    private let levels = Levels()
     private let bridge = Bridge()
     private var webView: WKWebView!
     private var player: PlayerChannel!
@@ -45,6 +48,9 @@ final class RootViewController: UIViewController, WKNavigationDelegate, WKUIDele
         stage.view.frame = root.bounds
         stage.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         root.addSubview(stage.view)
+        // Over the video and under the page, which is clear where the video shows.
+        root.addSubview(stats)
+        levels.install(in: root)
 
         let configuration = WKWebViewConfiguration()
         configuration.setURLSchemeHandler(WebAssets(thumbnails: thumbnails), forURLScheme: WebAssets.scheme)
@@ -114,6 +120,14 @@ final class RootViewController: UIViewController, WKNavigationDelegate, WKUIDele
             self?.bridge.send(message)
         }
         player.mediaChanged = { [weak self] in self?.pictureInPicture?.refresh() }
+        player.statsOverlay = { [weak self] shown in
+            guard let self else { return }
+            self.stats.show(shown ? self.engine : nil)
+        }
+        Task { [weak self] in
+            try? await Task.sleep(for: .seconds(8))
+            await self?.offerUpdate()
+        }
         // The window draws the subtitles itself while it's open.
         pictureInPicture.changed = { [weak self] active in
             guard let self else { return }
@@ -244,9 +258,13 @@ final class RootViewController: UIViewController, WKNavigationDelegate, WKUIDele
             level == "warn" ? AppLog.warn("web", text) : AppLog.info("web", text)
         case "web-error":
             AppLog.warn("web", message["message"] as? String ?? "")
+        case "levels":
+            bridge.send(levels.reading)
+        case "set-level":
+            levels.set(message["level"] as? String, JSON.number(message["value"]))
         case "exit", "open-logs", "player-key", "window-buttons", "discord-check", "external-choose",
              "external-open", "external-close", "watch-next", "keyboard-completions", "player-engine",
-             "player-retry", "crash-seen", "set-level", "levels", "voice-search", "voice-cancel":
+             "player-retry", "crash-seen", "voice-search", "voice-cancel":
             break
         default:
             AppLog.info("bridge", "unhandled \(type)")
@@ -309,6 +327,22 @@ final class RootViewController: UIViewController, WKNavigationDelegate, WKUIDele
         share.popoverPresentationController?.sourceView = view
         share.popoverPresentationController?.sourceRect = CGRect(x: view.bounds.midX, y: view.bounds.midY, width: 1, height: 1)
         present(share, animated: true)
+    }
+
+    /// A newer release, once for each version: where to get it, or later.
+    private func offerUpdate() async {
+        guard DemoMode.storageScript == nil, let version = await UpdateCheck.newer(),
+              UserDefaults.standard.string(forKey: "update.offered") != version,
+              presentedViewController == nil else { return }
+        UserDefaults.standard.set(version, forKey: "update.offered")
+        let alert = UIAlertController(title: String(localized: "Update available"),
+                                      message: String(localized: "AIOStreams \(version) is out. Install it the way you installed this copy."),
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: String(localized: "Later"), style: .cancel))
+        alert.addAction(UIAlertAction(title: String(localized: "See the release"), style: .default) { [weak self] _ in
+            self?.openExternally(UpdateCheck.page)
+        })
+        present(alert, animated: true)
     }
 
     private func openExternally(_ url: URL) {

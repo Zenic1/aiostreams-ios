@@ -349,9 +349,11 @@
 "Unwatched" = "Nevăzut";
 "Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "Până la %@, amestecate. Lăsat gol, primele tale biblioteci de filme și seriale sunt recomandate.";
 "Upcoming" = "În curând";
+"Update" = "Actualizare";
 "Use the address from your configure page: Save & Install → Jellyfin apps → Connect. With a share alias it's short, like your-instance/jellyfin/u/alias." = "Folosește adresa din pagina de configurare: Save & Install → Jellyfin apps → Connect. Cu un alias de partajare este scurtă, de exemplu your-instance/jellyfin/u/alias.";
 "User" = "Utilizator";
 "Version" = "Versiune";
+"Version %@ is out. Install it the way you installed this copy." = "A apărut versiunea %@. Instaleaz-o la fel cum ai instalat această copie.";
 "Video" = "Video";
 "Violet" = "Violet";
 "Wait for episodes to air" = "Așteaptă difuzarea episoadelor";
