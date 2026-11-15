@@ -522,7 +522,10 @@ private struct GuideTimes: View {
         }
         .frame(width: layout.width, height: GuideView.timesHeight, alignment: .topLeading)
         .offset(x: -scrolled.offset.x)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        // Drawn over a space as wide as the screen leaves, never sizing it: the hours run far wider,
+        // and as the space's own width they would push the whole page off the screen's left edge.
+        .frame(width: 0, alignment: .leading)
+        .frame(maxWidth: .infinity, maxHeight: GuideView.timesHeight, alignment: .leading)
         .clipped()
     }
 }
