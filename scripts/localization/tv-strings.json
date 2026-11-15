@@ -2255,6 +2255,14 @@
     },
     "Season %@": {
       "zh-Hans": "第 %@ 季"
+    },
+    "Up to %@, mixed together. Left empty, your first movie and show libraries are featured.": {
+      "el": "Έως %@, ανακατεμένα. Αν μείνει κενό, προβάλλονται οι πρώτες βιβλιοθήκες ταινιών και σειρών σου.",
+      "fr": "Jusqu'à %@, mélangés. Laissé vide, vos premières bibliothèques de films et de séries sont mises en avant.",
+      "id": "Hingga %@, dicampur. Jika kosong, pustaka film dan serial pertamamu yang ditampilkan.",
+      "pt": "Até %@, misturados. Deixado vazio, são destacadas as suas primeiras bibliotecas de filmes e séries.",
+      "tr": "En fazla %@, karışık. Boş bırakılırsa ilk film ve dizi kütüphanelerin öne çıkarılır.",
+      "zh-Hans": "最多 %@ 个，混合展示。留空时展示你的第一个电影和剧集媒体库。"
     }
   },
   "plurals": {

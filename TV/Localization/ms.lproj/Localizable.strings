@@ -83,6 +83,7 @@
 "Episodes" = "Episod";
 "Faint" = "Samar";
 "Favourites" = "Kegemaran";
+"Featured on home" = "Ditampilkan di laman utama";
 "Finding a version of %@…" = "Mencari versi %@…";
 "Finding versions" = "Mencari versi";
 "Follows the selected card" = "Mengikut kad yang dipilih";
@@ -295,6 +296,7 @@
 "TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6." = "TrueHD Atmos dan DTS:X dimainkan dengan saluran ketinggiannya, dipaparkan untuk pembesar suara anda dan dihantar ke penerima sebagai Dolby MAT. Memerlukan tvOS 26. DTS:X memerlukan 7.1.4 atau 9.1.6.";
 "Try again" = "Cuba lagi";
 "Unwatched" = "Belum ditonton";
+"Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "Sehingga %@, dicampur bersama. Jika dibiarkan kosong, pustaka filem dan rancangan pertama anda akan dipaparkan sebagai pilihan.";
 "Upcoming" = "Akan Datang";
 "Use the address from your configure page: Save & Install → Jellyfin apps → Connect. With a share alias it's short, like your-instance/jellyfin/u/alias." = "Gunakan alamat dari halaman konfigurasi anda: Save & Install → Jellyfin apps → Connect. Dengan alias kongsi, ia pendek, seperti your-instance/jellyfin/u/alias.";
 "User" = "Pengguna";

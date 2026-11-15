@@ -138,8 +138,12 @@ struct MainView: View {
         .playFlow($choice) { NotificationCenter.default.post(name: .watchStateChanged, object: nil) }
         .task { await findLiveTV() }
         .task { await session.readServerKind() }
+        .onReceive(NotificationCenter.default.publisher(for: DeepLink.opened)) { _ in
+            Task { await followLink() }
+        }
         .task {
             await startOnPage()
+            await followLink()
             guard let client = session.client, let userId = session.userId else { return }
             await prefs.load(client: client, userId: userId)
             await openDemoScreen()
@@ -223,6 +227,19 @@ struct MainView: View {
 
     /// Keeps the rail shut while Home loads its first rows, then lets it take focus again. Should
     /// focus have landed on the rail before the page had anything to focus, it's moved over.
+    /// Opens or plays the title a link names (Top Shelf), from Home.
+    private func followLink() async {
+        guard let client = session.client, let userId = session.userId, let link = DeepLink.take() else { return }
+        let found: ItemsResult? = try? await client.get("/Items", ["userId": userId, "Ids": link.id, "Fields": "Overview,Genres"])
+        guard let item = found?.items?.first else { return }
+        place = .home
+        if link.play {
+            choice = await playChoice(for: item, session: session)
+        } else {
+            paths[.home] = NavigationPath([Route.item(item)])
+        }
+    }
+
     private func startOnPage() async {
         for wait in [300, 700, 1000] {
             try? await Task.sleep(for: .milliseconds(wait))

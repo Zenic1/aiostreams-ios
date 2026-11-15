@@ -102,9 +102,17 @@ targets:
       - path: AIOStreams/Sources/Support.swift
       - path: AIOStreams/Sources/SubtitleOverlayView.swift
       - path: AIOStreams/Sources/YouTube.swift
+      - path: TV/Shared
     dependencies:
       - package: AetherEngineFeatures
         product: AetherEngineFeatures
+      # Continue watching and Next up on the Apple TV's home screen.
+      - target: AIOStreamsTVTopShelf
+        embed: true
+    entitlements:
+      path: TV/AIOStreamsTV.entitlements
+      properties:
+        com.apple.security.application-groups: [group.io.github.aiostreams-ios.tv]
     info:
       path: TV/Info.plist
       properties:
@@ -124,6 +132,11 @@ targets:
           NSAllowsArbitraryLoads: true
           NSAllowsLocalNetworking: true
         NSLocalNetworkUsageDescription: AIOStreams connects to your server and streams on your local network.
+        # Top Shelf's links: a title's page, or playing it.
+        CFBundleURLTypes:
+          - CFBundleURLName: io.github.aiostreams-ios.tv.link
+            CFBundleURLSchemes:
+              - aiostreams
         UIAppFonts:
           - Inter-Regular.ttf
           - Inter-Medium.ttf
@@ -135,4 +148,29 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: io.github.aiostreams-ios.tv
         TARGETED_DEVICE_FAMILY: "3"
         ASSETCATALOG_COMPILER_APPICON_NAME: "App Icon & Top Shelf Image"
+        CODE_SIGN_STYLE: Automatic
+  AIOStreamsTVTopShelf:
+    type: tv-app-extension
+    platform: tvOS
+    sources:
+      - path: TV/TopShelf
+        excludes: ["*.entitlements"]
+      - path: TV/Shared
+    entitlements:
+      path: TV/TopShelf/TopShelf.entitlements
+      properties:
+        com.apple.security.application-groups: [group.io.github.aiostreams-ios.tv]
+    info:
+      path: TV/TopShelf/Info.plist
+      properties:
+        CFBundleDisplayName: AIOStreams Top Shelf
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.tv-top-shelf
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ContentProvider
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.aiostreams-ios.tv.topshelf
+        TARGETED_DEVICE_FAMILY: "3"
         CODE_SIGN_STYLE: Automatic

@@ -83,6 +83,7 @@
 "Episodes" = "Επεισόδια";
 "Faint" = "Αχνό";
 "Favourites" = "Αγαπημένα";
+"Featured on home" = "Προβεβλημένα στην αρχική";
 "Finding a version of %@…" = "Αναζήτηση έκδοσης για %@…";
 "Finding versions" = "Αναζήτηση εκδόσεων";
 "Follows the selected card" = "Ακολουθεί την επιλεγμένη κάρτα";
@@ -295,6 +296,7 @@
 "TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6." = "Τα TrueHD Atmos και DTS:X παίζουν με τα κανάλια ύψους τους, αποδοσμένα για τα ηχεία σου και σταλμένα στον δέκτη σου ως Dolby MAT. Απαιτεί tvOS 26. Το DTS:X απαιτεί 7.1.4 ή 9.1.6.";
 "Try again" = "Δοκίμασε ξανά";
 "Unwatched" = "Δεν τα έχω δει";
+"Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "Έως %@, ανακατεμένα. Αν μείνει κενό, προβάλλονται οι πρώτες βιβλιοθήκες ταινιών και σειρών σου.";
 "Upcoming" = "Προσεχώς";
 "Use the address from your configure page: Save & Install → Jellyfin apps → Connect. With a share alias it's short, like your-instance/jellyfin/u/alias." = "Χρησιμοποίησε τη διεύθυνση από τη σελίδα διαμόρφωσης: Save & Install → Jellyfin apps → Connect. Με ψευδώνυμο κοινής χρήσης είναι σύντομη, όπως your-instance/jellyfin/u/alias.";
 "User" = "Χρήστης";

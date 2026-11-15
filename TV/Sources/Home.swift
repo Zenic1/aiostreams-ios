@@ -1,4 +1,5 @@
 import SwiftUI
+import TVServices
 
 // The web app's home (pages/home.tsx, components/hero.tsx) as a TV shows it by default:
 // a rotating hero over the first rows, then Continue watching, Next up and each library.
@@ -184,6 +185,7 @@ struct HomeView: View {
             async let viewsResult: ItemsResult = client.get("/UserViews", ["userId": userId])
             resume = (try? await resumeResult.items) ?? []
             nextUp = (try? await nextResult.items) ?? []
+            saveTopShelf(client: client)
             upcoming = (try? await upcomingResult.items) ?? []
             let allViews = try await viewsResult.items ?? []
             let views = allViews.filter(isBrowsable)
@@ -225,11 +227,47 @@ struct HomeView: View {
         }
     }
 
-    /// The Movies and Shows libraries' heads, or the first library's, taking turns; only titles with a backdrop.
+    /// Continue watching and Next up, for the Apple TV's home screen (Top Shelf).
+    private func saveTopShelf(client: JellyfinClient) {
+        func entries(_ items: [Item]) -> [TopShelfStore.Entry] {
+            items.prefix(12).map { item in
+                let title = item.isEpisode
+                    ? [item.seriesName, item.episodeCode].compactMap { $0 }.joined(separator: " · ")
+                    : item.name ?? ""
+                let progress = item.userData?.playedPercentage.map { $0 / 100 }
+                return TopShelfStore.Entry(id: item.id, title: title, image: client.still(item, height: 540),
+                                           progress: progress.flatMap { $0 > 0 ? $0 : nil })
+            }
+        }
+        let sections: [TopShelfStore.Section] = prefs.flag("mergeNextUp", false)
+            ? [.init(title: L("Continue watching"), entries: entries(mergeRows(resume, nextUp)))]
+            : [.init(title: L("Continue watching"), entries: entries(resume)), .init(title: L("Next up"), entries: entries(nextUp))]
+        TopShelfStore.save(.init(sections: sections))
+        TVTopShelfContentProvider.topShelfContentDidChange()
+    }
+
+    /// What the web app's Featured on home names (`resume`, `next-up`, `view:<id>`), taking turns;
+    /// on Automatic, the Movies and Shows libraries' heads, or the first library's. Only titles with
+    /// a backdrop.
     private func heroPicks(views: [Item], heads: [Int: (Item, [Item])], client: JellyfinClient) -> [Item] {
         let lists = heads.keys.sorted().compactMap { heads[$0] }
-        var sources = ["movies", "tvshows"].compactMap { kind in lists.first { $0.0.collectionType == kind }?.1 }
-        if sources.isEmpty, let first = lists.first?.1 { sources = [first] }
+        var sources: [[Item]]
+        // A removed library is skipped, and a list left without any is automatic, as the web app has it.
+        let chosen = prefs.featured?.filter { source in
+            !source.hasPrefix("view:") || views.contains { "view:\($0.id)" == source }
+        }
+        if let chosen, !(chosen.isEmpty && !(prefs.featured ?? []).isEmpty) {
+            sources = chosen.map { source in
+                switch source {
+                case "resume": return prefs.flag("mergeNextUp", false) ? mergeRows(resume, nextUp) : resume
+                case "next-up": return nextUp
+                default: return lists.first { "view:\($0.0.id)" == source }?.1 ?? []
+                }
+            }
+        } else {
+            sources = ["movies", "tvshows"].compactMap { kind in lists.first { $0.0.collectionType == kind }?.1 }
+            if sources.isEmpty, let first = lists.first?.1 { sources = [first] }
+        }
         let candidates = sources.map { Array($0.prefix(heroPerLibrary)) }
         var picks: [Item] = []
         var seen = Set<String>()

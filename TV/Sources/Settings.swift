@@ -116,6 +116,17 @@ final class Preferences: ObservableObject {
     var combineSearch: Bool { flag("combineSearch", false) }
     /// `rotate` through featured titles, or `follow` the focused card (`corner`: compactly).
     var heroMode: String { text("heroMode", "rotate") }
+    /// Featured on home: what the hero draws from (`resume`, `next-up`, `view:<library id>`), up to
+    /// four; nil for Automatic, empty for none. Stored as the web app stores it: a list, or `none`.
+    var featured: [String]? {
+        guard let raw = custom["featured"], raw != "auto" else { return nil }
+        if raw == "none" { return [] }
+        return raw.split(separator: ",").map(String.init).filter { !$0.isEmpty }
+    }
+
+    func setFeatured(_ sources: [String]?) {
+        set("featured", sources.map { $0.isEmpty ? "none" : $0.joined(separator: ",") }, fallback: "auto")
+    }
     /// `small`, `medium` or `large` posters.
     var posterSize: String { text("posterSize", "medium") }
     /// What shows under a poster: its title, its year, both or `none`.
@@ -301,6 +312,7 @@ struct SettingsView: View {
     @EnvironmentObject private var session: Session
     @EnvironmentObject private var prefs: Preferences
     @State private var chooser: Chooser?
+    @State private var picker: MultiChooser?
     /// The server lets another device sign in with a code this account approves.
     @State private var quickConnect = false
     @State private var approving = false
@@ -449,6 +461,7 @@ struct SettingsView: View {
                     }
                     toggle(L("Combine movie and show results"), key: "combineSearch", fallback: false)
                     toggle(L("Blur episodes you haven't started"), key: "blurSpoilers", fallback: false)
+                    row(L("Featured on home"), value: featuredLabel) { chooseFeatured() }
                     synced(L("Hero"), key: "heroMode", fallback: "rotate",
                            options: [(L("Rotates through featured titles"), "rotate"), (L("Follows the selected card"), "follow"),
                                      (L("Follows the selected card, compact"), "corner")])
@@ -494,6 +507,7 @@ struct SettingsView: View {
             .padding(.bottom, Theme.px(64))
         }
         .edgeToEdge()
+        .task { await loadFeaturedOptions() }
         .task {
             guard let client = session.client else { return }
             let enabled: Bool? = try? await client.get("/QuickConnect/Enabled")
@@ -506,6 +520,10 @@ struct SettingsView: View {
         }
         .fullScreenCover(item: $chooser) { chooser in
             ChooserPanel(chooser: chooser) { self.chooser = nil }
+                .presentationBackground(.clear)
+        }
+        .fullScreenCover(item: $picker) { picker in
+            MultiChooserPanel(chooser: picker) { self.picker = nil }
                 .presentationBackground(.clear)
         }
     }
@@ -583,6 +601,35 @@ struct SettingsView: View {
         }
     }
 
+    // MARK: Featured on home
+
+    /// The libraries the hero can draw from, with Continue watching and Next up.
+    @State private var featuredOptions: [(label: String, value: String)] = []
+
+    private var featuredLabel: String {
+        guard let featured = prefs.featured else { return L("Automatic") }
+        if featured.isEmpty { return L("None") }
+        return featured.map { source in featuredOptions.first { $0.value == source }?.label ?? source }
+            .joined(separator: ", ")
+    }
+
+    private func chooseFeatured() {
+        picker = MultiChooser(
+            title: L("Featured on home"),
+            note: L("Up to %@, mixed together. Left empty, your first movie and show libraries are featured.", "4"),
+            options: featuredOptions,
+            chosen: prefs.featured ?? [],
+            limit: 4
+        ) { chosen in prefs.setFeatured(chosen.isEmpty ? nil : chosen) }
+    }
+
+    private func loadFeaturedOptions() async {
+        guard let client = session.client, let userId = session.userId else { return }
+        let views: ItemsResult? = try? await client.get("/UserViews", ["userId": userId])
+        featuredOptions = [(L("Continue watching"), "resume"), (L("Next up"), "next-up")]
+            + (views?.items ?? []).filter(isBrowsable).map { ($0.name ?? L("Library"), "view:\($0.id)") }
+    }
+
     private func speakerName(_ value: String) -> String {
         value == "off" ? L("Off") : value == SpatialSpeakerLayout.l714.rawValue ? L("%@ (most Atmos setups)", value) : value
     }
@@ -618,6 +665,78 @@ private struct SubtitlePreview: UIViewRepresentable {
 /// The preview's one line, showing for as long as the preview does.
 private enum SubtitleCuePreview {
     static let cue = SubtitleCue(id: 0, startTime: 0, endTime: .greatestFiniteMagnitude, body: .text(L("This is how subtitles will look.")))
+}
+
+/// A setting that takes several choices, in the order they're picked, up to a limit.
+struct MultiChooser: Identifiable {
+    let id = UUID()
+    let title: String
+    var note: String?
+    let options: [(label: String, value: String)]
+    let chosen: [String]
+    var limit = Int.max
+    let choose: ([String]) -> Void
+}
+
+/// Choices that each turn on and off, saved as they change; Back closes it.
+struct MultiChooserPanel: View {
+    let chooser: MultiChooser
+    let done: () -> Void
+    @State private var chosen: [String] = []
+    @FocusState private var focused: String?
+
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.6).ignoresSafeArea()
+            VStack(alignment: .leading, spacing: Theme.px(12)) {
+                Text(chooser.title).font(Theme.font(Theme.xl, .semibold)).padding(.horizontal, Theme.px(8))
+                if let note = chooser.note {
+                    Text(note).font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray400).padding(.horizontal, Theme.px(8))
+                }
+                ScrollView {
+                    VStack(spacing: Theme.px(4)) {
+                        ForEach(chooser.options, id: \.value) { option in
+                            let on = chosen.contains(option.value)
+                            Button {
+                                if on {
+                                    chosen.removeAll { $0 == option.value }
+                                } else if chosen.count < chooser.limit {
+                                    chosen.append(option.value)
+                                }
+                                chooser.choose(chosen)
+                            } label: {
+                                HStack(spacing: Theme.px(10)) {
+                                    Image(systemName: on ? "checkmark.circle.fill" : "circle")
+                                        .font(.system(size: Theme.px(16), weight: .semibold))
+                                        .foregroundStyle(on ? Theme.ring : Theme.gray500)
+                                    Text(option.label).font(Theme.font(Theme.base))
+                                    Spacer()
+                                }
+                                .padding(.horizontal, Theme.px(14))
+                                .frame(height: Theme.px(44))
+                                .opacity(on || chosen.count < chooser.limit ? 1 : 0.5)
+                            }
+                            .buttonStyle(RowStyle(radius: Theme.px(8)))
+                            .focused($focused, equals: option.value)
+                        }
+                    }
+                    .padding(Theme.px(8))
+                }
+                .scrollClipDisabled()
+            }
+            .padding(Theme.px(20))
+            .frame(width: Theme.px(520))
+            .frame(maxHeight: Theme.px(640))
+            .background(RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous).fill(Color(white: 17 / 255)))
+            .overlay(RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous).stroke(.white.opacity(0.1), lineWidth: Theme.px(1)))
+        }
+        .foregroundStyle(.white)
+        .onAppear {
+            chosen = chooser.chosen
+            focused = chooser.options.first?.value
+        }
+        .onExitCommand(perform: done)
+    }
 }
 
 /// A list of choices over the dimmed page.

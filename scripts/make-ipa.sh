@@ -84,6 +84,20 @@ build() {
     echo "$scheme.app says $short ($number), expected $APP_VERSION ($BUILD_NUMBER)" >&2
     exit 1
   fi
+  # The Apple TV app and its Top Shelf share an app group, an entitlement an unsigned build leaves
+  # out: an ad-hoc signature carries it, which sideloading tools keep as they sign it again.
+  if [ "$scheme" = AIOStreamsTV ]; then
+    find "$app" -depth \( -name '*.framework' -o -name '*.dylib' \) -print0 |
+      xargs -0 -n1 codesign --force --sign - --timestamp=none
+    for ext in "$app"/PlugIns/*.appex; do
+      if [ -d "$ext" ]; then
+        codesign --force --sign - --timestamp=none --entitlements TV/TopShelf/TopShelf.entitlements "$ext"
+      fi
+    done
+    codesign --force --sign - --timestamp=none --entitlements TV/AIOStreamsTV.entitlements "$app"
+    codesign -d --entitlements - "$app" 2>/dev/null | grep -q application-groups ||
+      { echo "AIOStreamsTV.app has no app group" >&2; exit 1; }
+  fi
   local staging="$here/build/ipa-$scheme"
   rm -rf "$staging" "$here/build/$ipa"
   mkdir -p "$staging/Payload"

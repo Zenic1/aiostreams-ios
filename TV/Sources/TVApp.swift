@@ -31,6 +31,8 @@ struct AIOStreamsTVApp: App {
             .preferredColorScheme(.dark)
             // Screenshot mode only: the demo server's sign-in.
             .task { await DemoMode.start(session) }
+            // From Top Shelf: a title's page, or playing it.
+            .onOpenURL { DeepLink.open($0) }
             .tint(Theme.ring)
         }
     }
@@ -390,5 +392,25 @@ private struct AvatarStyle: ButtonStyle {
                 .opacity(pressed ? 0.85 : 1)
                 .animation(.easeOut(duration: 0.15), value: focused)
         }
+    }
+}
+
+/// A link into the app (`aiostreams://item/<id>`, `aiostreams://play/<id>`), from Top Shelf. Kept until
+/// the signed-in pages take it, as one can arrive before they're shown.
+enum DeepLink {
+    static let opened = Notification.Name("aiostreams.deepLink")
+    private(set) static var pending: URL?
+
+    static func open(_ url: URL) {
+        pending = url
+        NotificationCenter.default.post(name: opened, object: nil)
+    }
+
+    /// The link waiting, once: whether to play, and the title's id.
+    static func take() -> (play: Bool, id: String)? {
+        guard let url = pending, url.scheme == "aiostreams", let host = url.host(),
+              ["item", "play"].contains(host), let id = url.pathComponents.dropFirst().first else { return nil }
+        pending = nil
+        return (host == "play", id)
     }
 }

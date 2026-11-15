@@ -83,6 +83,7 @@
 "Episodes" = "Episodios";
 "Faint" = "Tenue";
 "Favourites" = "Favoritos";
+"Featured on home" = "Destacado en la página de inicio";
 "Finding a version of %@…" = "Buscando una versión de %@…";
 "Finding versions" = "Buscando versiones";
 "Follows the selected card" = "Sigue la tarjeta seleccionada";
@@ -295,6 +296,7 @@
 "TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6." = "TrueHD Atmos y DTS:X se reproducen con sus canales de altura, renderizados para tus altavoces y enviados a tu receptor como Dolby MAT. Requiere tvOS 26. DTS:X requiere 7.1.4 o 9.1.6.";
 "Try again" = "Intentar de nuevo";
 "Unwatched" = "No vistos";
+"Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "Hasta %@, combinados. Si se deja vacío, se mostrarán tus primeras bibliotecas de películas y series.";
 "Upcoming" = "Próximamente";
 "Use the address from your configure page: Save & Install → Jellyfin apps → Connect. With a share alias it's short, like your-instance/jellyfin/u/alias." = "Usa la dirección de tu página de configuración: Save & Install → Jellyfin apps → Connect. Con un alias para compartir es corta, como your-instance/jellyfin/u/alias.";
 "User" = "Usuario";
