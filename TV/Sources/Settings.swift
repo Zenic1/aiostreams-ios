@@ -850,17 +850,6 @@ struct SettingsView: View {
         }
     }
 
-    private func fact(_ label: String, _ value: String) -> some View {
-        HStack {
-            Text(label).foregroundStyle(Theme.gray400)
-            Spacer()
-            Text(value)
-        }
-        .font(Theme.font(Theme.base))
-        .padding(.horizontal, Theme.px(16))
-        .frame(height: Theme.px(40))
-    }
-
     private func listLabel(_ codes: [String], none: String) -> String {
         codes.isEmpty ? none : codes.map(languageName).joined(separator: ", ")
     }
