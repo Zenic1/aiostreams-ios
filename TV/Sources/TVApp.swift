@@ -24,6 +24,7 @@ struct AIOStreamsTVApp: App {
             // The web app's theme colours and language, once they've loaded.
             .id(prefs.themeKey)
             .environment(\.locale, AppLanguage.locale)
+            .environment(\.layoutDirection, AppLanguage.rightToLeft ? .rightToLeft : .leftToRight)
             .environmentObject(session)
             .environmentObject(prefs)
             .environmentObject(wash)

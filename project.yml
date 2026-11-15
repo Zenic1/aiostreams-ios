@@ -41,7 +41,7 @@ targets:
         # The languages the web app lists. On iOS, they're what lets the page's Automatic language
         # follow the system: a web view reports only the languages its app declares.
         CFBundleDevelopmentRegion: en
-        CFBundleLocalizations: [en, de, el, es, fr, id, it, ms, pl, pt-BR, pt-PT, tr, zh-Hans]
+        CFBundleLocalizations: [en, ar, de, el, es, fr, id, it, ms, pl, pt-BR, pt-PT, ro, tr, zh-Hans]
         LSRequiresIPhoneOS: true
         UILaunchScreen:
           UIColorName: ""
@@ -112,7 +112,7 @@ targets:
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleDevelopmentRegion: en
-        CFBundleLocalizations: [en, de, el, es, fr, id, it, ms, pl, pt-BR, pt-PT, tr, zh-Hans]
+        CFBundleLocalizations: [en, ar, de, el, es, fr, id, it, ms, pl, pt-BR, pt-PT, ro, tr, zh-Hans]
         LSRequiresIPhoneOS: true
         UILaunchScreen:
           UIColorName: ""

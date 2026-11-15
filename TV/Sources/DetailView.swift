@@ -363,8 +363,8 @@ struct ItemBackdrop: View {
                     .mask(
                         LinearGradient(
                             stops: [.init(color: .clear, location: 0), .init(color: .black, location: Theme.px(192) / width)],
-                            startPoint: .leading,
-                            endPoint: .trailing
+                            startPoint: .start,
+                            endPoint: .end
                         )
                     )
                     // Over the artwork, it fades out downwards and towards the details too.
@@ -382,8 +382,8 @@ struct ItemBackdrop: View {
                             stops: overArtwork
                                 ? [.init(color: .clear, location: 0), .init(color: .black, location: 0.5)]
                                 : [.init(color: .black, location: 0), .init(color: .black, location: 1)],
-                            startPoint: .leading,
-                            endPoint: .trailing
+                            startPoint: .start,
+                            endPoint: .end
                         )
                     )
                     .frame(maxWidth: .infinity, alignment: .trailing)
@@ -394,8 +394,8 @@ struct ItemBackdrop: View {
                         .init(color: Theme.background.opacity(0.6), location: 0.4),
                         .init(color: .clear, location: 1),
                     ],
-                    startPoint: .leading,
-                    endPoint: .trailing
+                    startPoint: .start,
+                    endPoint: .end
                 )
                 LinearGradient(
                     stops: [

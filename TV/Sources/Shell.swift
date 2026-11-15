@@ -120,8 +120,8 @@ struct MainView: View {
                     .init(color: .black.opacity(0.7), location: 0.75),
                     .init(color: .clear, location: 1),
                 ],
-                startPoint: .leading,
-                endPoint: .trailing
+                startPoint: .start,
+                endPoint: .end
             )
             .frame(width: Theme.px(576))
             .opacity(open ? 1 : 0)
@@ -167,7 +167,7 @@ struct MainView: View {
         if prefs.flag("artBackground", false) {
             HStack(spacing: 0) {
                 Color.clear.frame(width: Theme.px(40))
-                LinearGradient(colors: [.clear, .black], startPoint: .leading, endPoint: .trailing)
+                LinearGradient(colors: [.clear, .black], startPoint: .start, endPoint: .end)
                     .frame(width: Theme.px(40))
                 Color.black
             }

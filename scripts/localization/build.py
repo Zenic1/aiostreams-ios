@@ -24,8 +24,8 @@ OUT = os.path.join(ROOT, 'TV', 'Localization')
 OURS = json.load(open(os.path.join(ROOT, 'scripts', 'localization', 'tv-strings.json'), encoding='utf-8'))
 
 # The web app's listed catalogues (at least half translated), by its locale id, with the folder here.
-LANGUAGES = {'de': 'de', 'el': 'el', 'es': 'es', 'fr': 'fr', 'id': 'id', 'it': 'it', 'ms': 'ms', 'pl': 'pl',
-             'pt-BR': 'pt-BR', 'pt': 'pt-PT', 'tr': 'tr', 'zh-Hans': 'zh-Hans'}
+LANGUAGES = {'ar': 'ar', 'de': 'de', 'el': 'el', 'es': 'es', 'fr': 'fr', 'id': 'id', 'it': 'it', 'ms': 'ms', 'pl': 'pl',
+             'pt-BR': 'pt-BR', 'pt': 'pt-PT', 'ro': 'ro', 'tr': 'tr', 'zh-Hans': 'zh-Hans'}
 
 # The counts, in English; their translations come from these upstream messages where it has them.
 ENGLISH_PLURALS = {
@@ -177,7 +177,8 @@ def main():
                     forms = icu_forms(upstream[UPSTREAM_PLURALS[key]])
                 else:
                     forms = OURS['plurals'].get(key, {}).get(language)
-                if not forms or 'other' not in forms or any(specs(v) != ['ld'] for v in forms.values()):
+                # A form may leave the number out ("one second"), but `other` says it.
+                if not forms or specs(forms.get('other', '')) != ['ld'] or any(specs(v) not in ([], ['ld']) for v in forms.values()):
                     problems.append(f'{language}: plural {key!r}: {forms!r}')
                     continue
                 plurals[key] = forms

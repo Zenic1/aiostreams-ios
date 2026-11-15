@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>%ld seconds</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>zero</key>
+			<string>%ld ثانية</string>
+			<key>one</key>
+			<string>ثانية واحدة</string>
+			<key>two</key>
+			<string>ثانيتان</string>
+			<key>few</key>
+			<string>%ld ثوانٍ</string>
+			<key>many</key>
+			<string>%ld ثانية</string>
+			<key>other</key>
+			<string>%ld ثانية</string>
+		</dict>
+	</dict>
+	<key>%ld seconds before the end</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>zero</key>
+			<string>%ld ثانية قبل النهاية</string>
+			<key>one</key>
+			<string>ثانية واحدة قبل النهاية</string>
+			<key>two</key>
+			<string>ثانيتان قبل النهاية</string>
+			<key>few</key>
+			<string>%ld ثوانٍ قبل النهاية</string>
+			<key>many</key>
+			<string>%ld ثانية قبل النهاية</string>
+			<key>other</key>
+			<string>%ld ثانية قبل النهاية</string>
+		</dict>
+	</dict>
+	<key>%ld titles</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>zero</key>
+			<string>%ld عنوان</string>
+			<key>one</key>
+			<string>عنوان واحد</string>
+			<key>two</key>
+			<string>عنوانان</string>
+			<key>few</key>
+			<string>%ld عناوين</string>
+			<key>many</key>
+			<string>%ld عنوانًا</string>
+			<key>other</key>
+			<string>%ld عنوان</string>
+		</dict>
+	</dict>
+	<key>%ld versions</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>zero</key>
+			<string>%ld نسخة</string>
+			<key>one</key>
+			<string>نسخة واحدة</string>
+			<key>two</key>
+			<string>نسختان</string>
+			<key>few</key>
+			<string>%ld نسخ</string>
+			<key>many</key>
+			<string>%ld نسخة</string>
+			<key>other</key>
+			<string>%ld نسخة</string>
+		</dict>
+	</dict>
+	<key>After %ld episodes</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>zero</key>
+			<string>بعد %ld حلقة</string>
+			<key>one</key>
+			<string>بعد حلقة واحدة</string>
+			<key>two</key>
+			<string>بعد حلقتين</string>
+			<key>few</key>
+			<string>بعد %ld حلقات</string>
+			<key>many</key>
+			<string>بعد %ld حلقة</string>
+			<key>other</key>
+			<string>بعد %ld حلقة</string>
+		</dict>
+	</dict>
+	<key>in %ld days</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>zero</key>
+			<string>خلال %ld يوم</string>
+			<key>one</key>
+			<string>خلال يوم واحد</string>
+			<key>two</key>
+			<string>خلال يومين</string>
+			<key>few</key>
+			<string>خلال %ld أيام</string>
+			<key>many</key>
+			<string>خلال %ld يومًا</string>
+			<key>other</key>
+			<string>خلال %ld يوم</string>
+		</dict>
+	</dict>
+	<key>in %ld weeks</key>
+	<dict>
+		<key>NSStringLocalizedFormatKey</key>
+		<string>%#@count@</string>
+		<key>count</key>
+		<dict>
+			<key>NSStringFormatSpecTypeKey</key>
+			<string>NSStringPluralRuleType</string>
+			<key>NSStringFormatValueTypeKey</key>
+			<string>ld</string>
+			<key>zero</key>
+			<string>خلال %ld أسبوع</string>
+			<key>one</key>
+			<string>خلال أسبوع واحد</string>
+			<key>two</key>
+			<string>خلال أسبوعين</string>
+			<key>few</key>
+			<string>خلال %ld أسابيع</string>
+			<key>many</key>
+			<string>خلال %ld أسبوعًا</string>
+			<key>other</key>
+			<string>خلال %ld أسبوع</string>
+		</dict>
+	</dict>
+</dict>
+</plist>

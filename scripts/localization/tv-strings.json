@@ -12,7 +12,9 @@
       "pt-BR": "Biblioteca",
       "pt": "Biblioteca",
       "tr": "Kütüphane",
-      "zh-Hans": "媒体库"
+      "zh-Hans": "媒体库",
+      "ar": "المكتبة",
+      "ro": "Bibliotecă"
     },
     "See all": {
       "de": "Alle anzeigen",
@@ -26,7 +28,9 @@
       "pt-BR": "Ver tudo",
       "pt": "Ver tudo",
       "tr": "Tümünü gör",
-      "zh-Hans": "查看全部"
+      "zh-Hans": "查看全部",
+      "ar": "عرض الكل",
+      "ro": "Vezi tot"
     },
     "Nothing in this library.": {
       "de": "Nichts in dieser Mediathek.",
@@ -40,7 +44,9 @@
       "pt-BR": "Nada nesta biblioteca.",
       "pt": "Nada nesta biblioteca.",
       "tr": "Bu kütüphanede hiçbir şey yok.",
-      "zh-Hans": "此媒体库中没有内容。"
+      "zh-Hans": "此媒体库中没有内容。",
+      "ar": "لا شيء في هذه المكتبة.",
+      "ro": "Nimic în această bibliotecă."
     },
     "Titles you favourite show here.": {
       "de": "Titel, die du favorisierst, erscheinen hier.",
@@ -54,7 +60,9 @@
       "pt-BR": "Os títulos que você favoritar aparecem aqui.",
       "pt": "Os títulos que adicionar aos favoritos aparecem aqui.",
       "tr": "Favorilerine eklediğin içerikler burada görünür.",
-      "zh-Hans": "你收藏的影片会显示在这里。"
+      "zh-Hans": "你收藏的影片会显示在这里。",
+      "ar": "تظهر هنا العناوين التي تضيفها إلى المفضلة.",
+      "ro": "Titlurile pe care le adaugi la favorite apar aici."
     },
     "Movies, shows and channels": {
       "de": "Filme, Serien und Sender",
@@ -68,7 +76,9 @@
       "pt-BR": "Filmes, séries e canais",
       "pt": "Filmes, séries e canais",
       "tr": "Filmler, diziler ve kanallar",
-      "zh-Hans": "电影、剧集和频道"
+      "zh-Hans": "电影、剧集和频道",
+      "ar": "أفلام ومسلسلات وقنوات",
+      "ro": "Filme, seriale și canale"
     },
     "No results for “%@”.": {
       "de": "Keine Ergebnisse für „%@“.",
@@ -82,7 +92,9 @@
       "pt-BR": "Nenhum resultado para “%@”.",
       "pt": "Sem resultados para “%@”.",
       "tr": "“%@” için sonuç yok.",
-      "zh-Hans": "没有找到“%@”的结果。"
+      "zh-Hans": "没有找到“%@”的结果。",
+      "ar": "لا نتائج لـ «%@».",
+      "ro": "Niciun rezultat pentru „%@”."
     },
     "Ended": {
       "de": "Beendet",
@@ -96,7 +108,9 @@
       "pt-BR": "Finalizada",
       "pt": "Terminada",
       "tr": "Bitti",
-      "zh-Hans": "已完结"
+      "zh-Hans": "已完结",
+      "ar": "منتهٍ",
+      "ro": "Încheiat"
     },
     "Continuing": {
       "de": "Laufend",
@@ -110,7 +124,9 @@
       "pt-BR": "Em exibição",
       "pt": "Em exibição",
       "tr": "Devam ediyor",
-      "zh-Hans": "连载中"
+      "zh-Hans": "连载中",
+      "ar": "مستمر",
+      "ro": "În desfășurare"
     },
     "Season": {
       "de": "Staffel",
@@ -124,7 +140,9 @@
       "pt-BR": "Temporada",
       "pt": "Temporada",
       "tr": "Sezon",
-      "zh-Hans": "季"
+      "zh-Hans": "季",
+      "ar": "الموسم",
+      "ro": "Sezon"
     },
     "Nothing here yet. Add catalogs to your configuration.": {
       "de": "Hier ist noch nichts. Füge Kataloge zu deiner Konfiguration hinzu.",
@@ -138,7 +156,9 @@
       "pt-BR": "Nada aqui ainda. Adicione catálogos à sua configuração.",
       "pt": "Ainda não há nada. Adicione catálogos à sua configuração.",
       "tr": "Henüz burada bir şey yok. Yapılandırmana katalog ekle.",
-      "zh-Hans": "这里还没有内容。请在配置中添加目录。"
+      "zh-Hans": "这里还没有内容。请在配置中添加目录。",
+      "ar": "لا شيء هنا بعد. أضف كتالوجات إلى إعداداتك.",
+      "ro": "Încă nimic aici. Adaugă cataloage în configurația ta."
     },
     "today": {
       "de": "heute",
@@ -152,7 +172,9 @@
       "pt-BR": "hoje",
       "pt": "hoje",
       "tr": "bugün",
-      "zh-Hans": "今天"
+      "zh-Hans": "今天",
+      "ar": "اليوم",
+      "ro": "azi"
     },
     "tomorrow": {
       "de": "morgen",
@@ -166,7 +188,9 @@
       "pt-BR": "amanhã",
       "pt": "amanhã",
       "tr": "yarın",
-      "zh-Hans": "明天"
+      "zh-Hans": "明天",
+      "ar": "غدًا",
+      "ro": "mâine"
     },
     "The server sent something unexpected.": {
       "de": "Der Server hat etwas Unerwartetes gesendet.",
@@ -180,7 +204,9 @@
       "pt-BR": "O servidor enviou algo inesperado.",
       "pt": "O servidor enviou algo inesperado.",
       "tr": "Sunucu beklenmedik bir şey gönderdi.",
-      "zh-Hans": "服务器返回了意外的内容。"
+      "zh-Hans": "服务器返回了意外的内容。",
+      "ar": "أرسل الخادم شيئًا غير متوقع.",
+      "ro": "Serverul a trimis ceva neașteptat."
     },
     "Signed out. Sign in again.": {
       "de": "Abgemeldet. Melde dich erneut an.",
@@ -194,7 +220,9 @@
       "pt-BR": "Sessão encerrada. Entre novamente.",
       "pt": "Sessão terminada. Inicie sessão novamente.",
       "tr": "Oturum kapandı. Tekrar giriş yap.",
-      "zh-Hans": "已退出登录。请重新登录。"
+      "zh-Hans": "已退出登录。请重新登录。",
+      "ar": "تم تسجيل الخروج. سجّل الدخول مجددًا.",
+      "ro": "Deconectat. Conectează-te din nou."
     },
     "The server refused this.": {
       "de": "Der Server hat das abgelehnt.",
@@ -208,7 +236,9 @@
       "pt-BR": "O servidor recusou isso.",
       "pt": "O servidor recusou isto.",
       "tr": "Sunucu bunu reddetti.",
-      "zh-Hans": "服务器拒绝了此请求。"
+      "zh-Hans": "服务器拒绝了此请求。",
+      "ar": "رفض الخادم هذا الطلب.",
+      "ro": "Serverul a refuzat cererea."
     },
     "Not found on this server.": {
       "de": "Auf diesem Server nicht gefunden.",
@@ -222,7 +252,9 @@
       "pt-BR": "Não encontrado neste servidor.",
       "pt": "Não encontrado neste servidor.",
       "tr": "Bu sunucuda bulunamadı.",
-      "zh-Hans": "在此服务器上未找到。"
+      "zh-Hans": "在此服务器上未找到。",
+      "ar": "غير موجود على هذا الخادم.",
+      "ro": "Nu a fost găsit pe acest server."
     },
     "Too many requests. Try again shortly.": {
       "de": "Zu viele Anfragen. Versuche es gleich noch einmal.",
@@ -236,7 +268,9 @@
       "pt-BR": "Solicitações demais. Tente novamente em instantes.",
       "pt": "Demasiados pedidos. Tente novamente daqui a pouco.",
       "tr": "Çok fazla istek. Birazdan tekrar dene.",
-      "zh-Hans": "请求过多。请稍后再试。"
+      "zh-Hans": "请求过多。请稍后再试。",
+      "ar": "طلبات كثيرة جدًا. حاول مجددًا بعد قليل.",
+      "ro": "Prea multe cereri. Încearcă din nou în curând."
     },
     "More channels": {
       "de": "Weitere Sender",
@@ -250,7 +284,9 @@
       "pt-BR": "Mais canais",
       "pt": "Mais canais",
       "tr": "Daha fazla kanal",
-      "zh-Hans": "更多频道"
+      "zh-Hans": "更多频道",
+      "ar": "مزيد من القنوات",
+      "ro": "Mai multe canale"
     },
     "Next %@: %@": {
       "de": "Danach %@: %@",
@@ -264,7 +300,9 @@
       "pt-BR": "A seguir %@: %@",
       "pt": "A seguir %@: %@",
       "tr": "Sonra %@: %@",
-      "zh-Hans": "接下来 %@：%@"
+      "zh-Hans": "接下来 %@：%@",
+      "ar": "التالي %@: %@",
+      "ro": "Urmează %@: %@"
     },
     "Next: %@": {
       "de": "Danach: %@",
@@ -278,7 +316,9 @@
       "pt-BR": "A seguir: %@",
       "pt": "A seguir: %@",
       "tr": "Sonra: %@",
-      "zh-Hans": "接下来：%@"
+      "zh-Hans": "接下来：%@",
+      "ar": "التالي: %@",
+      "ro": "Urmează: %@"
     },
     "Choose a programme on now to watch its channel, or an earlier one marked ↺ to watch it from the start.": {
       "de": "Wähle eine laufende Sendung, um ihren Sender zu schauen, oder eine frühere mit ↺, um sie von Anfang an zu sehen.",
@@ -292,7 +332,9 @@
       "pt-BR": "Escolha um programa no ar para assistir ao canal, ou um anterior marcado com ↺ para assisti-lo desde o início.",
       "pt": "Escolha um programa em exibição para ver o respetivo canal, ou um anterior marcado com ↺ para o ver desde o início.",
       "tr": "Kanalını izlemek için şu an yayında olan bir programı, baştan izlemek için ↺ işaretli daha önceki bir programı seç.",
-      "zh-Hans": "选择正在播出的节目以观看其频道，或选择标有 ↺ 的较早节目以从头观看。"
+      "zh-Hans": "选择正在播出的节目以观看其频道，或选择标有 ↺ 的较早节目以从头观看。",
+      "ar": "اختر برنامجًا يُعرض الآن لمشاهدة قناته، أو برنامجًا سابقًا عليه ↺ لمشاهدته من البداية.",
+      "ro": "Alege un program difuzat acum pentru a-i viziona canalul sau unul anterior marcat cu ↺ pentru a-l viziona de la început."
     },
     "No guide for this channel": {
       "de": "Kein Programm für diesen Sender",
@@ -306,7 +348,9 @@
       "pt-BR": "Sem guia para este canal",
       "pt": "Sem guia para este canal",
       "tr": "Bu kanal için yayın akışı yok",
-      "zh-Hans": "此频道没有节目指南"
+      "zh-Hans": "此频道没有节目指南",
+      "ar": "لا يوجد دليل لهذه القناة",
+      "ro": "Niciun ghid pentru acest canal"
     },
     "Nothing with %@ on this server.": {
       "de": "Nichts mit %@ auf diesem Server.",
@@ -320,7 +364,9 @@
       "pt-BR": "Nada com %@ neste servidor.",
       "pt": "Nada com %@ neste servidor.",
       "tr": "Bu sunucuda %@ ile ilgili hiçbir şey yok.",
-      "zh-Hans": "此服务器上没有与 %@ 相关的内容。"
+      "zh-Hans": "此服务器上没有与 %@ 相关的内容。",
+      "ar": "لا شيء مع %@ على هذا الخادم.",
+      "ro": "Nimic cu %@ pe acest server."
     },
     "them": {
       "de": "dieser Person",
@@ -334,7 +380,9 @@
       "pt-BR": "essa pessoa",
       "pt": "esta pessoa",
       "tr": "bu kişi",
-      "zh-Hans": "此人"
+      "zh-Hans": "此人",
+      "ar": "هذا الشخص",
+      "ro": "această persoană"
     },
     "Nothing airs in the next two weeks.": {
       "de": "In den nächsten zwei Wochen läuft nichts.",
@@ -348,7 +396,9 @@
       "pt-BR": "Nada vai ao ar nas próximas duas semanas.",
       "pt": "Nada é emitido nas próximas duas semanas.",
       "tr": "Önümüzdeki iki haftada yayınlanacak bir şey yok.",
-      "zh-Hans": "接下来两周没有播出内容。"
+      "zh-Hans": "接下来两周没有播出内容。",
+      "ar": "لا يُعرض شيء في الأسبوعين القادمين.",
+      "ro": "Nimic nu se difuzează în următoarele două săptămâni."
     },
     "What you watch shows here.": {
       "de": "Was du schaust, erscheint hier.",
@@ -362,7 +412,9 @@
       "pt-BR": "O que você assiste aparece aqui.",
       "pt": "O que vê aparece aqui.",
       "tr": "İzlediklerin burada görünür.",
-      "zh-Hans": "你观看的内容会显示在这里。"
+      "zh-Hans": "你观看的内容会显示在这里。",
+      "ar": "يظهر هنا ما تشاهده.",
+      "ro": "Ce vizionezi apare aici."
     },
     "Earlier": {
       "de": "Früher",
@@ -376,7 +428,9 @@
       "pt-BR": "Antes",
       "pt": "Antes",
       "tr": "Daha önce",
-      "zh-Hans": "更早"
+      "zh-Hans": "更早",
+      "ar": "سابقًا",
+      "ro": "Mai devreme"
     },
     "Finding a version of %@…": {
       "de": "Suche eine Version von %@…",
@@ -390,7 +444,9 @@
       "pt-BR": "Procurando uma versão de %@…",
       "pt": "A procurar uma versão de %@…",
       "tr": "%@ için sürüm aranıyor…",
-      "zh-Hans": "正在查找 %@ 的版本…"
+      "zh-Hans": "正在查找 %@ 的版本…",
+      "ar": "جارٍ البحث عن نسخة من %@…",
+      "ro": "Se caută o versiune pentru %@…"
     },
     "this": {
       "de": "diesem Titel",
@@ -404,7 +460,9 @@
       "pt-BR": "isto",
       "pt": "isto",
       "tr": "bu",
-      "zh-Hans": "此影片"
+      "zh-Hans": "此影片",
+      "ar": "هذا",
+      "ro": "acesta"
     },
     "LIVE": {
       "de": "LIVE",
@@ -418,7 +476,9 @@
       "pt-BR": "AO VIVO",
       "pt": "EM DIRETO",
       "tr": "CANLI",
-      "zh-Hans": "直播"
+      "zh-Hans": "直播",
+      "ar": "مباشر",
+      "ro": "LIVE"
     },
     "This version didn't play": {
       "de": "Diese Version wurde nicht abgespielt",
@@ -432,7 +492,9 @@
       "pt-BR": "Esta versão não foi reproduzida",
       "pt": "Esta versão não foi reproduzida",
       "tr": "Bu sürüm oynatılamadı",
-      "zh-Hans": "此版本无法播放"
+      "zh-Hans": "此版本无法播放",
+      "ar": "تعذّر تشغيل هذه النسخة",
+      "ro": "Această versiune nu a putut fi redată"
     },
     "Press Back to pick another version.": {
       "de": "Drücke „Zurück“, um eine andere Version zu wählen.",
@@ -446,7 +508,9 @@
       "pt-BR": "Pressione Voltar para escolher outra versão.",
       "pt": "Prima Voltar para escolher outra versão.",
       "tr": "Başka bir sürüm seçmek için Geri'ye bas.",
-      "zh-Hans": "按返回键选择其他版本。"
+      "zh-Hans": "按返回键选择其他版本。",
+      "ar": "اضغط رجوع لاختيار نسخة أخرى.",
+      "ro": "Apasă Înapoi pentru a alege altă versiune."
     },
     "Skipped": {
       "de": "Übersprungen",
@@ -460,7 +524,9 @@
       "pt-BR": "Pulado",
       "pt": "Saltado",
       "tr": "Atlandı",
-      "zh-Hans": "已跳过"
+      "zh-Hans": "已跳过",
+      "ar": "تم التخطي",
+      "ro": "Omis"
     },
     "Playing in %@s": {
       "de": "Spielt in %@ s",
@@ -474,7 +540,9 @@
       "pt-BR": "Reproduzindo em %@ s",
       "pt": "A reproduzir dentro de %@ s",
       "tr": "%@ sn içinde oynatılacak",
-      "zh-Hans": "%@ 秒后播放"
+      "zh-Hans": "%@ 秒后播放",
+      "ar": "التشغيل خلال %@ ث",
+      "ro": "Pornește în %@ s"
     },
     "Play next": {
       "de": "Nächste abspielen",
@@ -488,7 +556,9 @@
       "pt-BR": "Reproduzir o próximo",
       "pt": "Reproduzir o seguinte",
       "tr": "Sonrakini oynat",
-      "zh-Hans": "播放下一集"
+      "zh-Hans": "播放下一集",
+      "ar": "تشغيل التالي",
+      "ro": "Redă următorul"
     },
     "Keep watching": {
       "de": "Weiterschauen",
@@ -502,7 +572,9 @@
       "pt-BR": "Continuar assistindo",
       "pt": "Continuar a ver",
       "tr": "İzlemeye devam et",
-      "zh-Hans": "继续观看"
+      "zh-Hans": "继续观看",
+      "ar": "متابعة المشاهدة",
+      "ro": "Continuă vizionarea"
     },
     "This version has one audio track.": {
       "de": "Diese Version hat eine Tonspur.",
@@ -516,7 +588,9 @@
       "pt-BR": "Esta versão tem uma faixa de áudio.",
       "pt": "Esta versão tem uma faixa de áudio.",
       "tr": "Bu sürümün tek bir ses parçası var.",
-      "zh-Hans": "此版本只有一条音轨。"
+      "zh-Hans": "此版本只有一条音轨。",
+      "ar": "تحتوي هذه النسخة على مسار صوتي واحد.",
+      "ro": "Această versiune are o singură pistă audio."
     },
     "Later shows subtitles, or plays the sound, after the picture; earlier, before it. Kept for this title.": {
       "de": "Später zeigt Untertitel oder spielt den Ton nach dem Bild ab, früher davor. Gilt für diesen Titel.",
@@ -530,7 +604,9 @@
       "pt-BR": "Depois mostra as legendas, ou toca o som, após a imagem; antes, adiantado. Salvo para este título.",
       "pt": "Mais tarde mostra as legendas, ou reproduz o som, depois da imagem; mais cedo, antes dela. Guardado para este título.",
       "tr": "Daha geç, altyazıları gösterir ya da sesi görüntüden sonra çalar; daha erken, ondan önce. Bu içerik için saklanır.",
-      "zh-Hans": "延后会在画面之后显示字幕或播放声音；提前则在画面之前。仅对此影片保存。"
+      "zh-Hans": "延后会在画面之后显示字幕或播放声音；提前则在画面之前。仅对此影片保存。",
+      "ar": "«لاحقًا» يعرض الترجمة أو يشغّل الصوت بعد الصورة؛ و«مبكرًا» قبلها. يُحفظ لهذا العنوان.",
+      "ro": "Mai târziu afișează subtitrările sau redă sunetul după imagine; mai devreme, înaintea ei. Se păstrează pentru acest titlu."
     },
     "Mono": {
       "de": "Mono",
@@ -544,7 +620,9 @@
       "pt-BR": "Mono",
       "pt": "Mono",
       "tr": "Mono",
-      "zh-Hans": "单声道"
+      "zh-Hans": "单声道",
+      "ar": "أحادي",
+      "ro": "Mono"
     },
     "%@ ch": {
       "de": "%@ Kanäle",
@@ -558,7 +636,9 @@
       "pt-BR": "%@ canais",
       "pt": "%@ canais",
       "tr": "%@ kanal",
-      "zh-Hans": "%@ 声道"
+      "zh-Hans": "%@ 声道",
+      "ar": "%@ قنوات",
+      "ro": "%@ canale"
     },
     "Audio description": {
       "de": "Audiodeskription",
@@ -572,7 +652,9 @@
       "pt-BR": "Audiodescrição",
       "pt": "Audiodescrição",
       "tr": "Sesli betimleme",
-      "zh-Hans": "口述影像"
+      "zh-Hans": "口述影像",
+      "ar": "الوصف الصوتي",
+      "ro": "Audiodescriere"
     },
     "Addon": {
       "de": "Addon",
@@ -586,7 +668,9 @@
       "pt-BR": "Addon",
       "pt": "Addon",
       "tr": "Eklenti",
-      "zh-Hans": "插件"
+      "zh-Hans": "插件",
+      "ar": "إضافة",
+      "ro": "Addon"
     },
     "This version has no address to play.": {
       "de": "Diese Version hat keine Adresse zum Abspielen.",
@@ -600,7 +684,9 @@
       "pt-BR": "Esta versão não tem um endereço para reproduzir.",
       "pt": "Esta versão não tem um endereço para reproduzir.",
       "tr": "Bu sürümün oynatılacak bir adresi yok.",
-      "zh-Hans": "此版本没有可播放的地址。"
+      "zh-Hans": "此版本没有可播放的地址。",
+      "ar": "لا تحتوي هذه النسخة على عنوان للتشغيل.",
+      "ro": "Această versiune nu are o adresă de redat."
     },
     "Saved to your account, so the web app and your other devices use them too.": {
       "de": "In deinem Konto gespeichert, sodass die Web-App und deine anderen Geräte sie auch verwenden.",
@@ -614,7 +700,9 @@
       "pt-BR": "Salvas na sua conta, para que o app web e seus outros dispositivos também as usem.",
       "pt": "Guardadas na sua conta, para que a app web e os seus outros dispositivos também as usem.",
       "tr": "Hesabına kaydedilir, böylece web uygulaması ve diğer cihazların da bunları kullanır.",
-      "zh-Hans": "保存在你的账户中，网页应用和你的其他设备也会使用。"
+      "zh-Hans": "保存在你的账户中，网页应用和你的其他设备也会使用。",
+      "ar": "تُحفظ في حسابك، فيستخدمها تطبيق الويب وأجهزتك الأخرى أيضًا.",
+      "ro": "Salvate în contul tău, astfel încât aplicația web și celelalte dispozitive ale tale le folosesc și ele."
     },
     "Audio language": {
       "de": "Audiosprache",
@@ -628,7 +716,9 @@
       "pt-BR": "Idioma do áudio",
       "pt": "Idioma do áudio",
       "tr": "Ses dili",
-      "zh-Hans": "音频语言"
+      "zh-Hans": "音频语言",
+      "ar": "لغة الصوت",
+      "ro": "Limba audio"
     },
     "The file's default": {
       "de": "Standard der Datei",
@@ -642,7 +732,9 @@
       "pt-BR": "O padrão do arquivo",
       "pt": "A predefinição do ficheiro",
       "tr": "Dosyanın varsayılanı",
-      "zh-Hans": "文件默认"
+      "zh-Hans": "文件默认",
+      "ar": "الافتراضي في الملف",
+      "ro": "Implicita fișierului"
     },
     "Subtitle language": {
       "de": "Untertitelsprache",
@@ -656,7 +748,9 @@
       "pt-BR": "Idioma das legendas",
       "pt": "Idioma das legendas",
       "tr": "Altyazı dili",
-      "zh-Hans": "字幕语言"
+      "zh-Hans": "字幕语言",
+      "ar": "لغة الترجمة",
+      "ro": "Limba subtitrărilor"
     },
     "Any": {
       "de": "Beliebig",
@@ -670,7 +764,9 @@
       "pt-BR": "Qualquer",
       "pt": "Qualquer",
       "tr": "Herhangi biri",
-      "zh-Hans": "任意"
+      "zh-Hans": "任意",
+      "ar": "أي لغة",
+      "ro": "Oricare"
     },
     "Play starts the first version, and resuming goes back to the version you were watching. Hold select on a title and choose Choose a version to pick instead.": {
       "de": "Abspielen startet die erste Version, und Fortsetzen kehrt zu der Version zurück, die du geschaut hast. Halte auf einem Titel die Auswahltaste gedrückt und wähle „Version auswählen“, um stattdessen zu wählen.",
@@ -684,7 +780,9 @@
       "pt-BR": "Reproduzir inicia a primeira versão, e retomar volta à versão que você estava assistindo. Segure selecionar em um título e escolha Escolher uma versão para escolher você mesmo.",
       "pt": "Reproduzir inicia a primeira versão, e retomar volta à versão que estava a ver. Mantenha premido selecionar num título e escolha Escolher uma versão para escolher.",
       "tr": "Oynat ilk sürümü başlatır, devam etmek ise izlediğin sürüme döner. Kendin seçmek için bir içerikte seçme tuşunu basılı tut ve Sürüm seç'i seç.",
-      "zh-Hans": "播放会开始第一个版本，继续播放会回到你之前观看的版本。在影片上按住选择键并选择“选择版本”即可自行选择。"
+      "zh-Hans": "播放会开始第一个版本，继续播放会回到你之前观看的版本。在影片上按住选择键并选择“选择版本”即可自行选择。",
+      "ar": "«تشغيل» يبدأ النسخة الأولى، والاستئناف يعود إلى النسخة التي كنت تشاهدها. اضغط مطولًا على زر التحديد في عنوان واختر «اختر نسخة» لتختار بنفسك.",
+      "ro": "Redă pornește prima versiune, iar reluarea revine la versiunea pe care o vizionai. Ține apăsat pe selectare pe un titlu și alege Alege o versiune pentru a alege tu."
     },
     "Play lists the versions to choose from, but resuming goes back to the version you were watching. Hold select on a title and choose Play straight away to start the first.": {
       "de": "Abspielen listet die Versionen zur Auswahl auf, aber Fortsetzen kehrt zu der Version zurück, die du geschaut hast. Halte auf einem Titel die Auswahltaste gedrückt und wähle „Sofort abspielen“, um die erste zu starten.",
@@ -698,7 +796,9 @@
       "pt-BR": "Reproduzir lista as versões para escolher, mas retomar volta à versão que você estava assistindo. Segure selecionar em um título e escolha Reproduzir diretamente para iniciar a primeira.",
       "pt": "Reproduzir lista as versões para escolher, mas retomar volta à versão que estava a ver. Mantenha premido selecionar num título e escolha Reproduzir de imediato para iniciar a primeira.",
       "tr": "Oynat seçebileceğin sürümleri listeler, ama devam etmek izlediğin sürüme döner. İlkini başlatmak için bir içerikte seçme tuşunu basılı tut ve Hemen oynat'ı seç.",
-      "zh-Hans": "播放会列出可选的版本，但继续播放会回到你之前观看的版本。在影片上按住选择键并选择“立即播放”即可开始第一个版本。"
+      "zh-Hans": "播放会列出可选的版本，但继续播放会回到你之前观看的版本。在影片上按住选择键并选择“立即播放”即可开始第一个版本。",
+      "ar": "«تشغيل» يسرد النسخ لتختار منها، لكن الاستئناف يعود إلى النسخة التي كنت تشاهدها. اضغط مطولًا على زر التحديد في عنوان واختر «التشغيل فورًا» لبدء الأولى.",
+      "ro": "Redă afișează versiunile din care să alegi, dar reluarea revine la versiunea pe care o vizionai. Ține apăsat pe selectare pe un titlu și alege Redă imediat pentru a o porni pe prima."
     },
     "Skipping and the next episode": {
       "de": "Überspringen und nächste Folge",
@@ -712,7 +812,9 @@
       "pt-BR": "Pular e próximo episódio",
       "pt": "Saltar e próximo episódio",
       "tr": "Atlama ve sonraki bölüm",
-      "zh-Hans": "跳过与下一集"
+      "zh-Hans": "跳过与下一集",
+      "ar": "التخطي والحلقة التالية",
+      "ro": "Omiteri și episodul următor"
     },
     "Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration.": {
       "de": "Mit der Web-App geteilt. Intros, Rückblicke und Abspann kommen von deinem Server, wenn dort „Intro und Abspann überspringen“ in der Konfiguration aktiviert ist.",
@@ -726,7 +828,9 @@
       "pt-BR": "Compartilhado com o app web. Aberturas, recapitulações e créditos vêm do seu servidor, com a opção de pular abertura e créditos ativada na configuração dele.",
       "pt": "Partilhado com a app web. Genéricos, resumos e créditos vêm do seu servidor, com a opção de saltar o genérico e os créditos ativada na configuração dele.",
       "tr": "Web uygulamasıyla paylaşılır. Girişler, özetler ve jenerikler sunucundan gelir; bunun için yapılandırmasında giriş ve jenerik atlama açık olmalıdır.",
-      "zh-Hans": "与网页应用共享。片头、回顾和片尾来自你的服务器，需要在其配置中开启跳过片头和片尾。"
+      "zh-Hans": "与网页应用共享。片头、回顾和片尾来自你的服务器，需要在其配置中开启跳过片头和片尾。",
+      "ar": "مشترك مع تطبيق الويب. تأتي المقدمات والملخصات وشارات النهاية من خادمك، مع تفعيل تخطي المقدمة وشارة النهاية في إعداداته.",
+      "ro": "Partajat cu aplicația web. Introurile, rezumatele și genericele vin de la serverul tău, cu omiterea introului și a genericului activată în configurația sa."
     },
     "Don't skip": {
       "de": "Nicht überspringen",
@@ -740,7 +844,9 @@
       "pt-BR": "Não pular",
       "pt": "Não saltar",
       "tr": "Atlama",
-      "zh-Hans": "不跳过"
+      "zh-Hans": "不跳过",
+      "ar": "عدم التخطي",
+      "ro": "Nu sări"
     },
     "Play the next episode automatically": {
       "de": "Nächste Folge automatisch abspielen",
@@ -754,7 +860,9 @@
       "pt-BR": "Reproduzir o próximo episódio automaticamente",
       "pt": "Reproduzir o próximo episódio automaticamente",
       "tr": "Sonraki bölümü otomatik oynat",
-      "zh-Hans": "自动播放下一集"
+      "zh-Hans": "自动播放下一集",
+      "ar": "تشغيل الحلقة التالية تلقائيًا",
+      "ro": "Redă automat episodul următor"
     },
     "On": {
       "de": "An",
@@ -768,7 +876,9 @@
       "pt-BR": "Ativado",
       "pt": "Ligado",
       "tr": "Açık",
-      "zh-Hans": "开启"
+      "zh-Hans": "开启",
+      "ar": "مُفعّل",
+      "ro": "Pornit"
     },
     "Offer the next episode": {
       "de": "Nächste Folge anbieten",
@@ -782,7 +892,9 @@
       "pt-BR": "Oferecer o próximo episódio",
       "pt": "Propor o próximo episódio",
       "tr": "Sonraki bölümü öner",
-      "zh-Hans": "提示下一集"
+      "zh-Hans": "提示下一集",
+      "ar": "عرض الحلقة التالية",
+      "ro": "Propune episodul următor"
     },
     "At the credits": {
       "de": "Beim Abspann",
@@ -796,7 +908,9 @@
       "pt-BR": "Nos créditos",
       "pt": "Nos créditos",
       "tr": "Jenerikte",
-      "zh-Hans": "片尾时"
+      "zh-Hans": "片尾时",
+      "ar": "عند شارة النهاية",
+      "ro": "La generic"
     },
     "Near the end": {
       "de": "Kurz vor dem Ende",
@@ -810,7 +924,9 @@
       "pt-BR": "Perto do fim",
       "pt": "Perto do fim",
       "tr": "Sona doğru",
-      "zh-Hans": "接近结尾时"
+      "zh-Hans": "接近结尾时",
+      "ar": "قرب النهاية",
+      "ro": "Spre final"
     },
     "Without credits, offer it": {
       "de": "Ohne Abspann anbieten",
@@ -824,7 +940,9 @@
       "pt-BR": "Sem créditos, oferecer",
       "pt": "Sem créditos, propor",
       "tr": "Jenerik yoksa öner",
-      "zh-Hans": "没有片尾时，提前提示"
+      "zh-Hans": "没有片尾时，提前提示",
+      "ar": "دون شارة نهاية، اعرضها",
+      "ro": "Fără generic, propune-l"
     },
     "Wait for episodes to air": {
       "de": "Auf die Ausstrahlung von Folgen warten",
@@ -838,7 +956,9 @@
       "pt-BR": "Esperar os episódios irem ao ar",
       "pt": "Esperar que os episódios sejam emitidos",
       "tr": "Bölümlerin yayınlanmasını bekle",
-      "zh-Hans": "等待剧集播出"
+      "zh-Hans": "等待剧集播出",
+      "ar": "انتظار بث الحلقات",
+      "ro": "Așteaptă difuzarea episoadelor"
     },
     "The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer.": {
       "de": "Die nächste Folge läuft in der Version, die zu der passt, die du schaust. Passt keine, läuft die erste, oder wenn das aus ist, werden die Versionen aufgelistet. „Zurück“ blendet das Angebot aus.",
@@ -852,7 +972,9 @@
       "pt-BR": "O próximo episódio é reproduzido na versão que corresponde à que você está assistindo. Se nenhuma corresponder, a primeira é reproduzida, ou, com isso desativado, as versões são listadas. Voltar esconde a oferta.",
       "pt": "O próximo episódio é reproduzido na versão que corresponde à que está a ver. Se nenhuma corresponder, é reproduzida a primeira, ou, com isso desligado, as versões são listadas. Voltar oculta a proposta.",
       "tr": "Sonraki bölüm, izlediğin sürümle eşleşen sürümde oynar. Eşleşen yoksa ilki oynar ya da bu kapalıysa sürümler listelenir. Geri, öneriyi gizler.",
-      "zh-Hans": "下一集会以与你正在观看的版本相匹配的版本播放。没有匹配的版本时，会播放第一个版本；若关闭此选项，则列出各个版本。按返回键可隐藏提示。"
+      "zh-Hans": "下一集会以与你正在观看的版本相匹配的版本播放。没有匹配的版本时，会播放第一个版本；若关闭此选项，则列出各个版本。按返回键可隐藏提示。",
+      "ar": "تُعرض الحلقة التالية بالنسخة المطابقة لما تشاهده. إن لم تطابقه أي نسخة، تُعرض الأولى، أو تُسرد النسخ إذا كان ذلك متوقفًا. زر الرجوع يخفي العرض.",
+      "ro": "Episodul următor rulează în versiunea care se potrivește cu cea pe care o vizionezi. Dacă niciuna nu se potrivește, rulează prima sau, cu opțiunea dezactivată, sunt afișate versiunile. Înapoi ascunde propunerea."
     },
     "Shared with the web app.": {
       "de": "Mit der Web-App geteilt.",
@@ -866,7 +988,9 @@
       "pt-BR": "Compartilhado com o app web.",
       "pt": "Partilhado com a app web.",
       "tr": "Web uygulamasıyla paylaşılır.",
-      "zh-Hans": "与网页应用共享。"
+      "zh-Hans": "与网页应用共享。",
+      "ar": "مشترك مع تطبيق الويب.",
+      "ro": "Partajat cu aplicația web."
     },
     "Accent colour": {
       "de": "Akzentfarbe",
@@ -880,7 +1004,9 @@
       "pt-BR": "Cor de destaque",
       "pt": "Cor de destaque",
       "tr": "Vurgu rengi",
-      "zh-Hans": "强调色"
+      "zh-Hans": "强调色",
+      "ar": "لون التمييز",
+      "ro": "Culoare de accent"
     },
     "Sky": {
       "de": "Himmelblau",
@@ -894,7 +1020,9 @@
       "pt-BR": "Céu",
       "pt": "Céu",
       "tr": "Gök mavisi",
-      "zh-Hans": "天蓝"
+      "zh-Hans": "天蓝",
+      "ar": "سماوي",
+      "ro": "Cer"
     },
     "Teal": {
       "de": "Blaugrün",
@@ -908,7 +1036,9 @@
       "pt-BR": "Verde-azulado",
       "pt": "Verde-azulado",
       "tr": "Camgöbeği",
-      "zh-Hans": "青绿"
+      "zh-Hans": "青绿",
+      "ar": "أزرق مخضر",
+      "ro": "Verde-albastru"
     },
     "Amber": {
       "de": "Bernstein",
@@ -922,7 +1052,9 @@
       "pt-BR": "Âmbar",
       "pt": "Âmbar",
       "tr": "Kehribar",
-      "zh-Hans": "琥珀"
+      "zh-Hans": "琥珀",
+      "ar": "كهرماني",
+      "ro": "Chihlimbar"
     },
     "Orange": {
       "de": "Orange",
@@ -936,7 +1068,9 @@
       "pt-BR": "Laranja",
       "pt": "Laranja",
       "tr": "Turuncu",
-      "zh-Hans": "橙色"
+      "zh-Hans": "橙色",
+      "ar": "برتقالي",
+      "ro": "Portocaliu"
     },
     "Violet": {
       "de": "Violett",
@@ -950,7 +1084,9 @@
       "pt-BR": "Violeta",
       "pt": "Violeta",
       "tr": "Mor",
-      "zh-Hans": "紫罗兰"
+      "zh-Hans": "紫罗兰",
+      "ar": "بنفسجي",
+      "ro": "Violet"
     },
     "Charcoal": {
       "de": "Anthrazit",
@@ -964,7 +1100,9 @@
       "pt-BR": "Carvão",
       "pt": "Carvão",
       "tr": "Kömür",
-      "zh-Hans": "炭灰"
+      "zh-Hans": "炭灰",
+      "ar": "فحمي",
+      "ro": "Cărbune"
     },
     "Slate": {
       "de": "Schiefer",
@@ -978,7 +1116,9 @@
       "pt-BR": "Ardósia",
       "pt": "Ardósia",
       "tr": "Arduvaz",
-      "zh-Hans": "石板灰"
+      "zh-Hans": "石板灰",
+      "ar": "أردوازي",
+      "ro": "Ardezie"
     },
     "Navy": {
       "de": "Marineblau",
@@ -992,7 +1132,9 @@
       "pt-BR": "Azul-marinho",
       "pt": "Azul-marinho",
       "tr": "Lacivert",
-      "zh-Hans": "海军蓝"
+      "zh-Hans": "海军蓝",
+      "ar": "كحلي",
+      "ro": "Bleumarin"
     },
     "Plum": {
       "de": "Pflaume",
@@ -1006,7 +1148,9 @@
       "pt-BR": "Ameixa",
       "pt": "Ameixa",
       "tr": "Erik",
-      "zh-Hans": "梅紫"
+      "zh-Hans": "梅紫",
+      "ar": "برقوقي",
+      "ro": "Prună"
     },
     "Forest": {
       "de": "Waldgrün",
@@ -1020,7 +1164,9 @@
       "pt-BR": "Floresta",
       "pt": "Floresta",
       "tr": "Orman",
-      "zh-Hans": "森林绿"
+      "zh-Hans": "森林绿",
+      "ar": "أخضر غابي",
+      "ro": "Verde pădure"
     },
     "Maroon": {
       "de": "Kastanienrot",
@@ -1034,7 +1180,9 @@
       "pt-BR": "Bordô",
       "pt": "Bordeaux",
       "tr": "Bordo",
-      "zh-Hans": "栗红"
+      "zh-Hans": "栗红",
+      "ar": "عنابي",
+      "ro": "Vișiniu"
     },
     "Player controls": {
       "de": "Player-Steuerung",
@@ -1048,7 +1196,9 @@
       "pt-BR": "Controles do player",
       "pt": "Controlos do leitor",
       "tr": "Oynatıcı kontrolleri",
-      "zh-Hans": "播放器控制"
+      "zh-Hans": "播放器控制",
+      "ar": "عناصر تحكم المشغّل",
+      "ro": "Comenzile playerului"
     },
     "Kept on this Apple TV.": {
       "de": "Auf diesem Apple TV gespeichert.",
@@ -1062,7 +1212,9 @@
       "pt-BR": "Salvo nesta Apple TV.",
       "pt": "Guardado nesta Apple TV.",
       "tr": "Bu Apple TV'de saklanır.",
-      "zh-Hans": "保存在此 Apple TV 上。"
+      "zh-Hans": "保存在此 Apple TV 上。",
+      "ar": "محفوظ على جهاز Apple TV هذا.",
+      "ro": "Păstrat pe acest Apple TV."
     },
     "Skip step": {
       "de": "Sprungweite",
@@ -1076,7 +1228,9 @@
       "pt-BR": "Intervalo de salto",
       "pt": "Intervalo de salto",
       "tr": "Atlama adımı",
-      "zh-Hans": "快进/快退间隔"
+      "zh-Hans": "快进/快退间隔",
+      "ar": "مقدار القفز",
+      "ro": "Pas de salt"
     },
     "Show the clock": {
       "de": "Uhr anzeigen",
@@ -1090,7 +1244,9 @@
       "pt-BR": "Mostrar o relógio",
       "pt": "Mostrar o relógio",
       "tr": "Saati göster",
-      "zh-Hans": "显示时钟"
+      "zh-Hans": "显示时钟",
+      "ar": "إظهار الساعة",
+      "ro": "Afișează ceasul"
     },
     "Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title.": {
       "de": "Anime bis 1080p wird für deinen Fernseher mit dem Line-Art-Netz von Anime4K hochskaliert, für schärfere Linien. Gilt für Titel mit einer Anime-Datenbank-ID und nur für SDR-Video. Änderungen gelten ab dem nächsten Titel.",
@@ -1104,7 +1260,9 @@
       "pt-BR": "Animes de até 1080p são ampliados para a sua TV com a rede line-art do Anime4K, para traços mais nítidos. Vale para títulos com um ID de banco de dados de anime, e só para vídeo SDR. As mudanças valem a partir do próximo título.",
       "pt": "Os animes até 1080p são ampliados para a sua TV com a rede line-art do Anime4K, para traços mais nítidos. Aplica-se a títulos com um ID de base de dados de anime, e apenas a vídeo SDR. As alterações aplicam-se a partir do título seguinte.",
       "tr": "1080p'ye kadar olan animeler, daha keskin çizgiler için Anime4K'nin line-art ağıyla televizyonun için büyütülür. Anime veritabanı kimliği olan içeriklerde ve yalnızca SDR videoda geçerlidir. Değişiklikler sonraki içerikten itibaren geçerli olur.",
-      "zh-Hans": "1080p 及以下的动画会使用 Anime4K 的线稿网络为你的电视放大，使线条更清晰。适用于带有动画数据库 ID 的影片，且仅限 SDR 视频。更改将从下一部影片开始生效。"
+      "zh-Hans": "1080p 及以下的动画会使用 Anime4K 的线稿网络为你的电视放大，使线条更清晰。适用于带有动画数据库 ID 的影片，且仅限 SDR 视频。更改将从下一部影片开始生效。",
+      "ar": "تُكبَّر دقة الأنمي حتى 1080p لتلفازك باستخدام شبكة الخطوط في Anime4K، لخطوط أوضح. ينطبق على العناوين التي لها معرّف في قاعدة بيانات أنمي، وعلى فيديو SDR فقط. تسري التغييرات من العنوان التالي.",
+      "ro": "Anime-ul de până la 1080p este mărit pentru televizorul tău cu rețeaua line-art din Anime4K, pentru linii mai clare. Se aplică titlurilor cu un ID dintr-o bază de date anime și doar videoclipurilor SDR. Modificările se aplică de la următorul titlu."
     },
     "Subtitle style": {
       "de": "Untertitelstil",
@@ -1118,7 +1276,9 @@
       "pt-BR": "Estilo das legendas",
       "pt": "Estilo das legendas",
       "tr": "Altyazı stili",
-      "zh-Hans": "字幕样式"
+      "zh-Hans": "字幕样式",
+      "ar": "نمط الترجمة",
+      "ro": "Stilul subtitrărilor"
     },
     "The same style as the web app's, on every device you sign in to.": {
       "de": "Derselbe Stil wie in der Web-App, auf jedem Gerät, auf dem du dich anmeldest.",
@@ -1132,7 +1292,9 @@
       "pt-BR": "O mesmo estilo do app web, em todos os dispositivos em que você entrar.",
       "pt": "O mesmo estilo da app web, em todos os dispositivos em que iniciar sessão.",
       "tr": "Web uygulamasındakiyle aynı stil, giriş yaptığın her cihazda.",
-      "zh-Hans": "与网页应用相同的样式，在你登录的每台设备上生效。"
+      "zh-Hans": "与网页应用相同的样式，在你登录的每台设备上生效。",
+      "ar": "النمط نفسه كما في تطبيق الويب، على كل جهاز تسجّل الدخول إليه.",
+      "ro": "Același stil ca în aplicația web, pe fiecare dispozitiv pe care te conectezi."
     },
     "The player's own": {
       "de": "Der des Players",
@@ -1146,7 +1308,9 @@
       "pt-BR": "O do player",
       "pt": "O do leitor",
       "tr": "Oynatıcının kendi fontu",
-      "zh-Hans": "播放器默认"
+      "zh-Hans": "播放器默认",
+      "ar": "خط المشغّل",
+      "ro": "Cel al playerului"
     },
     "Text colour": {
       "de": "Textfarbe",
@@ -1160,7 +1324,9 @@
       "pt-BR": "Cor do texto",
       "pt": "Cor do texto",
       "tr": "Metin rengi",
-      "zh-Hans": "文字颜色"
+      "zh-Hans": "文字颜色",
+      "ar": "لون النص",
+      "ro": "Culoarea textului"
     },
     "Light grey": {
       "de": "Hellgrau",
@@ -1174,7 +1340,9 @@
       "pt-BR": "Cinza-claro",
       "pt": "Cinzento-claro",
       "tr": "Açık gri",
-      "zh-Hans": "浅灰"
+      "zh-Hans": "浅灰",
+      "ar": "رمادي فاتح",
+      "ro": "Gri deschis"
     },
     "Outline": {
       "de": "Umriss",
@@ -1188,7 +1356,9 @@
       "pt-BR": "Contorno",
       "pt": "Contorno",
       "tr": "Kenar çizgisi",
-      "zh-Hans": "描边"
+      "zh-Hans": "描边",
+      "ar": "الحد الخارجي",
+      "ro": "Contur"
     },
     "Faint": {
       "de": "Schwach",
@@ -1202,7 +1372,9 @@
       "pt-BR": "Fraco",
       "pt": "Ténue",
       "tr": "Hafif",
-      "zh-Hans": "淡"
+      "zh-Hans": "淡",
+      "ar": "خافت",
+      "ro": "Slab"
     },
     "Half": {
       "de": "Halb",
@@ -1216,7 +1388,9 @@
       "pt-BR": "Metade",
       "pt": "Metade",
       "tr": "Yarı",
-      "zh-Hans": "半透明"
+      "zh-Hans": "半透明",
+      "ar": "نصف",
+      "ro": "Jumătate"
     },
     "Strong": {
       "de": "Kräftig",
@@ -1230,7 +1404,9 @@
       "pt-BR": "Forte",
       "pt": "Forte",
       "tr": "Güçlü",
-      "zh-Hans": "浓"
+      "zh-Hans": "浓",
+      "ar": "قوي",
+      "ro": "Puternic"
     },
     "Lowest": {
       "de": "Ganz unten",
@@ -1244,7 +1420,9 @@
       "pt-BR": "Mais baixo",
       "pt": "Mais abaixo",
       "tr": "En alt",
-      "zh-Hans": "最低"
+      "zh-Hans": "最低",
+      "ar": "الأدنى",
+      "ro": "Cel mai jos"
     },
     "Raised a little": {
       "de": "Etwas höher",
@@ -1258,7 +1436,9 @@
       "pt-BR": "Um pouco mais alto",
       "pt": "Um pouco mais acima",
       "tr": "Biraz yukarıda",
-      "zh-Hans": "稍高"
+      "zh-Hans": "稍高",
+      "ar": "مرفوع قليلًا",
+      "ro": "Puțin mai sus"
     },
     "Raised": {
       "de": "Höher",
@@ -1272,7 +1452,9 @@
       "pt-BR": "Mais alto",
       "pt": "Mais acima",
       "tr": "Yukarıda",
-      "zh-Hans": "较高"
+      "zh-Hans": "较高",
+      "ar": "مرفوع",
+      "ro": "Mai sus"
     },
     "High": {
       "de": "Hoch",
@@ -1286,7 +1468,9 @@
       "pt-BR": "Alto",
       "pt": "Alto",
       "tr": "Yüksek",
-      "zh-Hans": "高"
+      "zh-Hans": "高",
+      "ar": "مرتفع",
+      "ro": "Sus"
     },
     "Override styled subtitles": {
       "de": "Gestaltete Untertitel überschreiben",
@@ -1300,7 +1484,9 @@
       "pt-BR": "Substituir o estilo de legendas estilizadas",
       "pt": "Substituir o estilo das legendas formatadas",
       "tr": "Stilli altyazıları geçersiz kıl",
-      "zh-Hans": "覆盖带样式的字幕"
+      "zh-Hans": "覆盖带样式的字幕",
+      "ar": "تجاوز الترجمات المنسّقة",
+      "ro": "Suprascrie subtitrările stilizate"
     },
     "TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6.": {
       "de": "TrueHD Atmos und DTS:X werden mit ihren Höhenkanälen abgespielt, für deine Lautsprecher gerendert und als Dolby MAT an deinen Receiver gesendet. Erfordert tvOS 26. DTS:X erfordert 7.1.4 oder 9.1.6.",
@@ -1314,7 +1500,9 @@
       "pt-BR": "TrueHD Atmos e DTS:X tocam com seus canais de altura, renderizados para as suas caixas de som e enviados ao seu receiver como Dolby MAT. Requer tvOS 26. DTS:X requer 7.1.4 ou 9.1.6.",
       "pt": "TrueHD Atmos e DTS:X são reproduzidos com os canais de altura, renderizados para as suas colunas e enviados ao seu recetor como Dolby MAT. Requer tvOS 26. DTS:X requer 7.1.4 ou 9.1.6.",
       "tr": "TrueHD Atmos ve DTS:X, yükseklik kanallarıyla oynatılır, hoparlörlerin için işlenir ve alıcına Dolby MAT olarak gönderilir. tvOS 26 gerekir. DTS:X için 7.1.4 veya 9.1.6 gerekir.",
-      "zh-Hans": "TrueHD Atmos 和 DTS:X 会连同高度声道一起播放，按你的扬声器渲染后以 Dolby MAT 发送到你的功放。需要 tvOS 26。DTS:X 需要 7.1.4 或 9.1.6。"
+      "zh-Hans": "TrueHD Atmos 和 DTS:X 会连同高度声道一起播放，按你的扬声器渲染后以 Dolby MAT 发送到你的功放。需要 tvOS 26。DTS:X 需要 7.1.4 或 9.1.6。",
+      "ar": "يُشغَّل TrueHD Atmos وDTS:X مع قنوات الارتفاع، مُعالجةً لسماعاتك ومُرسلةً إلى جهاز الاستقبال بصيغة Dolby MAT. يتطلب tvOS 26. ويتطلب DTS:X نظام 7.1.4 أو 9.1.6.",
+      "ro": "TrueHD Atmos și DTS:X se redau cu canalele de înălțime, randate pentru boxele tale și trimise receiverului ca Dolby MAT. Necesită tvOS 26. DTS:X necesită 7.1.4 sau 9.1.6."
     },
     "Atmos and DTS:X speakers": {
       "de": "Lautsprecher für Atmos und DTS:X",
@@ -1328,7 +1516,9 @@
       "pt-BR": "Caixas de som para Atmos e DTS:X",
       "pt": "Colunas para Atmos e DTS:X",
       "tr": "Atmos ve DTS:X hoparlörleri",
-      "zh-Hans": "Atmos 和 DTS:X 扬声器"
+      "zh-Hans": "Atmos 和 DTS:X 扬声器",
+      "ar": "سماعات Atmos وDTS:X",
+      "ro": "Boxe pentru Atmos și DTS:X"
     },
     "Off: play the 7.1 channels": {
       "de": "Aus: die 7.1-Kanäle abspielen",
@@ -1342,7 +1532,9 @@
       "pt-BR": "Desativado: tocar os canais 7.1",
       "pt": "Desligado: reproduzir os canais 7.1",
       "tr": "Kapalı: 7.1 kanallarını oynat",
-      "zh-Hans": "关闭：播放 7.1 声道"
+      "zh-Hans": "关闭：播放 7.1 声道",
+      "ar": "متوقف: تشغيل قنوات 7.1",
+      "ro": "Oprit: redă canalele 7.1"
     },
     "12-hour": {
       "de": "12 Stunden",
@@ -1356,7 +1548,9 @@
       "pt-BR": "12 horas",
       "pt": "12 horas",
       "tr": "12 saat",
-      "zh-Hans": "12 小时制"
+      "zh-Hans": "12 小时制",
+      "ar": "12 ساعة",
+      "ro": "12 ore"
     },
     "24-hour": {
       "de": "24 Stunden",
@@ -1370,7 +1564,9 @@
       "pt-BR": "24 horas",
       "pt": "24 horas",
       "tr": "24 saat",
-      "zh-Hans": "24 小时制"
+      "zh-Hans": "24 小时制",
+      "ar": "24 ساعة",
+      "ro": "24 de ore"
     },
     "Start page": {
       "de": "Startseite",
@@ -1384,7 +1580,9 @@
       "pt-BR": "Página inicial",
       "pt": "Página inicial",
       "tr": "Başlangıç sayfası",
-      "zh-Hans": "启动页面"
+      "zh-Hans": "启动页面",
+      "ar": "صفحة البدء",
+      "ro": "Pagina de start"
     },
     "Card previews": {
       "de": "Kartenvorschau",
@@ -1398,7 +1596,9 @@
       "pt-BR": "Prévias dos cards",
       "pt": "Pré-visualizações dos cartões",
       "tr": "Kart önizlemeleri",
-      "zh-Hans": "卡片预览"
+      "zh-Hans": "卡片预览",
+      "ar": "معاينات البطاقات",
+      "ro": "Previzualizări carduri"
     },
     "Trailers in card previews": {
       "de": "Trailer in der Kartenvorschau",
@@ -1412,7 +1612,9 @@
       "pt-BR": "Trailers nas prévias dos cards",
       "pt": "Trailers nas pré-visualizações",
       "tr": "Kart önizlemelerinde fragmanlar",
-      "zh-Hans": "卡片预览中的预告片"
+      "zh-Hans": "卡片预览中的预告片",
+      "ar": "الإعلانات التشويقية في معاينات البطاقات",
+      "ro": "Trailere în previzualizările cardurilor"
     },
     "Trailer sound": {
       "de": "Trailer-Ton",
@@ -1426,7 +1628,9 @@
       "pt-BR": "Som dos trailers",
       "pt": "Som dos trailers",
       "tr": "Fragman sesi",
-      "zh-Hans": "预告片声音"
+      "zh-Hans": "预告片声音",
+      "ar": "صوت الإعلان التشويقي",
+      "ro": "Sunetul trailerelor"
     },
     "Follows the selected card, compact": {
       "de": "Folgt der ausgewählten Karte, kompakt",
@@ -1440,7 +1644,9 @@
       "pt-BR": "Segue o card selecionado, compacto",
       "pt": "Segue o cartão selecionado, compacto",
       "tr": "Seçili kartı takip eder, kompakt",
-      "zh-Hans": "跟随所选卡片，紧凑"
+      "zh-Hans": "跟随所选卡片，紧凑",
+      "ar": "يتبع البطاقة المحددة، مضغوط",
+      "ro": "Urmează cardul selectat, compact"
     },
     "Poster text": {
       "de": "Text unter Postern",
@@ -1454,7 +1660,9 @@
       "pt-BR": "Texto dos pôsteres",
       "pt": "Texto dos pósteres",
       "tr": "Afiş metni",
-      "zh-Hans": "海报文字"
+      "zh-Hans": "海报文字",
+      "ar": "نص الملصق",
+      "ro": "Textul posterului"
     },
     "Title and year": {
       "de": "Titel und Jahr",
@@ -1468,7 +1676,9 @@
       "pt-BR": "Título e ano",
       "pt": "Título e ano",
       "tr": "Başlık ve yıl",
-      "zh-Hans": "标题和年份"
+      "zh-Hans": "标题和年份",
+      "ar": "العنوان والسنة",
+      "ro": "Titlu și an"
     },
     "Prevent accidental exit": {
       "de": "Versehentliches Beenden verhindern",
@@ -1482,7 +1692,9 @@
       "pt-BR": "Evitar sair sem querer",
       "pt": "Evitar sair por engano",
       "tr": "Yanlışlıkla çıkmayı önle",
-      "zh-Hans": "防止误退出"
+      "zh-Hans": "防止误退出",
+      "ar": "منع الخروج غير المقصود",
+      "ro": "Previne ieșirea accidentală"
     },
     "Back on Home shows “Press Back again to leave”, and only a second press leaves the app.": {
       "de": "„Zurück“ auf der Startseite zeigt „Erneut \"Zurück\" drücken zum Beenden“, und erst ein zweites Drücken beendet die App.",
@@ -1496,7 +1708,9 @@
       "pt-BR": "Voltar no Início mostra “Pressione Voltar novamente para sair”, e só um segundo toque fecha o app.",
       "pt": "Voltar no Início mostra “Prima Voltar novamente para sair”, e só um segundo toque fecha a app.",
       "tr": "Ana sayfada Geri, “Çıkmak için Geri tuşuna tekrar bas” mesajını gösterir ve uygulamadan yalnızca ikinci basış çıkar.",
-      "zh-Hans": "在首页按返回键会显示“再次按返回键退出”，只有再按一次才会退出应用。"
+      "zh-Hans": "在首页按返回键会显示“再次按返回键退出”，只有再按一次才会退出应用。",
+      "ar": "زر الرجوع في الرئيسية يعرض «اضغط رجوع مرة أخرى للمغادرة»، ولا يغلق التطبيق إلا الضغط الثاني.",
+      "ro": "Înapoi pe Acasă afișează „Apasă din nou Înapoi pentru a ieși”, iar aplicația se închide doar la a doua apăsare."
     },
     "Back on Home leaves the app straight away.": {
       "de": "„Zurück“ auf der Startseite beendet die App sofort.",
@@ -1510,7 +1724,9 @@
       "pt-BR": "Voltar no Início fecha o app na hora.",
       "pt": "Voltar no Início fecha a app de imediato.",
       "tr": "Ana sayfada Geri, uygulamadan hemen çıkar.",
-      "zh-Hans": "在首页按返回键会直接退出应用。"
+      "zh-Hans": "在首页按返回键会直接退出应用。",
+      "ar": "زر الرجوع في الرئيسية يغلق التطبيق فورًا.",
+      "ro": "Înapoi pe Acasă închide imediat aplicația."
     },
     "Hero turns every": {
       "de": "Titelbanner wechselt alle",
@@ -1524,7 +1740,9 @@
       "pt-BR": "O destaque muda a cada",
       "pt": "O destaque muda a cada",
       "tr": "Vitrin şu aralıkla değişir:",
-      "zh-Hans": "主视觉切换间隔"
+      "zh-Hans": "主视觉切换间隔",
+      "ar": "تتبدل اللافتة الرئيسية كل",
+      "ro": "Bannerul principal se schimbă la fiecare"
     },
     "Signed in as": {
       "de": "Angemeldet als",
@@ -1538,7 +1756,9 @@
       "pt-BR": "Conectado como",
       "pt": "Sessão iniciada como",
       "tr": "Giriş yapan",
-      "zh-Hans": "登录身份"
+      "zh-Hans": "登录身份",
+      "ar": "مسجّل الدخول باسم",
+      "ro": "Conectat ca"
     },
     "Approve a Quick Connect code": {
       "de": "Quick-Connect-Code bestätigen",
@@ -1552,7 +1772,9 @@
       "pt-BR": "Aprovar um código do Quick Connect",
       "pt": "Aprovar um código Quick Connect",
       "tr": "Quick Connect kodunu onayla",
-      "zh-Hans": "批准快速连接代码"
+      "zh-Hans": "批准快速连接代码",
+      "ar": "الموافقة على رمز Quick Connect",
+      "ro": "Aprobă un cod Quick Connect"
     },
     "An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License.": {
       "de": "Eine inoffizielle App, nicht mit AIOStreams oder AetherEngine verbunden. AGPL-3.0; AetherEngine steht unter LGPL-3.0, FFmpeg unter LGPL-2.1+, libdovi und Anime4K (Copyright (c) 2019-2021 bloc97) unter MIT und die Schrift Inter unter der SIL Open Font License.",
@@ -1566,7 +1788,9 @@
       "pt-BR": "Um app não oficial, sem vínculo com o AIOStreams ou o AetherEngine. AGPL-3.0; o AetherEngine é LGPL-3.0, o FFmpeg LGPL-2.1+, libdovi e Anime4K (Copyright (c) 2019-2021 bloc97) MIT, e a fonte Inter está sob a SIL Open Font License.",
       "pt": "Uma app não oficial, sem ligação ao AIOStreams nem ao AetherEngine. AGPL-3.0; o AetherEngine é LGPL-3.0, o FFmpeg LGPL-2.1+, libdovi e Anime4K (Copyright (c) 2019-2021 bloc97) MIT, e o tipo de letra Inter está sob a SIL Open Font License.",
       "tr": "Resmî olmayan bir uygulama; AIOStreams veya AetherEngine ile bağlantısı yoktur. AGPL-3.0; AetherEngine LGPL-3.0, FFmpeg LGPL-2.1+, libdovi ve Anime4K (Copyright (c) 2019-2021 bloc97) MIT lisanslıdır ve Inter yazı tipi SIL Open Font License altındadır.",
-      "zh-Hans": "非官方应用，与 AIOStreams 或 AetherEngine 无关。AGPL-3.0；AetherEngine 采用 LGPL-3.0，FFmpeg 采用 LGPL-2.1+，libdovi 和 Anime4K (Copyright (c) 2019-2021 bloc97) 采用 MIT，Inter 字体采用 SIL Open Font License。"
+      "zh-Hans": "非官方应用，与 AIOStreams 或 AetherEngine 无关。AGPL-3.0；AetherEngine 采用 LGPL-3.0，FFmpeg 采用 LGPL-2.1+，libdovi 和 Anime4K (Copyright (c) 2019-2021 bloc97) 采用 MIT，Inter 字体采用 SIL Open Font License。",
+      "ar": "تطبيق غير رسمي، لا يتبع AIOStreams ولا AetherEngine. AGPL-3.0؛ AetherEngine بترخيص LGPL-3.0، وFFmpeg بترخيص LGPL-2.1+، وlibdovi وAnime4K (Copyright (c) 2019-2021 bloc97) بترخيص MIT، وخط Inter بترخيص SIL Open Font License.",
+      "ro": "O aplicație neoficială, neafiliată cu AIOStreams sau AetherEngine. AGPL-3.0; AetherEngine este sub LGPL-3.0, FFmpeg sub LGPL-2.1+, libdovi și Anime4K (Copyright (c) 2019-2021 bloc97) sub MIT, iar fontul Inter sub SIL Open Font License."
     },
     "%@ (most Atmos setups)": {
       "de": "%@ (die meisten Atmos-Setups)",
@@ -1580,7 +1804,9 @@
       "pt-BR": "%@ (a maioria dos sistemas Atmos)",
       "pt": "%@ (a maioria das configurações Atmos)",
       "tr": "%@ (çoğu Atmos kurulumu)",
-      "zh-Hans": "%@（大多数 Atmos 配置）"
+      "zh-Hans": "%@（大多数 Atmos 配置）",
+      "ar": "%@ (معظم أنظمة Atmos)",
+      "ro": "%@ (majoritatea sistemelor Atmos)"
     },
     "Smart: when the audio isn't in your language": {
       "de": "Smart: wenn der Ton nicht in deiner Sprache ist",
@@ -1594,7 +1820,9 @@
       "pt-BR": "Inteligente: quando o áudio não está no seu idioma",
       "pt": "Inteligente: quando o áudio não está no seu idioma",
       "tr": "Akıllı: ses senin dilinde olmadığında",
-      "zh-Hans": "智能：音频不是你的语言时"
+      "zh-Hans": "智能：音频不是你的语言时",
+      "ar": "ذكي: عندما لا يكون الصوت بلغتك",
+      "ro": "Inteligent: când audio nu este în limba ta"
     },
     "Enter the code the other device shows to sign it in to this account.": {
       "de": "Gib den Code ein, den das andere Gerät anzeigt, um es in diesem Konto anzumelden.",
@@ -1608,7 +1836,9 @@
       "pt-BR": "Digite o código que o outro dispositivo mostra para conectá-lo a esta conta.",
       "pt": "Introduza o código que o outro dispositivo mostra para iniciar sessão nesta conta.",
       "tr": "Diğer cihazı bu hesapla giriş yaptırmak için gösterdiği kodu gir.",
-      "zh-Hans": "输入另一台设备显示的代码，让它登录此账户。"
+      "zh-Hans": "输入另一台设备显示的代码，让它登录此账户。",
+      "ar": "أدخل الرمز الذي يعرضه الجهاز الآخر لتسجيل دخوله إلى هذا الحساب.",
+      "ro": "Introdu codul afișat de celălalt dispozitiv pentru a-l conecta la acest cont."
     },
     "Approving…": {
       "de": "Wird bestätigt…",
@@ -1622,7 +1852,9 @@
       "pt-BR": "Aprovando…",
       "pt": "A aprovar…",
       "tr": "Onaylanıyor…",
-      "zh-Hans": "正在批准…"
+      "zh-Hans": "正在批准…",
+      "ar": "جارٍ الموافقة…",
+      "ro": "Se aprobă…"
     },
     "Approved. The other device is signing in.": {
       "de": "Bestätigt. Das andere Gerät meldet sich an.",
@@ -1636,7 +1868,9 @@
       "pt-BR": "Aprovado. O outro dispositivo está entrando.",
       "pt": "Aprovado. O outro dispositivo está a iniciar sessão.",
       "tr": "Onaylandı. Diğer cihaz giriş yapıyor.",
-      "zh-Hans": "已批准。另一台设备正在登录。"
+      "zh-Hans": "已批准。另一台设备正在登录。",
+      "ar": "تمت الموافقة. الجهاز الآخر يسجّل الدخول.",
+      "ro": "Aprobat. Celălalt dispozitiv se conectează."
     },
     "That code wasn't approved. Check it and try again.": {
       "de": "Dieser Code wurde nicht bestätigt. Prüfe ihn und versuche es erneut.",
@@ -1650,7 +1884,9 @@
       "pt-BR": "Esse código não foi aprovado. Confira e tente novamente.",
       "pt": "Esse código não foi aprovado. Verifique-o e tente novamente.",
       "tr": "Bu kod onaylanmadı. Kontrol edip tekrar dene.",
-      "zh-Hans": "该代码未被批准。请检查后重试。"
+      "zh-Hans": "该代码未被批准。请检查后重试。",
+      "ar": "لم تتم الموافقة على هذا الرمز. تحقق منه وحاول مجددًا.",
+      "ro": "Codul nu a fost aprobat. Verifică-l și încearcă din nou."
     },
     "Coming in a later build.": {
       "de": "Kommt in einem späteren Build.",
@@ -1664,7 +1900,9 @@
       "pt-BR": "Chega em uma versão futura.",
       "pt": "Chega numa versão futura.",
       "tr": "Sonraki bir sürümde geliyor.",
-      "zh-Hans": "将在后续版本中推出。"
+      "zh-Hans": "将在后续版本中推出。",
+      "ar": "قادم في إصدار لاحق.",
+      "ro": "Vine într-o versiune ulterioară."
     },
     "Connect to your server": {
       "de": "Mit deinem Server verbinden",
@@ -1678,7 +1916,9 @@
       "pt-BR": "Conecte-se ao seu servidor",
       "pt": "Ligue-se ao seu servidor",
       "tr": "Sunucuna bağlan",
-      "zh-Hans": "连接到你的服务器"
+      "zh-Hans": "连接到你的服务器",
+      "ar": "اتصل بخادمك",
+      "ro": "Conectează-te la serverul tău"
     },
     "Use the address from your configure page: Save & Install → Jellyfin apps → Connect. With a share alias it's short, like your-instance/jellyfin/u/alias.": {
       "de": "Verwende die Adresse von deiner Konfigurationsseite: Save & Install → Jellyfin apps → Connect. Mit einem Freigabe-Alias ist sie kurz, etwa your-instance/jellyfin/u/alias.",
@@ -1692,7 +1932,9 @@
       "pt-BR": "Use o endereço da sua página de configuração: Save & Install → Jellyfin apps → Connect. Com um alias de compartilhamento ele é curto, como your-instance/jellyfin/u/alias.",
       "pt": "Use o endereço da sua página de configuração: Save & Install → Jellyfin apps → Connect. Com um alias de partilha é curto, como your-instance/jellyfin/u/alias.",
       "tr": "Yapılandırma sayfandaki adresi kullan: Save & Install → Jellyfin apps → Connect. Paylaşım takma adıyla kısadır, örneğin your-instance/jellyfin/u/alias.",
-      "zh-Hans": "使用配置页面中的地址：Save & Install → Jellyfin apps → Connect。使用分享别名时地址很短，例如 your-instance/jellyfin/u/alias。"
+      "zh-Hans": "使用配置页面中的地址：Save & Install → Jellyfin apps → Connect。使用分享别名时地址很短，例如 your-instance/jellyfin/u/alias。",
+      "ar": "استخدم العنوان من صفحة الإعداد: Save & Install → Jellyfin apps → Connect. مع اسم مستعار للمشاركة يكون قصيرًا، مثل your-instance/jellyfin/u/alias.",
+      "ro": "Folosește adresa din pagina de configurare: Save & Install → Jellyfin apps → Connect. Cu un alias de partajare este scurtă, de exemplu your-instance/jellyfin/u/alias."
     },
     "Connecting…": {
       "de": "Verbinde…",
@@ -1706,7 +1948,9 @@
       "pt-BR": "Conectando…",
       "pt": "A ligar…",
       "tr": "Bağlanıyor…",
-      "zh-Hans": "正在连接…"
+      "zh-Hans": "正在连接…",
+      "ar": "جارٍ الاتصال…",
+      "ro": "Se conectează…"
     },
     "Password for %@": {
       "de": "Passwort für %@",
@@ -1720,7 +1964,9 @@
       "pt-BR": "Senha de %@",
       "pt": "Palavra-passe de %@",
       "tr": "%@ için şifre",
-      "zh-Hans": "%@ 的密码"
+      "zh-Hans": "%@ 的密码",
+      "ar": "كلمة مرور %@",
+      "ro": "Parola pentru %@"
     },
     "this user": {
       "de": "diesen Benutzer",
@@ -1734,7 +1980,9 @@
       "pt-BR": "este usuário",
       "pt": "este utilizador",
       "tr": "bu kullanıcı",
-      "zh-Hans": "此用户"
+      "zh-Hans": "此用户",
+      "ar": "هذا المستخدم",
+      "ro": "acest utilizator"
     },
     "If the user has a PIN, add it after the password with a /, like password/1234.": {
       "de": "Hat der Benutzer eine PIN, füge sie mit einem / an das Passwort an, etwa password/1234.",
@@ -1748,7 +1996,9 @@
       "pt-BR": "Se o usuário tiver um PIN, adicione-o depois da senha com uma /, como password/1234.",
       "pt": "Se o utilizador tiver um PIN, adicione-o depois da palavra-passe com uma /, como password/1234.",
       "tr": "Kullanıcının PIN'i varsa şifreden sonra / ile ekle, örneğin password/1234.",
-      "zh-Hans": "如果用户设置了 PIN，请在密码后加上 / 和 PIN，例如 password/1234。"
+      "zh-Hans": "如果用户设置了 PIN，请在密码后加上 / 和 PIN，例如 password/1234。",
+      "ar": "إذا كان لدى المستخدم رمز PIN، فأضفه بعد كلمة المرور مع /، مثل password/1234.",
+      "ro": "Dacă utilizatorul are un PIN, adaugă-l după parolă cu /, de exemplu password/1234."
     },
     "Signing in…": {
       "de": "Melde an…",
@@ -1762,7 +2012,9 @@
       "pt-BR": "Entrando…",
       "pt": "A iniciar sessão…",
       "tr": "Giriş yapılıyor…",
-      "zh-Hans": "正在登录…"
+      "zh-Hans": "正在登录…",
+      "ar": "جارٍ تسجيل الدخول…",
+      "ro": "Se conectează…"
     },
     "Password, and /PIN if the user has one": {
       "de": "Passwort und /PIN, falls der Benutzer eine hat",
@@ -1776,7 +2028,9 @@
       "pt-BR": "Senha, e /PIN se o usuário tiver um",
       "pt": "Palavra-passe, e /PIN se o utilizador tiver um",
       "tr": "Şifre ve kullanıcının varsa /PIN'i",
-      "zh-Hans": "密码，若用户有 PIN 则加上 /PIN"
+      "zh-Hans": "密码，若用户有 PIN 则加上 /PIN",
+      "ar": "كلمة المرور، و/PIN إن كان لدى المستخدم رمز",
+      "ro": "Parola și /PIN, dacă utilizatorul are unul"
     },
     "On your configure page, open Save & Install → Jellyfin apps → Connect, type this code into the Quick Connect box and approve it.": {
       "de": "Öffne auf deiner Konfigurationsseite Save & Install → Jellyfin apps → Connect, gib diesen Code in das Quick-Connect-Feld ein und bestätige ihn.",
@@ -1790,7 +2044,9 @@
       "pt-BR": "Na sua página de configuração, abra Save & Install → Jellyfin apps → Connect, digite este código na caixa do Quick Connect e aprove-o.",
       "pt": "Na sua página de configuração, abra Save & Install → Jellyfin apps → Connect, escreva este código na caixa Quick Connect e aprove-o.",
       "tr": "Yapılandırma sayfanda Save & Install → Jellyfin apps → Connect bölümünü aç, bu kodu Quick Connect kutusuna yaz ve onayla.",
-      "zh-Hans": "在配置页面中打开 Save & Install → Jellyfin apps → Connect，将此代码输入快速连接框并批准。"
+      "zh-Hans": "在配置页面中打开 Save & Install → Jellyfin apps → Connect，将此代码输入快速连接框并批准。",
+      "ar": "في صفحة الإعداد، افتح Save & Install → Jellyfin apps → Connect، واكتب هذا الرمز في خانة Quick Connect ووافق عليه.",
+      "ro": "În pagina de configurare, deschide Save & Install → Jellyfin apps → Connect, introdu acest cod în câmpul Quick Connect și aprobă-l."
     },
     "That password doesn't match.": {
       "de": "Das Passwort stimmt nicht.",
@@ -1804,7 +2060,9 @@
       "pt-BR": "Essa senha não confere.",
       "pt": "Essa palavra-passe não corresponde.",
       "tr": "Bu şifre eşleşmiyor.",
-      "zh-Hans": "密码不正确。"
+      "zh-Hans": "密码不正确。",
+      "ar": "كلمة المرور غير مطابقة.",
+      "ro": "Parola nu se potrivește."
     },
     "No playable versions found. Only streams with a link play: use debrid or Usenet.": {
       "de": "Keine abspielbaren Versionen gefunden. Nur Streams mit einem Link werden abgespielt: Nutze Debrid oder Usenet.",
@@ -1818,7 +2076,9 @@
       "pt-BR": "Nenhuma versão reproduzível encontrada. Só streams com link são reproduzidos: use debrid ou Usenet.",
       "pt": "Nenhuma versão reproduzível encontrada. Só são reproduzidos streams com ligação: use debrid ou Usenet.",
       "tr": "Oynatılabilir sürüm bulunamadı. Yalnızca bağlantısı olan yayınlar oynatılır: debrid veya Usenet kullan.",
-      "zh-Hans": "没有找到可播放的版本。只有带链接的流才能播放：请使用 debrid 或 Usenet。"
+      "zh-Hans": "没有找到可播放的版本。只有带链接的流才能播放：请使用 debrid 或 Usenet。",
+      "ar": "لم يُعثر على نسخ قابلة للتشغيل. تُشغَّل فقط البثوث التي لها رابط: استخدم debrid أو Usenet.",
+      "ro": "Nu s-au găsit versiuni redabile. Se redau doar fluxurile cu link: folosește debrid sau Usenet."
     },
     "Searching your addons…": {
       "de": "Durchsuche deine Addons…",
@@ -1832,7 +2092,9 @@
       "pt-BR": "Procurando nos seus addons…",
       "pt": "A procurar nos seus addons…",
       "tr": "Eklentilerin aranıyor…",
-      "zh-Hans": "正在搜索你的插件…"
+      "zh-Hans": "正在搜索你的插件…",
+      "ar": "جارٍ البحث في إضافاتك…",
+      "ro": "Se caută în addonurile tale…"
     },
     "Background from artwork": {
       "de": "Hintergrund aus dem Artwork",
@@ -2042,6 +2304,19 @@
       },
       "zh-Hans": {
         "other": "%ld 天后"
+      },
+      "ar": {
+        "zero": "خلال %ld يوم",
+        "one": "خلال يوم واحد",
+        "two": "خلال يومين",
+        "few": "خلال %ld أيام",
+        "many": "خلال %ld يومًا",
+        "other": "خلال %ld يوم"
+      },
+      "ro": {
+        "one": "peste %ld zi",
+        "few": "peste %ld zile",
+        "other": "peste %ld de zile"
       }
     },
     "in %ld weeks": {
@@ -2090,6 +2365,19 @@
       },
       "zh-Hans": {
         "other": "%ld 周后"
+      },
+      "ar": {
+        "zero": "خلال %ld أسبوع",
+        "one": "خلال أسبوع واحد",
+        "two": "خلال أسبوعين",
+        "few": "خلال %ld أسابيع",
+        "many": "خلال %ld أسبوعًا",
+        "other": "خلال %ld أسبوع"
+      },
+      "ro": {
+        "one": "peste %ld săptămână",
+        "few": "peste %ld săptămâni",
+        "other": "peste %ld de săptămâni"
       }
     },
     "%ld seconds before the end": {
@@ -2138,6 +2426,19 @@
       },
       "zh-Hans": {
         "other": "结束前 %ld 秒"
+      },
+      "ar": {
+        "zero": "%ld ثانية قبل النهاية",
+        "one": "ثانية واحدة قبل النهاية",
+        "two": "ثانيتان قبل النهاية",
+        "few": "%ld ثوانٍ قبل النهاية",
+        "many": "%ld ثانية قبل النهاية",
+        "other": "%ld ثانية قبل النهاية"
+      },
+      "ro": {
+        "one": "%ld secundă înainte de final",
+        "few": "%ld secunde înainte de final",
+        "other": "%ld de secunde înainte de final"
       }
     }
   }
