@@ -409,273 +409,40 @@ struct SettingsView: View {
     @State private var newer: String?
     @State private var approving = false
 
+    @State private var page: SettingsPage
+    @FocusState private var tab: SettingsPage?
+
+    /// You in the navigation opens Account; Settings opens Playback.
+    init(start: SettingsPage = .playback) {
+        _page = State(initialValue: start)
+    }
+    @Namespace private var settingsScope
+
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Theme.px(28)) {
-                PageTitle(text: L("Settings"))
-                section(L("Playback"), note: L("Saved to your account, so the web app and your other devices use them too.")) {
-                    toggle(L("Auto-play the first version"), key: "autoPlayFirst", fallback: false)
-                    toggle(L("Find versions when a title opens"), key: "preloadVersions", fallback: false)
-                    note(L("Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it."))
-                    Text(prefs.autoPlayFirst
-                        ? L("Play starts the first version, and resuming goes back to the version you were watching. Hold select on a title and choose Choose a version to pick instead.")
-                        : L("Play lists the versions to choose from, but resuming goes back to the version you were watching. Hold select on a title and choose Play straight away to start the first."))
-                        .font(Theme.font(Theme.sm))
-                        .foregroundStyle(Theme.gray400)
-                        .padding(.horizontal, Theme.px(16))
+        VStack(alignment: .leading, spacing: Theme.px(24)) {
+            PageTitle(text: L("Settings"))
+            HStack(alignment: .top, spacing: Theme.px(32)) {
+                tabs
+                    .frame(width: Theme.px(260))
+                // The page chosen at the side: its heading, then its cards, as the web app's settings.
+                ScrollView {
+                    VStack(alignment: .leading, spacing: Theme.px(28)) {
+                        header(page)
+                        pageContent(page)
+                    }
+                    .padding(.trailing, pageMargin)
+                    .padding(.bottom, Theme.px(64))
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                // The web app's Audio and Subtitles pages: the account's languages and track choice.
-                section(L("Audio"), note: L("Saved to your account, so the web app and your other devices use them too.")) {
-                    row(L("Audio language"), value: listLabel(prefs.languages(list: "AudioLanguages", one: "AudioLanguagePreference"), none: L("The file's default"))) {
-                        chooseLanguage(L("Audio language"), list: "AudioLanguages", one: "AudioLanguagePreference", original: true)
-                    }
-                    if let types = prefs.audioTypes {
-                        row(L("Audio types"), value: types.map(\.label).joined(separator: " › ")) {
-                            rank(L("Audio types"), types.map { ($0.label, $0.rawValue) }) { prefs.configure(["AudioTypes": $0]) }
-                        }
-                        note(L("When a version has more than one kind of audio track, the first of these it has plays."))
-                    }
-                    configToggle(L("Remember picks per show"), key: "RememberAudioSelections", on: prefs.rememberAudio)
-                    note(L("An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it."))
-                }
-                section(L("Subtitles"), note: nil) {
-                    row(L("Subtitle language"), value: listLabel(prefs.languages(list: "SubtitleLanguages", one: "SubtitleLanguagePreference"), none: L("Any"))) {
-                        chooseLanguage(L("Subtitle language"), list: "SubtitleLanguages", one: "SubtitleLanguagePreference", original: false)
-                    }
-                    row(L("Subtitles"), value: modeName(prefs.subtitleMode)) {
-                        chooser = Chooser(
-                            title: L("Subtitles"),
-                            options: ["Default", "Smart", "Always", "OnlyForced", "None"].map { (modeName($0), $0) },
-                            current: prefs.subtitleMode
-                        ) { prefs.configure(["SubtitleMode": $0]) }
-                    }
-                    if let types = prefs.subtitleTypes {
-                        row(L("Subtitle types"), value: types.map(\.label).joined(separator: " › ")) {
-                            rank(L("Subtitle types"), types.map { ($0.label, $0.rawValue) }) { prefs.configure(["SubtitleTypes": $0]) }
-                        }
-                        note(L("When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last."))
-                    }
-                    if let only = prefs.listOnlyMyLanguages {
-                        configToggle(L("List only my languages"), key: "ListPreferredSubtitlesOnly", on: only)
-                        note(L("The player's subtitle menu lists subtitles in your languages, ones without a language and the one on. The rest wait under More languages."))
-                    }
-                    configToggle(L("Remember picks per show"), key: "RememberSubtitleSelections", on: prefs.rememberSubtitles)
-                    note(L("Subtitles you pick or turn off while watching a show stay that way for its other episodes. Picking what the settings above would show forgets it."))
-                }
-                section(L("Skipping and the next episode"), note: L("Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration.")) {
-                    ForEach([("Intro", L("Intros")), ("Recap", L("Recaps")), ("Outro", L("Credits")), ("Preview", L("Previews")), ("Commercial", L("Ads"))], id: \.0) { entry in
-                        synced(entry.1, key: "segment\(entry.0)", fallback: "ask",
-                               options: [(L("Show a skip button"), "ask"), (L("Skip automatically"), "skip"), (L("Don't skip"), "none")])
-                    }
-                    row(L("Play the next episode automatically"), value: prefs.autoplayNext ? L("On") : L("Off")) {
-                        prefs.configure(["EnableNextEpisodeAutoPlay": !prefs.autoplayNext])
-                    }
-                    synced(L("Offer the next episode"), key: "nextPrompt", fallback: "credits",
-                           options: [(L("At the credits"), "credits"), (L("Near the end"), "end"), (L("Never"), "off")])
-                    synced(L("Without credits, offer it"), key: "nextLead", fallback: "30",
-                           options: [15, 30, 45, 60, 90, 120].map { (L("%ld seconds before the end", $0), String($0)) })
-                    synced(L("Countdown"), key: "nextCountdown", fallback: "15",
-                           options: [5, 10, 15, 30].map { (L("%ld seconds", $0), String($0)) })
-                    toggle(L("Skip by the file's chapters"), key: "chapterSkips", fallback: true)
-                    toggle(L("Play the first version when none matches"), key: "nextFallbackFirst", fallback: true)
-                    toggle(L("Skip filler episodes"), key: "skipFillers", fallback: true)
-                    toggle(L("Skip recap episodes"), key: "skipRecaps", fallback: true)
-                    toggle(L("Wait for episodes to air"), key: "markUnaired", fallback: true)
-                    synced(L("Ask if you are still watching"), key: "stillWatching", fallback: "3",
-                           options: [(L("Never"), "0")] + [2, 3, 4, 5, 8].map { (L("After %ld episodes", $0), String($0)) })
-                    Text(L("The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer."))
-                        .font(Theme.font(Theme.sm))
-                        .foregroundStyle(Theme.gray400)
-                        .padding(.horizontal, Theme.px(16))
-                }
-                section(L("Theme"), note: L("Shared with the web app.")) {
-                    synced(L("Accent colour"), key: "accentColor", fallback: "",
-                           options: [(L("Default"), ""), (L("Blue"), "#3b82f6"), (L("Sky"), "#0ea5e9"), (L("Teal"), "#14b8a6"),
-                                     (L("Green"), "#22c55e"), (L("Amber"), "#f59e0b"), (L("Orange"), "#f97316"), (L("Red"), "#ef4444"),
-                                     (L("Pink"), "#ec4899"), (L("Violet"), "#8b5cf6")])
-                    toggle(L("Background from artwork"), key: "artBackground", fallback: false)
-                    synced(L("Background"), key: "backgroundColor", fallback: "",
-                           options: [(L("Default"), ""), (L("Black"), "#000000"), (L("Charcoal"), "#1c1c1f"), (L("Slate"), "#1e2836"),
-                                     (L("Navy"), "#0a1846"), (L("Plum"), "#24102e"), (L("Forest"), "#0c2018"), (L("Maroon"), "#2a0c12")])
-                }
-                section(L("Player controls"), note: L("Kept on this Apple TV.")) {
-                    row(L("Skip step"), value: L("%ld seconds", prefs.seekStep)) {
-                        chooser = Chooser(title: L("Skip step"), options: [5, 10, 15, 30].map { (L("%ld seconds", $0), String($0)) },
-                                          current: String(prefs.seekStep)) { prefs.seekStep = Int($0) ?? 10 }
-                    }
-                    row(L("Show time left"), value: prefs.showTimeLeft ? L("On") : L("Off")) { prefs.showTimeLeft.toggle() }
-                    row(L("Show the clock"), value: prefs.showClock ? L("On") : L("Off")) { prefs.showClock.toggle() }
-                    row(L("Held speed"), value: L("%@×", rateName(prefs.holdRate))) {
-                        chooser = Chooser(title: L("Held speed"), options: [1.5, 2, 3].map { (L("%@×", rateName($0)), String($0)) },
-                                          current: String(prefs.holdRate)) { prefs.holdRate = Double($0) ?? 2 }
-                    }
-                    note(L("How fast playback runs while you hold Select on the video."))
-                    row(L("Seek bar previews"), value: prefs.seekPreviews ? L("On") : L("Off")) { prefs.seekPreviews.toggle() }
-                    row(L("Show the controls on pause and skip"), value: prefs.showOnPauseAndSkip ? L("On") : L("Off")) {
-                        prefs.showOnPauseAndSkip.toggle()
-                    }
-                }
-                section(L("Live TV"), note: L("Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on.")) {
-                    row(L("Match frame rate"), value: prefs.liveMatchFrameRate ? L("On") : L("Off")) { prefs.liveMatchFrameRate.toggle() }
-                    row(L("Match dynamic range"), value: prefs.liveMatchDynamicRange ? L("On") : L("Off")) { prefs.liveMatchDynamicRange.toggle() }
-                    note(L("Off, the TV keeps the mode it's in when a channel starts, so channels start sooner, without the blank of a mode change."))
-                }
-                section(L("Video"), note: nil) {
-                    row(L("Anime upscaling"), value: prefs.animeUpscaling ? L("On") : L("Off")) {
-                        prefs.animeUpscaling.toggle()
-                    }
-                    Text(L("Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title."))
-                        .font(Theme.font(Theme.sm))
-                        .foregroundStyle(Theme.gray400)
-                        .padding(.horizontal, Theme.px(16))
-                }
-                section(L("Subtitle style"), note: L("The same style as the web app's, on every device you sign in to.")) {
-                    synced(L("Size"), key: "subtitleSize", fallback: "normal",
-                           options: [(L("Small"), "small"), (L("Normal"), "normal"), (L("Large"), "large"), (L("Huge"), "huge")])
-                    synced(L("Font"), key: "subtitleFont", fallback: "default",
-                           options: [(L("The player's own"), "default"), (L("Sans serif"), "sans-serif"), (L("Serif"), "serif"),
-                                     (L("Monospace"), "monospace"), (L("Casual"), "casual"), (L("Cursive"), "cursive")])
-                    synced(L("Text colour"), key: "subtitleColor", fallback: "#ffffff",
-                           options: [(L("White"), "#ffffff"), (L("Yellow"), "#ffff00"), (L("Light grey"), "#d1d1d1"),
-                                     (L("Cyan"), "#00ffff"), (L("Green"), "#00ff00")])
-                    toggle(L("Bold"), key: "subtitleBold", fallback: false)
-                    synced(L("Outline"), key: "subtitleOutline", fallback: "normal",
-                           options: [(L("None"), "none"), (L("Thin"), "thin"), (L("Normal"), "normal"), (L("Thick"), "thick")])
-                    synced(L("Outline colour"), key: "subtitleOutlineColor", fallback: "#000000", options: subtitleColours)
-                    toggle(L("Shadow"), key: "subtitleShadow", fallback: false)
-                    synced(L("Background"), key: "subtitleBackgroundOpacity", fallback: "0",
-                           options: [(L("None"), "0"), (L("Faint"), "25"), (L("Half"), "50"), (L("Strong"), "75"), (L("Solid"), "100")])
-                    if prefs.number("subtitleBackgroundOpacity", 0) > 0 {
-                        synced(L("Background colour"), key: "subtitleBackgroundColor", fallback: "#000000", options: subtitleColours)
-                    }
-                    synced(L("Height"), key: "subtitlePosition", fallback: "0",
-                           options: [(L("Lowest"), "-3"), (L("Normal"), "0"), (L("Raised a little"), "5"), (L("Raised"), "10"), (L("High"), "20")])
-                    toggle(L("Override styled subtitles"), key: "subtitleOverrideStyled", fallback: false)
-                    SubtitlePreview(look: prefs.subtitleLook)
-                        .frame(width: Theme.px(480), height: Theme.px(270))
-                        .clipShape(RoundedRectangle(cornerRadius: Theme.px(12), style: .continuous))
-                        .padding(.top, Theme.px(8))
-                }
-                // Only a build with the height channel components has anything to set here.
-                // The web app's Output and Sound cards, kept on this Apple TV.
-                section(L("Sound"), note: L("Kept on this Apple TV.")) {
-                    row(L("Channels"), value: channelName(prefs.audioChannels)) {
-                        chooser = Chooser(title: L("Channels"), options: ["auto", "stereo", "5.1", "7.1"].map { (channelName($0), $0) },
-                                          current: prefs.audioChannels) { prefs.audioChannels = $0 }
-                    }
-                    note(L("What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in."))
-                    row(L("Dialogue boost"), value: boostName(prefs.dialogueBoost)) {
-                        chooser = Chooser(title: L("Dialogue boost"), options: [0, 3, 6, 9, 12].map { (boostName($0), String($0)) },
-                                          current: String(prefs.dialogueBoost)) { prefs.dialogueBoost = Int($0) ?? 0 }
-                    }
-                    note(L("Raises the centre channel, where surround sound puts dialogue. Not for sound passed through."))
-                    row(L("Night mode"), value: prefs.nightMode ? L("On") : L("Off")) { prefs.nightMode.toggle() }
-                    note(L("Evens out loud and quiet scenes, for listening at a low volume. Not for sound passed through."))
-                    row(L("Delay: %@", delayName(prefs.audioDelayMs)), value: "") {
-                        chooser = Chooser(title: L("Delay: %@", delayName(prefs.audioDelayMs)),
-                                          options: stride(from: -1000, through: 1000, by: 50).map { (delayName($0), String($0)) },
-                                          current: String(prefs.audioDelayMs)) { prefs.audioDelayMs = Int($0) ?? 0 }
-                    }
-                    note(L("Below zero plays the sound earlier, as for wireless headphones that lag behind the picture."))
-                }
-                if AetherEngine.OptionalComponent.trueHDObjectAudio.isBuiltIn || AetherEngine.OptionalComponent.dtsxObjectAudio.isBuiltIn {
-                    section(L("Atmos and DTS:X"), note: L("TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6.")) {
-                        row(L("Atmos and DTS:X speakers"), value: speakerName(prefs.speakerChoice)) {
-                            var options: [(label: String, value: String)] = [(label: L("Off: play the 7.1 channels"), value: "off")]
-                            for layout in SpatialSpeakerLayout.allCases {
-                                options.append((label: speakerName(layout.rawValue), value: layout.rawValue))
-                            }
-                            chooser = Chooser(title: L("Atmos and DTS:X speakers"), options: options, current: prefs.speakerChoice) {
-                                prefs.speakerChoice = $0
-                            }
-                        }
-                    }
-                }
-                // The web app's Language card: its language and clock, synced.
-                section(L("Language"), note: L("Titles, synopses and version names stay in the language the server sends.")) {
-                    synced(L("App language"), key: "language", fallback: "auto",
-                           options: [(L("System (%@)", AppLanguage.name(AppLanguage.system)), "auto")]
-                               + AppLanguage.catalogues.map { (AppLanguage.name($0.id), $0.id) }
-                                   .sorted { $0.0.localizedCompare($1.0) == .orderedAscending })
-                    synced(L("Time format"), key: "timeFormat", fallback: "auto",
-                           options: [(L("Automatic"), "auto"), (L("12-hour"), "12"), (L("24-hour"), "24")])
-                }
-                section(L("Interface"), note: nil) {
-                    row(L("Navigation"), value: prefs.tvNavigation == "top" ? L("Top bar") : L("Rail")) {
-                        chooser = Chooser(title: L("Navigation"), options: [(L("Rail"), "rail"), (L("Top bar"), "top")],
-                                          current: prefs.tvNavigation) { prefs.tvNavigation = $0 }
-                    }
-                    row(L("Start page"), value: Place(rawValue: prefs.startPage)?.name ?? Place.home.name) {
-                        chooser = Chooser(
-                            title: L("Start page"),
-                            options: Place.startPages.map { ($0.name, $0.rawValue) },
-                            current: prefs.startPage
-                        ) { prefs.startPage = $0 }
-                    }
-                    toggle(L("Merge continue watching and next up"), key: "mergeNextUp", fallback: false)
-                    row(L("Card previews"), value: prefs.cardPreviews ? L("On") : L("Off")) { prefs.cardPreviews.toggle() }
-                    if prefs.cardPreviews {
-                        row(L("Trailers in card previews"), value: prefs.cardTrailers ? L("On") : L("Off")) { prefs.cardTrailers.toggle() }
-                        row(L("Trailer sound"), value: prefs.trailerSound ? L("On") : L("Off")) { prefs.trailerSound.toggle() }
-                    }
-                    toggle(L("Combine movie and show results"), key: "combineSearch", fallback: false)
-                    toggle(L("Blur episodes you haven't started"), key: "blurSpoilers", fallback: false)
-                    row(L("Featured on home"), value: featuredLabel) { chooseFeatured() }
-                    synced(L("Hero"), key: "heroMode", fallback: "rotate",
-                           options: [(L("Rotates through featured titles"), "rotate"), (L("Follows the selected card"), "follow"),
-                                     (L("Follows the selected card, compact"), "corner")])
-                    synced(L("Poster size"), key: "posterSize", fallback: "medium",
-                           options: [(L("Small"), "small"), (L("Medium"), "medium"), (L("Large"), "large")])
-                    synced(L("Poster text"), key: "posterText", fallback: "title,year",
-                           options: [(L("Title and year"), "title,year"), (L("Title"), "title"), (L("Year"), "year"), (L("None"), "none")])
-                    row(L("Prevent accidental exit"), value: prefs.preventAccidentalExit ? L("On") : L("Off")) {
-                        prefs.preventAccidentalExit.toggle()
-                    }
-                    Text(prefs.preventAccidentalExit
-                        ? L("Back on Home shows “Press Back again to leave”, and only a second press leaves the app.")
-                        : L("Back on Home leaves the app straight away."))
-                        .font(Theme.font(Theme.sm))
-                        .foregroundStyle(Theme.gray400)
-                        .padding(.horizontal, Theme.px(16))
-                    synced(L("Hero turns every"), key: "heroSeconds", fallback: "9",
-                           options: [5, 7, 9, 12, 15, 20, 30].map { (L("%ld seconds", $0), String($0)) })
-                }
-                section(L("Account"), note: nil) {
-                    fact(L("Server"), session.serverName ?? session.client?.base.host ?? "")
-                    fact(L("Signed in as"), session.userName ?? "")
-                    if quickConnect {
-                        row(L("Approve a Quick Connect code"), value: "") { approving = true }
-                    }
-                    row(L("Ask when the app opens"), value: askWho ? L("On") : L("Off")) {
-                        askWho.toggle()
-                        Session.askWho = askWho
-                    }
-                    note(L("Also when you come back to it after half an hour. Whoever was watching carries on without their PIN."))
-                    HStack(spacing: Theme.px(8)) {
-                        Button(L("Switch user")) { session.signOut() }.buttonStyle(SoftPillStyle())
-                        Button(L("Change server")) { session.forgetServer() }.buttonStyle(SoftPillStyle())
-                    }
-                    .padding(.top, Theme.px(4))
-                }
-                section(L("About"), note: nil) {
-                    fact(L("App"), "AIOStreams tvOS \(AppInfo.version)")
-                    if let newer {
-                        fact(L("Update"), L("Version %@ is out. Install it the way you installed this copy.", newer))
-                    }
-                    fact(L("Player"), AppInfo.player)
-                    row(L("Report a problem"), value: report ?? "") { Task { await sendReport() } }
-                    note(L("Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out."))
-                    Text(L("An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License."))
-                        .font(Theme.font(Theme.sm))
-                        .foregroundStyle(Theme.gray400)
-                }
+                .contentMargins(.top, Theme.px(8), for: .scrollContent)
+                .id(page)
+                .focusSection()
             }
-            .frame(maxWidth: Theme.px(760), alignment: .leading)
-            .pagePadding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.bottom, Theme.px(64))
+            .padding(.leading, pageInset)
         }
-        .edgeToEdge()
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+        .focusScope(settingsScope)
+        .ignoresSafeArea()
         .task { await loadFeaturedOptions() }
         .task { if !DemoMode.active { newer = await UpdateCheck.newer() } }
         .task {
@@ -698,30 +465,373 @@ struct SettingsView: View {
         }
     }
 
-    // MARK: Rows
+    @ViewBuilder private func pageContent(_ page: SettingsPage) -> some View {
+        switch page {
+        case .playback:
+            section(nil, note: L("Saved to your account, so the web app and your other devices use them too.")) {
+                toggle(L("Auto-play the first version"), key: "autoPlayFirst", fallback: false)
+                toggle(L("Find versions when a title opens"), key: "preloadVersions", fallback: false)
+                note(L("Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it."))
+                note(prefs.autoPlayFirst
+                    ? L("Play starts the first version, and resuming goes back to the version you were watching. Hold select on a title and choose Choose a version to pick instead.")
+                    : L("Play lists the versions to choose from, but resuming goes back to the version you were watching. Hold select on a title and choose Play straight away to start the first."))
+            }
+            section(L("Skipping and the next episode"), note: L("Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration.")) {
+                ForEach([("Intro", L("Intros")), ("Recap", L("Recaps")), ("Outro", L("Credits")), ("Preview", L("Previews")), ("Commercial", L("Ads"))], id: \.0) { entry in
+                    synced(entry.1, key: "segment\(entry.0)", fallback: "ask",
+                           options: [(L("Show a skip button"), "ask"), (L("Skip automatically"), "skip"), (L("Don't skip"), "none")])
+                }
+                row(L("Play the next episode automatically"), value: prefs.autoplayNext ? L("On") : L("Off")) {
+                    prefs.configure(["EnableNextEpisodeAutoPlay": !prefs.autoplayNext])
+                }
+                synced(L("Offer the next episode"), key: "nextPrompt", fallback: "credits",
+                       options: [(L("At the credits"), "credits"), (L("Near the end"), "end"), (L("Never"), "off")])
+                synced(L("Without credits, offer it"), key: "nextLead", fallback: "30",
+                       options: [15, 30, 45, 60, 90, 120].map { (L("%ld seconds before the end", $0), String($0)) })
+                synced(L("Countdown"), key: "nextCountdown", fallback: "15",
+                       options: [5, 10, 15, 30].map { (L("%ld seconds", $0), String($0)) })
+                toggle(L("Skip by the file's chapters"), key: "chapterSkips", fallback: true)
+                toggle(L("Play the first version when none matches"), key: "nextFallbackFirst", fallback: true)
+                toggle(L("Skip filler episodes"), key: "skipFillers", fallback: true)
+                toggle(L("Skip recap episodes"), key: "skipRecaps", fallback: true)
+                toggle(L("Wait for episodes to air"), key: "markUnaired", fallback: true)
+                synced(L("Ask if you are still watching"), key: "stillWatching", fallback: "3",
+                       options: [(L("Never"), "0")] + [2, 3, 4, 5, 8].map { (L("After %ld episodes", $0), String($0)) })
+                note(L("The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer."))
+            }
+            section(L("Player controls"), note: L("Kept on this Apple TV.")) {
+                row(L("Skip step"), value: L("%ld seconds", prefs.seekStep)) {
+                    chooser = Chooser(title: L("Skip step"), options: [5, 10, 15, 30].map { (L("%ld seconds", $0), String($0)) },
+                                      current: String(prefs.seekStep)) { prefs.seekStep = Int($0) ?? 10 }
+                }
+                row(L("Show time left"), value: prefs.showTimeLeft ? L("On") : L("Off")) { prefs.showTimeLeft.toggle() }
+                row(L("Show the clock"), value: prefs.showClock ? L("On") : L("Off")) { prefs.showClock.toggle() }
+                row(L("Held speed"), value: L("%@×", rateName(prefs.holdRate))) {
+                    chooser = Chooser(title: L("Held speed"), options: [1.5, 2, 3].map { (L("%@×", rateName($0)), String($0)) },
+                                      current: String(prefs.holdRate)) { prefs.holdRate = Double($0) ?? 2 }
+                }
+                note(L("How fast playback runs while you hold Select on the video."))
+                row(L("Seek bar previews"), value: prefs.seekPreviews ? L("On") : L("Off")) { prefs.seekPreviews.toggle() }
+                row(L("Show the controls on pause and skip"), value: prefs.showOnPauseAndSkip ? L("On") : L("Off")) {
+                    prefs.showOnPauseAndSkip.toggle()
+                }
+            }
+            section(L("Live TV"), note: L("Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on.")) {
+                row(L("Match frame rate"), value: prefs.liveMatchFrameRate ? L("On") : L("Off")) { prefs.liveMatchFrameRate.toggle() }
+                row(L("Match dynamic range"), value: prefs.liveMatchDynamicRange ? L("On") : L("Off")) { prefs.liveMatchDynamicRange.toggle() }
+                note(L("Off, the TV keeps the mode it's in when a channel starts, so channels start sooner, without the blank of a mode change."))
+            }
+            section(L("Video"), note: nil) {
+                row(L("Anime upscaling"), value: prefs.animeUpscaling ? L("On") : L("Off")) {
+                    prefs.animeUpscaling.toggle()
+                }
+                note(L("Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title."))
+            }
+        case .audio:
+            // The web app's Audio and Subtitles pages: the account's languages and track choice.
+            section(nil, note: L("Saved to your account, so the web app and your other devices use them too.")) {
+                row(L("Audio language"), value: listLabel(prefs.languages(list: "AudioLanguages", one: "AudioLanguagePreference"), none: L("The file's default"))) {
+                    chooseLanguage(L("Audio language"), list: "AudioLanguages", one: "AudioLanguagePreference", original: true)
+                }
+                if let types = prefs.audioTypes {
+                    row(L("Audio types"), value: types.map(\.label).joined(separator: " › ")) {
+                        rank(L("Audio types"), types.map { ($0.label, $0.rawValue) }) { prefs.configure(["AudioTypes": $0]) }
+                    }
+                    note(L("When a version has more than one kind of audio track, the first of these it has plays."))
+                }
+                configToggle(L("Remember picks per show"), key: "RememberAudioSelections", on: prefs.rememberAudio)
+                note(L("An audio track you pick while watching a show sets the language for its other episodes. Picking what the settings above would play forgets it."))
+            }
+            // Only a build with the height channel components has anything to set here.
+            // The web app's Output and Sound cards, kept on this Apple TV.
+            section(L("Sound"), note: L("Kept on this Apple TV.")) {
+                row(L("Channels"), value: channelName(prefs.audioChannels)) {
+                    chooser = Chooser(title: L("Channels"), options: ["auto", "stereo", "5.1", "7.1"].map { (channelName($0), $0) },
+                                      current: prefs.audioChannels) { prefs.audioChannels = $0 }
+                }
+                note(L("What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in."))
+                row(L("Dialogue boost"), value: boostName(prefs.dialogueBoost)) {
+                    chooser = Chooser(title: L("Dialogue boost"), options: [0, 3, 6, 9, 12].map { (boostName($0), String($0)) },
+                                      current: String(prefs.dialogueBoost)) { prefs.dialogueBoost = Int($0) ?? 0 }
+                }
+                note(L("Raises the centre channel, where surround sound puts dialogue. Not for sound passed through."))
+                row(L("Night mode"), value: prefs.nightMode ? L("On") : L("Off")) { prefs.nightMode.toggle() }
+                note(L("Evens out loud and quiet scenes, for listening at a low volume. Not for sound passed through."))
+                row(L("Delay: %@", delayName(prefs.audioDelayMs)), value: "") {
+                    chooser = Chooser(title: L("Delay: %@", delayName(prefs.audioDelayMs)),
+                                      options: stride(from: -1000, through: 1000, by: 50).map { (delayName($0), String($0)) },
+                                      current: String(prefs.audioDelayMs)) { prefs.audioDelayMs = Int($0) ?? 0 }
+                }
+                note(L("Below zero plays the sound earlier, as for wireless headphones that lag behind the picture."))
+            }
+            if AetherEngine.OptionalComponent.trueHDObjectAudio.isBuiltIn || AetherEngine.OptionalComponent.dtsxObjectAudio.isBuiltIn {
+                section(L("Atmos and DTS:X"), note: L("TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6.")) {
+                    row(L("Atmos and DTS:X speakers"), value: speakerName(prefs.speakerChoice)) {
+                        var options: [(label: String, value: String)] = [(label: L("Off: play the 7.1 channels"), value: "off")]
+                        for layout in SpatialSpeakerLayout.allCases {
+                            options.append((label: speakerName(layout.rawValue), value: layout.rawValue))
+                        }
+                        chooser = Chooser(title: L("Atmos and DTS:X speakers"), options: options, current: prefs.speakerChoice) {
+                            prefs.speakerChoice = $0
+                        }
+                    }
+                }
+            }
+        case .subtitles:
+            section(nil, note: nil) {
+                row(L("Subtitle language"), value: listLabel(prefs.languages(list: "SubtitleLanguages", one: "SubtitleLanguagePreference"), none: L("Any"))) {
+                    chooseLanguage(L("Subtitle language"), list: "SubtitleLanguages", one: "SubtitleLanguagePreference", original: false)
+                }
+                row(L("Subtitles"), value: modeName(prefs.subtitleMode)) {
+                    chooser = Chooser(
+                        title: L("Subtitles"),
+                        options: ["Default", "Smart", "Always", "OnlyForced", "None"].map { (modeName($0), $0) },
+                        current: prefs.subtitleMode
+                    ) { prefs.configure(["SubtitleMode": $0]) }
+                }
+                if let types = prefs.subtitleTypes {
+                    row(L("Subtitle types"), value: types.map(\.label).joined(separator: " › ")) {
+                        rank(L("Subtitle types"), types.map { ($0.label, $0.rawValue) }) { prefs.configure(["SubtitleTypes": $0]) }
+                    }
+                    note(L("When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last."))
+                }
+                if let only = prefs.listOnlyMyLanguages {
+                    configToggle(L("List only my languages"), key: "ListPreferredSubtitlesOnly", on: only)
+                    note(L("The player's subtitle menu lists subtitles in your languages, ones without a language and the one on. The rest wait under More languages."))
+                }
+                configToggle(L("Remember picks per show"), key: "RememberSubtitleSelections", on: prefs.rememberSubtitles)
+                note(L("Subtitles you pick or turn off while watching a show stay that way for its other episodes. Picking what the settings above would show forgets it."))
+            }
+            section(L("Subtitle style"), note: L("The same style as the web app's, on every device you sign in to.")) {
+                synced(L("Size"), key: "subtitleSize", fallback: "normal",
+                       options: [(L("Small"), "small"), (L("Normal"), "normal"), (L("Large"), "large"), (L("Huge"), "huge")])
+                synced(L("Font"), key: "subtitleFont", fallback: "default",
+                       options: [(L("The player's own"), "default"), (L("Sans serif"), "sans-serif"), (L("Serif"), "serif"),
+                                 (L("Monospace"), "monospace"), (L("Casual"), "casual"), (L("Cursive"), "cursive")])
+                synced(L("Text colour"), key: "subtitleColor", fallback: "#ffffff",
+                       options: [(L("White"), "#ffffff"), (L("Yellow"), "#ffff00"), (L("Light grey"), "#d1d1d1"),
+                                 (L("Cyan"), "#00ffff"), (L("Green"), "#00ff00")])
+                toggle(L("Bold"), key: "subtitleBold", fallback: false)
+                synced(L("Outline"), key: "subtitleOutline", fallback: "normal",
+                       options: [(L("None"), "none"), (L("Thin"), "thin"), (L("Normal"), "normal"), (L("Thick"), "thick")])
+                synced(L("Outline colour"), key: "subtitleOutlineColor", fallback: "#000000", options: subtitleColours)
+                toggle(L("Shadow"), key: "subtitleShadow", fallback: false)
+                synced(L("Background"), key: "subtitleBackgroundOpacity", fallback: "0",
+                       options: [(L("None"), "0"), (L("Faint"), "25"), (L("Half"), "50"), (L("Strong"), "75"), (L("Solid"), "100")])
+                if prefs.number("subtitleBackgroundOpacity", 0) > 0 {
+                    synced(L("Background colour"), key: "subtitleBackgroundColor", fallback: "#000000", options: subtitleColours)
+                }
+                synced(L("Height"), key: "subtitlePosition", fallback: "0",
+                       options: [(L("Lowest"), "-3"), (L("Normal"), "0"), (L("Raised a little"), "5"), (L("Raised"), "10"), (L("High"), "20")])
+                toggle(L("Override styled subtitles"), key: "subtitleOverrideStyled", fallback: false)
+                SubtitlePreview(look: prefs.subtitleLook)
+                    .frame(width: Theme.px(480), height: Theme.px(270))
+                    .clipShape(RoundedRectangle(cornerRadius: Theme.px(12), style: .continuous))
+                    .padding(Theme.px(12))
+            }
+        case .interface:
+            section(nil, note: nil) {
+                row(L("Navigation"), value: prefs.tvNavigation == "top" ? L("Top bar") : L("Rail")) {
+                    chooser = Chooser(title: L("Navigation"), options: [(L("Rail"), "rail"), (L("Top bar"), "top")],
+                                      current: prefs.tvNavigation) { prefs.tvNavigation = $0 }
+                }
+                row(L("Start page"), value: Place(rawValue: prefs.startPage)?.name ?? Place.home.name) {
+                    chooser = Chooser(
+                        title: L("Start page"),
+                        options: Place.startPages.map { ($0.name, $0.rawValue) },
+                        current: prefs.startPage
+                    ) { prefs.startPage = $0 }
+                }
+                toggle(L("Merge continue watching and next up"), key: "mergeNextUp", fallback: false)
+                row(L("Card previews"), value: prefs.cardPreviews ? L("On") : L("Off")) { prefs.cardPreviews.toggle() }
+                if prefs.cardPreviews {
+                    row(L("Trailers in card previews"), value: prefs.cardTrailers ? L("On") : L("Off")) { prefs.cardTrailers.toggle() }
+                    row(L("Trailer sound"), value: prefs.trailerSound ? L("On") : L("Off")) { prefs.trailerSound.toggle() }
+                }
+                toggle(L("Combine movie and show results"), key: "combineSearch", fallback: false)
+                toggle(L("Blur episodes you haven't started"), key: "blurSpoilers", fallback: false)
+                row(L("Featured on home"), value: featuredLabel) { chooseFeatured() }
+                synced(L("Hero"), key: "heroMode", fallback: "rotate",
+                       options: [(L("Rotates through featured titles"), "rotate"), (L("Follows the selected card"), "follow"),
+                                 (L("Follows the selected card, compact"), "corner")])
+                synced(L("Poster size"), key: "posterSize", fallback: "medium",
+                       options: [(L("Small"), "small"), (L("Medium"), "medium"), (L("Large"), "large")])
+                synced(L("Poster text"), key: "posterText", fallback: "title,year",
+                       options: [(L("Title and year"), "title,year"), (L("Title"), "title"), (L("Year"), "year"), (L("None"), "none")])
+                row(L("Prevent accidental exit"), value: prefs.preventAccidentalExit ? L("On") : L("Off")) {
+                    prefs.preventAccidentalExit.toggle()
+                }
+                note(prefs.preventAccidentalExit
+                    ? L("Back on Home shows “Press Back again to leave”, and only a second press leaves the app.")
+                    : L("Back on Home leaves the app straight away."))
+                synced(L("Hero turns every"), key: "heroSeconds", fallback: "9",
+                       options: [5, 7, 9, 12, 15, 20, 30].map { (L("%ld seconds", $0), String($0)) })
+            }
+            // The web app's Language card: its language and clock, synced.
+            section(L("Language"), note: L("Titles, synopses and version names stay in the language the server sends.")) {
+                synced(L("App language"), key: "language", fallback: "auto",
+                       options: [(L("System (%@)", AppLanguage.name(AppLanguage.system)), "auto")]
+                           + AppLanguage.catalogues.map { (AppLanguage.name($0.id), $0.id) }
+                               .sorted { $0.0.localizedCompare($1.0) == .orderedAscending })
+                synced(L("Time format"), key: "timeFormat", fallback: "auto",
+                       options: [(L("Automatic"), "auto"), (L("12-hour"), "12"), (L("24-hour"), "24")])
+            }
+        case .theme:
+            section(nil, note: L("Shared with the web app.")) {
+                synced(L("Accent colour"), key: "accentColor", fallback: "",
+                       options: [(L("Default"), ""), (L("Blue"), "#3b82f6"), (L("Sky"), "#0ea5e9"), (L("Teal"), "#14b8a6"),
+                                 (L("Green"), "#22c55e"), (L("Amber"), "#f59e0b"), (L("Orange"), "#f97316"), (L("Red"), "#ef4444"),
+                                 (L("Pink"), "#ec4899"), (L("Violet"), "#8b5cf6")])
+                toggle(L("Background from artwork"), key: "artBackground", fallback: false)
+                synced(L("Background"), key: "backgroundColor", fallback: "",
+                       options: [(L("Default"), ""), (L("Black"), "#000000"), (L("Charcoal"), "#1c1c1f"), (L("Slate"), "#1e2836"),
+                                 (L("Navy"), "#0a1846"), (L("Plum"), "#24102e"), (L("Forest"), "#0c2018"), (L("Maroon"), "#2a0c12")])
+            }
+        case .account:
+            section(nil, note: nil) {
+                fact(L("Server"), session.serverName ?? session.client?.base.host ?? "")
+                fact(L("Signed in as"), session.userName ?? "")
+                if quickConnect {
+                    row(L("Approve a Quick Connect code"), value: "") { approving = true }
+                }
+                row(L("Ask when the app opens"), value: askWho ? L("On") : L("Off")) {
+                    askWho.toggle()
+                    Session.askWho = askWho
+                }
+                note(L("Also when you come back to it after half an hour. Whoever was watching carries on without their PIN."))
+                HStack(spacing: Theme.px(8)) {
+                    Button(L("Switch user")) { session.signOut() }.buttonStyle(SoftPillStyle())
+                    Button(L("Change server")) { session.forgetServer() }.buttonStyle(SoftPillStyle())
+                }
+                .padding(.top, Theme.px(4))
+            }
+        case .about:
+            section(nil, note: nil) {
+                fact(L("App"), "AIOStreams tvOS \(AppInfo.version)")
+                if let newer {
+                    fact(L("Update"), L("Version %@ is out. Install it the way you installed this copy.", newer))
+                }
+                fact(L("Player"), AppInfo.player)
+                row(L("Report a problem"), value: report ?? "") { Task { await sendReport() } }
+                note(L("Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out."))
+                note(L("An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License."))
+            }
+        }
+    }
 
-    private func section<Content: View>(_ title: String, note: String?, @ViewBuilder content: () -> Content) -> some View {
-        VStack(alignment: .leading, spacing: Theme.px(8)) {
-            Text(title).font(Theme.font(Theme.lg, .semibold))
-            if let note { Text(note).font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray400) }
-            VStack(alignment: .leading, spacing: Theme.px(6)) { content() }
-                .padding(.top, Theme.px(6))
+    // MARK: Tabs and cards, as the web app's settings (app/settings)
+
+    /// The pages down the side, in the web app's two cards, Watching and App. Moving onto one opens it.
+    private var tabs: some View {
+        VStack(alignment: .leading, spacing: Theme.px(12)) {
+            tabGroup(L("Watching"), SettingsPage.allCases.filter(\.watching))
+            tabGroup(L("App"), SettingsPage.allCases.filter { !$0.watching })
+        }
+        .focusSection()
+        .onChange(of: tab) { _, focused in if let focused { page = focused } }
+    }
+
+    private func tabGroup(_ title: String, _ pages: [SettingsPage]) -> some View {
+        VStack(alignment: .leading, spacing: Theme.px(2)) {
+            Text(title.uppercased(with: AppLanguage.locale))
+                .font(Theme.font(Theme.xs, .semibold))
+                .tracking(Theme.px(1))
+                .foregroundStyle(Theme.gray400)
+                .padding(.horizontal, Theme.px(12))
+                .padding(.vertical, Theme.px(4))
+            ForEach(pages) { item in
+                Button { page = item } label: {
+                    HStack(spacing: Theme.px(12)) {
+                        Image(systemName: item.icon)
+                            .font(.system(size: Theme.px(18)))
+                            .frame(width: Theme.px(24))
+                        Text(item.name).font(Theme.font(Theme.base, .medium)).lineLimit(1)
+                        Spacer(minLength: 0)
+                    }
+                    .padding(.horizontal, Theme.px(12))
+                    .frame(height: Theme.px(44))
+                }
+                .buttonStyle(SettingsTabStyle(selected: item == page))
+                .focused($tab, equals: item)
+                .prefersDefaultFocus(item == page, in: settingsScope)
+            }
+        }
+        .padding(Theme.px(8))
+        .background(SettingsCardShape())
+    }
+
+    /// The page's icon, name and what it holds, above its cards.
+    private func header(_ page: SettingsPage) -> some View {
+        HStack(spacing: Theme.px(12)) {
+            Image(systemName: page.icon)
+                .font(.system(size: Theme.px(24)))
+                .foregroundStyle(Theme.ring)
+                .frame(width: Theme.px(28), height: Theme.px(28))
+                .padding(Theme.px(10))
+                .background(
+                    RoundedRectangle(cornerRadius: Theme.px(10), style: .continuous)
+                        .fill(LinearGradient(colors: [Theme.brand500.opacity(0.1), Color.purple.opacity(0.1)],
+                                             startPoint: .topLeading, endPoint: .bottomTrailing))
+                        .overlay(RoundedRectangle(cornerRadius: Theme.px(10), style: .continuous)
+                            .stroke(Theme.brand500.opacity(0.15), lineWidth: Theme.px(1)))
+                )
+            VStack(alignment: .leading, spacing: Theme.px(2)) {
+                Text(page.name).font(Theme.font(Theme.xl, .semibold))
+                Text(page.detail).font(Theme.font(Theme.base)).foregroundStyle(Theme.gray400)
+            }
+        }
+    }
+
+    /// A card: its title and note above, its rows inside with a line between each, a note kept
+    /// with the row before it.
+    private func section<Content: View>(_ title: String?, note: String?, @ViewBuilder content: () -> Content) -> some View {
+        VStack(alignment: .leading, spacing: Theme.px(12)) {
+            if title != nil || note != nil {
+                VStack(alignment: .leading, spacing: Theme.px(2)) {
+                    if let title { Text(title).font(Theme.font(Theme.base, .semibold)) }
+                    if let note { Text(note).font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray400) }
+                }
+            }
+            VStack(alignment: .leading, spacing: 0) {
+                Group(subviews: content()) { subviews in
+                    ForEach(subviews.indices, id: \.self) { index in
+                        if index > 0 && !subviews[index].containerValues.settingsNote {
+                            Rectangle()
+                                .fill(Color(white: 55 / 255).opacity(0.4))
+                                .frame(height: Theme.px(2))
+                        }
+                        subviews[index]
+                    }
+                }
+            }
+            .padding(Theme.px(4))
+            .background(SettingsCardShape())
         }
         .focusSection()
     }
 
     private func row(_ title: String, value: String, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            HStack {
-                Text(title).font(Theme.font(Theme.base))
+            HStack(spacing: Theme.px(16)) {
+                Text(title).font(Theme.font(Theme.base, .medium))
                 Spacer(minLength: Theme.px(16))
                 Text(value).font(Theme.font(Theme.base)).foregroundStyle(Theme.gray400).lineLimit(1)
                 Image(systemName: "chevron.right").font(.system(size: Theme.px(12), weight: .semibold)).foregroundStyle(Theme.gray500)
             }
-            .padding(.horizontal, Theme.px(16))
-            .frame(height: Theme.px(48))
+            .padding(.horizontal, Theme.px(12))
+            .frame(minHeight: Theme.px(52))
         }
-        .buttonStyle(RowStyle())
+        .buttonStyle(RowStyle(radius: Theme.px(10)))
+    }
+
+    private func fact(_ label: String, _ value: String) -> some View {
+        HStack(spacing: Theme.px(16)) {
+            Text(label).font(Theme.font(Theme.base, .semibold))
+            Spacer(minLength: Theme.px(16))
+            Text(value).font(Theme.font(Theme.base)).foregroundStyle(Theme.gray300).lineLimit(1)
+        }
+        .padding(.horizontal, Theme.px(12))
+        .frame(minHeight: Theme.px(52))
     }
 
     private func synced(_ title: String, key: String, fallback: String, options: [(String, String)]) -> some View {
@@ -823,11 +933,15 @@ struct SettingsView: View {
             + (views?.items ?? []).filter(isBrowsable).map { ($0.name ?? L("Library"), "view:\($0.id)") }
     }
 
+    /// Help under the row before it, in the same card, with no line between.
     private func note(_ text: String) -> some View {
         Text(text)
             .font(Theme.font(Theme.sm))
             .foregroundStyle(Theme.gray400)
-            .padding(.horizontal, Theme.px(16))
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.horizontal, Theme.px(12))
+            .padding(.bottom, Theme.px(12))
+            .containerValue(\.settingsNote, true)
     }
 
     /// A switch in the user's Jellyfin configuration, which the web app shares.
@@ -874,6 +988,82 @@ struct SettingsView: View {
         case "OnlyForced": return L("Only forced")
         case "None": return L("Off")
         default: return L("Default")
+        }
+    }
+}
+
+/// The settings' pages, as the web app's settings tabs, in its Watching and App groups.
+enum SettingsPage: String, CaseIterable, Identifiable {
+    case playback, audio, subtitles, interface, theme, account, about
+
+    var id: String { rawValue }
+    var watching: Bool { self == .playback || self == .audio || self == .subtitles }
+
+    var name: String {
+        switch self {
+        case .playback: return L("Playback")
+        case .audio: return L("Audio")
+        case .subtitles: return L("Subtitles")
+        case .interface: return L("Interface")
+        case .theme: return L("Theme")
+        case .account: return L("Account")
+        case .about: return L("About")
+        }
+    }
+
+    var detail: String {
+        switch self {
+        case .playback: return L("Next episode, controls and players")
+        case .audio: return L("Language and output")
+        case .subtitles: return L("Language and how subtitles look")
+        case .interface: return L("Language, home, grids and episodes")
+        case .theme: return L("Colours and background")
+        case .account: return L("Who you are signed in as")
+        case .about: return L("Versions and links")
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .playback: return "play.circle"
+        case .audio: return "speaker.wave.2"
+        case .subtitles: return "captions.bubble"
+        case .interface: return "square.grid.2x2"
+        case .theme: return "paintpalette"
+        case .account: return "person"
+        case .about: return "info.circle"
+        }
+    }
+}
+
+extension ContainerValues {
+    /// A card's help line, which keeps to the row before it without a line between.
+    @Entry var settingsNote: Bool = false
+}
+
+/// The web app's settings card: nearly black, with a faint edge.
+private struct SettingsCardShape: View {
+    var body: some View {
+        RoundedRectangle(cornerRadius: Theme.px(14), style: .continuous)
+            .fill(Color(red: 3 / 255, green: 7 / 255, blue: 18 / 255).opacity(0.7))
+            .overlay(RoundedRectangle(cornerRadius: Theme.px(14), style: .continuous)
+                .stroke(Color.white.opacity(0.1), lineWidth: Theme.px(1)))
+    }
+}
+
+/// A tab down the side: the open one filled, the focused one lighter, as the web app's on a TV.
+private struct SettingsTabStyle: ButtonStyle {
+    let selected: Bool
+
+    func makeBody(configuration: Configuration) -> some View {
+        Focused { focused in
+            configuration.label
+                .foregroundStyle(selected || focused ? Color.white : Theme.gray300)
+                .background(
+                    RoundedRectangle(cornerRadius: Theme.px(8), style: .continuous)
+                        .fill(Color.white.opacity(focused ? 0.2 : selected ? 0.1 : 0))
+                )
+                .opacity(configuration.isPressed ? 0.8 : 1)
         }
     }
 }

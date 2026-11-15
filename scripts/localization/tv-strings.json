@@ -2960,6 +2960,22 @@
       "ro": "Dezactivat, televizorul își păstrează modul la pornirea unui canal, așa că canalele pornesc mai repede, fără ecranul negru al schimbării de mod.",
       "tr": "Kapalıyken TV, kanal başladığında mevcut modunu korur; böylece kanallar mod değişiminin siyah ekranı olmadan daha hızlı başlar.",
       "zh-Hans": "关闭时，频道开始播放时电视保持当前模式，频道因此启动更快，不会出现切换模式时的黑屏。"
+    },
+    "Colours and background": {
+      "ar": "الألوان والخلفية",
+      "de": "Farben und Hintergrund",
+      "el": "Χρώματα και φόντο",
+      "es": "Colores y fondo",
+      "fr": "Couleurs et arrière-plan",
+      "id": "Warna dan latar",
+      "it": "Colori e sfondo",
+      "ms": "Warna dan latar belakang",
+      "pl": "Kolory i tło",
+      "pt-BR": "Cores e fundo",
+      "pt": "Cores e fundo",
+      "ro": "Culori și fundal",
+      "tr": "Renkler ve arka plan",
+      "zh-Hans": "颜色和背景"
     }
   },
   "plurals": {

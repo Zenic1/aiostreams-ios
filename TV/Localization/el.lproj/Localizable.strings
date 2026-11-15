@@ -93,6 +93,7 @@
 "Choose a version" = "Επίλεξε έκδοση";
 "Close" = "Κλείσιμο";
 "Code" = "Κωδικός";
+"Colours and background" = "Χρώματα και φόντο";
 "Combine movie and show results" = "Ενιαία αποτελέσματα για ταινίες και σειρές";
 "Coming in a later build." = "Έρχεται σε επόμενη έκδοση.";
 "Commentary" = "Σχολιασμός";
@@ -164,6 +165,9 @@
 "Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on." = "Αποθηκεύεται σε αυτό το Apple TV. Καθένα λειτουργεί με ενεργή τη ρύθμιση Αντιστοίχιση περιεχομένου του Apple TV.";
 "LIVE" = "ΖΩΝΤΑΝΑ";
 "Language" = "Γλώσσα";
+"Language and how subtitles look" = "Γλώσσα και εμφάνιση υποτίτλων";
+"Language and output" = "Γλώσσα και έξοδος";
+"Language, home, grids and episodes" = "Γλώσσα, αρχική, πλέγματα και επεισόδια";
 "Large" = "Μεγάλο";
 "Later shows subtitles, or plays the sound, after the picture; earlier, before it. Kept for this title." = "Το «αργότερα» δείχνει τους υπότιτλους, ή παίζει τον ήχο, μετά την εικόνα· το «νωρίτερα», πριν από αυτήν. Αποθηκεύεται για αυτόν τον τίτλο.";
 "Leave the party" = "Αποχώρηση από την ομαδική προβολή";
@@ -200,6 +204,7 @@
 "New playlist" = "Νέα λίστα αναπαραγωγής";
 "Next %@: %@" = "Επόμενο %@: %@";
 "Next episode" = "Επόμενο επεισόδιο";
+"Next episode, controls and players" = "Επόμενο επεισόδιο, στοιχεία ελέγχου και προγράμματα αναπαραγωγής";
 "Next up" = "Επόμενα επεισόδια";
 "Next: %@" = "Επόμενο: %@";
 "Night mode" = "Νυχτερινή λειτουργία";
@@ -421,6 +426,7 @@
 "User" = "Χρήστης";
 "Version" = "Έκδοση";
 "Version %@ is out. Install it the way you installed this copy." = "Κυκλοφόρησε η έκδοση %@. Εγκατέστησέ τη όπως εγκατέστησες αυτό το αντίγραφο.";
+"Versions and links" = "Εκδόσεις και σύνδεσμοι";
 "Video" = "Βίντεο";
 "Violet" = "Βιολετί";
 "Wait for episodes to air" = "Αναμονή για την προβολή επεισοδίων";
@@ -428,11 +434,13 @@
 "Watch together" = "Δείτε μαζί";
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Δες με φίλους, ο καθένας στη συσκευή του: ό,τι βάζει, σταματά ή προσπερνά ένας, το κάνουν όλοι.";
 "Watched" = "Τα έχω δει";
+"Watching" = "Παρακολούθηση";
 "What you watch shows here." = "Ό,τι παρακολουθείς εμφανίζεται εδώ.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Τι υποστηρίζουν τα ηχεία ή ο ενισχυτής σου. Ο περιβάλλων ήχος με περισσότερα κανάλια μετατρέπεται σε λιγότερα, διατηρώντας τους διαλόγους.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Όταν μια έκδοση διαθέτει περισσότερους από έναν τύπους κομματιού ήχου, αναπαράγεται ο πρώτος διαθέσιμος από αυτή τη λίστα.";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Όταν μια έκδοση διαθέτει περισσότερους από έναν υπότιτλους στη γλώσσα σου, εμφανίζεται ο πρώτος διαθέσιμος από αυτή τη λίστα. Ο σχολιασμός έρχεται τελευταίος.";
 "White" = "Λευκό";
+"Who you are signed in as" = "Ο χρήστης με τον οποίο έχεις συνδεθεί";
 "Who's watching?" = "Ποιος παρακολουθεί;";
 "Without credits, offer it" = "Χωρίς τίτλους τέλους, πρότεινέ το";
 "Year" = "Έτος";

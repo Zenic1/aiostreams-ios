@@ -93,6 +93,7 @@
 "Choose a version" = "اختر نسخة";
 "Close" = "إغلاق";
 "Code" = "الرمز";
+"Colours and background" = "الألوان والخلفية";
 "Combine movie and show results" = "دمج نتائج الأفلام والمسلسلات";
 "Coming in a later build." = "قادم في إصدار لاحق.";
 "Commentary" = "التعليق";
@@ -164,6 +165,9 @@
 "Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on." = "محفوظ على جهاز Apple TV هذا. يعمل كل منهما عند تشغيل إعداد مطابقة المحتوى في Apple TV.";
 "LIVE" = "مباشر";
 "Language" = "اللغة";
+"Language and how subtitles look" = "اللغة ومظهر الترجمة";
+"Language and output" = "اللغة والخرج";
+"Language, home, grids and episodes" = "اللغة والرئيسية والشبكات والحلقات";
 "Large" = "كبير";
 "Later shows subtitles, or plays the sound, after the picture; earlier, before it. Kept for this title." = "«لاحقًا» يعرض الترجمة أو يشغّل الصوت بعد الصورة؛ و«مبكرًا» قبلها. يُحفظ لهذا العنوان.";
 "Leave the party" = "مغادرة جلسة المشاهدة";
@@ -200,6 +204,7 @@
 "New playlist" = "قائمة تشغيل جديدة";
 "Next %@: %@" = "التالي %@: %@";
 "Next episode" = "الحلقة التالية";
+"Next episode, controls and players" = "الحلقة التالية وعناصر التحكم والمشغّلات";
 "Next up" = "التالي";
 "Next: %@" = "التالي: %@";
 "Night mode" = "الوضع الليلي";
@@ -421,6 +426,7 @@
 "User" = "المستخدم";
 "Version" = "الإصدار";
 "Version %@ is out. Install it the way you installed this copy." = "صدر الإصدار %@. ثبّته بالطريقة التي ثبّت بها هذه النسخة.";
+"Versions and links" = "النسخ والروابط";
 "Video" = "الفيديو";
 "Violet" = "بنفسجي";
 "Wait for episodes to air" = "انتظار بث الحلقات";
@@ -428,11 +434,13 @@
 "Watch together" = "المشاهدة معًا";
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "شاهد مع أصدقائك، كلٌّ على جهازه: ما يشغّله أحدكم أو يوقفه أو يتخطى إليه، يحدث عند الجميع.";
 "Watched" = "تمت مشاهدته";
+"Watching" = "يشاهد";
 "What you watch shows here." = "يظهر هنا ما تشاهده.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "ما تستقبله مكبرات الصوت أو جهاز الاستقبال. أما الصوت المحيطي الأكثر قنوات فيُدمج في عدد أقل، مع الإبقاء على الحوار.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "عندما تحتوي النسخة على أكثر من نوع من المسارات الصوتية، يُشغَّل أول ما تملكه من هذه.";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "عندما تحتوي النسخة على أكثر من ترجمة بلغتك، يُعرض أول ما تملكه من هذه. ويأتي التعليق أخيرًا.";
 "White" = "أبيض";
+"Who you are signed in as" = "المستخدم الذي سجّلت الدخول به";
 "Who's watching?" = "من يشاهد؟";
 "Without credits, offer it" = "دون شارة نهاية، اعرضها";
 "Year" = "السنة";

@@ -93,6 +93,7 @@
 "Choose a version" = "Alege o versiune";
 "Close" = "Închide";
 "Code" = "Cod";
+"Colours and background" = "Culori și fundal";
 "Combine movie and show results" = "Combină rezultatele pentru filme și seriale";
 "Coming in a later build." = "Vine într-o versiune ulterioară.";
 "Commentary" = "Comentariu";
@@ -164,6 +165,9 @@
 "Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on." = "Păstrat pe acest Apple TV. Fiecare funcționează cu setarea Potrivire conținut a Apple TV activată.";
 "LIVE" = "LIVE";
 "Language" = "Limbă";
+"Language and how subtitles look" = "Limba și cum arată subtitrările";
+"Language and output" = "Limba și ieșirea";
+"Language, home, grids and episodes" = "Limba, pagina principală, grilele și episoadele";
 "Large" = "Mare";
 "Later shows subtitles, or plays the sound, after the picture; earlier, before it. Kept for this title." = "Mai târziu afișează subtitrările sau redă sunetul după imagine; mai devreme, înaintea ei. Se păstrează pentru acest titlu.";
 "Leave the party" = "Părăsește sesiunea Watch party";
@@ -200,6 +204,7 @@
 "New playlist" = "Listă de redare nouă";
 "Next %@: %@" = "Urmează %@: %@";
 "Next episode" = "Episodul următor";
+"Next episode, controls and players" = "Episodul următor, comenzi și playere";
 "Next up" = "Urmează";
 "Next: %@" = "Urmează: %@";
 "Night mode" = "Mod de noapte";
@@ -421,6 +426,7 @@
 "User" = "Utilizator";
 "Version" = "Versiune";
 "Version %@ is out. Install it the way you installed this copy." = "A apărut versiunea %@. Instaleaz-o la fel cum ai instalat această copie.";
+"Versions and links" = "Versiuni și linkuri";
 "Video" = "Video";
 "Violet" = "Violet";
 "Wait for episodes to air" = "Așteaptă difuzarea episoadelor";
@@ -428,11 +434,13 @@
 "Watch together" = "Vizionează împreună";
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Vizionează cu prietenii, fiecare pe dispozitivul lui: ce redă, pune pe pauză sau sare unul, se întâmplă la toți.";
 "Watched" = "Văzut";
+"Watching" = "Se vizionează";
 "What you watch shows here." = "Ce vizionezi apare aici.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Ce acceptă boxele sau receiverul tău. Sunetul surround cu mai multe canale este redus, păstrând dialogul.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Când o versiune are mai multe tipuri de piste audio, se redă primul dintre acestea pe care îl are.";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Când o versiune are mai multe subtitrări în limba ta, se afișează prima dintre acestea pe care o are. Comentariul vine ultimul.";
 "White" = "Alb";
+"Who you are signed in as" = "Cine ești conectat";
 "Who's watching?" = "Cine vizionează?";
 "Without credits, offer it" = "Fără generic, propune-l";
 "Year" = "An";

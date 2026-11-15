@@ -221,7 +221,8 @@ struct MainView: View {
         case .together: PartyView()
         case .calendar: CalendarView()
         case .activity: ActivityView()
-        case .account, .settings: SettingsView()
+        case .account: SettingsView(start: .account)
+        case .settings: SettingsView()
         }
     }
 

@@ -93,6 +93,7 @@
 "Choose a version" = "Pilih versi";
 "Close" = "Tutup";
 "Code" = "Kod";
+"Colours and background" = "Warna dan latar belakang";
 "Combine movie and show results" = "Gabungkan hasil filem dan rancangan";
 "Coming in a later build." = "Akan datang dalam binaan kemudian.";
 "Commentary" = "Ulasan";
@@ -164,6 +165,9 @@
 "Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on." = "Disimpan pada Apple TV ini. Setiap satu berfungsi apabila tetapan Padankan Kandungan Apple TV dihidupkan.";
 "LIVE" = "LANGSUNG";
 "Language" = "Bahasa";
+"Language and how subtitles look" = "Bahasa dan penampilan sarikata";
+"Language and output" = "Bahasa dan output";
+"Language, home, grids and episodes" = "Bahasa, laman utama, grid dan episod";
 "Large" = "Besar";
 "Later shows subtitles, or plays the sound, after the picture; earlier, before it. Kept for this title." = "Lewat memaparkan sari kata, atau memainkan bunyi, selepas gambar; awal, sebelumnya. Disimpan untuk tajuk ini.";
 "Leave the party" = "Tinggalkan sesi";
@@ -200,6 +204,7 @@
 "New playlist" = "Senarai main baharu";
 "Next %@: %@" = "Seterusnya %@: %@";
 "Next episode" = "Episod seterusnya";
+"Next episode, controls and players" = "Episod seterusnya, kawalan dan pemain";
 "Next up" = "Seterusnya";
 "Next: %@" = "Seterusnya: %@";
 "Night mode" = "Mod malam";
@@ -421,6 +426,7 @@
 "User" = "Pengguna";
 "Version" = "Versi";
 "Version %@ is out. Install it the way you installed this copy." = "Versi %@ telah keluar. Pasangnya seperti anda memasang salinan ini.";
+"Versions and links" = "Versi dan pautan";
 "Video" = "Video";
 "Violet" = "Ungu";
 "Wait for episodes to air" = "Tunggu episod disiarkan";
@@ -428,11 +434,13 @@
 "Watch together" = "Tonton bersama";
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Tonton dengan rakan, masing-masing pada peranti sendiri: apa yang seorang mainkan, jeda atau langkau, semua turut sama.";
 "Watched" = "Ditonton";
+"Watching" = "Menonton";
 "What you watch shows here." = "Apa yang anda tonton dipaparkan di sini.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Kapasiti pembesar suara atau penerima anda.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Apabila sesuatu versi mempunyai lebih daripada satu jenis trek audio, trek pertama yang sepadan akan dimainkan.";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Apabila sesuatu versi mempunyai lebih daripada satu sarikata dalam bahasa anda, sarikata pertama yang sepadan akan dipaparkan.";
 "White" = "Putih";
+"Who you are signed in as" = "Identiti anda yang sedang log masuk";
 "Who's watching?" = "Siapa yang menonton?";
 "Without credits, offer it" = "Tanpa kredit, tawarkan";
 "Year" = "Tahun";

@@ -93,6 +93,7 @@
 "Choose a version" = "Sürüm seç";
 "Close" = "Kapat";
 "Code" = "Kod";
+"Colours and background" = "Renkler ve arka plan";
 "Combine movie and show results" = "Film ve dizi sonuçlarını birleştir";
 "Coming in a later build." = "Sonraki bir sürümde geliyor.";
 "Commentary" = "Yorum parçası";
@@ -164,6 +165,9 @@
 "Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on." = "Bu Apple TV’de saklanır. Her biri Apple TV’nin İçeriği Eşleştir ayarı açıkken çalışır.";
 "LIVE" = "CANLI";
 "Language" = "Dil";
+"Language and how subtitles look" = "Dil ve altyazı görünümü";
+"Language and output" = "Dil ve çıkış";
+"Language, home, grids and episodes" = "Dil, ana sayfa, ızgaralar ve bölümler";
 "Large" = "Büyük";
 "Later shows subtitles, or plays the sound, after the picture; earlier, before it. Kept for this title." = "Daha geç, altyazıları gösterir ya da sesi görüntüden sonra çalar; daha erken, ondan önce. Bu içerik için saklanır.";
 "Leave the party" = "Birlikte izlemeden ayrıl";
@@ -200,6 +204,7 @@
 "New playlist" = "Yeni oynatma listesi";
 "Next %@: %@" = "Sonra %@: %@";
 "Next episode" = "Sonraki bölüm";
+"Next episode, controls and players" = "Sonraki bölüm, kontroller ve oynatıcılar";
 "Next up" = "Sıradaki";
 "Next: %@" = "Sonra: %@";
 "Night mode" = "Gece modu";
@@ -421,6 +426,7 @@
 "User" = "Kullanıcı";
 "Version" = "Sürüm";
 "Version %@ is out. Install it the way you installed this copy." = "%@ sürümü çıktı. Bu kopyayı nasıl kurduysan öyle kur.";
+"Versions and links" = "Sürümler ve bağlantılar";
 "Video" = "Video";
 "Violet" = "Mor";
 "Wait for episodes to air" = "Bölümlerin yayınlanmasını bekle";
@@ -428,11 +434,13 @@
 "Watch together" = "Birlikte izle";
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Arkadaşlarınla, herkes kendi cihazında izle: biri neyi oynatır, duraklatır ya da atlarsa herkeste olur.";
 "Watched" = "İzlendi";
+"Watching" = "İzleniyor";
 "What you watch shows here." = "İzlediklerin burada görünür.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Hoparlörlerinin veya alıcının desteklediği kanal sayısı. Daha fazla kanallı çevresel ses, diyaloglar korunarak bu sayıya indirilir.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Bir sürümde birden fazla ses parçası türü varsa bu listedeki ilk mevcut tür oynatılır.";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Bir sürümde tercih ettiğin dilde birden fazla altyazı varsa bu listedeki ilk mevcut tür gösterilir. Yorum altyazıları en sona bırakılır.";
 "White" = "Beyaz";
+"Who you are signed in as" = "Oturum açtığın hesap";
 "Who's watching?" = "Kim izliyor?";
 "Without credits, offer it" = "Jenerik yoksa öner";
 "Year" = "Yıl";

@@ -93,6 +93,7 @@
 "Choose a version" = "Escolher uma versão";
 "Close" = "Fechar";
 "Code" = "Código";
+"Colours and background" = "Cores e fundo";
 "Combine movie and show results" = "Combinar resultados de filmes e séries";
 "Coming in a later build." = "Chega em uma versão futura.";
 "Commentary" = "Comentário";
@@ -164,6 +165,9 @@
 "Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on." = "Salvo nesta Apple TV. Cada um funciona com o ajuste Ajustar Conteúdo da Apple TV ativado.";
 "LIVE" = "AO VIVO";
 "Language" = "Idioma";
+"Language and how subtitles look" = "Idioma e aparência das legendas";
+"Language and output" = "Idioma e saída de áudio";
+"Language, home, grids and episodes" = "Idioma, início, fileiras e episódios";
 "Large" = "Grande";
 "Later shows subtitles, or plays the sound, after the picture; earlier, before it. Kept for this title." = "Depois mostra as legendas, ou toca o som, após a imagem; antes, adiantado. Salvo para este título.";
 "Leave the party" = "Sair da sessão";
@@ -200,6 +204,7 @@
 "New playlist" = "Nova playlist";
 "Next %@: %@" = "A seguir %@: %@";
 "Next episode" = "Próximo episódio";
+"Next episode, controls and players" = "Próximo episódio, controles e reprodutores";
 "Next up" = "A seguir";
 "Next: %@" = "A seguir: %@";
 "Night mode" = "Modo noturno";
@@ -421,6 +426,7 @@
 "User" = "Usuário";
 "Version" = "Versão";
 "Version %@ is out. Install it the way you installed this copy." = "Saiu a versão %@. Instale do mesmo jeito que instalou esta cópia.";
+"Versions and links" = "Versões e links";
 "Video" = "Vídeo";
 "Violet" = "Violeta";
 "Wait for episodes to air" = "Esperar os episódios irem ao ar";
@@ -428,11 +434,13 @@
 "Watch together" = "Assistir juntos";
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Assista com amigos, cada um no seu dispositivo: o que um reproduz, pausa ou pula, acontece para todos.";
 "Watched" = "Assistido";
+"Watching" = "Assistindo";
 "What you watch shows here." = "O que você assiste aparece aqui.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "O que suas caixas de som ou receiver suportam. Som surround com mais canais é reduzido, mantendo os diálogos.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Quando uma versão tem mais de um tipo de faixa de áudio, o primeiro disponível desta lista é reproduzido.";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Quando uma versão tem mais de uma legenda no seu idioma, a primeira disponível desta lista é exibida. Comentários ficam por último.";
 "White" = "Branco";
+"Who you are signed in as" = "Conta em uso";
 "Who's watching?" = "Quem está assistindo?";
 "Without credits, offer it" = "Sem créditos, oferecer";
 "Year" = "Ano";
