@@ -68,10 +68,11 @@ targets:
         # Playback keeps going with the screen off or the app in the background.
         UIBackgroundModes:
           - audio
-        # Self-hosted servers are often plain http on the local network.
+        # Self-hosted servers, and many streams and live channels, are plain http, on the local
+        # network or not. Only this key: with NSAllowsLocalNetworking (or the media or web content
+        # ones) beside it, iOS and tvOS ignore it and allow plain http on the local network alone.
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
-          NSAllowsLocalNetworking: true
         NSLocalNetworkUsageDescription: AIOStreams connects to your server and streams on your local network.
         NSMicrophoneUsageDescription: Voice search in the page's search field uses the microphone.
         CFBundleURLTypes:
@@ -127,10 +128,11 @@ targets:
         UIUserInterfaceStyle: Dark
         UIBackgroundModes:
           - audio
-        # Self-hosted servers are often plain http on the local network.
+        # Self-hosted servers, and many streams and live channels, are plain http, on the local
+        # network or not. Only this key: with NSAllowsLocalNetworking (or the media or web content
+        # ones) beside it, iOS and tvOS ignore it and allow plain http on the local network alone.
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
-          NSAllowsLocalNetworking: true
         NSLocalNetworkUsageDescription: AIOStreams connects to your server and streams on your local network.
         # Top Shelf's links: a title's page, or playing it.
         CFBundleURLTypes:
