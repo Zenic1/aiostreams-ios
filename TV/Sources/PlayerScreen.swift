@@ -141,7 +141,7 @@ struct PlayerScreen: View {
         let next = channels[(index + step + channels.count) % channels.count]
         finding = next
         defer { finding = nil }
-        guard let info = try? await client.playbackInfo(userId: userId, itemId: next.id, listed: true),
+        guard let info = try? await client.playbackInfo(userId: userId, itemId: next.id),
               var source = info.mediaSources?.first else { return }
         var playSession = info.playSessionId
         // Named, as when a channel is chosen from Live TV, for its stream in full.

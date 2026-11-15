@@ -594,10 +594,7 @@ struct JellyfinClient: Sendable {
     ]
 
     /// The version list, or with `sourceId` one version with its subtitles from subtitle addons.
-    /// `listed` asks a list for only what choosing a version reads, as the web app's does before it
-    /// names the one it plays (lib/jellyfin/playback-info.ts), which the server answers sooner.
-    func playbackInfo(userId: String, itemId: String, sourceId: String? = nil, refresh: Bool = false,
-                      listed: Bool = false) async throws -> PlaybackInfo {
+    func playbackInfo(userId: String, itemId: String, sourceId: String? = nil, refresh: Bool = false) async throws -> PlaybackInfo {
         var body: [String: Any] = [
             "UserId": userId,
             "DeviceProfile": Self.deviceProfile,
@@ -605,8 +602,6 @@ struct JellyfinClient: Sendable {
             // Every version, past the server's limit for a list, as the web app asks (server v2.38).
             "AllVersions": true,
         ]
-        var query: [String: String?] = ["userId": userId]
-        if listed && sourceId == nil { query["MediaSourceFields"] = "Id,Type,Name,RunTimeTicks,aiostreams" }
         if let sourceId {
             body["MediaSourceId"] = sourceId
         } else {
@@ -614,7 +609,7 @@ struct JellyfinClient: Sendable {
             body["SkipSubtitles"] = true
         }
         if refresh { body["Refresh"] = true }
-        return try await post("/Items/\(itemId)/PlaybackInfo", query, body: body)
+        return try await post("/Items/\(itemId)/PlaybackInfo", ["userId": userId], body: body)
     }
 
     /// The version's own address where it has one, which outlives this session; the stream route otherwise.

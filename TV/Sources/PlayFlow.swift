@@ -176,7 +176,7 @@ struct PlayFlow: ViewModifier {
         guard let client = session.client, let userId = session.userId else { return }
         finding = choice.item
         defer { finding = nil }
-        let info = try? await client.playbackInfo(userId: userId, itemId: choice.item.id, listed: true)
+        let info = try? await client.playbackInfo(userId: userId, itemId: choice.item.id)
         let sources = (info?.mediaSources ?? []).filter { $0.aiostreams?.ytId == nil }
         let last = (choice.startMs ?? 0) > 0 ? LastVersions.find(choice.item.id, in: sources) : nil
         guard let source = last ?? sources.first else {
