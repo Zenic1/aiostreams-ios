@@ -2,11 +2,11 @@ import SwiftUI
 
 /// The places the rail leads to, in the web app's order (components/layout.tsx).
 enum Place: String, CaseIterable, Identifiable {
-    case account, home, discover, live, search, favourites, calendar, activity, settings
+    case account, home, discover, live, search, favourites, playlists, calendar, activity, settings
 
     var id: String { rawValue }
 
-    static let main: [Place] = [.home, .discover, .live, .search, .favourites, .calendar, .activity]
+    static let main: [Place] = [.home, .discover, .live, .search, .favourites, .playlists, .calendar, .activity]
 
     /// What the start page setting offers, as the web app's (lib/start-page.ts).
     static let startPages: [Place] = [.home, .discover, .live, .favourites, .calendar, .activity]
@@ -19,6 +19,7 @@ enum Place: String, CaseIterable, Identifiable {
         case .live: return L("Live TV")
         case .search: return L("Search")
         case .favourites: return L("Favourites")
+        case .playlists: return L("Playlists")
         case .calendar: return L("Calendar")
         case .activity: return L("Activity")
         case .settings: return L("Settings")
@@ -34,6 +35,7 @@ enum Place: String, CaseIterable, Identifiable {
         case .live: return "play.tv"
         case .search: return "magnifyingglass"
         case .favourites: return "heart"
+        case .playlists: return "list.bullet.rectangle.portrait"
         case .calendar: return "calendar"
         case .activity: return "clock.arrow.circlepath"
         case .settings: return "gearshape"
@@ -150,6 +152,8 @@ struct MainView: View {
         .playFlow($choice, restoresPictureInPicture: true) { NotificationCenter.default.post(name: .watchStateChanged, object: nil) }
         .task { await findLiveTV() }
         .task { await session.readServerKind() }
+        // Signed out, or asked who's watching: other devices can't reach this one meanwhile.
+        .onDisappear { ServerEvents.shared.stop() }
         .onReceive(NotificationCenter.default.publisher(for: DeepLink.opened)) { _ in
             Task { await followLink() }
         }
@@ -158,6 +162,10 @@ struct MainView: View {
             await followLink()
             guard let client = session.client, let userId = session.userId else { return }
             LiveReminders.shared.load(userId: userId)
+            // Other devices' remotes: open or play a title here.
+            ServerEvents.shared.skipStep = Double(prefs.seekStep)
+            ServerEvents.shared.pageHandler = { command in Task { await remote(command) } }
+            ServerEvents.shared.start(client: client)
             await prefs.load(client: client, userId: userId)
             await openDemoScreen()
         }
@@ -202,6 +210,7 @@ struct MainView: View {
             if let liveView { LiveTVView(view: liveView) } else { ProgressView().frame(maxWidth: .infinity, maxHeight: .infinity) }
         case .search: SearchView()
         case .favourites: FavouritesView()
+        case .playlists: PlaylistsView()
         case .calendar: CalendarView()
         case .activity: ActivityView()
         case .account, .settings: SettingsView()
@@ -240,6 +249,28 @@ struct MainView: View {
 
     /// Keeps the rail shut while Home loads its first rows, then lets it take focus again. Should
     /// focus have landed on the rail before the page had anything to focus, it's moved over.
+    /// A title another device's remote opens or plays here.
+    private func remote(_ command: RemoteCommand) async {
+        guard let client = session.client, let userId = session.userId else { return }
+        let id: String
+        switch command {
+        case .show(let itemId): id = itemId
+        case .play(let itemId, _, _): id = itemId
+        default: return
+        }
+        let found: ItemsResult? = try? await client.get("/Items", ["userId": userId, "Ids": id, "Fields": "Overview,Genres"])
+        guard let item = found?.items?.first else { return }
+        if case .play(_, let startMs, _) = command {
+            // A player closing for it gives way first.
+            try? await Task.sleep(for: .milliseconds(800))
+            choice = VersionChoice(item: item, startMs: startMs > 0 ? startMs : nil)
+        } else {
+            var path = paths[place] ?? NavigationPath()
+            path.append(Route.item(item))
+            paths[place] = path
+        }
+    }
+
     /// Opens or plays the title a link names (Top Shelf), from Home.
     private func followLink() async {
         guard let client = session.client, let userId = session.userId, let link = DeepLink.take() else { return }

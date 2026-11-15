@@ -18,10 +18,14 @@
 "Account" = "Akaun";
 "Activity" = "Aktiviti";
 "Add favourite" = "Tambah kegemaran";
+"Add titles to a playlist from their menu: hold Select on a title and choose Add to playlist." = "Tambah tajuk ke senarai main dari menunya: tahan pilih pada tajuk dan pilih Tambah ke senarai main.";
+"Add to playlist" = "Tambah ke senarai main";
+"Added to %@" = "Ditambah ke %@";
 "Addon" = "Addon";
 "Ads" = "Iklan";
 "All" = "Semua";
 "All channels" = "Semua saluran";
+"Already in %@" = "Sudah ada dalam %@";
 "Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "Juga apabila anda kembali selepas setengah jam. Sesiapa yang menonton boleh meneruskan tanpa PIN mereka.";
 "Always" = "Sentiasa";
 "Amber" = "Ambar";
@@ -65,6 +69,7 @@
 "Buffered" = "Penimbal";
 "Calendar" = "Kalendar";
 "Can't reach the server" = "Tidak dapat mencapai pelayan";
+"Cancel" = "Batal";
 "Card previews" = "Pratonton kad";
 "Cast" = "Pelakon";
 "Casual" = "Santai";
@@ -86,6 +91,7 @@
 "Continue watching" = "Teruskan menonton";
 "Continuing" = "Bersambung";
 "Countdown" = "Pemeriksaan/Masa Undur";
+"Create" = "Cipta";
 "Credits" = "Penghargaan";
 "Cursive" = "Kursif";
 "Cyan" = "Sian";
@@ -93,6 +99,8 @@
 "Decoder" = "Penyahkod";
 "Default" = "Lalai";
 "Delay: %@" = "Lengah masa: %@";
+"Delete playlist" = "Padam senarai main";
+"Delete this playlist?" = "Padam senarai main ini?";
 "Dialogue boost" = "Peningkatan Dialog";
 "Discover" = "Teroka";
 "Dismiss" = "Tutup";
@@ -168,6 +176,7 @@
 "Navy" = "Biru laut";
 "Near the end" = "Menjelang akhir";
 "Never" = "Tidak pernah";
+"New playlist" = "Senarai main baharu";
 "Next %@: %@" = "Seterusnya %@: %@";
 "Next episode" = "Episod seterusnya";
 "Next up" = "Seterusnya";
@@ -183,6 +192,7 @@
 "Nothing airs in the next two weeks." = "Tiada apa-apa bersiaran dalam dua minggu akan datang.";
 "Nothing here yet. Add catalogs to your configuration." = "Belum ada apa-apa lagi. Tambah katalog pada konfigurasi anda.";
 "Nothing in this library." = "Tiada apa-apa dalam pustaka ini.";
+"Nothing in this playlist yet." = "Belum ada apa-apa dalam senarai main ini.";
 "Nothing with %@ on this server." = "Tiada apa-apa dengan %@ pada pelayan ini.";
 "OK" = "OK";
 "Off" = "Mati";
@@ -214,6 +224,8 @@
 "Player" = "Pemain";
 "Player controls" = "Kawalan pemain";
 "Playing in %@s" = "Dimainkan dalam %@ saat";
+"Playlist" = "Senarai main";
+"Playlists" = "Senarai main";
 "Plum" = "Plum";
 "Poster size" = "Saiz poster";
 "Poster text" = "Teks poster";
@@ -235,6 +247,7 @@
 "Reminder" = "Peringatan";
 "Remove favourite" = "Keluarkan kegemaran";
 "Remove from continue watching" = "Keluarkan daripada teruskan menonton";
+"Remove from playlist" = "Keluarkan daripada senarai main";
 "Report a problem" = "Laporkan masalah";
 "Request failed (%@)" = "Permintaan gagal (%@)";
 "Reset" = "Tetap semula";
@@ -269,6 +282,7 @@
 "Show the controls on pause and skip" = "Papar kawalan semasa jeda dan langkau";
 "Show time left" = "Tunjuk masa baki";
 "Shows" = "Rancangan";
+"Shuffle" = "Rawak";
 "Sign in" = "Log masuk";
 "Signed in as" = "Log masuk sebagai";
 "Signed out. Sign in again." = "Telah log keluar. Log masuk semula.";
@@ -347,6 +361,7 @@
 "TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6." = "TrueHD Atmos dan DTS:X dimainkan dengan saluran ketinggiannya, dipaparkan untuk pembesar suara anda dan dihantar ke penerima sebagai Dolby MAT. Memerlukan tvOS 26. DTS:X memerlukan 7.1.4 atau 9.1.6.";
 "Try again" = "Cuba lagi";
 "Unwatched" = "Belum ditonton";
+"Up next" = "Seterusnya";
 "Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "Sehingga %@, dicampur bersama. Jika dibiarkan kosong, pustaka filem dan rancangan pertama anda akan dipaparkan sebagai pilihan.";
 "Upcoming" = "Akan Datang";
 "Update" = "Kemas kini";

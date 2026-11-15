@@ -29,6 +29,9 @@ struct Item: Decodable, Identifiable, Hashable {
     var type: String?
     var seriesName: String?
     var seriesId: String?
+    /// A playlist's count of titles, and a title's own place in a playlist.
+    var childCount: Int?
+    var playlistItemId: String?
     var seasonId: String?
     var indexNumber: Int?
     var parentIndexNumber: Int?

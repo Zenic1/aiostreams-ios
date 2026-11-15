@@ -189,7 +189,8 @@ struct VersionsView: View {
             chosen = match
             playSession = named.playSessionId ?? playSession
         }
-        play(PlayRequest(item: item, source: chosen, playSessionId: playSession, startMs: fromStart ? 0 : choice.startMs))
+        play(PlayRequest(item: item, source: chosen, playSessionId: playSession, startMs: fromStart ? 0 : choice.startMs,
+                         queue: choice.queue))
     }
 
     private func clock(_ ms: Double) -> String {

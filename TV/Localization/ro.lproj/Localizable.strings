@@ -18,10 +18,14 @@
 "Account" = "Cont";
 "Activity" = "Activitate";
 "Add favourite" = "Adaugă la favorite";
+"Add titles to a playlist from their menu: hold Select on a title and choose Add to playlist." = "Adaugă titluri într-un playlist din meniul lor: ține apăsat pe selectare pe un titlu și alege Adaugă în playlist.";
+"Add to playlist" = "Adaugă în lista de redare";
+"Added to %@" = "Adăugat în %@";
 "Addon" = "Addon";
 "Ads" = "Reclame";
 "All" = "Toate";
 "All channels" = "Toate canalele";
+"Already in %@" = "Deja în %@";
 "Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "La fel și când revii la el după o jumătate de oră. Cine se uita continuă fără PIN.";
 "Always" = "Întotdeauna";
 "Amber" = "Chihlimbar";
@@ -65,6 +69,7 @@
 "Buffered" = "În buffer";
 "Calendar" = "Calendar";
 "Can't reach the server" = "Nu se poate conecta la server";
+"Cancel" = "Anulează";
 "Card previews" = "Previzualizări carduri";
 "Cast" = "Distribuție";
 "Casual" = "Lejer";
@@ -86,6 +91,7 @@
 "Continue watching" = "Continuă vizionarea";
 "Continuing" = "În desfășurare";
 "Countdown" = "Numărătoare inversă";
+"Create" = "Creează";
 "Credits" = "Distribuție";
 "Cursive" = "Cursiv";
 "Cyan" = "Cyan";
@@ -93,6 +99,8 @@
 "Decoder" = "Decodor";
 "Default" = "Implicit";
 "Delay: %@" = "Întârziere: %@";
+"Delete playlist" = "Șterge lista de redare";
+"Delete this playlist?" = "Ștergi acest playlist?";
 "Dialogue boost" = "Amplificare dialog";
 "Discover" = "Descoperă";
 "Dismiss" = "Închide";
@@ -168,6 +176,7 @@
 "Navy" = "Bleumarin";
 "Near the end" = "Spre final";
 "Never" = "Niciodată";
+"New playlist" = "Listă de redare nouă";
 "Next %@: %@" = "Urmează %@: %@";
 "Next episode" = "Episodul următor";
 "Next up" = "Urmează";
@@ -183,6 +192,7 @@
 "Nothing airs in the next two weeks." = "Nimic nu se difuzează în următoarele două săptămâni.";
 "Nothing here yet. Add catalogs to your configuration." = "Încă nimic aici. Adaugă cataloage în configurația ta.";
 "Nothing in this library." = "Nimic în această bibliotecă.";
+"Nothing in this playlist yet." = "Încă nimic în acest playlist.";
 "Nothing with %@ on this server." = "Nimic cu %@ pe acest server.";
 "OK" = "OK";
 "Off" = "Oprit";
@@ -214,6 +224,8 @@
 "Player" = "Player";
 "Player controls" = "Comenzile playerului";
 "Playing in %@s" = "Pornește în %@ s";
+"Playlist" = "Listă de redare";
+"Playlists" = "Liste de redare";
 "Plum" = "Prună";
 "Poster size" = "Dimensiunea posterului";
 "Poster text" = "Textul posterului";
@@ -235,6 +247,7 @@
 "Reminder" = "Memento";
 "Remove favourite" = "Elimină din favorite";
 "Remove from continue watching" = "Elimină din Continuă vizionarea";
+"Remove from playlist" = "Elimină din lista de redare";
 "Report a problem" = "Raportează o problemă";
 "Request failed (%@)" = "Cererea a eșuat (%@)";
 "Reset" = "Resetează";
@@ -269,6 +282,7 @@
 "Show the controls on pause and skip" = "Afișează comenzile la pauză și sărire";
 "Show time left" = "Afișează timpul rămas";
 "Shows" = "Seriale";
+"Shuffle" = "Amestecă";
 "Sign in" = "Conectează-te";
 "Signed in as" = "Conectat ca";
 "Signed out. Sign in again." = "Deconectat. Conectează-te din nou.";
@@ -347,6 +361,7 @@
 "TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6." = "TrueHD Atmos și DTS:X se redau cu canalele de înălțime, randate pentru boxele tale și trimise receiverului ca Dolby MAT. Necesită tvOS 26. DTS:X necesită 7.1.4 sau 9.1.6.";
 "Try again" = "Încearcă din nou";
 "Unwatched" = "Nevăzut";
+"Up next" = "Urmează";
 "Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "Până la %@, amestecate. Lăsat gol, primele tale biblioteci de filme și seriale sunt recomandate.";
 "Upcoming" = "În curând";
 "Update" = "Actualizare";

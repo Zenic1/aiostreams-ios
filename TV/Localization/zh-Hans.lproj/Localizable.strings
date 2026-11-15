@@ -18,10 +18,14 @@
 "Account" = "账户";
 "Activity" = "活动";
 "Add favourite" = "添加收藏";
+"Add titles to a playlist from their menu: hold Select on a title and choose Add to playlist." = "从影片的菜单将其添加到播放列表：在影片上按住选择键并选择“添加到播放列表”。";
+"Add to playlist" = "添加到播放列表";
+"Added to %@" = "已添加到 %@";
 "Addon" = "插件";
 "Ads" = "广告";
 "All" = "全部";
 "All channels" = "所有频道";
+"Already in %@" = "已在 %@ 中";
 "Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "即使你在半小时后重新打开应用也会询问。继续观看的人无需输入 PIN 码。";
 "Always" = "始终";
 "Amber" = "琥珀";
@@ -65,6 +69,7 @@
 "Buffered" = "已缓冲";
 "Calendar" = "日历";
 "Can't reach the server" = "无法连接到服务器";
+"Cancel" = "取消";
 "Card previews" = "卡片预览";
 "Cast" = "投放";
 "Casual" = "休闲";
@@ -86,6 +91,7 @@
 "Continue watching" = "继续观看";
 "Continuing" = "连载中";
 "Countdown" = "倒计时";
+"Create" = "创建";
 "Credits" = "演职员表";
 "Cursive" = "手写体";
 "Cyan" = "青色";
@@ -93,6 +99,8 @@
 "Decoder" = "解码器";
 "Default" = "默认";
 "Delay: %@" = "延迟：%@";
+"Delete playlist" = "删除播放列表";
+"Delete this playlist?" = "删除此播放列表？";
 "Dialogue boost" = "对白增强";
 "Discover" = "发现";
 "Dismiss" = "关闭";
@@ -168,6 +176,7 @@
 "Navy" = "海军蓝";
 "Near the end" = "接近结尾时";
 "Never" = "从不";
+"New playlist" = "新建播放列表";
 "Next %@: %@" = "接下来 %@：%@";
 "Next episode" = "下一集";
 "Next up" = "接下来播放";
@@ -183,6 +192,7 @@
 "Nothing airs in the next two weeks." = "接下来两周没有播出内容。";
 "Nothing here yet. Add catalogs to your configuration." = "这里还没有内容。请在配置中添加目录。";
 "Nothing in this library." = "此媒体库中没有内容。";
+"Nothing in this playlist yet." = "此播放列表中还没有内容。";
 "Nothing with %@ on this server." = "此服务器上没有与 %@ 相关的内容。";
 "OK" = "好";
 "Off" = "关闭";
@@ -214,6 +224,8 @@
 "Player" = "播放器";
 "Player controls" = "播放器控制";
 "Playing in %@s" = "%@ 秒后播放";
+"Playlist" = "播放列表";
+"Playlists" = "播放列表";
 "Plum" = "梅紫";
 "Poster size" = "海报大小";
 "Poster text" = "海报文字";
@@ -235,6 +247,7 @@
 "Reminder" = "提醒";
 "Remove favourite" = "取消收藏";
 "Remove from continue watching" = "从「继续观看」中移除";
+"Remove from playlist" = "从播放列表中移除";
 "Report a problem" = "报告问题";
 "Request failed (%@)" = "请求失败（%@）";
 "Reset" = "重置";
@@ -269,6 +282,7 @@
 "Show the controls on pause and skip" = "暂停和快进/快退时显示控制栏";
 "Show time left" = "显示剩余时间";
 "Shows" = "剧集";
+"Shuffle" = "随机播放";
 "Sign in" = "登录";
 "Signed in as" = "登录身份";
 "Signed out. Sign in again." = "已退出登录。请重新登录。";
@@ -347,6 +361,7 @@
 "TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6." = "TrueHD Atmos 和 DTS:X 会连同高度声道一起播放，按你的扬声器渲染后以 Dolby MAT 发送到你的功放。需要 tvOS 26。DTS:X 需要 7.1.4 或 9.1.6。";
 "Try again" = "重试";
 "Unwatched" = "未观看";
+"Up next" = "接下来播放";
 "Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "最多 %@ 个，混合展示。留空时展示你的第一个电影和剧集媒体库。";
 "Upcoming" = "即将播出";
 "Update" = "更新";

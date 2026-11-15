@@ -18,10 +18,14 @@
 "Account" = "Hesap";
 "Activity" = "Faaliyet";
 "Add favourite" = "Favori ekle";
+"Add titles to a playlist from their menu: hold Select on a title and choose Add to playlist." = "Menülerinden oynatma listesine içerik ekle: bir içerikte seçme tuşunu basılı tut ve Oynatma listesine ekle'yi seç.";
+"Add to playlist" = "Oynatma listesine ekle";
+"Added to %@" = "%@ öğesine eklendi";
 "Addon" = "Eklenti";
 "Ads" = "Reklamlar";
 "All" = "Hepsi";
 "All channels" = "Tüm kanallar";
+"Already in %@" = "Zaten %@ içinde";
 "Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "Yarım saat sonra uygulamaya döndüğünde de sorulur. İzleyen kişi PIN girmeden devam eder.";
 "Always" = "Her zaman";
 "Amber" = "Kehribar";
@@ -65,6 +69,7 @@
 "Buffered" = "Arabellek";
 "Calendar" = "Takvim";
 "Can't reach the server" = "Sunucuya ulaşılamıyor";
+"Cancel" = "İptal et";
 "Card previews" = "Kart önizlemeleri";
 "Cast" = "Oyuncular";
 "Casual" = "Normal";
@@ -86,6 +91,7 @@
 "Continue watching" = "İzlemeye devam et";
 "Continuing" = "Devam ediyor";
 "Countdown" = "Geri sayım";
+"Create" = "Oluştur";
 "Credits" = "Emeği geçenler";
 "Cursive" = "El yazısı";
 "Cyan" = "Camgöbeği";
@@ -93,6 +99,8 @@
 "Decoder" = "Kod çözücü";
 "Default" = "Varsayılan";
 "Delay: %@" = "Gecikme: %@";
+"Delete playlist" = "Oynatma listesini sil";
+"Delete this playlist?" = "Bu oynatma listesi silinsin mi?";
 "Dialogue boost" = "Diyalogları güçlendir";
 "Discover" = "Keşfet";
 "Dismiss" = "Kapat";
@@ -168,6 +176,7 @@
 "Navy" = "Lacivert";
 "Near the end" = "Sona doğru";
 "Never" = "Asla";
+"New playlist" = "Yeni oynatma listesi";
 "Next %@: %@" = "Sonra %@: %@";
 "Next episode" = "Sonraki bölüm";
 "Next up" = "Sıradaki";
@@ -183,6 +192,7 @@
 "Nothing airs in the next two weeks." = "Önümüzdeki iki haftada yayınlanacak bir şey yok.";
 "Nothing here yet. Add catalogs to your configuration." = "Henüz burada bir şey yok. Yapılandırmana katalog ekle.";
 "Nothing in this library." = "Bu kütüphanede hiçbir şey yok.";
+"Nothing in this playlist yet." = "Bu oynatma listesinde henüz bir şey yok.";
 "Nothing with %@ on this server." = "Bu sunucuda %@ ile ilgili hiçbir şey yok.";
 "OK" = "Tamam";
 "Off" = "Kapalı";
@@ -214,6 +224,8 @@
 "Player" = "Oynatıcı";
 "Player controls" = "Oynatıcı kontrolleri";
 "Playing in %@s" = "%@ sn içinde oynatılacak";
+"Playlist" = "Oynatma listesi";
+"Playlists" = "Oynatma listeleri";
 "Plum" = "Erik";
 "Poster size" = "Afiş boyutu";
 "Poster text" = "Afiş metni";
@@ -235,6 +247,7 @@
 "Reminder" = "Hatırlatıcı";
 "Remove favourite" = "Favorilerden kaldır";
 "Remove from continue watching" = "İzlemeye devam et listesinden kaldır";
+"Remove from playlist" = "Oynatma listesinden kaldır";
 "Report a problem" = "Sorun bildir";
 "Request failed (%@)" = "İstek başarısız (%@)";
 "Reset" = "Sıfırla";
@@ -269,6 +282,7 @@
 "Show the controls on pause and skip" = "Duraklatma ve atlamada kontrolleri göster";
 "Show time left" = "Kalan süreyi göster";
 "Shows" = "Diziler";
+"Shuffle" = "Karıştır";
 "Sign in" = "Oturum aç";
 "Signed in as" = "Giriş yapan";
 "Signed out. Sign in again." = "Oturum kapandı. Tekrar giriş yap.";
@@ -347,6 +361,7 @@
 "TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6." = "TrueHD Atmos ve DTS:X, yükseklik kanallarıyla oynatılır, hoparlörlerin için işlenir ve alıcına Dolby MAT olarak gönderilir. tvOS 26 gerekir. DTS:X için 7.1.4 veya 9.1.6 gerekir.";
 "Try again" = "Yeniden dene";
 "Unwatched" = "İzlenmedi";
+"Up next" = "Sıradaki";
 "Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "En fazla %@, karışık. Boş bırakılırsa ilk film ve dizi kütüphanelerin öne çıkarılır.";
 "Upcoming" = "Yakında";
 "Update" = "Güncelleme";

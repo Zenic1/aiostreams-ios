@@ -283,6 +283,11 @@ final class PlayerModel: ObservableObject {
         let marked: SegmentsResult? = try? await client.get("/MediaSegments/\(item.id)", ["userId": userId])
         serverSegments = (marked?.items ?? []).filter { $0.end > $0.start }
         combineSegments()
+        // From a playlist, its next title plays on, in place of a show's next episode.
+        if let next = request.queue.first(where: { $0.playable && $0.locationType != "Virtual" }) {
+            nextEpisode = next
+            return
+        }
         // The episode after this one, as the web app finds it; one not yet out isn't offered.
         guard item.isEpisode, let series = item.seriesId else { return }
         let around: ItemsResult? = try? await client.get("/Shows/\(series)/Episodes", ["userId": userId, "AdjacentTo": item.id])
@@ -593,6 +598,22 @@ final class PlayerModel: ObservableObject {
                                   client: client, userId: userId)
         }
         report("/Sessions/Playing/Progress", event: "AudioTrackChange")
+    }
+
+    /// A track named by the server's stream index, as a remote names it: the file's own streams by
+    /// their index, the server's subtitle files by their place among them; below zero, no subtitles.
+    func selectServerTrack(audio: Bool, index: Int) {
+        if audio {
+            if audioTracks.contains(where: { $0.id == index }) { selectAudio(index) }
+            return
+        }
+        guard index >= 0 else { return selectSubtitle(nil) }
+        let streams = request.source.mediaStreams ?? []
+        if let stream = streams.first(where: { $0.index == index }), stream.isExternal == true {
+            if let at = serverStreams().firstIndex(of: stream) { selectSubtitle(AetherEngine.externalSubtitleTrackIDBase + at) }
+        } else if subtitleTracks.contains(where: { $0.id == index }) {
+            selectSubtitle(index)
+        }
     }
 
     func selectSubtitle(_ id: Int?) {

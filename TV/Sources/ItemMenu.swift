@@ -36,7 +36,9 @@ struct ItemMenu: ViewModifier {
     @EnvironmentObject private var prefs: Preferences
     @Environment(\.playItem) private var play
     @Environment(\.openRoute) private var openRoute
+    @Environment(\.removeFromPlaylist) private var removeFromPlaylist
     let item: Item
+    @State private var adding = false
     /// On the title's own page, where Open would lead nowhere.
     var onPage = false
 
@@ -128,6 +130,19 @@ struct ItemMenu: ViewModifier {
                     Label(favourite ? L("Remove favourite") : L("Add favourite"), systemImage: favourite ? "heart.slash" : "heart")
                 }
             }
+            if item.playable || item.isSeries {
+                Button { adding = true } label: { Label(L("Add to playlist"), systemImage: "text.badge.plus") }
+            }
+            if let removeFromPlaylist {
+                Button(role: .destructive) { removeFromPlaylist(item) } label: {
+                    Label(L("Remove from playlist"), systemImage: "minus.circle")
+                }
+            }
+        }
+        .fullScreenCover(isPresented: $adding) {
+            AddToPlaylist(item: item) { adding = false }
+                .environmentObject(session)
+                .presentationBackground(.clear)
         }
     }
 

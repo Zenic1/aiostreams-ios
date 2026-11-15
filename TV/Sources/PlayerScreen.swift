@@ -109,7 +109,9 @@ struct PlayerScreen: View {
         LastVersions.set(next.id, chosen)
         current.stop()
         let startMs = next.userData?.played == true ? nil : next.resumeMs
-        await start(PlayRequest(item: next, source: chosen, playSessionId: playSession, startMs: startMs))
+        // From a playlist, the rest of it carries on after.
+        let rest = Array(current.request.queue.drop { $0.id != next.id }.dropFirst())
+        await start(PlayRequest(item: next, source: chosen, playSessionId: playSession, startMs: startMs, queue: rest))
     }
 
     private func finish() {
@@ -403,6 +405,9 @@ private struct PlayerChrome: View {
             else { close() }
         }
         .onAppear { focus = .play; wake() }
+        // Another device's remote: the player takes what plays here, the pages the rest.
+        .onAppear { ServerEvents.shared.playerHandler = remote }
+        .onDisappear { ServerEvents.shared.playerHandler = nil }
         .onChange(of: focus) { _, _ in if shown { wake() } }
         // The subtitles rise over the controls while they show, and settle back as they hide.
         .onChange(of: shown) { _, shown in model.liftSubtitles(shown ? liftShare : 0) }
@@ -761,6 +766,34 @@ private struct PlayerChrome: View {
          "Commercial": L("Skipped ad")][type] ?? L("Skipped")
     }
 
+    /// What another device's remote sends while the player is up; a new title closes it for the
+    /// pages to play.
+    private func remote(_ command: RemoteCommand) -> Bool {
+        switch command {
+        case .key(let key):
+            switch key {
+            case .pause: if !model.paused { model.togglePause() }
+            case .play: if model.paused { model.togglePause() }
+            case .toggle: model.togglePause()
+            case .stop: close(); return true
+            case .next: if model.nextEpisode != nil { playOn(auto: false) }
+            case .previous: model.seek(to: 0)
+            case .seek(let ms): model.seek(to: ms / 1000)
+            case .skip(let ms): model.skip(ms / 1000)
+            }
+            wake()
+            return true
+        case .track(let audio, let index):
+            model.selectServerTrack(audio: audio, index: index)
+            return true
+        case .play:
+            close()
+            return false
+        case .show:
+            return false
+        }
+    }
+
     /// Moves on to the next episode; by itself, after a run of them, it asks first.
     private func playOn(auto: Bool) {
         guard !playingOn else { return }
@@ -788,7 +821,7 @@ private struct PlayerChrome: View {
                     .clipShape(RoundedRectangle(cornerRadius: Theme.px(8), style: .continuous))
             }
             VStack(alignment: .leading, spacing: Theme.px(6)) {
-                Text(L("Next episode")).font(Theme.font(Theme.xs, .medium)).foregroundStyle(Theme.gray400)
+                Text(model.request.queue.isEmpty ? L("Next episode") : L("Up next")).font(Theme.font(Theme.xs, .medium)).foregroundStyle(Theme.gray400)
                 Text(next.displayTitle).font(Theme.font(Theme.base, .semibold)).lineLimit(1)
                 Button { playOn(auto: false) } label: {
                     Label(counting ? L("Playing in %@s", "\(max(1, Int(countdownLeft.rounded(.up))))") : L("Play next"),

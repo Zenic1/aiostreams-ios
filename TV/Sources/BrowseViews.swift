@@ -5,6 +5,7 @@ enum Route: Hashable {
     case item(Item)
     case library(Item)
     case person(Person)
+    case playlist(Item)
 }
 
 extension View {
@@ -15,6 +16,7 @@ extension View {
                 case .item(let item): DetailView(item: item)
                 case .library(let view): LibraryView(view: view)
                 case .person(let person): PersonView(person: person)
+                case .playlist(let playlist): PlaylistView(playlist: playlist)
                 }
             }
             .toolbar(.hidden, for: .navigationBar)

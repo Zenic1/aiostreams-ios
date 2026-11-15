@@ -11,6 +11,8 @@ struct VersionChoice: Identifiable {
     let item: Item
     let startMs: Double?
     var mode: PlayMode = .usual
+    /// What plays on after it, from a playlist, in place of a show's next episode.
+    var queue: [Item] = []
 }
 
 /// The version each title last played in, kept on this device, which resuming goes back to.
@@ -166,7 +168,7 @@ struct PlayFlow: ViewModifier {
             playSession = named.playSessionId ?? playSession
         }
         LastVersions.set(choice.item.id, chosen)
-        playing = PlayRequest(item: choice.item, source: chosen, playSessionId: playSession, startMs: choice.startMs)
+        playing = PlayRequest(item: choice.item, source: chosen, playSessionId: playSession, startMs: choice.startMs, queue: choice.queue)
     }
 }
 
@@ -209,6 +211,8 @@ struct PlayRequest: Identifiable {
     let startMs: Double?
     /// A title's trailer: played without telling the server, so the title's own progress is left alone.
     var isTrailer = false
+    /// What plays on after it, from a playlist, in place of a show's next episode.
+    var queue: [Item] = []
     /// Audio languages in place of the account's, as a trailer's own language stands in for Original.
     var audioLanguages: [String]?
 }

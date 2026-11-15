@@ -18,10 +18,14 @@
 "Account" = "Konto";
 "Activity" = "Aktywność";
 "Add favourite" = "Dodaj do ulubionych";
+"Add titles to a playlist from their menu: hold Select on a title and choose Add to playlist." = "Dodawaj tytuły do playlisty z ich menu: przytrzymaj wybór na tytule i wybierz Dodaj do playlisty.";
+"Add to playlist" = "Dodaj do playlisty";
+"Added to %@" = "Dodano do %@";
 "Addon" = "Addon";
 "Ads" = "Reklamy";
 "All" = "Wszystko";
 "All channels" = "Wszystkie kanały";
+"Already in %@" = "Znajduje się już w %@";
 "Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "Również po powrocie do niej po pół godzinie. Osoba, która oglądała, kontynuuje bez podawania kodu PIN.";
 "Always" = "Zawsze";
 "Amber" = "Bursztynowy";
@@ -65,6 +69,7 @@
 "Buffered" = "Bufor";
 "Calendar" = "Kalendarz";
 "Can't reach the server" = "Serwer nieosiągalny";
+"Cancel" = "Anuluj";
 "Card previews" = "Podglądy kart";
 "Cast" = "Obsada";
 "Casual" = "Casual";
@@ -86,6 +91,7 @@
 "Continue watching" = "Kontynuuj oglądanie";
 "Continuing" = "Trwa";
 "Countdown" = "Odliczanie";
+"Create" = "Utwórz";
 "Credits" = "Twórcy";
 "Cursive" = "Kursywa";
 "Cyan" = "Cyjan";
@@ -93,6 +99,8 @@
 "Decoder" = "Dekoder";
 "Default" = "Domyślny";
 "Delay: %@" = "Opóźnienie: %@";
+"Delete playlist" = "Usuń playlistę";
+"Delete this playlist?" = "Usunąć tę playlistę?";
 "Dialogue boost" = "Wzmocnienie dialogów";
 "Discover" = "Odkrywaj";
 "Dismiss" = "Odrzuć";
@@ -168,6 +176,7 @@
 "Navy" = "Granatowy";
 "Near the end" = "Pod koniec";
 "Never" = "Nigdy";
+"New playlist" = "Nowa playlista";
 "Next %@: %@" = "Następnie %@: %@";
 "Next episode" = "Następny odcinek";
 "Next up" = "Następne";
@@ -183,6 +192,7 @@
 "Nothing airs in the next two weeks." = "W ciągu najbliższych dwóch tygodni nic nie jest emitowane.";
 "Nothing here yet. Add catalogs to your configuration." = "Jeszcze nic tu nie ma. Dodaj katalogi do swojej konfiguracji.";
 "Nothing in this library." = "Nic nie ma w tej bibliotece.";
+"Nothing in this playlist yet." = "Ta playlista jest jeszcze pusta.";
 "Nothing with %@ on this server." = "Nic z udziałem %@ na tym serwerze.";
 "OK" = "OK";
 "Off" = "Wył.";
@@ -214,6 +224,8 @@
 "Player" = "Odtwarzacz";
 "Player controls" = "Sterowanie odtwarzaczem";
 "Playing in %@s" = "Odtwarzanie za %@ s";
+"Playlist" = "Playlista";
+"Playlists" = "Playlisty";
 "Plum" = "Śliwkowy";
 "Poster size" = "Rozmiar plakatów";
 "Poster text" = "Tekst pod plakatem";
@@ -235,6 +247,7 @@
 "Reminder" = "Przypomnienie";
 "Remove favourite" = "Usuń z ulubionych";
 "Remove from continue watching" = "Usuń z „Kontynuuj oglądanie”";
+"Remove from playlist" = "Usuń z playlisty";
 "Report a problem" = "Zgłoś problem";
 "Request failed (%@)" = "Żądanie nie powiodło się (%@)";
 "Reset" = "Zresetuj";
@@ -269,6 +282,7 @@
 "Show the controls on pause and skip" = "Wyświetlaj elementy sterujące przy wstrzymaniu i przewinięciu";
 "Show time left" = "Pokazuj pozostały czas";
 "Shows" = "Seriale";
+"Shuffle" = "Odtwarzaj losowo";
 "Sign in" = "Zaloguj się";
 "Signed in as" = "Zalogowano jako";
 "Signed out. Sign in again." = "Wylogowano. Zaloguj się ponownie.";
@@ -347,6 +361,7 @@
 "TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6." = "TrueHD Atmos i DTS:X są odtwarzane z kanałami wysokości, renderowane dla Twoich głośników i wysyłane do amplitunera jako Dolby MAT. Wymaga tvOS 26. DTS:X wymaga 7.1.4 lub 9.1.6.";
 "Try again" = "Spróbuj ponownie";
 "Unwatched" = "Nieobejrzane";
+"Up next" = "Kolejne";
 "Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "Maksymalnie %@, wymieszane ze sobą. Jeśli pozostawisz to pole puste, wyróżnione zostaną Twoje pierwsze biblioteki filmów i seriali.";
 "Upcoming" = "Nadchodzące";
 "Update" = "Aktualizacja";

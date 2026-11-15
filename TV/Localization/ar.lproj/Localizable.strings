@@ -18,10 +18,14 @@
 "Account" = "الحساب";
 "Activity" = "النشاط";
 "Add favourite" = "إضافة إلى المفضلة";
+"Add titles to a playlist from their menu: hold Select on a title and choose Add to playlist." = "أضف عناوين إلى قائمة تشغيل من قائمتها: اضغط مطولًا على زر التحديد في عنوان واختر «إضافة إلى قائمة التشغيل».";
+"Add to playlist" = "إضافة إلى قائمة التشغيل";
+"Added to %@" = "تمت الإضافة إلى %@";
 "Addon" = "إضافة";
 "Ads" = "الإعلانات";
 "All" = "الكل";
 "All channels" = "كل القنوات";
+"Already in %@" = "موجود بالفعل في %@";
 "Also when you come back to it after half an hour. Whoever was watching carries on without their PIN." = "وأيضًا عند العودة إليه بعد نصف ساعة. يتابع من كان يشاهد دون رقمه السري.";
 "Always" = "دائمًا";
 "Amber" = "كهرماني";
@@ -65,6 +69,7 @@
 "Buffered" = "المخزّن مؤقتًا";
 "Calendar" = "التقويم";
 "Can't reach the server" = "تعذّر الوصول إلى الخادم";
+"Cancel" = "إلغاء";
 "Card previews" = "معاينات البطاقات";
 "Cast" = "طاقم التمثيل";
 "Casual" = "عادي";
@@ -86,6 +91,7 @@
 "Continue watching" = "متابعة المشاهدة";
 "Continuing" = "مستمر";
 "Countdown" = "العد التنازلي";
+"Create" = "إنشاء";
 "Credits" = "الشكر والتقدير";
 "Cursive" = "خط يدوي";
 "Cyan" = "سماوي";
@@ -93,6 +99,8 @@
 "Decoder" = "فك الترميز";
 "Default" = "افتراضي";
 "Delay: %@" = "التأخير: %@";
+"Delete playlist" = "حذف قائمة التشغيل";
+"Delete this playlist?" = "حذف قائمة التشغيل هذه؟";
 "Dialogue boost" = "تعزيز الحوار";
 "Discover" = "استكشاف";
 "Dismiss" = "تجاهل";
@@ -168,6 +176,7 @@
 "Navy" = "كحلي";
 "Near the end" = "قرب النهاية";
 "Never" = "أبدًا";
+"New playlist" = "قائمة تشغيل جديدة";
 "Next %@: %@" = "التالي %@: %@";
 "Next episode" = "الحلقة التالية";
 "Next up" = "التالي";
@@ -183,6 +192,7 @@
 "Nothing airs in the next two weeks." = "لا يُعرض شيء في الأسبوعين القادمين.";
 "Nothing here yet. Add catalogs to your configuration." = "لا شيء هنا بعد. أضف كتالوجات إلى إعداداتك.";
 "Nothing in this library." = "لا شيء في هذه المكتبة.";
+"Nothing in this playlist yet." = "لا شيء في قائمة التشغيل هذه بعد.";
 "Nothing with %@ on this server." = "لا شيء مع %@ على هذا الخادم.";
 "OK" = "موافق";
 "Off" = "متوقف";
@@ -214,6 +224,8 @@
 "Player" = "المشغّل";
 "Player controls" = "عناصر تحكم المشغّل";
 "Playing in %@s" = "التشغيل خلال %@ ث";
+"Playlist" = "قائمة التشغيل";
+"Playlists" = "قوائم التشغيل";
 "Plum" = "برقوقي";
 "Poster size" = "حجم الملصق";
 "Poster text" = "نص الملصق";
@@ -235,6 +247,7 @@
 "Reminder" = "تذكير";
 "Remove favourite" = "إزالة من المفضلة";
 "Remove from continue watching" = "إزالة من متابعة المشاهدة";
+"Remove from playlist" = "إزالة من قائمة التشغيل";
 "Report a problem" = "الإبلاغ عن مشكلة";
 "Request failed (%@)" = "فشل الطلب (%@)";
 "Reset" = "إعادة ضبط";
@@ -269,6 +282,7 @@
 "Show the controls on pause and skip" = "إظهار عناصر التحكم عند الإيقاف المؤقت والتخطي";
 "Show time left" = "إظهار الوقت المتبقي";
 "Shows" = "المسلسلات";
+"Shuffle" = "تشغيل عشوائي";
 "Sign in" = "تسجيل الدخول";
 "Signed in as" = "مسجّل الدخول باسم";
 "Signed out. Sign in again." = "تم تسجيل الخروج. سجّل الدخول مجددًا.";
@@ -347,6 +361,7 @@
 "TrueHD Atmos and DTS:X play with their height channels, rendered for your speakers and sent to your receiver as Dolby MAT. Needs tvOS 26. DTS:X needs 7.1.4 or 9.1.6." = "يُشغَّل TrueHD Atmos وDTS:X مع قنوات الارتفاع، مُعالجةً لسماعاتك ومُرسلةً إلى جهاز الاستقبال بصيغة Dolby MAT. يتطلب tvOS 26. ويتطلب DTS:X نظام 7.1.4 أو 9.1.6.";
 "Try again" = "حاول مرة أخرى";
 "Unwatched" = "غير مشاهد";
+"Up next" = "التالي";
 "Up to %@, mixed together. Left empty, your first movie and show libraries are featured." = "حتى %@، مختلطة معًا. وعند تركه فارغًا، تُعرض أولى مكتباتك للأفلام والمسلسلات.";
 "Upcoming" = "القادمة";
 "Update" = "تحديث";
