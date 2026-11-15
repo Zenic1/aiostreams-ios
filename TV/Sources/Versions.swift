@@ -158,7 +158,8 @@ struct VersionsView: View {
         error = nil
         if refresh { info = nil }
         do {
-            var result = try await client.playbackInfo(userId: userId, itemId: item.id, refresh: refresh)
+            var result = try await (refresh ? nil : VersionSearches.take(item.id))?.value
+                ?? client.playbackInfo(userId: userId, itemId: item.id, refresh: refresh)
             // Versions only the app's own player could open from YouTube aren't offered here.
             result.mediaSources = result.mediaSources?.filter { $0.aiostreams?.ytId == nil }
             info = result
@@ -280,5 +281,24 @@ private struct SegmentStyle: ButtonStyle {
                 .background(Capsule().fill(selected ? Color.white : (focused ? Color.white.opacity(0.12) : Color.clear)))
                 .focusRing(focused)
         }
+    }
+}
+
+/// Version searches started before Play (Find versions when a title opens), which the version list
+/// takes up rather than searching again; a search older than a few minutes is left to go stale.
+@MainActor
+enum VersionSearches {
+    private static var started: [String: (at: Date, search: Task<PlaybackInfo, Error>)] = [:]
+    private static let fresh: TimeInterval = 180
+
+    static func start(_ itemId: String, client: JellyfinClient, userId: String) {
+        if let existing = started[itemId], Date().timeIntervalSince(existing.at) < fresh { return }
+        started = started.filter { Date().timeIntervalSince($0.value.at) < fresh }
+        started[itemId] = (Date(), Task { try await client.playbackInfo(userId: userId, itemId: itemId) })
+    }
+
+    static func take(_ itemId: String) -> Task<PlaybackInfo, Error>? {
+        guard let entry = started.removeValue(forKey: itemId), Date().timeIntervalSince(entry.at) < fresh else { return nil }
+        return entry.search
     }
 }

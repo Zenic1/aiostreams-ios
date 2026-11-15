@@ -7,11 +7,14 @@ import UIKit
 /// runs alongside SwiftUI's own recognizers rather than waiting on them. `begin` returns whether
 /// to take this hold.
 struct PressHold: UIViewRepresentable {
+    /// The buttons it watches: left and right report -1 and 1, Select 0.
+    var presses: [UIPress.PressType] = [.leftArrow, .rightArrow]
     var begin: (_ direction: Int) -> Bool
     var end: () -> Void
 
     func makeUIView(context: Context) -> Catcher {
         let view = Catcher()
+        view.presses = presses
         view.isUserInteractionEnabled = false
         return view
     }
@@ -28,13 +31,14 @@ struct PressHold: UIViewRepresentable {
     final class Catcher: UIView, UIGestureRecognizerDelegate {
         var begin: (Int) -> Bool = { _ in false }
         var end: () -> Void = {}
+        var presses: [UIPress.PressType] = [.leftArrow, .rightArrow]
         private var watcher: Watcher?
 
         override func willMove(toWindow newWindow: UIWindow?) {
             super.willMove(toWindow: newWindow)
             detach()
             guard let newWindow else { return }
-            let watcher = Watcher()
+            let watcher = Watcher(presses: presses)
             watcher.delegate = self
             watcher.began = { [weak self] direction in self?.begin(direction) ?? false }
             watcher.ended = { [weak self] in self?.end() }
@@ -53,7 +57,7 @@ struct PressHold: UIViewRepresentable {
                                shouldRecognizeSimultaneouslyWith other: UIGestureRecognizer) -> Bool { true }
 
         func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive press: UIPress) -> Bool {
-            press.type == .leftArrow || press.type == .rightArrow
+            presses.contains(press.type)
         }
     }
 
@@ -65,22 +69,27 @@ struct PressHold: UIViewRepresentable {
         private var timer: Timer?
         private var holding = false
         private var direction = 0
+        private var presses: [UIPress.PressType] = [.leftArrow, .rightArrow]
 
         override init(target: Any?, action: Selector?) {
             super.init(target: target, action: action)
-            allowedPressTypes = [UIPress.PressType.leftArrow, .rightArrow].map { NSNumber(value: $0.rawValue) }
+            allowedPressTypes = presses.map { NSNumber(value: $0.rawValue) }
             allowedTouchTypes = []
             cancelsTouchesInView = false
             delaysTouchesBegan = false
             delaysTouchesEnded = false
         }
 
-        convenience init() { self.init(target: nil, action: nil) }
+        convenience init(presses: [UIPress.PressType]) {
+            self.init(target: nil, action: nil)
+            self.presses = presses
+            allowedPressTypes = presses.map { NSNumber(value: $0.rawValue) }
+        }
 
         override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent) {
-            guard let press = presses.first(where: { $0.type == .leftArrow || $0.type == .rightArrow }) else { return }
+            guard let press = presses.first(where: { self.presses.contains($0.type) }) else { return }
             stop()
-            direction = press.type == .leftArrow ? -1 : 1
+            direction = press.type == .leftArrow ? -1 : press.type == .rightArrow ? 1 : 0
             timer = Timer.scheduledTimer(withTimeInterval: 0.45, repeats: false) { [weak self] _ in
                 guard let self else { return }
                 self.holding = self.began(self.direction)

@@ -5,6 +5,7 @@
 "%@ left" = "%@ kaldı";
 "%@h %@m" = "%1$@sa %2$@dk";
 "%@m" = "%@dk";
+"%@×" = "x%@";
 "+%@ dB" = "+%@ dB";
 "+%@ ms" = "+%@ ms";
 "12-hour" = "12 saat";
@@ -52,11 +53,13 @@
 "Background colour" = "Arka plan rengi";
 "Background from artwork" = "Görselden arka plan";
 "Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "Sıfırın altı, görüntüye göre geciken kablosuz kulaklıklar için sesi daha erken çalar.";
+"Bitrate" = "Bit hızı";
 "Black" = "Siyah";
 "Blue" = "Mavi";
 "Blur episodes you haven't started" = "Başlamadığın bölümleri bulanıklaştır";
 "Bold" = "Kalın";
 "Born %@" = "%@ tarihinde doğdu";
+"Buffered" = "Arabellek";
 "Calendar" = "Takvim";
 "Can't reach the server" = "Sunucuya ulaşılamıyor";
 "Card previews" = "Kart önizlemeleri";
@@ -84,6 +87,7 @@
 "Cursive" = "El yazısı";
 "Cyan" = "Camgöbeği";
 "Date added" = "Eklenme tarihi";
+"Decoder" = "Kod çözücü";
 "Default" = "Varsayılan";
 "Delay: %@" = "Gecikme: %@";
 "Dialogue boost" = "Diyalogları güçlendir";
@@ -97,6 +101,7 @@
 "Faint" = "Hafif";
 "Favourites" = "Favoriler";
 "Featured on home" = "Ana sayfada öne çıkanlar";
+"Find versions when a title opens" = "Bir başlık açıldığında sürümleri bul";
 "Finding a version of %@…" = "%@ için sürüm aranıyor…";
 "Finding versions" = "Sürümler aranıyor";
 "Follows the selected card" = "Seçili kartı takip eder";
@@ -105,6 +110,7 @@
 "Forced" = "Zorunlu";
 "Forced, for foreign parts only" = "Zorunlu, yalnızca yabancı dildeki kısımlar";
 "Forest" = "Orman";
+"Format" = "Biçim";
 "From the start" = "Baştan";
 "Full" = "Tam";
 "Go to show" = "Diziye git";
@@ -112,10 +118,12 @@
 "Guide" = "Yayın akışı";
 "Half" = "Yarı";
 "Height" = "Yükseklik";
+"Held speed" = "Basılı tutma hızı";
 "Hero" = "Vitrin";
 "Hero turns every" = "Vitrin şu aralıkla değişir:";
 "High" = "Yüksek";
 "Home" = "Ana sayfa";
+"How fast playback runs while you hold Select on the video." = "Videoda seçme tuşunu basılı tutarken oynatmanın hızı.";
 "Huge" = "Kocaman";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "Kullanıcının PIN'i varsa şifreden sonra / ile ekle, örneğin password/1234.";
 "In progress" = "Devam eden";
@@ -134,6 +142,7 @@
 "List only my languages" = "Yalnızca dillerimi listele";
 "Live" = "Canlı";
 "Live TV" = "Canlı TV";
+"Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it." = "Oynat ve sürüm listesi beklemesin diye bir başlığın sayfası açılır açılmaz sürümleri arar. Oynatmasanız bile açtığınız her başlık aranır.";
 "Lowest" = "En alt";
 "Main" = "Ana";
 "Mark unwatched" = "İzlenmedi olarak işaretle";
@@ -225,6 +234,7 @@
 "Resume %@" = "%@ devam et";
 "Resume from %@" = "%@ konumundan devam et";
 "Rotates through featured titles" = "Öne çıkan içerikleri sırayla gösterir";
+"Route" = "Yol";
 "Runtime" = "Süre";
 "SDH, with sounds described" = "SDH, sesleri betimleyen altyazı";
 "Sans serif" = "Serifsiz";
@@ -235,6 +245,7 @@
 "Season" = "Sezon";
 "Season %@" = "%@. sezon";
 "See all" = "Tümünü gör";
+"Seek bar previews" = "İlerleme çubuğu önizlemeleri";
 "Serif" = "Serifli";
 "Server" = "Sunucu";
 "Server address" = "Sunucu adresi";

@@ -5,6 +5,7 @@
 "%@ left" = "%@ restants";
 "%@h %@m" = "%1$@h %2$@m";
 "%@m" = "%@m";
+"%@×" = "%@×";
 "+%@ dB" = "+%@ dB";
 "+%@ ms" = "+%@ ms";
 "12-hour" = "12 heures";
@@ -52,11 +53,13 @@
 "Background colour" = "Couleur de l'arrière-plan";
 "Background from artwork" = "Arrière-plan à partir de l'illustration";
 "Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "Une valeur inférieure à zéro avance le son, utile pour les casques sans fil en décalage avec l'image.";
+"Bitrate" = "Débit";
 "Black" = "Noir";
 "Blue" = "Bleu";
 "Blur episodes you haven't started" = "Masquer les épisodes que vous n'avez pas commencés";
 "Bold" = "Gras";
 "Born %@" = "Né(e) le %@";
+"Buffered" = "En mémoire tampon";
 "Calendar" = "Calendrier";
 "Can't reach the server" = "Impossible de joindre le serveur";
 "Card previews" = "Aperçus des cartes";
@@ -84,6 +87,7 @@
 "Cursive" = "Cursive";
 "Cyan" = "Cyan";
 "Date added" = "Date d'ajout";
+"Decoder" = "Décodeur";
 "Default" = "Par défaut";
 "Delay: %@" = "Délai : %@";
 "Dialogue boost" = "Amplification des dialogues";
@@ -97,6 +101,7 @@
 "Faint" = "Léger";
 "Favourites" = "Favoris";
 "Featured on home" = "À la une sur l'accueil";
+"Find versions when a title opens" = "Trouver des versions quand un titre s'ouvre";
 "Finding a version of %@…" = "Recherche d'une version de %@…";
 "Finding versions" = "Recherche des versions";
 "Follows the selected card" = "Suit la carte sélectionnée";
@@ -105,6 +110,7 @@
 "Forced" = "Forcés";
 "Forced, for foreign parts only" = "Forcés, uniquement pour les passages en langue étrangère";
 "Forest" = "Forêt";
+"Format" = "Format";
 "From the start" = "Depuis le début";
 "Full" = "Complet";
 "Go to show" = "Aller à la série";
@@ -112,10 +118,12 @@
 "Guide" = "Guide";
 "Half" = "Moitié";
 "Height" = "Hauteur";
+"Held speed" = "Vitesse maintenue";
 "Hero" = "Bannière à la une";
 "Hero turns every" = "La bannière change toutes les";
 "High" = "Haut";
 "Home" = "Accueil";
+"How fast playback runs while you hold Select on the video." = "La vitesse de lecture tant que vous maintenez la sélection sur la vidéo.";
 "Huge" = "Très grand";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "Si l'utilisateur a un code PIN, ajoutez-le après le mot de passe avec un /, comme password/1234.";
 "In progress" = "En cours";
@@ -134,6 +142,7 @@
 "List only my languages" = "Lister uniquement mes langues";
 "Live" = "En direct";
 "Live TV" = "TV en direct";
+"Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it." = "La recherche des versions s'effectue dès l'ouverture de la page d'un titre, ce qui évite tout temps d'attente pour la lecture et l'affichage de la liste des versions. Chaque titre que vous ouvrez fait l'objet d'une recherche, même si vous ne le lancez pas.";
 "Lowest" = "Tout en bas";
 "Main" = "Principal";
 "Mark unwatched" = "Marquer comme non vu";
@@ -225,6 +234,7 @@
 "Resume %@" = "Reprendre %@";
 "Resume from %@" = "Reprendre à %@";
 "Rotates through featured titles" = "Fait défiler les titres à la une";
+"Route" = "Chemin";
 "Runtime" = "Durée";
 "SDH, with sounds described" = "SME / SDH, avec description des sons";
 "Sans serif" = "Sans-serif";
@@ -235,6 +245,7 @@
 "Season" = "Saison";
 "Season %@" = "Saison %@";
 "See all" = "Tout voir";
+"Seek bar previews" = "Aperçus de la barre de lecture";
 "Serif" = "Serif";
 "Server" = "Serveur";
 "Server address" = "Adresse du serveur";

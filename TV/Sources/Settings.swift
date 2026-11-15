@@ -153,6 +153,14 @@ final class Preferences: ObservableObject {
     @Published var nightMode: Bool = UserDefaults.standard.bool(forKey: "audio.nightMode") {
         didSet { UserDefaults.standard.set(nightMode, forKey: "audio.nightMode") }
     }
+    /// How fast playback runs while Select is held on the video: 1.5, 2 or 3.
+    @Published var holdRate: Double = UserDefaults.standard.object(forKey: "controls.holdRate") as? Double ?? 2 {
+        didSet { UserDefaults.standard.set(holdRate, forKey: "controls.holdRate") }
+    }
+    @Published var seekPreviews: Bool = UserDefaults.standard.object(forKey: "controls.thumbnails") as? Bool ?? true {
+        didSet { UserDefaults.standard.set(seekPreviews, forKey: "controls.thumbnails") }
+    }
+
     /// Milliseconds, -1000 to 1000; positive plays the sound later than the picture.
     @Published var audioDelayMs: Int = UserDefaults.standard.integer(forKey: "audio.delayMs") {
         didSet { UserDefaults.standard.set(audioDelayMs, forKey: "audio.delayMs") }
@@ -384,6 +392,8 @@ struct SettingsView: View {
                 PageTitle(text: L("Settings"))
                 section(L("Playback"), note: L("Saved to your account, so the web app and your other devices use them too.")) {
                     toggle(L("Auto-play the first version"), key: "autoPlayFirst", fallback: false)
+                    toggle(L("Find versions when a title opens"), key: "preloadVersions", fallback: false)
+                    note(L("Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it."))
                     Text(prefs.autoPlayFirst
                         ? L("Play starts the first version, and resuming goes back to the version you were watching. Hold select on a title and choose Choose a version to pick instead.")
                         : L("Play lists the versions to choose from, but resuming goes back to the version you were watching. Hold select on a title and choose Play straight away to start the first."))
@@ -472,6 +482,12 @@ struct SettingsView: View {
                     }
                     row(L("Show time left"), value: prefs.showTimeLeft ? L("On") : L("Off")) { prefs.showTimeLeft.toggle() }
                     row(L("Show the clock"), value: prefs.showClock ? L("On") : L("Off")) { prefs.showClock.toggle() }
+                    row(L("Held speed"), value: L("%@×", rateName(prefs.holdRate))) {
+                        chooser = Chooser(title: L("Held speed"), options: [1.5, 2, 3].map { (L("%@×", rateName($0)), String($0)) },
+                                          current: String(prefs.holdRate)) { prefs.holdRate = Double($0) ?? 2 }
+                    }
+                    note(L("How fast playback runs while you hold Select on the video."))
+                    row(L("Seek bar previews"), value: prefs.seekPreviews ? L("On") : L("Off")) { prefs.seekPreviews.toggle() }
                     row(L("Show the controls on pause and skip"), value: prefs.showOnPauseAndSkip ? L("On") : L("Off")) {
                         prefs.showOnPauseAndSkip.toggle()
                     }
@@ -769,6 +785,10 @@ struct SettingsView: View {
 
     private func channelName(_ value: String) -> String {
         ["stereo": L("Stereo"), "5.1": L("5.1 surround"), "7.1": L("7.1 surround")][value] ?? L("Automatic")
+    }
+
+    private func rateName(_ rate: Double) -> String {
+        rate.formatted(.number.precision(.fractionLength(0...1)).locale(AppLanguage.locale))
     }
 
     private func boostName(_ db: Int) -> String { db == 0 ? L("Off") : L("+%@ dB", String(db)) }

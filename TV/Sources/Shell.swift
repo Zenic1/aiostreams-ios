@@ -135,7 +135,7 @@ struct MainView: View {
         .font(Theme.font(Theme.base))
         .foregroundStyle(.white)
         .animation(.easeOut(duration: 0.2), value: open)
-        .playFlow($choice) { NotificationCenter.default.post(name: .watchStateChanged, object: nil) }
+        .playFlow($choice, restoresPictureInPicture: true) { NotificationCenter.default.post(name: .watchStateChanged, object: nil) }
         .task { await findLiveTV() }
         .task { await session.readServerKind() }
         .onReceive(NotificationCenter.default.publisher(for: DeepLink.opened)) { _ in

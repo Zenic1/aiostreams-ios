@@ -5,6 +5,7 @@
 "%@ left" = "Υπόλοιπο: %@";
 "%@h %@m" = "%1$@ ώ. %2$@ λ.";
 "%@m" = "%@ λ.";
+"%@×" = "%@×";
 "+%@ dB" = "+%@ dB";
 "+%@ ms" = "+%@ ms";
 "12-hour" = "12ωρη";
@@ -52,11 +53,13 @@
 "Background colour" = "Χρώμα φόντου";
 "Background from artwork" = "Φόντο από το artwork";
 "Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "Οι αρνητικές τιμές αναπαράγουν τον ήχο νωρίτερα, για παράδειγμα όταν τα ασύρματα ακουστικά έχουν καθυστέρηση σε σχέση με την εικόνα.";
+"Bitrate" = "Ρυθμός bit";
 "Black" = "Μαύρο";
 "Blue" = "Μπλε";
 "Blur episodes you haven't started" = "Θόλωση επεισοδίων που δεν έχεις ξεκινήσει";
 "Bold" = "Έντονα";
 "Born %@" = "Ημερομηνία γέννησης: %@";
+"Buffered" = "Προσωρινή μνήμη";
 "Calendar" = "Ημερολόγιο";
 "Can't reach the server" = "Αδυναμία επικοινωνίας με τον διακομιστή";
 "Card previews" = "Προεπισκοπήσεις καρτών";
@@ -84,6 +87,7 @@
 "Cursive" = "Καλλιγραφική";
 "Cyan" = "Κυανό";
 "Date added" = "Ημερομηνία προσθήκης";
+"Decoder" = "Αποκωδικοποιητής";
 "Default" = "Προεπιλογή";
 "Delay: %@" = "Καθυστέρηση: %@";
 "Dialogue boost" = "Ενίσχυση διαλόγων";
@@ -97,6 +101,7 @@
 "Faint" = "Αχνό";
 "Favourites" = "Αγαπημένα";
 "Featured on home" = "Προβεβλημένα στην αρχική";
+"Find versions when a title opens" = "Αναζήτηση εκδόσεων κατά το άνοιγμα ενός τίτλου";
 "Finding a version of %@…" = "Αναζήτηση έκδοσης για %@…";
 "Finding versions" = "Αναζήτηση εκδόσεων";
 "Follows the selected card" = "Ακολουθεί την επιλεγμένη κάρτα";
@@ -105,6 +110,7 @@
 "Forced" = "Αναγκαστικοί";
 "Forced, for foreign parts only" = "Αναγκαστικοί, μόνο για ξενόγλωσσα σημεία";
 "Forest" = "Δάσος";
+"Format" = "Μορφή";
 "From the start" = "Από την αρχή";
 "Full" = "Πλήρεις";
 "Go to show" = "Μετάβαση στη σειρά";
@@ -112,10 +118,12 @@
 "Guide" = "Πρόγραμμα";
 "Half" = "Μισό";
 "Height" = "Ύψος";
+"Held speed" = "Ταχύτητα παρατεταμένου πατήματος";
 "Hero" = "Κεντρικό πλαίσιο";
 "Hero turns every" = "Το κεντρικό πλαίσιο αλλάζει κάθε";
 "High" = "Ψηλά";
 "Home" = "Αρχική";
+"How fast playback runs while you hold Select on the video." = "Πόσο γρήγορα παίζει το βίντεο όσο κρατάς πατημένο το κουμπί επιλογής.";
 "Huge" = "Τεράστιο";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "Αν ο χρήστης έχει PIN, πρόσθεσέ το μετά τον κωδικό με /, όπως password/1234.";
 "In progress" = "Σε εξέλιξη";
@@ -134,6 +142,7 @@
 "List only my languages" = "Εμφάνιση μόνο των γλωσσών μου";
 "Live" = "Ζωντανά";
 "Live TV" = "Ζωντανή τηλεόραση";
+"Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it." = "Αναζητά εκδόσεις μόλις ανοίξει η σελίδα ενός τίτλου, ώστε η αναπαραγωγή και η λίστα εκδόσεων να είναι έτοιμες. Γίνεται αναζήτηση για κάθε τίτλο που ανοίγεις, ακόμη κι αν δεν τον αναπαράγεις.";
 "Lowest" = "Χαμηλότερα";
 "Main" = "Κύριο";
 "Mark unwatched" = "Δεν το έχω δει";
@@ -225,6 +234,7 @@
 "Resume %@" = "Συνέχιση %@";
 "Resume from %@" = "Συνέχιση από %@";
 "Rotates through featured titles" = "Εναλλαγή προβεβλημένων τίτλων";
+"Route" = "Διαδρομή";
 "Runtime" = "Διάρκεια";
 "SDH, with sounds described" = "SDH, με περιγραφή ήχων";
 "Sans serif" = "Χωρίς πατούρες";
@@ -235,6 +245,7 @@
 "Season" = "Σεζόν";
 "Season %@" = "Σεζόν %@";
 "See all" = "Προβολή όλων";
+"Seek bar previews" = "Προεπισκοπήσεις στη γραμμή αναπαραγωγής";
 "Serif" = "Με πατούρες";
 "Server" = "Διακομιστής";
 "Server address" = "Διεύθυνση διακομιστή";

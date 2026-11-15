@@ -53,8 +53,13 @@ struct PlayFlow: ViewModifier {
     @EnvironmentObject private var wash: ArtWash
     @Binding var choice: VersionChoice?
     var finished: () -> Void = {}
+    /// The one flow, the app's own, that opens the player again from Picture in Picture.
+    var restoresPictureInPicture = false
 
     @State private var playing: PlayRequest?
+    /// The model Picture in Picture hands back, for the player opened again on it.
+    @State private var restored: PlayerModel?
+    @ObservedObject private var pictureInPicture = TVPictureInPicture.shared
     /// Waits for the version sheet to close, as one screen can't open over another closing.
     @State private var pendingPlay: PlayRequest?
     /// The title a version is being found for, without the list.
@@ -95,6 +100,11 @@ struct PlayFlow: ViewModifier {
                     .transition(.opacity)
                 }
             }
+            .onChange(of: pictureInPicture.restoring?.request.id) { _, _ in
+                guard restoresPictureInPicture, let model = pictureInPicture.restoring, playing == nil else { return }
+                restored = model
+                playing = model.request
+            }
             .onChange(of: choice?.id) { _, _ in
                 guard let choice, straight(choice) else { return }
                 self.choice = nil
@@ -118,12 +128,13 @@ struct PlayFlow: ViewModifier {
                 .presentationBackground(.clear)
             }
             .fullScreenCover(item: $playing, onDismiss: {
+                restored = nil
                 if let next = listAfterPlayer {
                     listAfterPlayer = nil
                     choice = next
                 }
             }) { request in
-                PlayerScreen(request: request, close: {
+                PlayerScreen(request: request, existing: restored?.request.id == request.id ? restored : nil, close: {
                     playing = nil
                     finished()
                 }, listVersions: { item in
@@ -160,8 +171,9 @@ struct PlayFlow: ViewModifier {
 }
 
 extension View {
-    func playFlow(_ choice: Binding<VersionChoice?>, finished: @escaping () -> Void = {}) -> some View {
-        modifier(PlayFlow(choice: choice, finished: finished))
+    func playFlow(_ choice: Binding<VersionChoice?>, restoresPictureInPicture: Bool = false,
+                  finished: @escaping () -> Void = {}) -> some View {
+        modifier(PlayFlow(choice: choice, finished: finished, restoresPictureInPicture: restoresPictureInPicture))
     }
 }
 

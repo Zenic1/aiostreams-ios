@@ -5,6 +5,7 @@
 "%@ left" = "%@ rămas";
 "%@h %@m" = "%1$@ ore %2$@ minute";
 "%@m" = "%@ minute";
+"%@×" = "%@×";
 "+%@ dB" = "+%@ dB";
 "+%@ ms" = "+%@ ms";
 "12-hour" = "12 ore";
@@ -52,11 +53,13 @@
 "Background colour" = "Culoarea fundalului";
 "Background from artwork" = "Imagine de fundal preluată din ilustrație";
 "Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "La valori negative, sunetul este redat mai devreme pentru a compensa întârzierea căștilor wireless față de imagine.";
+"Bitrate" = "Rată de biți";
 "Black" = "Negru";
 "Blue" = "Albastru";
 "Blur episodes you haven't started" = "Estompează episoadele pe care nu le-ai început";
 "Bold" = "Aldin";
 "Born %@" = "Născut la %@";
+"Buffered" = "În buffer";
 "Calendar" = "Calendar";
 "Can't reach the server" = "Nu se poate conecta la server";
 "Card previews" = "Previzualizări carduri";
@@ -84,6 +87,7 @@
 "Cursive" = "Cursiv";
 "Cyan" = "Cyan";
 "Date added" = "Data adăugării";
+"Decoder" = "Decodor";
 "Default" = "Implicit";
 "Delay: %@" = "Întârziere: %@";
 "Dialogue boost" = "Amplificare dialog";
@@ -97,6 +101,7 @@
 "Faint" = "Slab";
 "Favourites" = "Favorite";
 "Featured on home" = "Recomandat pe pagina principală";
+"Find versions when a title opens" = "Caută versiuni la deschiderea unui titlu";
 "Finding a version of %@…" = "Se caută o versiune pentru %@…";
 "Finding versions" = "Se caută versiuni";
 "Follows the selected card" = "Urmează cardul selectat";
@@ -105,6 +110,7 @@
 "Forced" = "Forțate";
 "Forced, for foreign parts only" = "Forțate, doar pentru părțile în limbi străine";
 "Forest" = "Verde pădure";
+"Format" = "Format";
 "From the start" = "De la început";
 "Full" = "Complet";
 "Go to show" = "Mergi la serial";
@@ -112,10 +118,12 @@
 "Guide" = "Ghid";
 "Half" = "Jumătate";
 "Height" = "Înălțime";
+"Held speed" = "Viteza menținută";
 "Hero" = "Banner principal";
 "Hero turns every" = "Bannerul principal se schimbă la fiecare";
 "High" = "Sus";
 "Home" = "Acasă";
+"How fast playback runs while you hold Select on the video." = "Cât de repede rulează redarea cât ții apăsat pe selectare pe videoclip.";
 "Huge" = "Uriaș";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "Dacă utilizatorul are un PIN, adaugă-l după parolă cu /, de exemplu password/1234.";
 "In progress" = "În curs";
@@ -134,6 +142,7 @@
 "List only my languages" = "Afișează doar limbile mele";
 "Live" = "Direct";
 "Live TV" = "TV în direct";
+"Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it." = "Caută versiuni imediat ce se deschide pagina unui titlu, ca Redare și lista de versiuni să nu aștepte. Fiecare titlu pe care îl deschizi este căutat, chiar dacă nu îl redai.";
 "Lowest" = "Cel mai jos";
 "Main" = "Principal";
 "Mark unwatched" = "Marchează ca nevăzut";
@@ -225,6 +234,7 @@
 "Resume %@" = "Reia %@";
 "Resume from %@" = "Reia de la %@";
 "Rotates through featured titles" = "Se rotește între titlurile recomandate";
+"Route" = "Rută";
 "Runtime" = "Durată";
 "SDH, with sounds described" = "SDH, cu sunetele descrise";
 "Sans serif" = "Fără serife";
@@ -235,6 +245,7 @@
 "Season" = "Sezon";
 "Season %@" = "Sezonul %@";
 "See all" = "Vezi tot";
+"Seek bar previews" = "Previzualizări pe bara de derulare";
 "Serif" = "Cu serife";
 "Server" = "Server";
 "Server address" = "Adresa serverului";

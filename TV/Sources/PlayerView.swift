@@ -439,7 +439,7 @@ final class PlayerModel: ObservableObject {
     /// Asks the engine for a frame at `seconds`; while one is being made, only the latest ask waits.
     private func wantPreview(_ seconds: Double) {
         // From the engine where it holds the bytes, else the server's trickplay; else the time alone.
-        guard engine.supportsCacheBackedStills || trickplay != nil else { return }
+        guard scrubPreviews, engine.supportsCacheBackedStills || trickplay != nil else { return }
         previewWanted = seconds
         guard !previewBusy else { return }
         previewBusy = true
@@ -522,8 +522,19 @@ final class PlayerModel: ObservableObject {
 
     func setSpeed(_ value: Double) {
         speed = value
-        engine.setRate(Float(value))
+        engine.setRate(Float(heldRate ?? value))
     }
+
+    /// Held speed: faster while Select is held on the video, back to the speed set once it's let go.
+    @Published private(set) var heldRate: Double?
+
+    func hold(_ rate: Double?) {
+        heldRate = rate
+        engine.setRate(Float(rate ?? speed))
+    }
+
+    /// Seek bar previews: frames of where a scrub would land, which cost a little data each.
+    var scrubPreviews = true
 
     // MARK: Subtitle lift
 

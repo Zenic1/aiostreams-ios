@@ -5,6 +5,7 @@
 "%@ left" = "المتبقي %@";
 "%@h %@m" = "%1$@ س %2$@ د";
 "%@m" = "%@ د";
+"%@×" = "%@×";
 "+%@ dB" = "+%@ ديسيبل";
 "+%@ ms" = "+%@ مللي ثانية";
 "12-hour" = "12 ساعة";
@@ -52,11 +53,13 @@
 "Background colour" = "لون الخلفية";
 "Background from artwork" = "خلفية من الصورة الفنية";
 "Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "القيمة الأقل من الصفر تشغّل الصوت أبكر، كما في سماعات الرأس اللاسلكية التي يتأخر صوتها عن الصورة.";
+"Bitrate" = "معدل البت";
 "Black" = "أسود";
 "Blue" = "أزرق";
 "Blur episodes you haven't started" = "تمويه الحلقات التي لم تبدأها";
 "Bold" = "غامق";
 "Born %@" = "وُلد في %@";
+"Buffered" = "المخزّن مؤقتًا";
 "Calendar" = "التقويم";
 "Can't reach the server" = "تعذّر الوصول إلى الخادم";
 "Card previews" = "معاينات البطاقات";
@@ -84,6 +87,7 @@
 "Cursive" = "خط يدوي";
 "Cyan" = "سماوي";
 "Date added" = "تاريخ الإضافة";
+"Decoder" = "فك الترميز";
 "Default" = "افتراضي";
 "Delay: %@" = "التأخير: %@";
 "Dialogue boost" = "تعزيز الحوار";
@@ -97,6 +101,7 @@
 "Faint" = "خافت";
 "Favourites" = "المفضلة";
 "Featured on home" = "مميز في الرئيسية";
+"Find versions when a title opens" = "البحث عن النسخ عند فتح عنوان";
 "Finding a version of %@…" = "جارٍ البحث عن نسخة من %@…";
 "Finding versions" = "جارٍ البحث عن النسخ";
 "Follows the selected card" = "يتتبع البطاقة المحددة";
@@ -105,6 +110,7 @@
 "Forced" = "مفروضة";
 "Forced, for foreign parts only" = "مفروضة، للأجزاء الأجنبية فقط";
 "Forest" = "أخضر غابي";
+"Format" = "الصيغة";
 "From the start" = "من البداية";
 "Full" = "كامل";
 "Go to show" = "الانتقال إلى المسلسل";
@@ -112,10 +118,12 @@
 "Guide" = "الدليل";
 "Half" = "نصف";
 "Height" = "الارتفاع";
+"Held speed" = "سرعة الضغط المطوّل";
 "Hero" = "اللافتة الرئيسية";
 "Hero turns every" = "تتبدل اللافتة الرئيسية كل";
 "High" = "مرتفع";
 "Home" = "الرئيسية";
+"How fast playback runs while you hold Select on the video." = "سرعة التشغيل أثناء الضغط مطولًا على زر التحديد فوق الفيديو.";
 "Huge" = "ضخم";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "إذا كان لدى المستخدم رمز PIN، فأضفه بعد كلمة المرور مع /، مثل password/1234.";
 "In progress" = "قيد المشاهدة";
@@ -134,6 +142,7 @@
 "List only my languages" = "عرض لغاتي فقط";
 "Live" = "مباشر";
 "Live TV" = "البث المباشر";
+"Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it." = "يبحث عن النسخ بمجرد فتح صفحة العنوان، فلا ينتظر التشغيل وقائمة النسخ. يُبحث عن كل عنوان تفتحه، حتى لو لم تشغّله.";
 "Lowest" = "الأدنى";
 "Main" = "الرئيسي";
 "Mark unwatched" = "وضع علامة غير مشاهد";
@@ -225,6 +234,7 @@
 "Resume %@" = "استئناف %@";
 "Resume from %@" = "الاستئناف من %@";
 "Rotates through featured titles" = "يتنقل بين العناوين المميزة";
+"Route" = "المسار";
 "Runtime" = "مدة العرض";
 "SDH, with sounds described" = "SDH، مع وصف الأصوات";
 "Sans serif" = "خط بلا زوائد";
@@ -235,6 +245,7 @@
 "Season" = "الموسم";
 "Season %@" = "الموسم %@";
 "See all" = "عرض الكل";
+"Seek bar previews" = "معاينات شريط التقدم";
 "Serif" = "خط بزوائد";
 "Server" = "الخادم";
 "Server address" = "عنوان الخادم";

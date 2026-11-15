@@ -5,6 +5,7 @@
 "%@ left" = "Baki %@";
 "%@h %@m" = "%1$@j %2$@m";
 "%@m" = "%@m";
+"%@×" = "%@×";
 "+%@ dB" = "+%@ dB";
 "+%@ ms" = "+%@ ms";
 "12-hour" = "12 jam";
@@ -52,11 +53,13 @@
 "Background colour" = "Warna latar belakang";
 "Background from artwork" = "Latar belakang daripada karya seni";
 "Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "Nilai bawah kosong memainkan bunyi lebih awal, sesuai untuk fon kepala tanpa wayar yang mengalami lengah masa.";
+"Bitrate" = "Kadar bit";
 "Black" = "Hitam";
 "Blue" = "Biru";
 "Blur episodes you haven't started" = "Kaburkan episod yang belum anda tonton";
 "Bold" = "Tebal";
 "Born %@" = "Lahir %@";
+"Buffered" = "Penimbal";
 "Calendar" = "Kalendar";
 "Can't reach the server" = "Tidak dapat mencapai pelayan";
 "Card previews" = "Pratonton kad";
@@ -84,6 +87,7 @@
 "Cursive" = "Kursif";
 "Cyan" = "Sian";
 "Date added" = "Tarikh ditambah";
+"Decoder" = "Penyahkod";
 "Default" = "Lalai";
 "Delay: %@" = "Lengah masa: %@";
 "Dialogue boost" = "Peningkatan Dialog";
@@ -97,6 +101,7 @@
 "Faint" = "Samar";
 "Favourites" = "Kegemaran";
 "Featured on home" = "Ditampilkan di laman utama";
+"Find versions when a title opens" = "Cari versi apabila tajuk dibuka";
 "Finding a version of %@…" = "Mencari versi %@…";
 "Finding versions" = "Mencari versi";
 "Follows the selected card" = "Mengikut kad yang dipilih";
@@ -105,6 +110,7 @@
 "Forced" = "Paksaan";
 "Forced, for foreign parts only" = "Paksaan, untuk bahagian bahasa asing sahaja";
 "Forest" = "Hutan";
+"Format" = "Format";
 "From the start" = "Dari permulaan";
 "Full" = "Penuh";
 "Go to show" = "Pergi ke rancangan";
@@ -112,10 +118,12 @@
 "Guide" = "Panduan";
 "Half" = "Separuh";
 "Height" = "Ketinggian";
+"Held speed" = "Kelajuan apabila ditekan";
 "Hero" = "Sepanduk utama";
 "Hero turns every" = "Sepanduk utama bertukar setiap";
 "High" = "Tinggi";
 "Home" = "Laman utama";
+"How fast playback runs while you hold Select on the video." = "Kelajuan main semasa anda menahan pilih pada video.";
 "Huge" = "Sangat Besar";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "Jika pengguna mempunyai PIN, tambahkannya selepas kata laluan dengan /, seperti password/1234.";
 "In progress" = "Sedang berjalan";
@@ -134,6 +142,7 @@
 "List only my languages" = "Senaraikan bahasa saya sahaja";
 "Live" = "Langsung";
 "Live TV" = "TV Langsung";
+"Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it." = "Mencari versi sebaik sahaja halaman tajuk dibuka, supaya Main dan senarai versi tidak menunggu. Setiap tajuk yang anda buka dicari, walaupun anda tidak memainkannya.";
 "Lowest" = "Paling rendah";
 "Main" = "Utama";
 "Mark unwatched" = "Tanda belum ditonton";
@@ -225,6 +234,7 @@
 "Resume %@" = "Sambung %@";
 "Resume from %@" = "Sambung dari %@";
 "Rotates through featured titles" = "Bertukar melalui tajuk pilihan";
+"Route" = "Laluan";
 "Runtime" = "Tempoh tayangan";
 "SDH, with sounds described" = "SDH, dengan penerangan bunyi";
 "Sans serif" = "Sans serif";
@@ -235,6 +245,7 @@
 "Season" = "Musim";
 "Season %@" = "Musim %@";
 "See all" = "Lihat semua";
+"Seek bar previews" = "Pratonton bar kedudukan";
 "Serif" = "Serif";
 "Server" = "Pelayan";
 "Server address" = "Alamat pelayan";

@@ -46,6 +46,12 @@ struct DetailView: View {
             .edgeToEdge()
         }
         .task { await load() }
+        // Find versions when a title opens: what Play would play, looked for straight away.
+        .task(id: target?.id) {
+            guard prefs.flag("preloadVersions", false), let target, !target.isChannel,
+                  let client = session.client, let userId = session.userId else { return }
+            VersionSearches.start(target.id, client: client, userId: userId)
+        }
         .reloadOnWatchChange { await load() }
         .playFlow($choice) { Task { await load() } }
         .fullScreenCover(item: $trailer) { request in

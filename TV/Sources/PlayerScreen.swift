@@ -7,6 +7,8 @@ import SwiftUI
 
 struct PlayerScreen: View {
     let request: PlayRequest
+    /// A player opened again from Picture in Picture, which carries on as it was.
+    var existing: PlayerModel?
     let close: () -> Void
     /// Lists an episode's versions, for one whose next episode has none that carries on.
     var listVersions: (Item) -> Void = { _ in }
@@ -20,7 +22,8 @@ struct PlayerScreen: View {
     var body: some View {
         Group {
             if let model {
-                PlayerChrome(model: model, close: finish, playNext: { next in Task { await playOn(next) } }, finding: finding)
+                PlayerChrome(model: model, close: finish, playNext: { next in Task { await playOn(next) } }, finding: finding,
+                             leave: close, changeChannel: { step in Task { await changeChannel(step) } })
                     // A new title starts the controls over.
                     .id(model.request.id)
             } else {
@@ -40,11 +43,21 @@ struct PlayerScreen: View {
                 .padding(.bottom, Theme.px(40))
             }
         }
-        .task { if model == nil { await start(request) } }
+        .task {
+            guard model == nil else { return }
+            if let existing {
+                model = existing
+                TVPictureInPicture.shared.restored()
+            } else {
+                await start(request)
+            }
+        }
     }
 
     private func start(_ request: PlayRequest) async {
         guard let client = session.client else { return }
+        // A title in Picture in Picture gives way to this one.
+        TVPictureInPicture.shared.stop()
         // The show's pick, as the web app keeps it, over the account's rules.
         if let userId = session.userId { await ShowPicks.shared.load(client: client, userId: userId) }
         let base = prefs.trackRules(audioLanguages: request.audioLanguages)
@@ -64,6 +77,7 @@ struct PlayerScreen: View {
             userId: session.userId,
             rules: prefs.playerRules
         )
+        player.scrubPreviews = prefs.seekPreviews
         model = player
         player.start()
     }
@@ -102,6 +116,25 @@ struct PlayerScreen: View {
         model?.stop()
         close()
     }
+
+    /// The next or previous channel, from up or down on a channel's video, in the guide's order.
+    private func changeChannel(_ step: Int) async {
+        guard let current = model, current.request.item.isChannel, finding == nil,
+              let client = session.client, let userId = session.userId else { return }
+        let list: ItemsResult? = try? await client.get("/LiveTv/Channels", [
+            "userId": userId, "SortBy": "SortName", "AddCurrentProgram": "false", "EnableImages": "false",
+        ])
+        let channels = list?.items ?? []
+        guard let index = channels.firstIndex(where: { $0.id == current.request.item.id }), channels.count > 1 else { return }
+        let next = channels[(index + step + channels.count) % channels.count]
+        finding = next
+        defer { finding = nil }
+        guard let info = try? await client.playbackInfo(userId: userId, itemId: next.id),
+              let source = info.mediaSources?.first else { return }
+        RecentChannels.note(next.id)
+        current.stop()
+        await start(PlayRequest(item: next, source: source, playSessionId: info.playSessionId, startMs: nil))
+    }
 }
 
 /// Episodes played on by themselves since anyone last pressed anything, for "Are you still watching?".
@@ -111,7 +144,7 @@ enum UnattendedPlays {
 }
 
 private enum PlayerFocus: Hashable {
-    case surface, bar, play, back, forward, tracks, audio, chapters, speed, fit, skip, next, keepWatching, stop, sync, episodes
+    case surface, bar, play, back, forward, tracks, audio, chapters, speed, fit, skip, next, keepWatching, stop, sync, episodes, stats, pip
 }
 
 private enum PlayerPanel: Hashable {
@@ -123,6 +156,14 @@ private struct PlayerChrome: View {
     let close: () -> Void
     let playNext: (Item) -> Void
     let finding: Item?
+    /// Closes the player's screen with the video still going, for Picture in Picture.
+    var leave: () -> Void = {}
+    /// Up or down on a channel's video: the next or previous channel.
+    var changeChannel: (Int) -> Void = { _ in }
+    /// The stats over the video's corner.
+    @State private var stats = false
+    /// Select was held for faster playback, so its letting go isn't a press.
+    @State private var heldSelect = false
 
     @EnvironmentObject private var session: Session
     @EnvironmentObject private var prefs: Preferences
@@ -210,6 +251,19 @@ private struct PlayerChrome: View {
             )
             .frame(width: 0, height: 0)
 
+            // Holding Select on the video plays faster (Held speed) until it's let go.
+            PressHold(
+                presses: [.select],
+                begin: { _ in
+                    guard !shown, panel == nil, !model.isLive, !model.paused, model.failure == nil else { return false }
+                    heldSelect = true
+                    model.hold(prefs.holdRate)
+                    return true
+                },
+                end: { model.hold(nil) }
+            )
+            .frame(width: 0, height: 0)
+
             // Swiping across the remote while paused, with the bar focused, slides along it.
             SwipeScrub(
                 begin: {
@@ -245,10 +299,34 @@ private struct PlayerChrome: View {
                     case .left where model.isLive, .right where model.isLive: reveal(.play)
                     case .left: if !moved(-1) { model.skip(-step) }; if prefs.showOnPauseAndSkip { reveal(.bar) }
                     case .right: if !moved(1) { model.skip(step) }; if prefs.showOnPauseAndSkip { reveal(.bar) }
+                    // On a channel, up and down change channel, as a TV's remote does.
+                    case .up where model.request.item.isChannel: changeChannel(-1)
+                    case .down where model.request.item.isChannel: changeChannel(1)
                     default: reveal(.play)
                     }
                 }
-                .onTapGesture { input(); reveal(.play) }
+                .onTapGesture {
+                    if heldSelect { heldSelect = false; return }
+                    input()
+                    reveal(.play)
+                }
+
+            if let rate = model.heldRate {
+                Label(L("%@×", rate.formatted(.number.precision(.fractionLength(0...1)).locale(AppLanguage.locale))),
+                      systemImage: "forward.fill")
+                    .font(Theme.font(Theme.lg, .semibold))
+                    .padding(.horizontal, Theme.px(18))
+                    .padding(.vertical, Theme.px(10))
+                    .background(Capsule().fill(.black.opacity(0.6)))
+                    .frame(maxHeight: .infinity, alignment: .top)
+                    .padding(.top, Theme.px(48))
+            }
+            if stats {
+                StatsOverlay(engine: model.engine)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                    .padding(Theme.px(48))
+                    .allowsHitTesting(false)
+            }
 
             if model.waiting && model.failure == nil {
                 ProgressView().scaleEffect(1.6)
@@ -507,6 +585,16 @@ private struct PlayerChrome: View {
                 }
                 .buttonStyle(ControlIconStyle())
                 .focused($focus, equals: .fit)
+                Button { stats.toggle() } label: { Image(systemName: stats ? "chart.bar.fill" : "chart.bar") }
+                    .buttonStyle(ControlIconStyle())
+                    .focused($focus, equals: .stats)
+                if TVPictureInPicture.available(model.engine) {
+                    Button {
+                        TVPictureInPicture.shared.start(model) { leave() }
+                    } label: { Image(systemName: "pip.enter") }
+                        .buttonStyle(ControlIconStyle())
+                        .focused($focus, equals: .pip)
+                }
             }
             .focusSection()
         }

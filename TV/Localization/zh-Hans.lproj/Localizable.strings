@@ -5,6 +5,7 @@
 "%@ left" = "剩余 %@";
 "%@h %@m" = "%1$@ 小时 %2$@ 分钟";
 "%@m" = "%@ 分钟";
+"%@×" = "%@×";
 "+%@ dB" = "+%@ dB";
 "+%@ ms" = "+%@ 毫秒";
 "12-hour" = "12 小时制";
@@ -52,11 +53,13 @@
 "Background colour" = "背景颜色";
 "Background from artwork" = "使用海报作为背景";
 "Below zero plays the sound earlier, as for wireless headphones that lag behind the picture." = "设为负值会让声音提前播放，适用于声音比画面延迟的无线耳机。";
+"Bitrate" = "码率";
 "Black" = "黑色";
 "Blue" = "蓝色";
 "Blur episodes you haven't started" = "模糊尚未开始观看的剧集";
 "Bold" = "粗体";
 "Born %@" = "出生于 %@";
+"Buffered" = "已缓冲";
 "Calendar" = "日历";
 "Can't reach the server" = "无法连接到服务器";
 "Card previews" = "卡片预览";
@@ -84,6 +87,7 @@
 "Cursive" = "手写体";
 "Cyan" = "青色";
 "Date added" = "添加日期";
+"Decoder" = "解码器";
 "Default" = "默认";
 "Delay: %@" = "延迟：%@";
 "Dialogue boost" = "对白增强";
@@ -97,6 +101,7 @@
 "Faint" = "淡";
 "Favourites" = "收藏";
 "Featured on home" = "在首页精选展示";
+"Find versions when a title opens" = "打开影片时查找版本";
 "Finding a version of %@…" = "正在查找 %@ 的版本…";
 "Finding versions" = "正在查找版本";
 "Follows the selected card" = "跟随当前选中的卡片";
@@ -105,6 +110,7 @@
 "Forced" = "强制";
 "Forced, for foreign parts only" = "强制字幕，仅显示外语片段";
 "Forest" = "森林绿";
+"Format" = "格式";
 "From the start" = "从头开始";
 "Full" = "完整";
 "Go to show" = "前往剧集";
@@ -112,10 +118,12 @@
 "Guide" = "节目指南";
 "Half" = "半透明";
 "Height" = "高度";
+"Held speed" = "按住时的播放速度";
 "Hero" = "主视觉";
 "Hero turns every" = "主视觉切换间隔";
 "High" = "高";
 "Home" = "首页";
+"How fast playback runs while you hold Select on the video." = "在视频上按住选择键时的播放速度。";
 "Huge" = "特大";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "如果用户设置了 PIN，请在密码后加上 / 和 PIN，例如 password/1234。";
 "In progress" = "观看中";
@@ -134,6 +142,7 @@
 "List only my languages" = "仅列出我的语言";
 "Live" = "直播";
 "Live TV" = "电视直播";
+"Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it." = "影片页面一打开就查找版本，这样播放和版本列表无需等待。你打开的每部影片都会被查找，即使你不播放。";
 "Lowest" = "最低";
 "Main" = "主要";
 "Mark unwatched" = "标记为未观看";
@@ -225,6 +234,7 @@
 "Resume %@" = "继续播放 %@";
 "Resume from %@" = "从 %@ 继续播放";
 "Rotates through featured titles" = "轮播精选内容";
+"Route" = "路径";
 "Runtime" = "时长";
 "SDH, with sounds described" = "SDH 字幕（包含声音描述）";
 "Sans serif" = "无衬线体";
@@ -235,6 +245,7 @@
 "Season" = "季";
 "Season %@" = "第 %@ 季";
 "See all" = "查看全部";
+"Seek bar previews" = "进度条预览";
 "Serif" = "衬线体";
 "Server" = "服务器";
 "Server address" = "服务器地址";
