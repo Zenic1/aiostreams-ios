@@ -323,32 +323,50 @@ struct MainView: View {
 
     private var topTabs: some View {
         HStack(spacing: Theme.px(6)) {
-            BrandLogo(height: Theme.px(28))
-                .frame(height: Theme.px(28))
-                .padding(.trailing, Theme.px(18))
-            HStack(spacing: Theme.px(4)) {
-                ForEach(Place.main.filter { $0 != .live || liveView != nil }) { tab($0) }
+            BrandLogo(height: Theme.px(22))
+                .frame(height: Theme.px(22))
+                .padding(.trailing, Theme.px(12))
+            // Every place named where they fit; else only the one you're on, the rest by their icons.
+            ViewThatFits(in: .horizontal) {
+                places(named: true)
+                places(named: false)
             }
-            .padding(Theme.px(6))
-            .background(Capsule().fill(Color(white: 17 / 255).opacity(0.85)))
-            Spacer(minLength: Theme.px(16))
+            Spacer(minLength: Theme.px(12))
             tab(.settings)
             tab(.account)
         }
         .padding(.horizontal, Theme.px(40))
-        .padding(.top, Theme.px(24))
-        .frame(height: Theme.topBarInset, alignment: .top)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .padding(.top, Theme.px(16))
+        // Never wider than the screen, which would push every page off its edges.
+        .frame(width: UIScreen.main.bounds.width, height: Theme.topBarInset, alignment: .topLeading)
         .focusSection()
-        .disabled(DemoMode.keepsRailShut)
+        // Down goes to the page, should the focus engine find nothing straight below a tab.
+        .onMoveCommand { direction in
+            guard direction == .down else { return }
+            Task {
+                try? await Task.sleep(for: .milliseconds(120))
+                if railFocus != nil { leaveRail() }
+            }
+        }
+        .disabled(DemoMode.keepsRailShut || railLocked)
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
 
-    private func tab(_ item: Place) -> some View {
+    private func places(named: Bool) -> some View {
+        HStack(spacing: Theme.px(2)) {
+            ForEach(Place.main.filter { $0 != .live || liveView != nil }) { tab($0, named: named || $0 == place) }
+        }
+        .padding(Theme.px(4))
+        .background(Capsule().fill(Color(white: 17 / 255).opacity(0.85)))
+        .fixedSize()
+    }
+
+    private func tab(_ item: Place, named: Bool = true) -> some View {
         Button {
             if item == place { paths[item] = NavigationPath() }
             place = item
         } label: {
-            TopTab(item: item, current: item == place, avatar: avatarURL)
+            TopTab(item: item, current: item == place, named: named, avatar: avatarURL)
         }
         .buttonStyle(RailButtonStyle())
         .focused($railFocus, equals: item)
@@ -496,6 +514,7 @@ private struct TopTab: View {
     @Environment(\.isFocused) private var focused
     let item: Place
     let current: Bool
+    var named = true
     let avatar: URL?
 
     var body: some View {
@@ -508,17 +527,17 @@ private struct TopTab: View {
                         Image(systemName: "person.crop.circle.fill").resizable()
                     }
                 }
-                .frame(width: Theme.px(26), height: Theme.px(26))
+                .frame(width: Theme.px(22), height: Theme.px(22))
                 .clipShape(Circle())
             } else {
-                Image(systemName: item.icon).font(.system(size: Theme.px(16), weight: current ? .semibold : .regular))
-                if item != .settings {
-                    Text(item.name).font(Theme.font(Theme.base, .medium)).lineLimit(1).fixedSize()
+                Image(systemName: item.icon).font(.system(size: Theme.px(14), weight: current ? .semibold : .regular))
+                if item != .settings && named {
+                    Text(item.name).font(Theme.font(Theme.sm, .medium)).lineLimit(1).fixedSize()
                 }
             }
         }
-        .padding(.horizontal, item == .account || item == .settings ? Theme.px(10) : Theme.px(16))
-        .frame(height: Theme.px(44))
+        .padding(.horizontal, item == .account || item == .settings || !named ? Theme.px(10) : Theme.px(12))
+        .frame(height: Theme.px(36))
         .foregroundStyle(current || focused ? Color.white : Theme.gray400)
         .background(Capsule().fill(Color.white.opacity(current ? 0.14 : 0)))
         .overlay {

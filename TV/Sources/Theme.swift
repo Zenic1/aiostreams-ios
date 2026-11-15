@@ -14,7 +14,7 @@ enum Theme {
     /// with the tabs across the top (Navigation: Top bar).
     static var railInset: CGFloat { UserDefaults.standard.string(forKey: "interface.tvNavigation") == "top" ? 0 : px(80) }
     /// The tabs' height across the top, which pages start below.
-    static var topBarInset: CGFloat { UserDefaults.standard.string(forKey: "interface.tvNavigation") == "top" ? px(84) : 0 }
+    static var topBarInset: CGFloat { UserDefaults.standard.string(forKey: "interface.tvNavigation") == "top" ? px(64) : 0 }
 
     /// The page's colour; the theme's background where the web app's theme set one.
     static var background: Color { custom.background ?? Color(red: 7 / 255, green: 7 / 255, blue: 7 / 255) }

@@ -229,9 +229,6 @@ final class PlayerModel: ObservableObject {
         options.objectAudioRendering = speakers.map { .render($0) } ?? .off
         options.isLive = isLive
         if isLive {
-            // A shorter wait before the first frame of a channel; a shallow start can rebuffer once.
-            options.liveStartupGraceSeconds = 0.5
-            options.liveStartupSingleSegmentMinimumSeconds = 3
             // With either match off, the app writes the TV's mode itself, or leaves it as it is.
             if !(liveDisplay.rate && liveDisplay.range) { options.displayCriteriaOwner = .host }
         }

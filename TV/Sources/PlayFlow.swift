@@ -176,8 +176,7 @@ struct PlayFlow: ViewModifier {
         guard let client = session.client, let userId = session.userId else { return }
         finding = choice.item
         defer { finding = nil }
-        if choice.item.isChannel { return await playChannel(choice, client: client, userId: userId) }
-        let info = try? await client.playbackInfo(userId: userId, itemId: choice.item.id)
+        let info = try? await client.playbackInfo(userId: userId, itemId: choice.item.id, listed: true)
         let sources = (info?.mediaSources ?? []).filter { $0.aiostreams?.ytId == nil }
         let last = (choice.startMs ?? 0) > 0 ? LastVersions.find(choice.item.id, in: sources) : nil
         guard let source = last ?? sources.first else {
@@ -196,15 +195,6 @@ struct PlayFlow: ViewModifier {
         present(PlayRequest(item: choice.item, source: chosen, playSessionId: playSession, startMs: choice.startMs, queue: choice.queue))
     }
 
-    /// A channel in one ask of the server, for its stream as it is, without searching or naming it again.
-    private func playChannel(_ choice: VersionChoice, client: JellyfinClient, userId: String) async {
-        let info = try? await client.playbackInfo(userId: userId, itemId: choice.item.id, live: true)
-        guard let source = info?.mediaSources?.first else {
-            self.choice = VersionChoice(item: choice.item, startMs: nil, mode: .list)
-            return
-        }
-        present(PlayRequest(item: choice.item, source: source, playSessionId: info?.playSessionId, startMs: nil, queue: choice.queue))
-    }
 }
 
 extension View {
