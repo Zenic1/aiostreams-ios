@@ -259,9 +259,15 @@ struct ChannelLogo: View {
             RoundedRectangle(cornerRadius: Theme.px(8), style: .continuous).fill(Theme.gray800)
             if let tag = channel.tag("Primary"), let client = session.client {
                 AsyncImage(url: client.image(channel.id, .primary, tag: tag, width: 240)) { phase in
-                    if case .success(let image) = phase { image.resizable().scaledToFit() }
+                    if case .success(let image) = phase {
+                        image.resizable().scaledToFit().padding(Theme.px(6))
+                    } else if case .failure = phase {
+                        // A logo the server lists but can't send: the number, as without one.
+                        Text(channel.channelNumber ?? String((channel.name ?? "?").prefix(2)))
+                            .font(Theme.font(Theme.base, .semibold))
+                            .foregroundStyle(Theme.gray300)
+                    }
                 }
-                .padding(Theme.px(6))
             } else {
                 Text(channel.channelNumber ?? String((channel.name ?? "?").prefix(2)))
                     .font(Theme.font(Theme.base, .semibold))
@@ -343,15 +349,11 @@ private struct GuideView: View {
 
     @FocusState private var focused: String?
     @ObservedObject private var reminders = LiveReminders.shared
+    /// Where the grid is scrolled: half an hour before now as it opens, once the window is known.
+    @State private var scroll = ScrollPosition(edge: .leading)
 
     /// How far back the guide reaches, for catch-up; it opens at now.
     static let hoursBack: Double = 2
-
-    /// Where now falls across the window, which the guide opens at.
-    private var nowShare: CGFloat {
-        let total = window.end.timeIntervalSince(window.start)
-        return total > 0 ? CGFloat(now.timeIntervalSince(window.start) / total) : 0
-    }
 
     private static let minute = Theme.px(4)
     private static let rowHeight = Theme.px(56)
@@ -362,6 +364,10 @@ private struct GuideView: View {
 
     private func x(_ date: Date) -> CGFloat {
         CGFloat(min(max(date.timeIntervalSince(window.start), 0), window.end.timeIntervalSince(window.start)) / 60) * Self.minute
+    }
+
+    private func openAtNow() {
+        scroll.scrollTo(x: max(0, x(now) - 30 * Self.minute))
     }
 
     /// The programme with focus, for the details above the grid.
@@ -377,16 +383,20 @@ private struct GuideView: View {
                 .frame(height: Theme.px(72), alignment: .topLeading)
                 .pagePadding()
             HStack(alignment: .top, spacing: Self.gap) {
-                VStack(spacing: Self.gap) {
-                    Color.clear.frame(height: Theme.px(28))
+                // As wide as its channels: the space above them, over the times, is no wider.
+                VStack(alignment: .leading, spacing: Self.gap) {
+                    Color.clear.frame(width: Self.channelWidth, height: Theme.px(28))
                     ForEach(channels) { channel in
                         Button { play(channel) } label: {
                             HStack(spacing: Theme.px(10)) {
                                 ChannelLogo(channel: channel)
-                                    .frame(width: Theme.px(64), height: Theme.px(36))
-                                Text(channel.channelNumber ?? channel.name ?? "")
-                                    .font(Theme.font(Theme.sm, .medium))
-                                    .lineLimit(1)
+                                    .frame(width: Theme.px(56), height: Theme.px(36))
+                                VStack(alignment: .leading, spacing: Theme.px(1)) {
+                                    if let number = channel.channelNumber {
+                                        Text(number).font(Theme.font(Theme.xs, .medium)).foregroundStyle(Theme.gray400)
+                                    }
+                                    Text(channel.name ?? "").font(Theme.font(Theme.sm, .medium)).lineLimit(1)
+                                }
                                 Spacer(minLength: 0)
                             }
                             .padding(.horizontal, Theme.px(10))
@@ -395,7 +405,8 @@ private struct GuideView: View {
                         .buttonStyle(RowStyle(radius: Theme.px(8)))
                     }
                 }
-                .padding(.leading, pageMargin + pageInset)
+                .fixedSize(horizontal: true, vertical: false)
+                .padding(.leading, pageInset)
                 ScrollView(.horizontal) {
                     VStack(alignment: .leading, spacing: Self.gap) {
                         timeline
@@ -406,8 +417,11 @@ private struct GuideView: View {
                     .padding(.trailing, pageMargin)
                     .padding(.vertical, Theme.px(4))
                 }
-                // Opens at now, with the earlier programmes a channel keeps to the left.
-                .defaultScrollAnchor(UnitPoint(x: nowShare, y: 0))
+                // Opens half an hour before now, with the earlier programmes a channel keeps to the left;
+                // again once the window is known, as the guide loads after the grid first draws.
+                .scrollPosition($scroll)
+                .onAppear { openAtNow() }
+                .onChange(of: window.start) { _, _ in openAtNow() }
                 .scrollClipDisabled()
             }
         }
@@ -491,18 +505,23 @@ private struct GuideView: View {
                 reminders.toggle(programme, on: channel)
             }
         } label: {
-            VStack(alignment: .leading, spacing: Theme.px(2)) {
-                HStack(spacing: Theme.px(4)) {
-                    if kept { Image(systemName: "arrow.counterclockwise").font(.system(size: Theme.px(10), weight: .semibold)) }
-                    if reminded { Image(systemName: "bell.fill").font(.system(size: Theme.px(10), weight: .semibold)).accessibilityLabel(L("Reminder")) }
-                    Text(programme.name ?? "").font(Theme.font(Theme.sm, .medium)).lineLimit(1)
-                }
-                .opacity(ended && !kept ? 0.45 : 1)
-                if let begins = programme.starts {
-                    Text(prefs.time(begins)).font(Theme.font(Theme.xs)).foregroundStyle(Theme.gray400)
+            // Too short to read, a programme is only its slot; focused, its details show above the grid.
+            Group {
+                if width >= Theme.px(64) {
+                    VStack(alignment: .leading, spacing: Theme.px(2)) {
+                        HStack(spacing: Theme.px(4)) {
+                            if kept { Image(systemName: "arrow.counterclockwise").font(.system(size: Theme.px(10), weight: .semibold)) }
+                            if reminded { Image(systemName: "bell.fill").font(.system(size: Theme.px(10), weight: .semibold)).accessibilityLabel(L("Reminder")) }
+                            Text(programme.name ?? "").font(Theme.font(Theme.sm, .medium)).lineLimit(1)
+                        }
+                        .opacity(ended && !kept ? 0.45 : 1)
+                        if let begins = programme.starts {
+                            Text(prefs.time(begins)).font(Theme.font(Theme.xs)).foregroundStyle(Theme.gray400).lineLimit(1)
+                        }
+                    }
+                    .padding(.horizontal, Theme.px(10))
                 }
             }
-            .padding(.horizontal, Theme.px(10))
             .frame(width: max(width - Self.gap, Theme.px(4)), height: Self.rowHeight, alignment: .leading)
             .background(
                 RoundedRectangle(cornerRadius: Theme.px(8), style: .continuous)
