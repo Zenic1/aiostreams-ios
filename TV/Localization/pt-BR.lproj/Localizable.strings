@@ -161,6 +161,7 @@
 "Joining…" = "Entrando…";
 "Keep watching" = "Continuar assistindo";
 "Kept on this Apple TV." = "Salvo nesta Apple TV.";
+"Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on." = "Salvo nesta Apple TV. Cada um funciona com o ajuste Ajustar Conteúdo da Apple TV ativado.";
 "LIVE" = "AO VIVO";
 "Language" = "Idioma";
 "Large" = "Grande";
@@ -179,12 +180,13 @@
 "Mark watched" = "Marcar como visto";
 "Mark watched up to here" = "Marcar todos os episódios até este como assistidos";
 "Maroon" = "Bordô";
+"Match dynamic range" = "Ajustar alcance dinâmico";
+"Match frame rate" = "Ajustar taxa de quadros";
 "Medium" = "Médio";
 "Merge continue watching and next up" = "Mesclar Continuar assistindo e A seguir";
 "Message" = "Mensagem";
 "Mono" = "Mono";
 "Monospace" = "Monoespaçado";
-"More channels" = "Mais canais";
 "More info" = "Mais informações";
 "More languages" = "Mais idiomas";
 "More like this" = "Mais como este";
@@ -219,6 +221,7 @@
 "Nothing's playing. Play a title and it starts for everyone." = "Nada está tocando. Reproduza um título e ele começa para todos.";
 "OK" = "OK";
 "Off" = "Desativado";
+"Off, the TV keeps the mode it's in when a channel starts, so channels start sooner, without the blank of a mode change." = "Desativado, a TV mantém o modo atual ao iniciar um canal, então os canais começam mais rápido, sem a tela preta de uma troca de modo.";
 "Off: play the 7.1 channels" = "Desativado: tocar os canais 7.1";
 "Offer the next episode" = "Oferecer o próximo episódio";
 "On" = "Ativado";

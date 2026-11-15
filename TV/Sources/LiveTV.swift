@@ -35,7 +35,41 @@ struct LiveTVView: View {
 
     private static let page = 100
 
+    private var showsGuide: Bool { guide && loaded && !channels.isEmpty }
+
     var body: some View {
+        ZStack(alignment: .topLeading) {
+            if showsGuide {
+                // The guide scrolls by itself, both ways, in the screen below the controls.
+                VStack(alignment: .leading, spacing: Theme.px(20)) {
+                    PageTitle(text: L("Live TV"))
+                    controls
+                    GuideView(channels: channels, schedules: schedules, window: window, now: now, play: play,
+                              playFromStart: { programme in
+                                  // An earlier programme the channel keeps plays from its start.
+                                  choice = VersionChoice(item: programme, startMs: 0, mode: .straight)
+                              },
+                              more: { if channels.count < total { Task { await more() } } })
+                }
+                .padding(.bottom, Theme.px(24))
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            } else {
+                page
+            }
+        }
+        .edgeToEdge()
+        .playFlow($choice)
+        .task { await loadGroups() }
+        .task(id: group) { await reload() }
+        .task {
+            while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(30))
+                now = Date()
+            }
+        }
+    }
+
+    private var page: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: Theme.px(20)) {
                 PageTitle(text: L("Live TV"))
@@ -48,16 +82,6 @@ struct LiveTVView: View {
                         .foregroundStyle(Theme.gray400)
                         .pagePadding()
                         .focusable()
-                } else if guide {
-                    GuideView(channels: channels, schedules: schedules, window: window, now: now, play: play) { programme in
-                        // An earlier programme the channel keeps plays from its start.
-                        choice = VersionChoice(item: programme, startMs: 0, mode: .straight)
-                    }
-                    if channels.count < total {
-                        Button(L("More channels")) { Task { await more() } }
-                            .buttonStyle(SoftPillStyle())
-                            .pagePadding()
-                    }
                 } else {
                     ForEach(channels) { channel in
                         ChannelRow(channel: channel, slots: slots(channel), now: now) { play(channel) }
@@ -67,16 +91,6 @@ struct LiveTVView: View {
                 }
             }
             .padding(.bottom, Theme.px(64))
-        }
-        .edgeToEdge()
-        .playFlow($choice)
-        .task { await loadGroups() }
-        .task(id: group) { await reload() }
-        .task {
-            while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(30))
-                now = Date()
-            }
         }
     }
 
@@ -336,100 +350,132 @@ private struct ChannelRow: View {
 
 // MARK: - Guide
 
+/// The programme with focus, which only the details above the grid follow, so a focus move
+/// redraws them alone rather than every row.
+@MainActor
+private final class GuideFocus: ObservableObject {
+    @Published var programme: Item?
+}
+
+/// Where the grid is scrolled, which the channels down the side and the times across the top
+/// follow, without the grid redrawing for it.
+@MainActor
+private final class GuideScroll: ObservableObject {
+    @Published var offset: CGPoint = .zero
+    @Published var height: CGFloat = 0
+}
+
 /// Channels down the side and the coming hours across, each programme as wide as it lasts. The
-/// channels stay put while the hours scroll; both scroll up and down together.
+/// grid scrolls both ways and builds only the rows in sight; the channels and the times follow it.
 private struct GuideView: View {
-    @EnvironmentObject private var prefs: Preferences
     let channels: [Item]
     let schedules: [String: [Item]]
     let window: (start: Date, end: Date)
     let now: Date
     let play: (Item) -> Void
     let playFromStart: (Item) -> Void
+    /// Loads the next channels as the grid nears its last.
+    let more: () -> Void
 
-    @FocusState private var focused: String?
-    @ObservedObject private var reminders = LiveReminders.shared
+    @StateObject private var focus = GuideFocus()
+    @StateObject private var scrolled = GuideScroll()
     /// Where the grid is scrolled: half an hour before now as it opens, once the window is known.
     @State private var scroll = ScrollPosition(edge: .leading)
 
     /// How far back the guide reaches, for catch-up; it opens at now.
     static let hoursBack: Double = 2
 
-    private static let minute = Theme.px(4)
-    private static let rowHeight = Theme.px(56)
-    private static let gap = Theme.px(4)
-    private static let channelWidth = Theme.px(200)
+    static let minute = Theme.px(4)
+    static let rowHeight = Theme.px(56)
+    static let gap = Theme.px(4)
+    static let channelWidth = Theme.px(200)
+    static let timesHeight = Theme.px(28)
+    /// Above the first row and below the last, for the focus ring.
+    static let inset = Theme.px(6)
 
-    private var width: CGFloat { CGFloat(window.end.timeIntervalSince(window.start) / 60) * Self.minute }
+    static func top(_ index: Int) -> CGFloat { inset + CGFloat(index) * (rowHeight + gap) }
 
-    private func x(_ date: Date) -> CGFloat {
-        CGFloat(min(max(date.timeIntervalSince(window.start), 0), window.end.timeIntervalSince(window.start)) / 60) * Self.minute
-    }
+    private var layout: GuideLayout { GuideLayout(window: window) }
 
     private func openAtNow() {
-        scroll.scrollTo(x: max(0, x(now) - 30 * Self.minute))
+        scroll.scrollTo(point: CGPoint(x: max(0, layout.x(now) - 30 * Self.minute), y: scrolled.offset.y))
     }
 
-    /// The programme with focus, for the details above the grid.
-    private var focusedProgramme: Item? {
-        guard let focused else { return nil }
-        for list in schedules.values { if let match = list.first(where: { $0.id == focused }) { return match } }
-        return nil
+    /// Scrolls a channel down the side fully into sight, as the grid's rows go with it.
+    private func reveal(_ index: Int) {
+        let top = Self.top(index) - Self.inset, bottom = Self.top(index) + Self.rowHeight + Self.inset
+        let y = scrolled.offset.y, height = scrolled.height
+        if top < y {
+            scroll.scrollTo(point: CGPoint(x: scrolled.offset.x, y: max(0, top)))
+        } else if height > 0, bottom > y + height {
+            scroll.scrollTo(point: CGPoint(x: scrolled.offset.x, y: bottom - height))
+        }
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: Theme.px(16)) {
-            details
+        VStack(alignment: .leading, spacing: Theme.px(12)) {
+            GuideDetails(focus: focus)
                 .frame(height: Theme.px(72), alignment: .topLeading)
                 .pagePadding()
+            HStack(spacing: Self.gap) {
+                Color.clear.frame(width: Self.channelWidth, height: Self.timesHeight)
+                GuideTimes(scrolled: scrolled, layout: layout, now: now)
+            }
+            .padding(.leading, pageInset)
             HStack(alignment: .top, spacing: Self.gap) {
-                // As wide as its channels: the space above them, over the times, is no wider.
-                VStack(alignment: .leading, spacing: Self.gap) {
-                    Color.clear.frame(width: Self.channelWidth, height: Theme.px(28))
-                    ForEach(channels) { channel in
-                        Button { play(channel) } label: {
-                            HStack(spacing: Theme.px(10)) {
-                                ChannelLogo(channel: channel)
-                                    .frame(width: Theme.px(56), height: Theme.px(36))
-                                VStack(alignment: .leading, spacing: Theme.px(1)) {
-                                    if let number = channel.channelNumber {
-                                        Text(number).font(Theme.font(Theme.xs, .medium)).foregroundStyle(Theme.gray400)
-                                    }
-                                    Text(channel.name ?? "").font(Theme.font(Theme.sm, .medium)).lineLimit(1)
-                                }
-                                Spacer(minLength: 0)
-                            }
-                            .padding(.horizontal, Theme.px(10))
-                            .frame(width: Self.channelWidth, height: Self.rowHeight)
-                        }
-                        .buttonStyle(RowStyle(radius: Theme.px(8)))
-                    }
-                }
-                .fixedSize(horizontal: true, vertical: false)
-                .padding(.leading, pageInset)
-                ScrollView(.horizontal) {
-                    VStack(alignment: .leading, spacing: Self.gap) {
-                        timeline
-                        ForEach(channels) { channel in
-                            row(channel)
+                GuideChannels(scrolled: scrolled, channels: channels, play: play, reveal: reveal)
+                    .frame(width: Self.channelWidth)
+                    .padding(.leading, pageInset)
+                ScrollView([.horizontal, .vertical]) {
+                    LazyVStack(alignment: .leading, spacing: Self.gap) {
+                        ForEach(Array(channels.enumerated()), id: \.element.id) { index, channel in
+                            GuideRow(channel: channel, programmes: schedules[channel.id] ?? [], layout: layout, now: now,
+                                     focus: focus, play: play, playFromStart: playFromStart)
+                                .onAppear { if index >= channels.count - 10 { more() } }
                         }
                     }
+                    .padding(.vertical, Self.inset)
                     .padding(.trailing, pageMargin)
-                    .padding(.vertical, Theme.px(4))
+                }
+                .scrollIndicators(.hidden)
+                // Kept inside its frame: the page lets scroll views draw past theirs.
+                .scrollClipDisabled(false)
+                .scrollPosition($scroll)
+                .onScrollGeometryChange(for: CGRect.self) { geometry in
+                    CGRect(origin: geometry.contentOffset, size: geometry.containerSize)
+                } action: { _, visible in
+                    scrolled.offset = visible.origin
+                    scrolled.height = visible.height
                 }
                 // Opens half an hour before now, with the earlier programmes a channel keeps to the left;
                 // again once the window is known, as the guide loads after the grid first draws.
-                .scrollPosition($scroll)
                 .onAppear { openAtNow() }
                 .onChange(of: window.start) { _, _ in openAtNow() }
-                .scrollClipDisabled()
             }
+            .frame(maxHeight: .infinity, alignment: .top)
         }
         .focusSection()
     }
+}
 
-    @ViewBuilder private var details: some View {
-        if let programme = focusedProgramme {
+/// Where a time falls across the guide.
+private struct GuideLayout {
+    let window: (start: Date, end: Date)
+
+    var width: CGFloat { CGFloat(window.end.timeIntervalSince(window.start) / 60) * GuideView.minute }
+
+    func x(_ date: Date) -> CGFloat {
+        CGFloat(min(max(date.timeIntervalSince(window.start), 0), window.end.timeIntervalSince(window.start)) / 60) * GuideView.minute
+    }
+}
+
+/// What the programme with focus is, above the grid.
+private struct GuideDetails: View {
+    @EnvironmentObject private var prefs: Preferences
+    @ObservedObject var focus: GuideFocus
+
+    var body: some View {
+        if let programme = focus.programme {
             VStack(alignment: .leading, spacing: Theme.px(4)) {
                 HStack(spacing: Theme.px(10)) {
                     Text(programme.name ?? "").font(Theme.font(Theme.lg, .semibold)).lineLimit(1)
@@ -452,21 +498,97 @@ private struct GuideView: View {
                 .foregroundStyle(Theme.gray400)
         }
     }
+}
 
-    /// The half hours across the top, with a line where now is.
-    private var timeline: some View {
+/// The half hours across the top, with a line where now is, moved along with the grid.
+private struct GuideTimes: View {
+    @EnvironmentObject private var prefs: Preferences
+    @ObservedObject var scrolled: GuideScroll
+    let layout: GuideLayout
+    let now: Date
+
+    var body: some View {
+        let window = layout.window
         ZStack(alignment: .topLeading) {
-            ForEach(0..<Int((window.end.timeIntervalSince(window.start)) / 1800), id: \.self) { index in
+            ForEach(0..<Int(window.end.timeIntervalSince(window.start) / 1800), id: \.self) { index in
                 let time = window.start.addingTimeInterval(Double(index) * 1800)
                 Text(prefs.time(time))
                     .font(Theme.font(Theme.xs, .medium))
                     .foregroundStyle(Theme.gray400)
-                    .offset(x: x(time) + Theme.px(4))
+                    .fixedSize()
+                    .offset(x: layout.x(time) + Theme.px(4))
             }
-            Rectangle().fill(Theme.ring).frame(width: Theme.px(2), height: Theme.px(28)).offset(x: x(now))
+            Rectangle().fill(Theme.ring).frame(width: Theme.px(2), height: GuideView.timesHeight).offset(x: layout.x(now))
         }
-        .frame(width: width, height: Theme.px(28), alignment: .topLeading)
+        .frame(width: layout.width, height: GuideView.timesHeight, alignment: .topLeading)
+        .offset(x: -scrolled.offset.x)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .clipped()
     }
+}
+
+/// The channels down the side: only those in sight, placed where the grid's rows are.
+private struct GuideChannels: View {
+    @ObservedObject var scrolled: GuideScroll
+    let channels: [Item]
+    let play: (Item) -> Void
+    let reveal: (Int) -> Void
+
+    var body: some View {
+        let step = GuideView.rowHeight + GuideView.gap
+        let first = max(0, Int((scrolled.offset.y - GuideView.inset) / step))
+        let count = Int(max(scrolled.height, Theme.px(600)) / step) + 2
+        let last = min(channels.count, first + count)
+        ZStack(alignment: .topLeading) {
+            ForEach(first..<max(first, last), id: \.self) { index in
+                GuideChannel(channel: channels[index]) { play(channels[index]) } focused: { reveal(index) }
+                    .offset(y: GuideView.top(index) - scrolled.offset.y)
+            }
+        }
+        .frame(maxHeight: .infinity, alignment: .topLeading)
+        .clipped()
+    }
+}
+
+private struct GuideChannel: View {
+    let channel: Item
+    let action: () -> Void
+    let focused: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Focused { isFocused in
+                HStack(spacing: Theme.px(10)) {
+                    ChannelLogo(channel: channel)
+                        .frame(width: Theme.px(56), height: Theme.px(36))
+                    VStack(alignment: .leading, spacing: Theme.px(1)) {
+                        if let number = channel.channelNumber {
+                            Text(number).font(Theme.font(Theme.xs, .medium)).foregroundStyle(Theme.gray400)
+                        }
+                        Text(channel.name ?? "").font(Theme.font(Theme.sm, .medium)).lineLimit(1)
+                    }
+                    Spacer(minLength: 0)
+                }
+                .padding(.horizontal, Theme.px(10))
+                .frame(width: GuideView.channelWidth, height: GuideView.rowHeight)
+                .onChange(of: isFocused) { _, on in if on { focused() } }
+            }
+        }
+        .buttonStyle(RowStyle(radius: Theme.px(8)))
+    }
+}
+
+/// One channel's programmes across the guide.
+private struct GuideRow: View {
+    @EnvironmentObject private var prefs: Preferences
+    @ObservedObject private var reminders = LiveReminders.shared
+    let channel: Item
+    let programmes: [Item]
+    let layout: GuideLayout
+    let now: Date
+    let focus: GuideFocus
+    let play: (Item) -> Void
+    let playFromStart: (Item) -> Void
 
     private struct Segment {
         var id: String
@@ -476,12 +598,13 @@ private struct GuideView: View {
 
     /// The row laid out from the left: each programme as wide as its slot, with a space where
     /// the guide has nothing. Laid out rather than offset, so focus moves follow what's drawn.
-    private func segments(_ programmes: [Item]) -> [Segment] {
+    private var segments: [Segment] {
+        let window = layout.window
         var list: [Segment] = []
         var cursor: CGFloat = 0
-        for programme in programmes {
-            let start = max(x(programme.starts ?? window.start), cursor)
-            let end = x(programme.ends ?? window.end)
+        for programme in programmes where (programme.ends ?? .distantPast) > window.start && (programme.starts ?? .distantFuture) < window.end {
+            let start = max(layout.x(programme.starts ?? window.start), cursor)
+            let end = layout.x(programme.ends ?? window.end)
             guard end - start >= Theme.px(4) else { continue }
             if start > cursor { list.append(Segment(id: "gap-\(programme.id)", width: start - cursor)) }
             list.append(Segment(id: programme.id, width: end - start, programme: programme))
@@ -490,7 +613,33 @@ private struct GuideView: View {
         return list
     }
 
-    private func cell(_ programme: Item, channel: Item, width: CGFloat) -> some View {
+    var body: some View {
+        let segments = segments
+        ZStack(alignment: .topLeading) {
+            RoundedRectangle(cornerRadius: Theme.px(8), style: .continuous)
+                .fill(.white.opacity(0.02))
+                .frame(width: layout.width, height: GuideView.rowHeight)
+            if segments.isEmpty {
+                Text(L("No guide for this channel"))
+                    .font(Theme.font(Theme.sm))
+                    .foregroundStyle(Theme.gray500)
+                    .padding(.horizontal, Theme.px(12))
+                    .frame(height: GuideView.rowHeight)
+            }
+            HStack(spacing: 0) {
+                ForEach(segments, id: \.id) { segment in
+                    if let programme = segment.programme {
+                        cell(programme, width: segment.width)
+                    } else {
+                        Color.clear.frame(width: segment.width, height: GuideView.rowHeight)
+                    }
+                }
+            }
+        }
+        .frame(width: layout.width, height: GuideView.rowHeight, alignment: .topLeading)
+    }
+
+    private func cell(_ programme: Item, width: CGFloat) -> some View {
         let airing = (programme.starts ?? .distantFuture) <= now && now < (programme.ends ?? .distantPast)
         let ended = (programme.ends ?? .distantFuture) <= now
         let kept = ended && programme.aiostreams?.catchup == true
@@ -505,59 +654,39 @@ private struct GuideView: View {
                 reminders.toggle(programme, on: channel)
             }
         } label: {
-            // Too short to read, a programme is only its slot; focused, its details show above the grid.
-            Group {
-                if width >= Theme.px(64) {
-                    VStack(alignment: .leading, spacing: Theme.px(2)) {
-                        HStack(spacing: Theme.px(4)) {
-                            if kept { Image(systemName: "arrow.counterclockwise").font(.system(size: Theme.px(10), weight: .semibold)) }
-                            if reminded { Image(systemName: "bell.fill").font(.system(size: Theme.px(10), weight: .semibold)).accessibilityLabel(L("Reminder")) }
-                            Text(programme.name ?? "").font(Theme.font(Theme.sm, .medium)).lineLimit(1)
+            Focused { isFocused in
+                // Too short to read, a programme is only its slot; focused, its details show above the grid.
+                Group {
+                    if width >= Theme.px(64) {
+                        VStack(alignment: .leading, spacing: Theme.px(2)) {
+                            HStack(spacing: Theme.px(4)) {
+                                if kept { Image(systemName: "arrow.counterclockwise").font(.system(size: Theme.px(10), weight: .semibold)) }
+                                if reminded { Image(systemName: "bell.fill").font(.system(size: Theme.px(10), weight: .semibold)).accessibilityLabel(L("Reminder")) }
+                                Text(programme.name ?? "").font(Theme.font(Theme.sm, .medium)).lineLimit(1)
+                            }
+                            .opacity(ended && !kept ? 0.45 : 1)
+                            if let begins = programme.starts {
+                                Text(prefs.time(begins)).font(Theme.font(Theme.xs)).foregroundStyle(Theme.gray400).lineLimit(1)
+                            }
                         }
-                        .opacity(ended && !kept ? 0.45 : 1)
-                        if let begins = programme.starts {
-                            Text(prefs.time(begins)).font(Theme.font(Theme.xs)).foregroundStyle(Theme.gray400).lineLimit(1)
-                        }
+                        .padding(.horizontal, Theme.px(10))
                     }
-                    .padding(.horizontal, Theme.px(10))
+                }
+                .frame(width: max(width - GuideView.gap, Theme.px(4)), height: GuideView.rowHeight, alignment: .leading)
+                .background(
+                    RoundedRectangle(cornerRadius: Theme.px(8), style: .continuous)
+                        .fill(airing ? Theme.brand500.opacity(0.25) : Color.white.opacity(0.05))
+                )
+                .onChange(of: isFocused) { _, on in
+                    if on {
+                        focus.programme = programme
+                    } else if focus.programme?.id == programme.id {
+                        focus.programme = nil
+                    }
                 }
             }
-            .frame(width: max(width - Self.gap, Theme.px(4)), height: Self.rowHeight, alignment: .leading)
-            .background(
-                RoundedRectangle(cornerRadius: Theme.px(8), style: .continuous)
-                    .fill(airing ? Theme.brand500.opacity(0.25) : Color.white.opacity(0.05))
-            )
         }
         .buttonStyle(RowStyle(radius: Theme.px(8)))
-        .focused($focused, equals: programme.id)
-        .padding(.trailing, Self.gap)
-    }
-
-    private func row(_ channel: Item) -> some View {
-        let programmes = (schedules[channel.id] ?? []).filter {
-            ($0.ends ?? .distantPast) > window.start && ($0.starts ?? .distantFuture) < window.end
-        }
-        return ZStack(alignment: .topLeading) {
-            RoundedRectangle(cornerRadius: Theme.px(8), style: .continuous)
-                .fill(.white.opacity(0.02))
-                .frame(width: width, height: Self.rowHeight)
-            if programmes.isEmpty {
-                Text(L("No guide for this channel"))
-                    .font(Theme.font(Theme.sm))
-                    .foregroundStyle(Theme.gray500)
-                    .padding(.horizontal, Theme.px(12))
-                    .frame(height: Self.rowHeight)
-            }
-            HStack(spacing: 0) {
-                ForEach(segments(programmes), id: \.id) { segment in
-                    if let programme = segment.programme {
-                        cell(programme, channel: channel, width: segment.width)
-                    } else {
-                        Color.clear.frame(width: segment.width, height: Self.rowHeight)
-                    }
-                }
-            }
-        }
-        .frame(width: width, height: Self.rowHeight, alignment: .topLeading)
+        .padding(.trailing, GuideView.gap)
     }
 }

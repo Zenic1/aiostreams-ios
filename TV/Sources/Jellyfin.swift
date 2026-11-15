@@ -594,15 +594,19 @@ struct JellyfinClient: Sendable {
     ]
 
     /// The version list, or with `sourceId` one version with its subtitles from subtitle addons.
-    func playbackInfo(userId: String, itemId: String, sourceId: String? = nil, refresh: Bool = false) async throws -> PlaybackInfo {
+    func playbackInfo(userId: String, itemId: String, sourceId: String? = nil, refresh: Bool = false,
+                      live: Bool = false) async throws -> PlaybackInfo {
         var body: [String: Any] = [
             "UserId": userId,
             "DeviceProfile": Self.deviceProfile,
             "EnableRequiredHttpHeaders": true,
-            // Every version, past the server's limit for a list, as the web app asks (server v2.38).
-            "AllVersions": true,
         ]
-        if let sourceId {
+        // Every version, past the server's limit for a list, as the web app asks (server v2.38).
+        if !live { body["AllVersions"] = true }
+        // A channel has its one stream: nothing to search afresh, and no subtitle addons to ask.
+        if live {
+            body["SkipSubtitles"] = true
+        } else if let sourceId {
             body["MediaSourceId"] = sourceId
         } else {
             body["Fresh"] = true

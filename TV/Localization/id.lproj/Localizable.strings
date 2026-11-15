@@ -161,6 +161,7 @@
 "Joining…" = "Bergabung…";
 "Keep watching" = "Lanjutkan menonton";
 "Kept on this Apple TV." = "Disimpan di Apple TV ini.";
+"Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on." = "Disimpan di Apple TV ini. Masing-masing berfungsi saat pengaturan Sesuaikan Konten di Apple TV aktif.";
 "LIVE" = "LANGSUNG";
 "Language" = "Bahasa";
 "Large" = "Besar";
@@ -179,12 +180,13 @@
 "Mark watched" = "Tandai sudah ditonton";
 "Mark watched up to here" = "Tandai sudah ditonton hingga di sini";
 "Maroon" = "Merah marun";
+"Match dynamic range" = "Sesuaikan rentang dinamis";
+"Match frame rate" = "Sesuaikan frame rate";
 "Medium" = "Sedang";
 "Merge continue watching and next up" = "Gabungkan Lanjutkan menonton dan Berikutnya ditonton";
 "Message" = "Pesan";
 "Mono" = "Mono";
 "Monospace" = "Monospace";
-"More channels" = "Saluran lainnya";
 "More info" = "Info selengkapnya";
 "More languages" = "Bahasa lainnya";
 "More like this" = "Serupa dengan ini";
@@ -219,6 +221,7 @@
 "Nothing's playing. Play a title and it starts for everyone." = "Tidak ada yang diputar. Putar sebuah judul dan judul itu dimulai untuk semua.";
 "OK" = "OK";
 "Off" = "Nonaktif";
+"Off, the TV keeps the mode it's in when a channel starts, so channels start sooner, without the blank of a mode change." = "Jika mati, TV mempertahankan modenya saat saluran dimulai, sehingga saluran mulai lebih cepat, tanpa layar hitam akibat pergantian mode.";
 "Off: play the 7.1 channels" = "Nonaktif: putar kanal 7.1";
 "Offer the next episode" = "Tawarkan episode berikutnya";
 "On" = "Aktif";

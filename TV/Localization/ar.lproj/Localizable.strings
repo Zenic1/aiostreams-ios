@@ -161,6 +161,7 @@
 "Joining…" = "جارٍ الانضمام…";
 "Keep watching" = "متابعة المشاهدة";
 "Kept on this Apple TV." = "محفوظ على جهاز Apple TV هذا.";
+"Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on." = "محفوظ على جهاز Apple TV هذا. يعمل كل منهما عند تشغيل إعداد مطابقة المحتوى في Apple TV.";
 "LIVE" = "مباشر";
 "Language" = "اللغة";
 "Large" = "كبير";
@@ -179,12 +180,13 @@
 "Mark watched" = "وضع علامة مشاهد";
 "Mark watched up to here" = "وضع علامة مشاهد حتى هنا";
 "Maroon" = "عنابي";
+"Match dynamic range" = "مطابقة النطاق الديناميكي";
+"Match frame rate" = "مطابقة معدل الإطارات";
 "Medium" = "متوسط";
 "Merge continue watching and next up" = "دمج متابعة المشاهدة والتالي";
 "Message" = "الرسالة";
 "Mono" = "أحادي";
 "Monospace" = "خط أحادي المسافة";
-"More channels" = "مزيد من القنوات";
 "More info" = "مزيد من المعلومات";
 "More languages" = "مزيد من اللغات";
 "More like this" = "المزيد المشابه";
@@ -219,6 +221,7 @@
 "Nothing's playing. Play a title and it starts for everyone." = "لا شيء قيد التشغيل. شغّل عنوانًا ليبدأ للجميع.";
 "OK" = "موافق";
 "Off" = "متوقف";
+"Off, the TV keeps the mode it's in when a channel starts, so channels start sooner, without the blank of a mode change." = "عند الإيقاف، يحتفظ التلفاز بوضعه الحالي عند بدء القناة، فتبدأ القنوات أسرع دون الشاشة السوداء لتغيير الوضع.";
 "Off: play the 7.1 channels" = "متوقف: تشغيل قنوات 7.1";
 "Offer the next episode" = "عرض الحلقة التالية";
 "On" = "مُفعّل";

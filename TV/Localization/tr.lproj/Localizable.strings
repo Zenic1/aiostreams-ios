@@ -161,6 +161,7 @@
 "Joining…" = "Katılınıyor…";
 "Keep watching" = "İzlemeye devam et";
 "Kept on this Apple TV." = "Bu Apple TV'de saklanır.";
+"Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on." = "Bu Apple TV’de saklanır. Her biri Apple TV’nin İçeriği Eşleştir ayarı açıkken çalışır.";
 "LIVE" = "CANLI";
 "Language" = "Dil";
 "Large" = "Büyük";
@@ -179,12 +180,13 @@
 "Mark watched" = "İzlendi olarak işaretle";
 "Mark watched up to here" = "Buraya kadar izlendi olarak işaretle";
 "Maroon" = "Bordo";
+"Match dynamic range" = "Dinamik aralığı eşleştir";
+"Match frame rate" = "Kare hızını eşleştir";
 "Medium" = "Orta";
 "Merge continue watching and next up" = "İzlemeye devam et ve Sıradaki listelerini birleştir";
 "Message" = "Mesaj";
 "Mono" = "Mono";
 "Monospace" = "Sabit genişlikli";
-"More channels" = "Daha fazla kanal";
 "More info" = "Daha fazla bilgi";
 "More languages" = "Daha fazla dil";
 "More like this" = "Benzer içerikler";
@@ -219,6 +221,7 @@
 "Nothing's playing. Play a title and it starts for everyone." = "Şu an bir şey oynatılmıyor. Bir içerik oynat, herkes için başlasın.";
 "OK" = "Tamam";
 "Off" = "Kapalı";
+"Off, the TV keeps the mode it's in when a channel starts, so channels start sooner, without the blank of a mode change." = "Kapalıyken TV, kanal başladığında mevcut modunu korur; böylece kanallar mod değişiminin siyah ekranı olmadan daha hızlı başlar.";
 "Off: play the 7.1 channels" = "Kapalı: 7.1 kanallarını oynat";
 "Offer the next episode" = "Sonraki bölümü öner";
 "On" = "Açık";

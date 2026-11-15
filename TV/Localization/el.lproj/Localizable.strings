@@ -161,6 +161,7 @@
 "Joining…" = "Σύνδεση…";
 "Keep watching" = "Συνέχεια παρακολούθησης";
 "Kept on this Apple TV." = "Αποθηκεύονται σε αυτό το Apple TV.";
+"Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on." = "Αποθηκεύεται σε αυτό το Apple TV. Καθένα λειτουργεί με ενεργή τη ρύθμιση Αντιστοίχιση περιεχομένου του Apple TV.";
 "LIVE" = "ΖΩΝΤΑΝΑ";
 "Language" = "Γλώσσα";
 "Large" = "Μεγάλο";
@@ -179,12 +180,13 @@
 "Mark watched" = "Το έχω δει";
 "Mark watched up to here" = "Τα έχω δει μέχρι εδώ";
 "Maroon" = "Μπορντό";
+"Match dynamic range" = "Αντιστοίχιση δυναμικού εύρους";
+"Match frame rate" = "Αντιστοίχιση ρυθμού καρέ";
 "Medium" = "Μεσαίο";
 "Merge continue watching and next up" = "Ενοποίηση της συνέχειας παρακολούθησης με τα επόμενα επεισόδια";
 "Message" = "Μήνυμα";
 "Mono" = "Μονοφωνικό";
 "Monospace" = "Σταθερού πλάτους";
-"More channels" = "Περισσότερα κανάλια";
 "More info" = "Περισσότερες πληροφορίες";
 "More languages" = "Περισσότερες γλώσσες";
 "More like this" = "Παρόμοιοι τίτλοι";
@@ -219,6 +221,7 @@
 "Nothing's playing. Play a title and it starts for everyone." = "Δεν παίζει τίποτα. Βάλε έναν τίτλο και ξεκινά για όλους.";
 "OK" = "Εντάξει";
 "Off" = "Ανενεργό";
+"Off, the TV keeps the mode it's in when a channel starts, so channels start sooner, without the blank of a mode change." = "Όταν είναι απενεργοποιημένο, η τηλεόραση κρατά τη λειτουργία της όταν ξεκινά ένα κανάλι, ώστε τα κανάλια να ξεκινούν πιο γρήγορα, χωρίς το μαύρο κενό μιας αλλαγής λειτουργίας.";
 "Off: play the 7.1 channels" = "Ανενεργό: αναπαραγωγή των καναλιών 7.1";
 "Offer the next episode" = "Πρόταση επόμενου επεισοδίου";
 "On" = "Ενεργό";

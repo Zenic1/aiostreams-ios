@@ -78,6 +78,7 @@ struct PlayerScreen: View {
             remember: (prefs.rememberAudio, prefs.rememberSubtitles),
             audioShaping: prefs.audioShaping,
             audioDelay: Double(prefs.audioDelayMs) / 1000,
+            liveDisplay: (prefs.liveMatchFrameRate, prefs.liveMatchDynamicRange),
             look: prefs.subtitleLook,
             speakers: prefs.speakers,
             animeUpscaling: prefs.animeUpscaling,
@@ -140,7 +141,7 @@ struct PlayerScreen: View {
         let next = channels[(index + step + channels.count) % channels.count]
         finding = next
         defer { finding = nil }
-        guard let info = try? await client.playbackInfo(userId: userId, itemId: next.id),
+        guard let info = try? await client.playbackInfo(userId: userId, itemId: next.id, live: true),
               let source = info.mediaSources?.first else { return }
         RecentChannels.note(next.id)
         current.stop()

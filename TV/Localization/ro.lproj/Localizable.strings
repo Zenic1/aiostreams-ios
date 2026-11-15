@@ -161,6 +161,7 @@
 "Joining…" = "Se alătură…";
 "Keep watching" = "Continuă vizionarea";
 "Kept on this Apple TV." = "Păstrat pe acest Apple TV.";
+"Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on." = "Păstrat pe acest Apple TV. Fiecare funcționează cu setarea Potrivire conținut a Apple TV activată.";
 "LIVE" = "LIVE";
 "Language" = "Limbă";
 "Large" = "Mare";
@@ -179,12 +180,13 @@
 "Mark watched" = "Marchează ca văzut";
 "Mark watched up to here" = "Marchează ca văzut până aici";
 "Maroon" = "Vișiniu";
+"Match dynamic range" = "Potrivește gama dinamică";
+"Match frame rate" = "Potrivește rata de cadre";
 "Medium" = "Mediu";
 "Merge continue watching and next up" = "Combină Continuă vizionarea cu Urmează";
 "Message" = "Mesaj";
 "Mono" = "Mono";
 "Monospace" = "Monospațiat";
-"More channels" = "Mai multe canale";
 "More info" = "Mai multe informații";
 "More languages" = "Mai multe limbi";
 "More like this" = "Mai multe asemănătoare";
@@ -219,6 +221,7 @@
 "Nothing's playing. Play a title and it starts for everyone." = "Nu rulează nimic. Redă un titlu și pornește pentru toată lumea.";
 "OK" = "OK";
 "Off" = "Oprit";
+"Off, the TV keeps the mode it's in when a channel starts, so channels start sooner, without the blank of a mode change." = "Dezactivat, televizorul își păstrează modul la pornirea unui canal, așa că canalele pornesc mai repede, fără ecranul negru al schimbării de mod.";
 "Off: play the 7.1 channels" = "Oprit: redă canalele 7.1";
 "Offer the next episode" = "Propune episodul următor";
 "On" = "Pornit";

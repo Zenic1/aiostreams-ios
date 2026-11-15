@@ -96,6 +96,10 @@ final class PlayerModel: ObservableObject {
     private let remember: (audio: Bool, subtitles: Bool)
     private let audioShaping: AudioShaping
     private let defaultAudioDelay: Double
+    /// Live TV's display matching: whether a channel switches the TV's frame rate, and its range.
+    private let liveDisplay: (rate: Bool, range: Bool)
+    /// Display criteria this player wrote itself, which it clears as it stops.
+    private var wroteCriteria = false
     /// The audio stream picked before the load, where the server describes the streams.
     private var audioStreamIndex: Int32?
     private let speakers: SpatialSpeakerLayout?
@@ -108,6 +112,7 @@ final class PlayerModel: ObservableObject {
     init(request: PlayRequest, client: JellyfinClient, tracks: TrackRules = TrackRules(), baseTracks: TrackRules = TrackRules(),
          remember: (audio: Bool, subtitles: Bool) = (true, true), audioShaping: AudioShaping = AudioShaping(),
          audioDelay: Double = 0,
+         liveDisplay: (rate: Bool, range: Bool) = (true, true),
          look: SubtitleLook = SubtitleLook(), speakers: SpatialSpeakerLayout? = .l714, animeUpscaling: Bool = false,
          userId: String? = nil, rules: PlayerRules = PlayerRules()) {
         self.request = request
@@ -118,6 +123,7 @@ final class PlayerModel: ObservableObject {
         self.remember = remember
         self.audioShaping = audioShaping
         defaultAudioDelay = audioDelay
+        self.liveDisplay = liveDisplay
         self.speakers = speakers
         self.animeUpscaling = animeUpscaling
         self.rules = rules
@@ -222,6 +228,13 @@ final class PlayerModel: ObservableObject {
         // as Dolby MAT (tvOS 26 and later); off, they play as their 7.1 channels.
         options.objectAudioRendering = speakers.map { .render($0) } ?? .off
         options.isLive = isLive
+        if isLive {
+            // A shorter wait before the first frame of a channel; a shallow start can rebuffer once.
+            options.liveStartupGraceSeconds = 0.5
+            options.liveStartupSingleSegmentMinimumSeconds = 3
+            // With either match off, the app writes the TV's mode itself, or leaves it as it is.
+            if !(liveDisplay.rate && liveDisplay.range) { options.displayCriteriaOwner = .host }
+        }
 
         // The engine is shared: a title starts at the usual delay, whatever the last one was set to.
         audioDelay = defaultAudioDelay
@@ -241,6 +254,7 @@ final class PlayerModel: ObservableObject {
                 let start = self.isLive ? nil : self.request.startMs.map { $0 / 1000 }
                 try await self.engine.load(url: url, startPosition: start, options: loadOptions,
                                            audioSourceStreamIndex: self.audioStreamIndex)
+                if self.isLive, self.liveDisplay.rate != self.liveDisplay.range { self.matchLiveDisplay() }
                 // A watch party's title waits for the group to start it; anything else plays.
                 if let entry = self.request.partyEntry {
                     self.party = PartyFollower(model: self, playlistItemId: entry)
@@ -435,6 +449,32 @@ final class PlayerModel: ObservableObject {
     /// Following a watch party's title: its commands drive the player, and its controls ask the group.
     private(set) var party: PartyFollower?
     var inParty: Bool { party != nil && WatchParty.shared.live }
+
+    /// Switches the TV to the channel's frame rate or its dynamic range, whichever Live TV matches,
+    /// keeping the other as the TV has it. The engine writes both together, so this writes them.
+    private func matchLiveDisplay() {
+        guard let manager = Self.window?.avDisplayManager, manager.isDisplayCriteriaMatchingEnabled else { return }
+        let width = Int32(max(engine.sourceVideoWidth, 16)), height = Int32(max(engine.sourceVideoHeight, 16))
+        let hdr = liveDisplay.range && engine.sourceVideoFormat != .sdr
+        var extensions: [CFString: Any] = [
+            kCMFormatDescriptionExtension_ColorPrimaries: hdr ? kCMFormatDescriptionColorPrimaries_ITU_R_2020 : kCMFormatDescriptionColorPrimaries_ITU_R_709_2,
+            kCMFormatDescriptionExtension_YCbCrMatrix: hdr ? kCMFormatDescriptionYCbCrMatrix_ITU_R_2020 : kCMFormatDescriptionYCbCrMatrix_ITU_R_709_2,
+            kCMFormatDescriptionExtension_TransferFunction: kCMFormatDescriptionTransferFunction_ITU_R_709_2,
+        ]
+        if hdr {
+            extensions[kCMFormatDescriptionExtension_TransferFunction] = engine.sourceVideoFormat == .hlg
+                ? kCMFormatDescriptionTransferFunction_ITU_R_2100_HLG : kCMFormatDescriptionTransferFunction_SMPTE_ST_2084_PQ
+        }
+        var description: CMFormatDescription?
+        CMVideoFormatDescriptionCreate(allocator: nil, codecType: hdr ? kCMVideoCodecType_HEVC : kCMVideoCodecType_H264,
+                                       width: width, height: height, extensions: extensions as CFDictionary,
+                                       formatDescriptionOut: &description)
+        guard let description else { return }
+        let current = Float(Self.window?.screen.maximumFramesPerSecond ?? 60)
+        let rate = liveDisplay.rate ? Float(engine.sourceVideoFrameRate ?? Double(current)) : current
+        manager.preferredDisplayCriteria = AVDisplayCriteria(refreshRate: rate, formatDescription: description)
+        wroteCriteria = true
+    }
 
     /// A seek the party's timeline asks for, past the controls that would ask the group.
     func followSeek(_ seconds: Double) {
@@ -693,6 +733,7 @@ final class PlayerModel: ObservableObject {
     /// Saves the position on the server and hands the screen back to the app.
     func stop() {
         guard !stopped else { return }
+        if wroteCriteria { Self.window?.avDisplayManager.preferredDisplayCriteria = nil }
         party?.stop()
         party = nil
         progressTimer?.invalidate()

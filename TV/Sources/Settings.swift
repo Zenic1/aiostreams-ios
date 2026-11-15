@@ -167,6 +167,16 @@ final class Preferences: ObservableObject {
         didSet { UserDefaults.standard.set(tvNavigation, forKey: "interface.tvNavigation") }
     }
 
+    /// Live TV: whether a channel switches the TV to its frame rate, and to its dynamic range, as
+    /// films and episodes do with the Apple TV's Match Content on. Off, the TV keeps its mode, and
+    /// channels start sooner, without the blank of a mode change.
+    @Published var liveMatchFrameRate: Bool = UserDefaults.standard.object(forKey: "live.matchFrameRate") as? Bool ?? true {
+        didSet { UserDefaults.standard.set(liveMatchFrameRate, forKey: "live.matchFrameRate") }
+    }
+    @Published var liveMatchDynamicRange: Bool = UserDefaults.standard.object(forKey: "live.matchDynamicRange") as? Bool ?? true {
+        didSet { UserDefaults.standard.set(liveMatchDynamicRange, forKey: "live.matchDynamicRange") }
+    }
+
     /// Milliseconds, -1000 to 1000; positive plays the sound later than the picture.
     @Published var audioDelayMs: Int = UserDefaults.standard.integer(forKey: "audio.delayMs") {
         didSet { UserDefaults.standard.set(audioDelayMs, forKey: "audio.delayMs") }
@@ -504,6 +514,11 @@ struct SettingsView: View {
                     row(L("Show the controls on pause and skip"), value: prefs.showOnPauseAndSkip ? L("On") : L("Off")) {
                         prefs.showOnPauseAndSkip.toggle()
                     }
+                }
+                section(L("Live TV"), note: L("Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on.")) {
+                    row(L("Match frame rate"), value: prefs.liveMatchFrameRate ? L("On") : L("Off")) { prefs.liveMatchFrameRate.toggle() }
+                    row(L("Match dynamic range"), value: prefs.liveMatchDynamicRange ? L("On") : L("Off")) { prefs.liveMatchDynamicRange.toggle() }
+                    note(L("Off, the TV keeps the mode it's in when a channel starts, so channels start sooner, without the blank of a mode change."))
                 }
                 section(L("Video"), note: nil) {
                     row(L("Anime upscaling"), value: prefs.animeUpscaling ? L("On") : L("Off")) {
