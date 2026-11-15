@@ -325,12 +325,14 @@ struct MainView: View {
         HStack(spacing: Theme.px(6)) {
             BrandLogo(height: Theme.px(22))
                 .frame(height: Theme.px(22))
-                .padding(.trailing, Theme.px(12))
-            // Every place named where they fit; else only the one you're on, the rest by their icons.
+            // The places centred between the logo and Settings and you: every place named where they
+            // fit, else only the one you're on, the rest by their icons.
+            Spacer(minLength: Theme.px(12))
             ViewThatFits(in: .horizontal) {
                 places(named: true)
                 places(named: false)
             }
+            .layoutPriority(1)
             Spacer(minLength: Theme.px(12))
             tab(.settings)
             tab(.account)
