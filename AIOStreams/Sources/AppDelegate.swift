@@ -73,4 +73,26 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             root?.openLink(context.url)
         }
     }
+
+    /// Time iOS gives the app after it leaves the screen, so the page finishes what it's doing,
+    /// above all a download's version search, which hands the file to the background downloader.
+    /// A search cut off all the same is tried again as the app comes back (web/ios-host.patch).
+    private var finishing: UIBackgroundTaskIdentifier = .invalid
+
+    func sceneDidEnterBackground(_ scene: UIScene) {
+        endFinishing()
+        finishing = UIApplication.shared.beginBackgroundTask(withName: "Finish the page's work") { [weak self] in
+            self?.endFinishing()
+        }
+    }
+
+    func sceneWillEnterForeground(_ scene: UIScene) {
+        endFinishing()
+    }
+
+    private func endFinishing() {
+        guard finishing != .invalid else { return }
+        UIApplication.shared.endBackgroundTask(finishing)
+        finishing = .invalid
+    }
 }

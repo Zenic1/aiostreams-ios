@@ -15,6 +15,77 @@ index e41938f9..d8ffaba2 100644
              shell.app,
            ],
            ...(shell.player && !shell.mpv
+diff --git a/packages/web/src/lib/downloads/index.ts b/packages/web/src/lib/downloads/index.ts
+index c7d13569..6b991f63 100644
+--- a/packages/web/src/lib/downloads/index.ts
++++ b/packages/web/src/lib/downloads/index.ts
+@@ -1,7 +1,11 @@
+ import { plural, t } from '@lingui/core/macro';
+ import React from 'react';
+ import { toast } from 'sonner';
+-import { JellyfinError, type JellyfinClient } from '@/lib/jellyfin/client';
++import {
++  ConnectionError,
++  JellyfinError,
++  type JellyfinClient,
++} from '@/lib/jellyfin/client';
+ import { currentHost } from '@/lib/hosts';
+ import { playableSources } from '@/lib/playback/sources';
+ import { closePlayback, playbackNow } from '@/lib/playback/session';
+@@ -31,6 +35,32 @@ import {
+ } from './store';
+ import type { Download, DownloadsHost, HostEvent } from './types';
+ 
++/**
++ * When the page was last hidden. On iOS the app leaving the screen suspends the page, which cuts
++ * off a version search under way; one cut off that way waits for the page to show again and is
++ * tried again then, rather than failing with "Can't reach the server".
++ */
++let lastHidden =
++  typeof document !== 'undefined' && document.visibilityState === 'hidden'
++    ? Date.now()
++    : 0;
++if (typeof document !== 'undefined')
++  document.addEventListener('visibilitychange', () => {
++    if (document.visibilityState === 'hidden') lastHidden = Date.now();
++  });
++
++function untilVisible(): Promise<void> {
++  return new Promise((resolve) => {
++    if (document.visibilityState === 'visible') return resolve();
++    const shown = () => {
++      if (document.visibilityState !== 'visible') return;
++      document.removeEventListener('visibilitychange', shown);
++      resolve();
++    };
++    document.addEventListener('visibilitychange', shown);
++  });
++}
++
+ export type { Download, DownloadState, DownloadsHost } from './types';
+ export { useDownloadFolder, useDownloadList, useDownloadSpeeds } from './store';
+ 
+@@ -441,6 +471,7 @@ export function useDownloadRunner(paused: boolean): void {
+   }, [paused, ready, host]);
+ 
+   const resolve = useLatest(async (download: Download) => {
++    const started = Date.now();
+     try {
+       const info = await requestPlaybackInfo(
+         client,
+@@ -475,6 +506,12 @@ export function useDownloadRunner(paused: boolean): void {
+         );
+         return;
+       }
++      // Cut off by the app leaving the screen: tried again once the page shows again.
++      if (e instanceof ConnectionError && lastHidden >= started) {
++        await untilVisible();
++        setRetry((n) => n + 1);
++        return;
++      }
+       updateDownloads([
+         {
+           id: download.id,
 diff --git a/packages/web/src/lib/hosts/shell/bridge.ts b/packages/web/src/lib/hosts/shell/bridge.ts
 index 39f60cb8..f18c1eb0 100644
 --- a/packages/web/src/lib/hosts/shell/bridge.ts
