@@ -62,6 +62,9 @@ struct PlayFlow: ViewModifier {
     /// The model Picture in Picture hands back, for the player opened again on it.
     @State private var restored: PlayerModel?
     @ObservedObject private var pictureInPicture = TVPictureInPicture.shared
+    @ObservedObject private var follow = PartyFollow.shared
+    /// The party's next title, opened once the player before it has closed.
+    @State private var partyNext: PlayRequest?
     /// Waits for the version sheet to close, as one screen can't open over another closing.
     @State private var pendingPlay: PlayRequest?
     /// The title a version is being found for, without the list.
@@ -107,6 +110,12 @@ struct PlayFlow: ViewModifier {
                 restored = model
                 playing = model.request
             }
+            // A watch party's title, which the party opens on this Apple TV.
+            .onChange(of: follow.open?.id) { _, _ in
+                guard restoresPictureInPicture, let request = follow.open else { return }
+                follow.open = nil
+                if playing == nil { playing = request } else { partyNext = request }
+            }
             .onChange(of: choice?.id) { _, _ in
                 guard let choice, straight(choice) else { return }
                 self.choice = nil
@@ -115,7 +124,7 @@ struct PlayFlow: ViewModifier {
             .fullScreenCover(item: listed, onDismiss: {
                 if let request = pendingPlay {
                     pendingPlay = nil
-                    playing = request
+                    present(request)
                 }
             }) { choice in
                 VersionsView(choice: choice) { request in
@@ -131,6 +140,11 @@ struct PlayFlow: ViewModifier {
             }
             .fullScreenCover(item: $playing, onDismiss: {
                 restored = nil
+                if let next = partyNext {
+                    partyNext = nil
+                    playing = next
+                    return
+                }
                 if let next = listAfterPlayer {
                     listAfterPlayer = nil
                     choice = next
@@ -145,6 +159,16 @@ struct PlayFlow: ViewModifier {
                 .environmentObject(session)
                 .environmentObject(prefs)
             }
+    }
+
+    /// The player for a title; in a watch party, the title starts for everyone instead, and the party
+    /// opens it here as it does for the others.
+    private func present(_ request: PlayRequest) {
+        if WatchParty.shared.live, !request.isTrailer, !request.item.isChannel, request.partyEntry == nil {
+            PartyFollow.shared.playForParty(request)
+        } else {
+            playing = request
+        }
     }
 
     /// The version that was playing, else the first; the list where there's none to play.
@@ -168,7 +192,7 @@ struct PlayFlow: ViewModifier {
             playSession = named.playSessionId ?? playSession
         }
         LastVersions.set(choice.item.id, chosen)
-        playing = PlayRequest(item: choice.item, source: chosen, playSessionId: playSession, startMs: choice.startMs, queue: choice.queue)
+        present(PlayRequest(item: choice.item, source: chosen, playSessionId: playSession, startMs: choice.startMs, queue: choice.queue))
     }
 }
 
@@ -215,4 +239,6 @@ struct PlayRequest: Identifiable {
     var queue: [Item] = []
     /// Audio languages in place of the account's, as a trailer's own language stands in for Original.
     var audioLanguages: [String]?
+    /// The watch party's title it plays, which the party's commands drive.
+    var partyEntry: String?
 }

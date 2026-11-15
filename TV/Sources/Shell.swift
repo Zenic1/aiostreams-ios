@@ -2,11 +2,11 @@ import SwiftUI
 
 /// The places the rail leads to, in the web app's order (components/layout.tsx).
 enum Place: String, CaseIterable, Identifiable {
-    case account, home, discover, live, search, favourites, playlists, calendar, activity, settings
+    case account, home, discover, live, search, favourites, playlists, together, calendar, activity, settings
 
     var id: String { rawValue }
 
-    static let main: [Place] = [.home, .discover, .live, .search, .favourites, .playlists, .calendar, .activity]
+    static let main: [Place] = [.home, .discover, .live, .search, .favourites, .playlists, .together, .calendar, .activity]
 
     /// What the start page setting offers, as the web app's (lib/start-page.ts).
     static let startPages: [Place] = [.home, .discover, .live, .favourites, .calendar, .activity]
@@ -20,6 +20,7 @@ enum Place: String, CaseIterable, Identifiable {
         case .search: return L("Search")
         case .favourites: return L("Favourites")
         case .playlists: return L("Playlists")
+        case .together: return L("Watch together")
         case .calendar: return L("Calendar")
         case .activity: return L("Activity")
         case .settings: return L("Settings")
@@ -36,6 +37,7 @@ enum Place: String, CaseIterable, Identifiable {
         case .search: return "magnifyingglass"
         case .favourites: return "heart"
         case .playlists: return "list.bullet.rectangle.portrait"
+        case .together: return "person.2"
         case .calendar: return "calendar"
         case .activity: return "clock.arrow.circlepath"
         case .settings: return "gearshape"
@@ -139,6 +141,9 @@ struct MainView: View {
                 rail
             }
 
+            // What others in a watch party do, said briefly.
+            PartyToasts()
+
             // Live TV reminders, asked over whatever page is open.
             ReminderHost { channel in
                 Task { choice = await playChoice(for: channel, session: session) }
@@ -162,6 +167,8 @@ struct MainView: View {
             await followLink()
             guard let client = session.client, let userId = session.userId else { return }
             LiveReminders.shared.load(userId: userId)
+            // A watch party's titles open here as the party plays them.
+            PartyFollow.shared.attach(session)
             // Other devices' remotes: open or play a title here.
             ServerEvents.shared.skipStep = Double(prefs.seekStep)
             ServerEvents.shared.pageHandler = { command in Task { await remote(command) } }
@@ -211,6 +218,7 @@ struct MainView: View {
         case .search: SearchView()
         case .favourites: FavouritesView()
         case .playlists: PlaylistsView()
+        case .together: PartyView()
         case .calendar: CalendarView()
         case .activity: ActivityView()
         case .account, .settings: SettingsView()

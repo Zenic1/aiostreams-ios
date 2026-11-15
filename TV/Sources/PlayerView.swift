@@ -241,7 +241,12 @@ final class PlayerModel: ObservableObject {
                 let start = self.isLive ? nil : self.request.startMs.map { $0 / 1000 }
                 try await self.engine.load(url: url, startPosition: start, options: loadOptions,
                                            audioSourceStreamIndex: self.audioStreamIndex)
-                self.engine.play()
+                // A watch party's title waits for the group to start it; anything else plays.
+                if let entry = self.request.partyEntry {
+                    self.party = PartyFollower(model: self, playlistItemId: entry)
+                } else {
+                    self.engine.play()
+                }
                 self.report("/Sessions/Playing")
                 self.progressTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
                     MainActor.assumeIsolated { self?.report("/Sessions/Playing/Progress", event: "TimeUpdate") }
@@ -418,7 +423,25 @@ final class PlayerModel: ObservableObject {
         if changed, reported { report("/Sessions/Playing/Progress", event: value ? "Pause" : "Unpause") }
     }
 
-    func togglePause() { engine.togglePlayPause() }
+    func togglePause() {
+        // In a watch party, the group pauses and plays, for everyone.
+        if inParty {
+            WatchParty.shared.request(["type": WatchParty.shared.timeline?.playing == true ? "Pause" : "Unpause"])
+            return
+        }
+        engine.togglePlayPause()
+    }
+
+    /// Following a watch party's title: its commands drive the player, and its controls ask the group.
+    private(set) var party: PartyFollower?
+    var inParty: Bool { party != nil && WatchParty.shared.live }
+
+    /// A seek the party's timeline asks for, past the controls that would ask the group.
+    func followSeek(_ seconds: Double) {
+        let target = min(max(seconds, 0), max(duration - 1, 0))
+        position = target
+        Task { await engine.seek(to: target) }
+    }
 
     // MARK: Holding left or right
 
@@ -521,11 +544,17 @@ final class PlayerModel: ObservableObject {
 
     func seek(to seconds: Double) {
         let target = min(max(seconds, 0), max(duration - 1, 0))
+        if inParty {
+            WatchParty.shared.request(["type": "Seek", "positionMs": target * 1000])
+            return
+        }
         position = target
         Task { await engine.seek(to: target) }
     }
 
     func setSpeed(_ value: Double) {
+        // Everyone in a watch party plays at the same speed.
+        guard party == nil else { return }
         speed = value
         engine.setRate(Float(heldRate ?? value))
     }
@@ -534,6 +563,7 @@ final class PlayerModel: ObservableObject {
     @Published private(set) var heldRate: Double?
 
     func hold(_ rate: Double?) {
+        guard party == nil else { return }
         heldRate = rate
         engine.setRate(Float(rate ?? speed))
     }
@@ -584,9 +614,7 @@ final class PlayerModel: ObservableObject {
     }
 
     func skip(_ seconds: Double) {
-        let target = min(max(position + seconds, 0), max(duration - 1, 0))
-        position = target
-        Task { await engine.seek(to: target) }
+        seek(to: position + seconds)
     }
 
     func selectAudio(_ id: Int) {
@@ -665,6 +693,8 @@ final class PlayerModel: ObservableObject {
     /// Saves the position on the server and hands the screen back to the app.
     func stop() {
         guard !stopped else { return }
+        party?.stop()
+        party = nil
         progressTimer?.invalidate()
         loadTask?.cancel()
         if reported {

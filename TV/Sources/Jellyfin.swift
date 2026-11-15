@@ -21,6 +21,9 @@ struct ItemExtension: Decodable, Hashable {
     var recap: Bool?
     /// A programme its channel keeps after it airs, which plays from its start (server v2.38).
     var catchup: Bool?
+    /// An id for the title every AIOStreams server resolves, where its own id is this server's;
+    /// a watch party names titles by it.
+    var sharedId: String?
 }
 
 struct Item: Decodable, Identifiable, Hashable {
@@ -224,6 +227,11 @@ struct SourceExtension: Decodable, Hashable {
     var bingeGroup: String?
     /// The file's release, the same from every addon that lists it, which outlives the version's id.
     var release: String?
+    /// What a watch party matches its members' versions by.
+    var filename: String?
+    var size: Int64?
+    var releaseGroup: String?
+    var resolution: String?
 }
 
 /// A stretch of a title the server knows: an intro, recap, credits, preview or ad (Jellyfin's
@@ -350,8 +358,18 @@ struct PublicSystemInfo: Decodable {
     var aiostreams: ServerExtension?
 }
 
-/// The AIOStreams server's own part of its public info; only its presence is read.
-struct ServerExtension: Decodable {}
+/// The AIOStreams server's own part of its public info: whether it hosts watch parties, and the
+/// relay it suggests otherwise.
+struct ServerExtension: Decodable {
+    var features: [String: Int]?
+    var parties: Parties?
+
+    struct Parties: Decodable {
+        /// `off`, `users` or `public`: who besides its own users may use its relay.
+        var relay: String?
+        var defaultRelay: String?
+    }
+}
 
 struct PublicUser: Decodable, Identifiable, Hashable {
     var id: String

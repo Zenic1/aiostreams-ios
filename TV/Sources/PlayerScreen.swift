@@ -43,6 +43,13 @@ struct PlayerScreen: View {
                 .padding(.bottom, Theme.px(40))
             }
         }
+        // The party stopped this title, or moved on: its player closes.
+        .onReceive(PartyFollow.shared.$bound) { bound in
+            if let entry = model?.request.partyEntry, bound != entry {
+                model?.stop()
+                close()
+            }
+        }
         .task {
             guard model == nil else { return }
             if let existing {
@@ -115,6 +122,8 @@ struct PlayerScreen: View {
     }
 
     private func finish() {
+        // Leaving a watch party's title sits it out, staying in the party.
+        if let entry = model?.request.partyEntry { PartyFollow.shared.leftPlayer(entry) }
         model?.stop()
         close()
     }
@@ -323,6 +332,7 @@ private struct PlayerChrome: View {
                     .frame(maxHeight: .infinity, alignment: .top)
                     .padding(.top, Theme.px(48))
             }
+            if model.party != nil { PartyToasts() }
             if stats {
                 StatsOverlay(engine: model.engine)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
@@ -414,6 +424,11 @@ private struct PlayerChrome: View {
         // At the end, the next episode plays on where Jellyfin's autoplay is on.
         .onChange(of: model.finished) { _, done in
             guard done else { return }
+            // In a watch party, the group moves on to its next title, or stops.
+            if let entry = model.request.partyEntry, model.party != nil {
+                WatchParty.shared.request(["type": "NextItem", "playlistItemId": entry])
+                return
+            }
             if model.nextEpisode != nil && prefs.autoplayNext { playOn(auto: true) } else { close() }
         }
         .onChange(of: inside?.id) { _, _ in enter(inside) }
@@ -697,7 +712,7 @@ private struct PlayerChrome: View {
     /// Where the next episode is offered: at the credits when they end the episode, else the
     /// chosen lead before the end. None for a short video, or with the offer off.
     private var promptAt: Double? {
-        guard model.nextEpisode != nil, model.duration >= 40, prefs.nextPrompt != "off" else { return nil }
+        guard model.nextEpisode != nil, model.party == nil, model.duration >= 40, prefs.nextPrompt != "off" else { return nil }
         if prefs.nextPrompt == "credits",
            let credits = model.segments.first(where: { $0.type == "Outro" && endsEpisode($0) }) {
             return credits.start
