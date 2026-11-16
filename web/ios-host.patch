@@ -15,6 +15,35 @@ index e41938f9..d8ffaba2 100644
              shell.app,
            ],
            ...(shell.player && !shell.mpv
+diff --git a/packages/web/src/features/trailers/preview.tsx b/packages/web/src/features/trailers/preview.tsx
+index a2c187d4..69f04e8b 100644
+--- a/packages/web/src/features/trailers/preview.tsx
++++ b/packages/web/src/features/trailers/preview.tsx
+@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
+ import { useReducedMotion } from 'motion/react';
+ import { cn } from '@aiostreams/ui/core/styling';
+ import { useSession } from '@/lib/jellyfin/session';
++import { usePlaybackPrefs } from '@/lib/jellyfin/user-config';
+ import { useItem } from '@/lib/jellyfin/queries';
+ import { currentHost } from '@/lib/hosts';
+ import { settings, useSetting, type TrailerSpot } from '@/lib/settings';
+@@ -441,12 +442,16 @@ function PlayedPreview({
+   const [fit] = useSetting(settings.video.fit);
+   // Without it, the app's player keeps the last style it was sent.
+   const [subtitleStyle] = useSetting(settings.subtitle.style);
++  // The account's subtitle mode and languages, as the trailer page plays with: drawn once the
++  // preview opens full screen, where it shows subtitles (iOS app).
++  const { prefs } = usePlaybackPrefs();
+   const player = usePlayer(engines, {
+     client,
+     item,
+     url,
+     source,
+     subtitleStyle,
++    prefs,
+     startMs: 0,
+     onEnded,
+     fit: full ? undefined : 'crop',
 diff --git a/packages/web/src/lib/downloads/index.ts b/packages/web/src/lib/downloads/index.ts
 index c7d13569..6b991f63 100644
 --- a/packages/web/src/lib/downloads/index.ts
