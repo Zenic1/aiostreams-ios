@@ -29,7 +29,7 @@ struct DetailView: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            ItemBackdrop(item: shown, overArtwork: prefs.flag("artBackground", false))
+            ItemBackdrop(item: shown, overArtwork: prefs.artPages.contains("item"))
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.px(48)) {
                     header

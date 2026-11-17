@@ -78,6 +78,7 @@
 "Blur episodes you haven't started" = "Masquer les épisodes que vous n'avez pas commencés";
 "Bold" = "Gras";
 "Born %@" = "Né(e) le %@";
+"Browsing" = "Navigation";
 "Buffered" = "En mémoire tampon";
 "Calendar" = "Calendrier";
 "Can't reach the server" = "Impossible de joindre le serveur";
@@ -104,6 +105,7 @@
 "Connecting…" = "Connexion…";
 "Continue watching" = "Reprendre la lecture";
 "Continuing" = "En cours";
+"Controls" = "Contrôles";
 "Could not load the calendar" = "Impossible de charger le calendrier";
 "Couldn't open %@." = "Impossible d'ouvrir %@.";
 "Couldn't reach %@." = "Impossible de joindre %@.";
@@ -154,14 +156,19 @@
 "Held speed" = "Vitesse maintenue";
 "Hero" = "Bannière à la une";
 "Hero turns every" = "La bannière change toutes les";
+"Hidden" = "Masqué";
+"Hidden, channels also leave search and favourites." = "Masqués, les chaînes disparaissent aussi de la recherche et des favoris.";
 "High" = "Haut";
 "Home" = "Accueil";
+"Home, posters, trailers and episodes" = "Accueil, affiches, bandes-annonces et épisodes";
+"Home, search and catalogs" = "Accueil, recherche et catalogues";
 "How fast playback runs while you hold Select on the video." = "La vitesse de lecture tant que vous maintenez la sélection sur la vidéo.";
 "How to use the app and what each setting does." = "Comment utiliser l'application et rôle de chaque paramètre.";
 "Huge" = "Très grand";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "Si l'utilisateur a un code PIN, ajoutez-le après le mot de passe avec un /, comme password/1234.";
 "In progress" = "En cours";
 "In sync" = "Synchronisé";
+"In the navigation only" = "Dans la navigation uniquement";
 "In the party" = "Dans la soirée";
 "Interface" = "Interface";
 "Intros" = "Intros";
@@ -174,8 +181,8 @@
 "LIVE" = "EN DIRECT";
 "Language" = "Langue";
 "Language and how subtitles look" = "Langue et apparence des sous-titres";
+"Language and navigation" = "Langue et navigation";
 "Language and output" = "Langue et sortie";
-"Language, home, grids and episodes" = "Langue, accueil, grilles et épisodes";
 "Large" = "Grand";
 "Later shows subtitles, or plays the sound, after the picture; earlier, before it. Kept for this title." = "Plus tard affiche les sous-titres, ou joue le son, après l'image ; plus tôt, avant. Conservé pour ce titre.";
 "Leave the party" = "Quitter la session";
@@ -185,6 +192,7 @@
 "List only my languages" = "Lister uniquement mes langues";
 "Live" = "En direct";
 "Live TV" = "TV en direct";
+"Look and feel" = "Apparence";
 "Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it." = "La recherche des versions s'effectue dès l'ouverture de la page d'un titre, ce qui évite tout temps d'attente pour la lecture et l'affichage de la liste des versions. Chaque titre que vous ouvrez fait l'objet d'une recherche, même si vous ne le lancez pas.";
 "Lowest" = "Tout en bas";
 "Main" = "Principal";
@@ -212,7 +220,6 @@
 "New playlist" = "Nouvelle playlist";
 "Next %@: %@" = "Ensuite %@ : %@";
 "Next episode" = "Épisode suivant";
-"Next episode, controls and players" = "Épisode suivant, contrôles et lecteurs";
 "Next month" = "Mois suivant";
 "Next up" = "À suivre";
 "Next: %@" = "Ensuite : %@";
@@ -233,18 +240,21 @@
 "Nothing in this playlist yet." = "Rien dans cette playlist pour l'instant.";
 "Nothing with %@ on this server." = "Rien avec %@ sur ce serveur.";
 "Nothing's playing. Play a title and it starts for everyone." = "Rien ne passe. Lancez un titre et il démarre pour tout le monde.";
+"Nowhere" = "Nulle part";
 "OK" = "OK";
 "Off" = "Désactivé";
 "Off, the TV keeps the mode it's in when a channel starts, so channels start sooner, without the blank of a mode change." = "Désactivé, le téléviseur garde son mode au lancement d’une chaîne : les chaînes démarrent plus vite, sans l’écran noir d’un changement de mode.";
 "Off: play the 7.1 channels" = "Désactivé : lire les canaux 7.1";
 "Offer the next episode" = "Proposer l'épisode suivant";
 "On" = "Activé";
+"On home and in the navigation" = "Sur l’accueil et dans la navigation";
 "On your configure page, open Save & Install → Jellyfin apps → Connect, type this code into the Quick Connect box and approve it." = "Sur votre page de configuration, ouvrez Save & Install → Jellyfin apps → Connect, saisissez ce code dans le champ Quick Connect et approuvez-le.";
 "Only forced" = "Forcés uniquement";
 "Only the host controls playback." = "Seul l'hôte contrôle la lecture.";
 "Open" = "Ouvrir";
 "Orange" = "Orange";
 "Original language" = "Langue originale";
+"Other pages, such as settings" = "Autres pages, comme les réglages";
 "Other user" = "Autre utilisateur";
 "Others join with this code in Watch together, on %@." = "Les autres rejoignent avec ce code dans Regarder ensemble, sur %@.";
 "Outline" = "Contour";
@@ -267,7 +277,6 @@
 "Play the next episode automatically" = "Lire automatiquement l'épisode suivant";
 "Playback" = "Lecture";
 "Player" = "Lecteur";
-"Player controls" = "Commandes du lecteur";
 "Playing" = "Lecture en cours";
 "Playing in %@s" = "Lecture dans %@ s";
 "Playlist" = "Playlist";
@@ -275,6 +284,7 @@
 "Plum" = "Prune";
 "Poster size" = "Taille des affiches";
 "Poster text" = "Texte des affiches";
+"Posters and grids" = "Affiches et grilles";
 "Press Back again to leave" = "Appuyez à nouveau sur Retour pour quitter";
 "Press Back to pick another version." = "Appuyez sur Retour pour choisir une autre version.";
 "Prevent accidental exit" = "Éviter de quitter par accident";
@@ -390,6 +400,7 @@
 "That relay doesn't let you in." = "Ce relais ne vous autorise pas à entrer.";
 "That relay is too busy for another party." = "Ce relais est trop chargé pour accueillir une autre session.";
 "That relay runs a different version of watch parties." = "Ce relais utilise une version différente des sessions de visionnage.";
+"The artwork of the title you're on, blurred and darkened, behind these pages. The version list shows it with title pages." = "L’illustration du titre affiché, floutée et assombrie, derrière ces pages. La liste des versions l’affiche avec les pages de titre.";
 "The code the party's host sees, like ABCDE-12345." = "Le code que voit l'hôte, comme ABCDE-12345.";
 "The file's default" = "Celle du fichier";
 "The host removed you from the party." = "L'hôte vous a exclu de la session.";
@@ -398,6 +409,7 @@
 "The party ended." = "La session est terminée.";
 "The player's own" = "Celle du lecteur";
 "The player's subtitle menu lists subtitles in your languages, ones without a language and the one on. The rest wait under More languages." = "Le menu des sous-titres liste ceux dans vos langues, ceux sans langue définie et celui activé. Les autres figurent sous Autres langues.";
+"The player, its controls and video" = "Le lecteur, ses commandes et la vidéo";
 "The relay could not read that." = "Le relais n'a pas pu lire cela.";
 "The same style as the web app's, on every device you sign in to." = "Le même style que celui de l'application web, sur chaque appareil où vous vous connectez.";
 "The server refused this." = "Le serveur a refusé.";
@@ -414,6 +426,7 @@
 "Time format" = "Format de l'heure";
 "Title" = "Titre";
 "Title and year" = "Titre et année";
+"Title pages" = "Pages des titres";
 "Titles you favourite show here." = "Les titres que vous mettez en favoris s'affichent ici.";
 "Titles, synopses and version names stay in the language the server sends." = "Les titres, résumés et noms de versions restent dans la langue envoyée par le serveur.";
 "Today" = "Aujourd'hui";
@@ -437,7 +450,9 @@
 "User" = "Utilisateur";
 "Version" = "Version";
 "Version %@ is out. Install it the way you installed this copy." = "La version %@ est sortie. Installez-la comme vous avez installé cette copie.";
+"Versions" = "Versions";
 "Versions and links" = "Versions et liens";
+"Versions, next episode and skipping" = "Versions, épisode suivant et sauts";
 "Video" = "Vidéo";
 "Violet" = "Violet";
 "Wait for episodes to air" = "Attendre la diffusion des épisodes";

@@ -40,6 +40,27 @@ final class Preferences: ObservableObject {
     // MARK: Synced settings
 
     func text(_ key: String, _ fallback: String) -> String { custom[key] ?? fallback }
+
+    /// Where Live TV shows, as the web app's setting: on home and in the navigation (`home`), in the
+    /// navigation only (`nav`), or hidden (`off`), when channels also leave search.
+    var liveTv: String { text("liveTv", "home") }
+
+    /// The pages the background from artwork shows behind (the web app's `artBackground`): `item`
+    /// for title pages, `browse` for Home, search and catalogs, `other` for the rest. Title pages
+    /// where nothing is set; an earlier "1" was everywhere.
+    var artPages: [String] {
+        let all = ["item", "browse", "other"]
+        guard let raw = custom["artBackground"] else { return ["item"] }
+        if raw == "1" { return all }
+        let parts = raw.split(separator: ",").map(String.init)
+        return all.filter(parts.contains)
+    }
+
+    func setArtPages(_ pages: [String]) {
+        let ordered = ["item", "browse", "other"].filter(pages.contains)
+        let value = ordered == ["item"] ? nil : ordered.isEmpty ? "none" : ordered.joined(separator: ",")
+        set("artBackground", value, fallback: "")
+    }
     func flag(_ key: String, _ fallback: Bool) -> Bool { custom[key].map { $0 == "1" } ?? fallback }
     func number(_ key: String, _ fallback: Double) -> Double { custom[key].flatMap(Double.init) ?? fallback }
 
@@ -416,6 +437,8 @@ struct SettingsView: View {
 
     @State private var page: SettingsPage
     @State private var donating = false
+    /// The server has Live TV, which its setting only shows with.
+    @State private var hasLiveTv = false
     @FocusState private var tab: SettingsPage?
 
     /// You in the navigation opens Account; Settings opens Playback.
@@ -450,6 +473,11 @@ struct SettingsView: View {
         .focusScope(settingsScope)
         .ignoresSafeArea()
         .task { await loadFeaturedOptions() }
+        .task {
+            guard let client = session.client, let userId = session.userId else { return }
+            let views: ItemsResult? = try? await client.get("/UserViews", ["userId": userId])
+            hasLiveTv = views?.items?.contains { $0.collectionType == "livetv" } == true
+        }
         .task { if !DemoMode.active { newer = await UpdateCheck.newer() } }
         .task {
             guard let client = session.client else { return }
@@ -478,7 +506,7 @@ struct SettingsView: View {
     @ViewBuilder private func pageContent(_ page: SettingsPage) -> some View {
         switch page {
         case .playback:
-            section(nil, note: L("Saved to your account, so the web app and your other devices use them too.")) {
+            section(L("Versions"), note: L("Saved to your account, so the web app and your other devices use them too.")) {
                 toggle(L("Auto-play the first version"), key: "autoPlayFirst", fallback: false)
                 toggle(L("Find versions when a title opens"), key: "preloadVersions", fallback: false)
                 note(L("Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it."))
@@ -509,7 +537,8 @@ struct SettingsView: View {
                        options: [(L("Never"), "0")] + [2, 3, 4, 5, 8].map { (L("After %ld episodes", $0), String($0)) })
                 note(L("The next episode plays in the version that matches the one you're watching. Where none does, the first plays, or with that off, the versions are listed. Back hides the offer."))
             }
-            section(L("Player controls"), note: L("Kept on this Apple TV.")) {
+        case .player:
+            section(L("Controls"), note: L("Kept on this Apple TV.")) {
                 row(L("Skip step"), value: L("%ld seconds", prefs.seekStep)) {
                     chooser = Chooser(title: L("Skip step"), options: [5, 10, 15, 30].map { (L("%ld seconds", $0), String($0)) },
                                       current: String(prefs.seekStep)) { prefs.seekStep = Int($0) ?? 10 }
@@ -646,7 +675,7 @@ struct SettingsView: View {
                     .padding(Theme.px(12))
             }
         case .interface:
-            section(nil, note: nil) {
+            section(L("Navigation"), note: L("Kept on this Apple TV.")) {
                 row(L("Navigation"), value: prefs.tvNavigation == "top" ? L("Top bar") : L("Rail")) {
                     chooser = Chooser(title: L("Navigation"), options: [(L("Rail"), "rail"), (L("Top bar"), "top")],
                                       current: prefs.tvNavigation) { prefs.tvNavigation = $0 }
@@ -658,30 +687,12 @@ struct SettingsView: View {
                         current: prefs.startPage
                     ) { prefs.startPage = $0 }
                 }
-                toggle(L("Merge continue watching and next up"), key: "mergeNextUp", fallback: false)
-                row(L("Card previews"), value: prefs.cardPreviews ? L("On") : L("Off")) { prefs.cardPreviews.toggle() }
-                if prefs.cardPreviews {
-                    row(L("Trailers in card previews"), value: prefs.cardTrailers ? L("On") : L("Off")) { prefs.cardTrailers.toggle() }
-                    row(L("Trailer sound"), value: prefs.trailerSound ? L("On") : L("Off")) { prefs.trailerSound.toggle() }
-                }
-                toggle(L("Combine movie and show results"), key: "combineSearch", fallback: false)
-                toggle(L("Blur episodes you haven't started"), key: "blurSpoilers", fallback: false)
-                row(L("Featured on home"), value: featuredLabel) { chooseFeatured() }
-                synced(L("Hero"), key: "heroMode", fallback: "rotate",
-                       options: [(L("Rotates through featured titles"), "rotate"), (L("Follows the selected card"), "follow"),
-                                 (L("Follows the selected card, compact"), "corner")])
-                synced(L("Poster size"), key: "posterSize", fallback: "medium",
-                       options: [(L("Small"), "small"), (L("Medium"), "medium"), (L("Large"), "large")])
-                synced(L("Poster text"), key: "posterText", fallback: "title,year",
-                       options: [(L("Title and year"), "title,year"), (L("Title"), "title"), (L("Year"), "year"), (L("None"), "none")])
                 row(L("Prevent accidental exit"), value: prefs.preventAccidentalExit ? L("On") : L("Off")) {
                     prefs.preventAccidentalExit.toggle()
                 }
                 note(prefs.preventAccidentalExit
                     ? L("Back on Home shows “Press Back again to leave”, and only a second press leaves the app.")
                     : L("Back on Home leaves the app straight away."))
-                synced(L("Hero turns every"), key: "heroSeconds", fallback: "9",
-                       options: [5, 7, 9, 12, 15, 20, 30].map { (L("%ld seconds", $0), String($0)) })
             }
             // The web app's Language card: its language and clock, synced.
             section(L("Language"), note: L("Titles, synopses and version names stay in the language the server sends.")) {
@@ -692,13 +703,51 @@ struct SettingsView: View {
                 synced(L("Time format"), key: "timeFormat", fallback: "auto",
                        options: [(L("Automatic"), "auto"), (L("12-hour"), "12"), (L("24-hour"), "24")])
             }
+        case .browsing:
+            section(L("Home"), note: L("Shared with the web app.")) {
+                row(L("Featured on home"), value: featuredLabel) { chooseFeatured() }
+                synced(L("Hero"), key: "heroMode", fallback: "rotate",
+                       options: [(L("Rotates through featured titles"), "rotate"), (L("Follows the selected card"), "follow"),
+                                 (L("Follows the selected card, compact"), "corner")])
+                synced(L("Hero turns every"), key: "heroSeconds", fallback: "9",
+                       options: [5, 7, 9, 12, 15, 20, 30].map { (L("%ld seconds", $0), String($0)) })
+                toggle(L("Merge continue watching and next up"), key: "mergeNextUp", fallback: false)
+                if hasLiveTv {
+                    synced(L("Live TV"), key: "liveTv", fallback: "home",
+                           options: [(L("On home and in the navigation"), "home"), (L("In the navigation only"), "nav"),
+                                     (L("Hidden"), "off")])
+                    note(L("Hidden, channels also leave search and favourites."))
+                }
+            }
+            section(L("Posters and grids"), note: nil) {
+                synced(L("Poster size"), key: "posterSize", fallback: "medium",
+                       options: [(L("Small"), "small"), (L("Medium"), "medium"), (L("Large"), "large")])
+                synced(L("Poster text"), key: "posterText", fallback: "title,year",
+                       options: [(L("Title and year"), "title,year"), (L("Title"), "title"), (L("Year"), "year"), (L("None"), "none")])
+                toggle(L("Combine movie and show results"), key: "combineSearch", fallback: false)
+                row(L("Card previews"), value: prefs.cardPreviews ? L("On") : L("Off")) { prefs.cardPreviews.toggle() }
+                if prefs.cardPreviews {
+                    row(L("Trailers in card previews"), value: prefs.cardTrailers ? L("On") : L("Off")) { prefs.cardTrailers.toggle() }
+                    row(L("Trailer sound"), value: prefs.trailerSound ? L("On") : L("Off")) { prefs.trailerSound.toggle() }
+                }
+            }
+            section(L("Episodes"), note: nil) {
+                toggle(L("Blur episodes you haven't started"), key: "blurSpoilers", fallback: false)
+            }
         case .theme:
             section(nil, note: L("Shared with the web app.")) {
                 synced(L("Accent colour"), key: "accentColor", fallback: "",
                        options: [(L("Default"), ""), (L("Blue"), "#3b82f6"), (L("Sky"), "#0ea5e9"), (L("Teal"), "#14b8a6"),
                                  (L("Green"), "#22c55e"), (L("Amber"), "#f59e0b"), (L("Orange"), "#f97316"), (L("Red"), "#ef4444"),
                                  (L("Pink"), "#ec4899"), (L("Violet"), "#8b5cf6")])
-                toggle(L("Background from artwork"), key: "artBackground", fallback: false)
+                row(L("Background from artwork"), value: artPagesLabel) {
+                    picker = MultiChooser(
+                        title: L("Background from artwork"),
+                        note: L("The artwork of the title you're on, blurred and darkened, behind these pages. The version list shows it with title pages."),
+                        options: Self.artPageOptions,
+                        chosen: prefs.artPages
+                    ) { prefs.setArtPages($0) }
+                }
                 synced(L("Background"), key: "backgroundColor", fallback: "",
                        options: [(L("Default"), ""), (L("Black"), "#000000"), (L("Charcoal"), "#1c1c1f"), (L("Slate"), "#1e2836"),
                                  (L("Navy"), "#0a1846"), (L("Plum"), "#24102e"), (L("Forest"), "#0c2018"), (L("Maroon"), "#2a0c12")])
@@ -747,8 +796,9 @@ struct SettingsView: View {
     /// The pages down the side, in the web app's two cards, Watching and App. Moving onto one opens it.
     private var tabs: some View {
         VStack(alignment: .leading, spacing: Theme.px(12)) {
-            tabGroup(L("Watching"), SettingsPage.allCases.filter(\.watching))
-            tabGroup(L("App"), SettingsPage.allCases.filter { !$0.watching })
+            tabGroup(L("Watching"), SettingsPage.allCases.filter { $0.group == 0 })
+            tabGroup(L("Look and feel"), SettingsPage.allCases.filter { $0.group == 1 })
+            tabGroup(L("App"), SettingsPage.allCases.filter { $0.group == 2 })
             // As the web app's, below the tabs: its links, here as codes to scan.
             Button { donating = true } label: {
                 Label(L("Donate"), systemImage: "heart")
@@ -990,6 +1040,16 @@ struct SettingsView: View {
         rate.formatted(.number.precision(.fractionLength(0...1)).locale(AppLanguage.locale))
     }
 
+    static var artPageOptions: [(label: String, value: String)] {
+        [(L("Title pages"), "item"), (L("Home, search and catalogs"), "browse"), (L("Other pages, such as settings"), "other")]
+    }
+
+    private var artPagesLabel: String {
+        let pages = prefs.artPages
+        if pages.isEmpty { return L("Nowhere") }
+        return Self.artPageOptions.filter { pages.contains($0.value) }.map(\.label).joined(separator: ", ")
+    }
+
     private func nitsName(_ nits: Int) -> String { nits == 0 ? L("Off") : L("%@ nits", String(nits)) }
 
     private func boostName(_ db: Int) -> String { db == 0 ? L("Off") : L("+%@ dB", String(db)) }
@@ -1015,17 +1075,26 @@ struct SettingsView: View {
 
 /// The settings' pages, as the web app's settings tabs, in its Watching and App groups.
 enum SettingsPage: String, CaseIterable, Identifiable {
-    case playback, audio, subtitles, interface, theme, account, about
+    case playback, player, audio, subtitles, interface, browsing, theme, account, about
 
     var id: String { rawValue }
-    var watching: Bool { self == .playback || self == .audio || self == .subtitles }
+    /// The web app's groups: Watching, Look and feel, App.
+    var group: Int {
+        switch self {
+        case .playback, .player, .audio, .subtitles: return 0
+        case .interface, .browsing, .theme: return 1
+        case .account, .about: return 2
+        }
+    }
 
     var name: String {
         switch self {
         case .playback: return L("Playback")
+        case .player: return L("Player")
         case .audio: return L("Audio")
         case .subtitles: return L("Subtitles")
         case .interface: return L("Interface")
+        case .browsing: return L("Browsing")
         case .theme: return L("Theme")
         case .account: return L("Account")
         case .about: return L("About")
@@ -1034,10 +1103,12 @@ enum SettingsPage: String, CaseIterable, Identifiable {
 
     var detail: String {
         switch self {
-        case .playback: return L("Next episode, controls and players")
+        case .playback: return L("Versions, next episode and skipping")
+        case .player: return L("The player, its controls and video")
         case .audio: return L("Language and output")
         case .subtitles: return L("Language and how subtitles look")
-        case .interface: return L("Language, home, grids and episodes")
+        case .interface: return L("Language and navigation")
+        case .browsing: return L("Home, posters, trailers and episodes")
         case .theme: return L("Colours and background")
         case .account: return L("Who you are signed in as")
         case .about: return L("Versions and links")
@@ -1047,9 +1118,11 @@ enum SettingsPage: String, CaseIterable, Identifiable {
     var icon: String {
         switch self {
         case .playback: return "play.circle"
+        case .player: return "play.rectangle"
         case .audio: return "speaker.wave.2"
         case .subtitles: return "captions.bubble"
         case .interface: return "square.grid.2x2"
+        case .browsing: return "rectangle.stack"
         case .theme: return "paintpalette"
         case .account: return "person"
         case .about: return "info.circle"
