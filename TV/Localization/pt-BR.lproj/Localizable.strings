@@ -8,6 +8,7 @@
 "%@ joined" = "%@ entrou";
 "%@ jumped to %@" = "%1$@ avançou para %2$@";
 "%@ left" = "%@ restantes";
+"%@ nits" = "%@ nits";
 "%@ on %@" = "Às %1$@, no canal %2$@";
 "%@ paused" = "%@ pausou";
 "%@ resumed" = "%@ retomou a reprodução";
@@ -118,7 +119,9 @@
 "Dialogue boost" = "Realce de diálogos";
 "Discover" = "Explorar";
 "Dismiss" = "Dispensar";
+"Documentation" = "Documentação";
 "Don't skip" = "Não pular";
+"Donate" = "Doar";
 "Earlier" = "Antes";
 "Ended" = "Finalizada";
 "Enter the code the other device shows to sign it in to this account." = "Digite o código que o outro dispositivo mostra para conectá-lo a esta conta.";
@@ -133,6 +136,7 @@
 "Follows the selected card" = "Acompanha o cartão selecionado";
 "Follows the selected card, compact" = "Segue o card selecionado, compacto";
 "Font" = "Fonte";
+"For a TV dimmer than the film: HDR10 brighter than the peak you choose is rolled off by the app, so highlights keep their detail, and the TV is told not to dim it again. Pick your TV's peak brightness. Needs tvOS 26; Dolby Vision, HLG and SDR are left as they are. A title it maps has no Picture in Picture, and Atmos in Dolby Digital Plus plays without its heights." = "Para uma TV menos brilhante que o filme: o app suaviza o HDR10 acima do pico escolhido, para que os realces mantenham os detalhes, e a TV é avisada para não escurecê-lo de novo. Escolha o pico de brilho da sua TV. Requer tvOS 26; Dolby Vision, HLG e SDR ficam como estão. Um título processado assim não tem Picture in Picture, e o Atmos em Dolby Digital Plus toca sem os canais de altura.";
 "Forced" = "Forçada";
 "Forced, for foreign parts only" = "Forçadas (apenas para trechos em outros idiomas)";
 "Forest" = "Floresta";
@@ -142,6 +146,7 @@
 "Go to show" = "Ir para a série";
 "Green" = "Verde";
 "Guide" = "Guia";
+"HDR10 tone mapping" = "Mapeamento de tons HDR10";
 "Half" = "Metade";
 "Height" = "Altura";
 "Held speed" = "Velocidade ao segurar";
@@ -150,6 +155,7 @@
 "High" = "Alto";
 "Home" = "Início";
 "How fast playback runs while you hold Select on the video." = "A velocidade da reprodução enquanto você segura selecionar no vídeo.";
+"How to use the app and what each setting does." = "Como usar o app e o que cada configuração faz.";
 "Huge" = "Muito grande";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "Se o usuário tiver um PIN, adicione-o depois da senha com uma /, como password/1234.";
 "In progress" = "Em andamento";
@@ -354,6 +360,7 @@
 "Solid" = "Sólido";
 "Someone" = "Alguém";
 "Sound" = "Som";
+"Source code" = "Código-fonte";
 "Speed" = "Velocidade";
 "Start a party" = "Iniciar uma sessão";
 "Start page" = "Página inicial";
@@ -439,6 +446,7 @@
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "O que suas caixas de som ou receiver suportam. Som surround com mais canais é reduzido, mantendo os diálogos.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Quando uma versão tem mais de um tipo de faixa de áudio, o primeiro disponível desta lista é reproduzido.";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Quando uma versão tem mais de uma legenda no seu idioma, a primeira disponível desta lista é exibida. Comentários ficam por último.";
+"Where the app is made, and where to report a problem." = "Onde o aplicativo é feito e onde relatar um problema.";
 "White" = "Branco";
 "Who you are signed in as" = "Conta em uso";
 "Who's watching?" = "Quem está assistindo?";

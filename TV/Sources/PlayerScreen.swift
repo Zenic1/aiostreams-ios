@@ -82,6 +82,7 @@ struct PlayerScreen: View {
             look: prefs.subtitleLook,
             speakers: prefs.speakers,
             animeUpscaling: prefs.animeUpscaling,
+            toneMapNits: prefs.toneMapNits,
             userId: session.userId,
             rules: prefs.playerRules
         )

@@ -104,6 +104,8 @@ final class PlayerModel: ObservableObject {
     private var audioStreamIndex: Int32?
     private let speakers: SpatialSpeakerLayout?
     private let animeUpscaling: Bool
+    /// HDR10 tone mapping's target in nits, 0 for off.
+    private let toneMapNits: Int
     private let rules: PlayerRules
     /// The server's segments, before the file's chapters are weighed against them.
     private var serverSegments: [MediaSegment] = []
@@ -113,7 +115,7 @@ final class PlayerModel: ObservableObject {
          remember: (audio: Bool, subtitles: Bool) = (true, true), audioShaping: AudioShaping = AudioShaping(),
          audioDelay: Double = 0,
          liveDisplay: (rate: Bool, range: Bool) = (true, true),
-         look: SubtitleLook = SubtitleLook(), speakers: SpatialSpeakerLayout? = .l714, animeUpscaling: Bool = false,
+         look: SubtitleLook = SubtitleLook(), speakers: SpatialSpeakerLayout? = .l714, animeUpscaling: Bool = false, toneMapNits: Int = 0,
          userId: String? = nil, rules: PlayerRules = PlayerRules()) {
         self.request = request
         isLive = request.source.isInfiniteStream == true || request.item.isChannel
@@ -126,6 +128,7 @@ final class PlayerModel: ObservableObject {
         self.liveDisplay = liveDisplay
         self.speakers = speakers
         self.animeUpscaling = animeUpscaling
+        self.toneMapNits = toneMapNits
         self.rules = rules
         self.userId = userId
         engine = SharedEngine.engine
@@ -228,6 +231,10 @@ final class PlayerModel: ObservableObject {
         // as Dolby MAT (tvOS 26 and later); off, they play as their 7.1 channels.
         options.objectAudioRendering = speakers.map { .render($0) } ?? .off
         options.isLive = isLive
+        // HDR10 brighter than the TV is rolled off to its peak (the engine passes the rest by).
+        if toneMapNits > 0, !request.isTrailer {
+            options.videoProcessing = VideoProcessingOptions(targetPeakNits: Double(toneMapNits))
+        }
         if isLive {
             // With either match off, the app writes the TV's mode itself, or leaves it as it is.
             if !(liveDisplay.rate && liveDisplay.range) { options.displayCriteriaOwner = .host }
@@ -251,6 +258,15 @@ final class PlayerModel: ObservableObject {
                 let start = self.isLive ? nil : self.request.startMs.map { $0 / 1000 }
                 try await self.engine.load(url: url, startPosition: start, options: loadOptions,
                                            audioSourceStreamIndex: self.audioStreamIndex)
+                // A channel whose sound the engine's own reader identified none of plays silent there:
+                // once more on AVPlayer, which reads the live playlist itself.
+                if self.isLive, !loadOptions.nativeRemoteHLS, self.engine.videoRoute != .remoteBypass,
+                   !self.engine.audioTracks.isEmpty, self.engine.audioTracks.allSatisfy({ $0.channels <= 0 }) {
+                    AppLog.warn("player", "live audio unidentified, loading again on AVPlayer")
+                    loadOptions.nativeRemoteHLS = true
+                    try await self.engine.load(url: url, startPosition: nil, options: loadOptions,
+                                               audioSourceStreamIndex: self.audioStreamIndex)
+                }
                 if self.isLive, self.liveDisplay.rate != self.liveDisplay.range { self.matchLiveDisplay() }
                 // A watch party's title waits for the group to start it; anything else plays.
                 if let entry = self.request.partyEntry {
@@ -258,6 +274,7 @@ final class PlayerModel: ObservableObject {
                 } else {
                     self.engine.play()
                 }
+                if self.isLive, self.request.partyEntry == nil { self.nudgeIfFrozen() }
                 self.report("/Sessions/Playing")
                 self.progressTimer = Timer.scheduledTimer(withTimeInterval: 10, repeats: true) { [weak self] _ in
                     MainActor.assumeIsolated { self?.report("/Sessions/Playing/Progress", event: "TimeUpdate") }
@@ -471,6 +488,21 @@ final class PlayerModel: ObservableObject {
         let rate = liveDisplay.rate ? Float(engine.sourceVideoFrameRate ?? Double(current)) : current
         manager.preferredDisplayCriteria = AVDisplayCriteria(refreshRate: rate, formatDescription: description)
         wroteCriteria = true
+    }
+
+    /// A channel that loads but doesn't move a few seconds later is paused and played once, which
+    /// starts most that stall at their first frame.
+    private func nudgeIfFrozen() {
+        let from = position
+        Task { [weak self] in
+            try? await Task.sleep(for: .seconds(6))
+            guard let self, !self.stopped, !self.paused, self.position - from < 1 else { return }
+            AppLog.warn("player", "live channel moved \(self.position - from) s in 6 s; pausing and playing it once")
+            self.engine.pause()
+            try? await Task.sleep(for: .milliseconds(500))
+            guard !self.stopped else { return }
+            self.engine.play()
+        }
     }
 
     /// A seek the party's timeline asks for, past the controls that would ask the group.

@@ -430,7 +430,7 @@ private struct GuideView: View {
                     LazyVStack(alignment: .leading, spacing: Self.gap) {
                         ForEach(Array(channels.enumerated()), id: \.element.id) { index, channel in
                             GuideRow(channel: channel, programmes: schedules[channel.id] ?? [], layout: layout, now: now,
-                                     focus: focus, play: play, playFromStart: playFromStart)
+                                     focus: focus, scrolled: scrolled, play: play, playFromStart: playFromStart)
                                 .onAppear { if index >= channels.count - 10 { more() } }
                         }
                     }
@@ -582,6 +582,20 @@ private struct GuideChannel: View {
     }
 }
 
+/// "No guide for this channel", kept beside the channels wherever the guide is scrolled to.
+private struct GuideEmptyLabel: View {
+    @ObservedObject var scrolled: GuideScroll
+
+    var body: some View {
+        Text(L("No guide for this channel"))
+            .font(Theme.font(Theme.sm))
+            .foregroundStyle(Theme.gray500)
+            .padding(.horizontal, Theme.px(12))
+            .frame(height: GuideView.rowHeight)
+            .offset(x: max(0, scrolled.offset.x))
+    }
+}
+
 /// One channel's programmes across the guide.
 private struct GuideRow: View {
     @EnvironmentObject private var prefs: Preferences
@@ -591,6 +605,7 @@ private struct GuideRow: View {
     let layout: GuideLayout
     let now: Date
     let focus: GuideFocus
+    let scrolled: GuideScroll
     let play: (Item) -> Void
     let playFromStart: (Item) -> Void
 
@@ -624,11 +639,7 @@ private struct GuideRow: View {
                 .fill(.white.opacity(0.02))
                 .frame(width: layout.width, height: GuideView.rowHeight)
             if segments.isEmpty {
-                Text(L("No guide for this channel"))
-                    .font(Theme.font(Theme.sm))
-                    .foregroundStyle(Theme.gray500)
-                    .padding(.horizontal, Theme.px(12))
-                    .frame(height: GuideView.rowHeight)
+                GuideEmptyLabel(scrolled: scrolled)
             }
             HStack(spacing: 0) {
                 ForEach(segments, id: \.id) { segment in

@@ -8,6 +8,7 @@
 "%@ joined" = "%@ bergabung";
 "%@ jumped to %@" = "%1$@ melompat ke %2$@";
 "%@ left" = "%@ tersisa";
+"%@ nits" = "%@ nit";
 "%@ on %@" = "%1$@ di %2$@";
 "%@ paused" = "%@ menjeda pemutaran";
 "%@ resumed" = "%@ melanjutkan pemutaran";
@@ -118,7 +119,9 @@
 "Dialogue boost" = "Penguatan dialog";
 "Discover" = "Jelajahi";
 "Dismiss" = "Tutup";
+"Documentation" = "Dokumentasi";
 "Don't skip" = "Jangan lewati";
+"Donate" = "Donasi";
 "Earlier" = "Sebelumnya";
 "Ended" = "Selesai";
 "Enter the code the other device shows to sign it in to this account." = "Masukkan kode yang ditampilkan perangkat lain untuk memasukkannya ke akun ini.";
@@ -133,6 +136,7 @@
 "Follows the selected card" = "Mengikuti kartu yang dipilih";
 "Follows the selected card, compact" = "Mengikuti kartu yang dipilih, ringkas";
 "Font" = "Font";
+"For a TV dimmer than the film: HDR10 brighter than the peak you choose is rolled off by the app, so highlights keep their detail, and the TV is told not to dim it again. Pick your TV's peak brightness. Needs tvOS 26; Dolby Vision, HLG and SDR are left as they are. A title it maps has no Picture in Picture, and Atmos in Dolby Digital Plus plays without its heights." = "Untuk TV yang lebih redup dari filmnya: HDR10 yang melebihi puncak pilihanmu diredam oleh aplikasi, sehingga bagian terang tetap detail, dan TV diminta tidak meredupkannya lagi. Pilih kecerahan puncak TV-mu. Perlu tvOS 26; Dolby Vision, HLG, dan SDR dibiarkan apa adanya. Judul yang diproses tidak mendukung Gambar dalam Gambar, dan Atmos dalam Dolby Digital Plus diputar tanpa kanal atasnya.";
 "Forced" = "Paksa";
 "Forced, for foreign parts only" = "Paksa, hanya untuk bagian berbahasa asing";
 "Forest" = "Hutan";
@@ -142,6 +146,7 @@
 "Go to show" = "Ke serial";
 "Green" = "Hijau";
 "Guide" = "Panduan";
+"HDR10 tone mapping" = "Pemetaan nada HDR10";
 "Half" = "Setengah";
 "Height" = "Ketinggian";
 "Held speed" = "Kecepatan saat ditahan";
@@ -150,6 +155,7 @@
 "High" = "Tinggi";
 "Home" = "Beranda";
 "How fast playback runs while you hold Select on the video." = "Kecepatan pemutaran saat kamu menahan tombol pilih di video.";
+"How to use the app and what each setting does." = "Cara menggunakan aplikasi dan fungsi setiap pengaturan.";
 "Huge" = "Sangat besar";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "Jika pengguna punya PIN, tambahkan setelah kata sandi dengan /, seperti password/1234.";
 "In progress" = "Sedang ditonton";
@@ -354,6 +360,7 @@
 "Solid" = "Solid";
 "Someone" = "Seseorang";
 "Sound" = "Suara";
+"Source code" = "Kode sumber";
 "Speed" = "Kecepatan";
 "Start a party" = "Mulai sesi nonton bersama";
 "Start page" = "Halaman awal";
@@ -439,6 +446,7 @@
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Format yang didukung speaker atau penerima audio Anda. Audio surround dengan lebih banyak saluran akan dicampur ke jumlah saluran yang didukung, dengan dialog tetap dipertahankan.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Jika suatu versi memiliki lebih dari satu jenis trek audio, jenis pertama dalam daftar ini yang tersedia akan diputar.";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Jika suatu versi memiliki lebih dari satu subtitel dalam bahasa Anda, jenis pertama dalam daftar ini yang tersedia akan ditampilkan. Subtitel komentar ditempatkan paling akhir.";
+"Where the app is made, and where to report a problem." = "Tempat aplikasi dikembangkan dan tempat melaporkan masalah.";
 "White" = "Putih";
 "Who you are signed in as" = "Identitas pengguna yang Anda gunakan untuk masuk";
 "Who's watching?" = "Siapa yang sedang menonton?";

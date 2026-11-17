@@ -8,6 +8,7 @@
 "%@ joined" = "%@ katıldı";
 "%@ jumped to %@" = "%1$@ %2$@ tarafına geçti";
 "%@ left" = "%@ kaldı";
+"%@ nits" = "%@ nit";
 "%@ on %@" = "%2$@ kanalında %1$@";
 "%@ paused" = "%@ duraklattı";
 "%@ resumed" = "%@ kaldığı yerden devam ettirdi";
@@ -118,7 +119,9 @@
 "Dialogue boost" = "Diyalogları güçlendir";
 "Discover" = "Keşfet";
 "Dismiss" = "Kapat";
+"Documentation" = "Dökümentasyon";
 "Don't skip" = "Atlama";
+"Donate" = "Bağış yap";
 "Earlier" = "Daha önce";
 "Ended" = "Bitti";
 "Enter the code the other device shows to sign it in to this account." = "Diğer cihazı bu hesapla giriş yaptırmak için gösterdiği kodu gir.";
@@ -133,6 +136,7 @@
 "Follows the selected card" = "Seçili kartı takip eder";
 "Follows the selected card, compact" = "Seçili kartı takip eder, kompakt";
 "Font" = "Yazı tipi";
+"For a TV dimmer than the film: HDR10 brighter than the peak you choose is rolled off by the app, so highlights keep their detail, and the TV is told not to dim it again. Pick your TV's peak brightness. Needs tvOS 26; Dolby Vision, HLG and SDR are left as they are. A title it maps has no Picture in Picture, and Atmos in Dolby Digital Plus plays without its heights." = "Filmden daha karanlık bir TV için: seçtiğin tepe parlaklığın üzerindeki HDR10 uygulama tarafından yumuşatılır, böylece parlak alanlar ayrıntısını korur ve TV’den onu yeniden karartmaması istenir. TV’nin tepe parlaklığını seç. tvOS 26 gerekir; Dolby Vision, HLG ve SDR olduğu gibi kalır. Bu şekilde işlenen bir içerikte Resim İçinde Resim olmaz ve Dolby Digital Plus’taki Atmos yükseklik kanalları olmadan çalar.";
 "Forced" = "Zorunlu";
 "Forced, for foreign parts only" = "Zorunlu, yalnızca yabancı dildeki kısımlar";
 "Forest" = "Orman";
@@ -142,6 +146,7 @@
 "Go to show" = "Diziye git";
 "Green" = "Yeşil";
 "Guide" = "Yayın akışı";
+"HDR10 tone mapping" = "HDR10 ton eşleme";
 "Half" = "Yarı";
 "Height" = "Yükseklik";
 "Held speed" = "Basılı tutma hızı";
@@ -150,6 +155,7 @@
 "High" = "Yüksek";
 "Home" = "Ana sayfa";
 "How fast playback runs while you hold Select on the video." = "Videoda seçme tuşunu basılı tutarken oynatmanın hızı.";
+"How to use the app and what each setting does." = "Uygulamanın kullanımı ve ayarların işlevleri.";
 "Huge" = "Kocaman";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "Kullanıcının PIN'i varsa şifreden sonra / ile ekle, örneğin password/1234.";
 "In progress" = "Devam eden";
@@ -354,6 +360,7 @@
 "Solid" = "Düz";
 "Someone" = "Birisi";
 "Sound" = "Ses";
+"Source code" = "Kaynak kodu";
 "Speed" = "Hız";
 "Start a party" = "Birlikte izlemeyi başlat";
 "Start page" = "Başlangıç sayfası";
@@ -439,6 +446,7 @@
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Hoparlörlerinin veya alıcının desteklediği kanal sayısı. Daha fazla kanallı çevresel ses, diyaloglar korunarak bu sayıya indirilir.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Bir sürümde birden fazla ses parçası türü varsa bu listedeki ilk mevcut tür oynatılır.";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Bir sürümde tercih ettiğin dilde birden fazla altyazı varsa bu listedeki ilk mevcut tür gösterilir. Yorum altyazıları en sona bırakılır.";
+"Where the app is made, and where to report a problem." = "Uygulamanın geliştirildiği ve sorun bildirebileceğin yer.";
 "White" = "Beyaz";
 "Who you are signed in as" = "Oturum açtığın hesap";
 "Who's watching?" = "Kim izliyor?";

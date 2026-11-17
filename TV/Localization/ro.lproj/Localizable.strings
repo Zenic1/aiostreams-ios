@@ -8,6 +8,7 @@
 "%@ joined" = "%@ s-a alăturat";
 "%@ jumped to %@" = "%1$@ a sărit la %2$@";
 "%@ left" = "%@ rămas";
+"%@ nits" = "%@ niți";
 "%@ on %@" = "%1$@ pe %2$@";
 "%@ paused" = "%@ a pus pauză";
 "%@ resumed" = "%@ a reluat redarea";
@@ -118,7 +119,9 @@
 "Dialogue boost" = "Amplificare dialog";
 "Discover" = "Descoperă";
 "Dismiss" = "Închide";
+"Documentation" = "Documentație";
 "Don't skip" = "Nu sări";
+"Donate" = "Donează";
 "Earlier" = "Mai devreme";
 "Ended" = "Încheiat";
 "Enter the code the other device shows to sign it in to this account." = "Introdu codul afișat de celălalt dispozitiv pentru a-l conecta la acest cont.";
@@ -133,6 +136,7 @@
 "Follows the selected card" = "Urmează cardul selectat";
 "Follows the selected card, compact" = "Urmează cardul selectat, compact";
 "Font" = "Font";
+"For a TV dimmer than the film: HDR10 brighter than the peak you choose is rolled off by the app, so highlights keep their detail, and the TV is told not to dim it again. Pick your TV's peak brightness. Needs tvOS 26; Dolby Vision, HLG and SDR are left as they are. A title it maps has no Picture in Picture, and Atmos in Dolby Digital Plus plays without its heights." = "Pentru un televizor mai puțin luminos decât filmul: aplicația atenuează HDR10 peste vârful ales, astfel încât zonele luminoase își păstrează detaliile, iar televizorului i se cere să nu-l atenueze din nou. Alege luminozitatea maximă a televizorului. Necesită tvOS 26; Dolby Vision, HLG și SDR rămân neschimbate. Un titlu procesat astfel nu are Picture in Picture, iar Atmos în Dolby Digital Plus rulează fără canalele de înălțime.";
 "Forced" = "Forțate";
 "Forced, for foreign parts only" = "Forțate, doar pentru părțile în limbi străine";
 "Forest" = "Verde pădure";
@@ -142,6 +146,7 @@
 "Go to show" = "Mergi la serial";
 "Green" = "Verde";
 "Guide" = "Ghid";
+"HDR10 tone mapping" = "Maparea tonurilor HDR10";
 "Half" = "Jumătate";
 "Height" = "Înălțime";
 "Held speed" = "Viteza menținută";
@@ -150,6 +155,7 @@
 "High" = "Sus";
 "Home" = "Acasă";
 "How fast playback runs while you hold Select on the video." = "Cât de repede rulează redarea cât ții apăsat pe selectare pe videoclip.";
+"How to use the app and what each setting does." = "Cum se folosește aplicația și ce face fiecare setare.";
 "Huge" = "Uriaș";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "Dacă utilizatorul are un PIN, adaugă-l după parolă cu /, de exemplu password/1234.";
 "In progress" = "În curs";
@@ -354,6 +360,7 @@
 "Solid" = "Solid";
 "Someone" = "Cineva";
 "Sound" = "Sunet";
+"Source code" = "Cod sursă";
 "Speed" = "Viteză";
 "Start a party" = "Pornește o sesiune Watch party";
 "Start page" = "Pagina de start";
@@ -439,6 +446,7 @@
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Ce acceptă boxele sau receiverul tău. Sunetul surround cu mai multe canale este redus, păstrând dialogul.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Când o versiune are mai multe tipuri de piste audio, se redă primul dintre acestea pe care îl are.";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Când o versiune are mai multe subtitrări în limba ta, se afișează prima dintre acestea pe care o are. Comentariul vine ultimul.";
+"Where the app is made, and where to report a problem." = "Unde este realizată aplicația și unde poți raporta o problemă.";
 "White" = "Alb";
 "Who you are signed in as" = "Cine ești conectat";
 "Who's watching?" = "Cine vizionează?";

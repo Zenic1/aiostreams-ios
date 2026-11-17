@@ -8,6 +8,7 @@
 "%@ joined" = "Ο/Η %@ μπήκε";
 "%@ jumped to %@" = "Μετάβαση στο %2$@ από: %1$@";
 "%@ left" = "Υπόλοιπο: %@";
+"%@ nits" = "%@ nits";
 "%@ on %@" = "%1$@ στο %2$@";
 "%@ paused" = "Παύση από: %@";
 "%@ resumed" = "Συνέχιση από: %@";
@@ -118,7 +119,9 @@
 "Dialogue boost" = "Ενίσχυση διαλόγων";
 "Discover" = "Ανακάλυψη";
 "Dismiss" = "Απόρριψη";
+"Documentation" = "Τεκμηρίωση";
 "Don't skip" = "Χωρίς παράλειψη";
+"Donate" = "Δωρεά";
 "Earlier" = "Νωρίτερα";
 "Ended" = "Ολοκληρώθηκε";
 "Enter the code the other device shows to sign it in to this account." = "Πληκτρολόγησε τον κωδικό που δείχνει η άλλη συσκευή για να συνδεθεί σε αυτόν τον λογαριασμό.";
@@ -133,6 +136,7 @@
 "Follows the selected card" = "Ακολουθεί την επιλεγμένη κάρτα";
 "Follows the selected card, compact" = "Ακολουθεί την επιλεγμένη κάρτα, συμπαγές";
 "Font" = "Γραμματοσειρά";
+"For a TV dimmer than the film: HDR10 brighter than the peak you choose is rolled off by the app, so highlights keep their detail, and the TV is told not to dim it again. Pick your TV's peak brightness. Needs tvOS 26; Dolby Vision, HLG and SDR are left as they are. A title it maps has no Picture in Picture, and Atmos in Dolby Digital Plus plays without its heights." = "Για τηλεόραση πιο σκοτεινή από την ταινία: το HDR10 πάνω από τη μέγιστη φωτεινότητα που επιλέγεις μειώνεται ομαλά από την εφαρμογή, ώστε τα φωτεινά σημεία να κρατούν τη λεπτομέρειά τους, και η τηλεόραση δεν το σκουραίνει ξανά. Επίλεξε τη μέγιστη φωτεινότητα της τηλεόρασής σου. Απαιτεί tvOS 26· τα Dolby Vision, HLG και SDR μένουν ως έχουν. Ένας τίτλος που επεξεργάζεται δεν έχει Εικόνα σε εικόνα, και το Atmos σε Dolby Digital Plus παίζει χωρίς τα ύψη του.";
 "Forced" = "Αναγκαστικοί";
 "Forced, for foreign parts only" = "Αναγκαστικοί, μόνο για ξενόγλωσσα σημεία";
 "Forest" = "Δάσος";
@@ -142,6 +146,7 @@
 "Go to show" = "Μετάβαση στη σειρά";
 "Green" = "Πράσινο";
 "Guide" = "Πρόγραμμα";
+"HDR10 tone mapping" = "Αντιστοίχιση τόνων HDR10";
 "Half" = "Μισό";
 "Height" = "Ύψος";
 "Held speed" = "Ταχύτητα παρατεταμένου πατήματος";
@@ -150,6 +155,7 @@
 "High" = "Ψηλά";
 "Home" = "Αρχική";
 "How fast playback runs while you hold Select on the video." = "Πόσο γρήγορα παίζει το βίντεο όσο κρατάς πατημένο το κουμπί επιλογής.";
+"How to use the app and what each setting does." = "Πώς να χρησιμοποιείς την εφαρμογή και τι κάνει κάθε ρύθμιση.";
 "Huge" = "Τεράστιο";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "Αν ο χρήστης έχει PIN, πρόσθεσέ το μετά τον κωδικό με /, όπως password/1234.";
 "In progress" = "Σε εξέλιξη";
@@ -354,6 +360,7 @@
 "Solid" = "Αδιαφανές";
 "Someone" = "Κάποιος";
 "Sound" = "Ήχος";
+"Source code" = "Πηγαίος κώδικας";
 "Speed" = "Ταχύτητα";
 "Start a party" = "Έναρξη ομαδικής προβολής";
 "Start page" = "Αρχική σελίδα";
@@ -439,6 +446,7 @@
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Τι υποστηρίζουν τα ηχεία ή ο ενισχυτής σου. Ο περιβάλλων ήχος με περισσότερα κανάλια μετατρέπεται σε λιγότερα, διατηρώντας τους διαλόγους.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Όταν μια έκδοση διαθέτει περισσότερους από έναν τύπους κομματιού ήχου, αναπαράγεται ο πρώτος διαθέσιμος από αυτή τη λίστα.";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "Όταν μια έκδοση διαθέτει περισσότερους από έναν υπότιτλους στη γλώσσα σου, εμφανίζεται ο πρώτος διαθέσιμος από αυτή τη λίστα. Ο σχολιασμός έρχεται τελευταίος.";
+"Where the app is made, and where to report a problem." = "Πού αναπτύσσεται η εφαρμογή και πού μπορείς να αναφέρεις ένα πρόβλημα.";
 "White" = "Λευκό";
 "Who you are signed in as" = "Ο χρήστης με τον οποίο έχεις συνδεθεί";
 "Who's watching?" = "Ποιος παρακολουθεί;";

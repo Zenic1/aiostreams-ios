@@ -8,6 +8,7 @@
 "%@ joined" = "انضم %@";
 "%@ jumped to %@" = "انتقل %1$@ إلى %2$@";
 "%@ left" = "المتبقي %@";
+"%@ nits" = "%@ نت";
 "%@ on %@" = "%1$@ على %2$@";
 "%@ paused" = "أوقف %@ التشغيل مؤقتًا";
 "%@ resumed" = "استأنف %@ التشغيل";
@@ -118,7 +119,9 @@
 "Dialogue boost" = "تعزيز الحوار";
 "Discover" = "استكشاف";
 "Dismiss" = "تجاهل";
+"Documentation" = "الوثائق";
 "Don't skip" = "عدم التخطي";
+"Donate" = "تبرّع";
 "Earlier" = "سابقًا";
 "Ended" = "منتهٍ";
 "Enter the code the other device shows to sign it in to this account." = "أدخل الرمز الذي يعرضه الجهاز الآخر لتسجيل دخوله إلى هذا الحساب.";
@@ -133,6 +136,7 @@
 "Follows the selected card" = "يتتبع البطاقة المحددة";
 "Follows the selected card, compact" = "يتبع البطاقة المحددة، مضغوط";
 "Font" = "الخط";
+"For a TV dimmer than the film: HDR10 brighter than the peak you choose is rolled off by the app, so highlights keep their detail, and the TV is told not to dim it again. Pick your TV's peak brightness. Needs tvOS 26; Dolby Vision, HLG and SDR are left as they are. A title it maps has no Picture in Picture, and Atmos in Dolby Digital Plus plays without its heights." = "لتلفاز أقل سطوعًا من الفيلم: يخفّض التطبيق ما يتجاوز الذروة التي تختارها في HDR10، فتحتفظ المناطق الساطعة بتفاصيلها، ويُطلب من التلفاز ألا يخفّضها مرة أخرى. اختر ذروة سطوع تلفازك. يتطلب tvOS 26؛ ويبقى Dolby Vision وHLG وSDR كما هي. العنوان الذي يُعالَج لا يدعم صورة داخل صورة، ويُشغَّل Atmos في Dolby Digital Plus دون قنواته العلوية.";
 "Forced" = "مفروضة";
 "Forced, for foreign parts only" = "مفروضة، للأجزاء الأجنبية فقط";
 "Forest" = "أخضر غابي";
@@ -142,6 +146,7 @@
 "Go to show" = "الانتقال إلى المسلسل";
 "Green" = "أخضر";
 "Guide" = "الدليل";
+"HDR10 tone mapping" = "تعيين درجات HDR10";
 "Half" = "نصف";
 "Height" = "الارتفاع";
 "Held speed" = "سرعة الضغط المطوّل";
@@ -150,6 +155,7 @@
 "High" = "مرتفع";
 "Home" = "الرئيسية";
 "How fast playback runs while you hold Select on the video." = "سرعة التشغيل أثناء الضغط مطولًا على زر التحديد فوق الفيديو.";
+"How to use the app and what each setting does." = "كيفية استخدام التطبيق وما يفعله كل إعداد.";
 "Huge" = "ضخم";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "إذا كان لدى المستخدم رمز PIN، فأضفه بعد كلمة المرور مع /، مثل password/1234.";
 "In progress" = "قيد المشاهدة";
@@ -354,6 +360,7 @@
 "Solid" = "مصمت";
 "Someone" = "شخص ما";
 "Sound" = "الصوتيات";
+"Source code" = "الشيفرة المصدرية";
 "Speed" = "السرعة";
 "Start a party" = "بدء جلسة مشاهدة";
 "Start page" = "صفحة البدء";
@@ -439,6 +446,7 @@
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "ما تستقبله مكبرات الصوت أو جهاز الاستقبال. أما الصوت المحيطي الأكثر قنوات فيُدمج في عدد أقل، مع الإبقاء على الحوار.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "عندما تحتوي النسخة على أكثر من نوع من المسارات الصوتية، يُشغَّل أول ما تملكه من هذه.";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "عندما تحتوي النسخة على أكثر من ترجمة بلغتك، يُعرض أول ما تملكه من هذه. ويأتي التعليق أخيرًا.";
+"Where the app is made, and where to report a problem." = "أين يُصنع التطبيق، وأين يُبلَّغ عن مشكلة.";
 "White" = "أبيض";
 "Who you are signed in as" = "المستخدم الذي سجّلت الدخول به";
 "Who's watching?" = "من يشاهد؟";

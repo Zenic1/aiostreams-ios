@@ -8,6 +8,7 @@
 "%@ joined" = "%@ 已加入";
 "%@ jumped to %@" = "%1$@ 跳转到了 %2$@";
 "%@ left" = "剩余 %@";
+"%@ nits" = "%@ 尼特";
 "%@ on %@" = "%1$@ · %2$@";
 "%@ paused" = "%@ 已暂停";
 "%@ resumed" = "%@ 已继续播放";
@@ -118,7 +119,9 @@
 "Dialogue boost" = "对白增强";
 "Discover" = "发现";
 "Dismiss" = "关闭";
+"Documentation" = "文档";
 "Don't skip" = "不跳过";
+"Donate" = "捐赠";
 "Earlier" = "更早";
 "Ended" = "已完结";
 "Enter the code the other device shows to sign it in to this account." = "输入另一台设备显示的代码，让它登录此账户。";
@@ -133,6 +136,7 @@
 "Follows the selected card" = "跟随当前选中的卡片";
 "Follows the selected card, compact" = "跟随所选卡片，紧凑";
 "Font" = "字体";
+"For a TV dimmer than the film: HDR10 brighter than the peak you choose is rolled off by the app, so highlights keep their detail, and the TV is told not to dim it again. Pick your TV's peak brightness. Needs tvOS 26; Dolby Vision, HLG and SDR are left as they are. A title it maps has no Picture in Picture, and Atmos in Dolby Digital Plus plays without its heights." = "适用于比影片暗的电视：超过所选峰值亮度的 HDR10 由应用柔和压低，让高光保留细节，并告知电视不要再次压暗。请选择电视的峰值亮度。需要 tvOS 26；杜比视界、HLG 和 SDR 保持不变。经此处理的影片不支持画中画，Dolby Digital Plus 中的全景声将不含顶部声道。";
 "Forced" = "强制";
 "Forced, for foreign parts only" = "强制字幕，仅显示外语片段";
 "Forest" = "森林绿";
@@ -142,6 +146,7 @@
 "Go to show" = "前往剧集";
 "Green" = "绿色";
 "Guide" = "节目指南";
+"HDR10 tone mapping" = "HDR10 色调映射";
 "Half" = "半透明";
 "Height" = "高度";
 "Held speed" = "按住时的播放速度";
@@ -150,6 +155,7 @@
 "High" = "高";
 "Home" = "首页";
 "How fast playback runs while you hold Select on the video." = "在视频上按住选择键时的播放速度。";
+"How to use the app and what each setting does." = "介绍应用的使用方法和各项设置的作用。";
 "Huge" = "特大";
 "If the user has a PIN, add it after the password with a /, like password/1234." = "如果用户设置了 PIN，请在密码后加上 / 和 PIN，例如 password/1234。";
 "In progress" = "观看中";
@@ -354,6 +360,7 @@
 "Solid" = "纯色";
 "Someone" = "某人";
 "Sound" = "声音";
+"Source code" = "源代码";
 "Speed" = "速度";
 "Start a party" = "开始一起观看";
 "Start page" = "启动页面";
@@ -439,6 +446,7 @@
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "扬声器或接收器接收的音频格式。声道数更多的环绕声会混音降级，同时保留对白。";
 "When a version has more than one kind of audio track, the first of these it has plays." = "当某个版本包含多种音轨时，会播放列表中优先级最高且该版本具备的音轨。";
 "When a version has more than one subtitle in your language, the first of these it has shows. Commentary comes last." = "当某个版本包含多条你所用语言的字幕时，会显示列表中优先级最高且该版本具备的字幕。评论字幕优先级最低。";
+"Where the app is made, and where to report a problem." = "了解应用的开发来源，以及如何报告问题。";
 "White" = "白色";
 "Who you are signed in as" = "当前登录的用户";
 "Who's watching?" = "谁在观看？";

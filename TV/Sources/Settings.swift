@@ -1,4 +1,5 @@
 import AetherEngineFeatures
+import CoreImage.CIFilterBuiltins
 import SwiftUI
 
 // Settings that follow the user, kept where the web app keeps them: its synced settings in
@@ -172,6 +173,10 @@ final class Preferences: ObservableObject {
     /// channels start sooner, without the blank of a mode change.
     @Published var liveMatchFrameRate: Bool = UserDefaults.standard.object(forKey: "live.matchFrameRate") as? Bool ?? true {
         didSet { UserDefaults.standard.set(liveMatchFrameRate, forKey: "live.matchFrameRate") }
+    }
+    /// HDR10 tone mapping's target, the TV's peak in nits; 0 is off (AetherEngine's videoProcessing).
+    @Published var toneMapNits: Int = UserDefaults.standard.integer(forKey: "video.toneMapNits") {
+        didSet { UserDefaults.standard.set(toneMapNits, forKey: "video.toneMapNits") }
     }
     @Published var liveMatchDynamicRange: Bool = UserDefaults.standard.object(forKey: "live.matchDynamicRange") as? Bool ?? true {
         didSet { UserDefaults.standard.set(liveMatchDynamicRange, forKey: "live.matchDynamicRange") }
@@ -410,6 +415,7 @@ struct SettingsView: View {
     @State private var approving = false
 
     @State private var page: SettingsPage
+    @State private var donating = false
     @FocusState private var tab: SettingsPage?
 
     /// You in the navigation opens Account; Settings opens Playback.
@@ -461,6 +467,10 @@ struct SettingsView: View {
         }
         .fullScreenCover(item: $picker) { picker in
             MultiChooserPanel(chooser: picker) { self.picker = nil }
+                .presentationBackground(.clear)
+        }
+        .fullScreenCover(isPresented: $donating) {
+            DonatePanel { donating = false }
                 .presentationBackground(.clear)
         }
     }
@@ -526,6 +536,12 @@ struct SettingsView: View {
                     prefs.animeUpscaling.toggle()
                 }
                 note(L("Anime up to 1080p is upscaled for your TV with Anime4K's line-art network, for sharper lines. Applies to titles with an anime database id, and only to SDR video. Changes take effect from the next title."))
+                row(L("HDR10 tone mapping"), value: nitsName(prefs.toneMapNits)) {
+                    chooser = Chooser(title: L("HDR10 tone mapping"),
+                                      options: [0, 400, 600, 800, 1000, 1500, 2000].map { (nitsName($0), String($0)) },
+                                      current: String(prefs.toneMapNits)) { prefs.toneMapNits = Int($0) ?? 0 }
+                }
+                note(L("For a TV dimmer than the film: HDR10 brighter than the peak you choose is rolled off by the app, so highlights keep their detail, and the TV is told not to dim it again. Pick your TV's peak brightness. Needs tvOS 26; Dolby Vision, HLG and SDR are left as they are. A title it maps has no Picture in Picture, and Atmos in Dolby Digital Plus plays without its heights."))
             }
         case .audio:
             // The web app's Audio and Subtitles pages: the account's languages and track choice.
@@ -716,6 +732,13 @@ struct SettingsView: View {
                 note(L("Sends this Apple TV's details and the app's recent log to your server, where whoever runs it finds them among its logs. Passwords and tokens are left out."))
                 note(L("An unofficial app, not affiliated with AIOStreams or AetherEngine. AGPL-3.0; AetherEngine is LGPL-3.0, FFmpeg LGPL-2.1+, libdovi and Anime4K (Copyright (c) 2019-2021 bloc97) MIT, and the Inter font is under the SIL Open Font License."))
             }
+            // The web app's About links, each as a code to scan, as a TV opens no web pages.
+            section(nil, note: nil) {
+                LinkRow(name: L("Source code"), help: L("Where the app is made, and where to report a problem."),
+                        url: "https://github.com/wizaarddlabs/aiostreams-ios")
+                LinkRow(name: L("Documentation"), help: L("How to use the app and what each setting does."),
+                        url: "https://aiostreams.org/apps")
+            }
         }
     }
 
@@ -726,6 +749,13 @@ struct SettingsView: View {
         VStack(alignment: .leading, spacing: Theme.px(12)) {
             tabGroup(L("Watching"), SettingsPage.allCases.filter(\.watching))
             tabGroup(L("App"), SettingsPage.allCases.filter { !$0.watching })
+            // As the web app's, below the tabs: its links, here as codes to scan.
+            Button { donating = true } label: {
+                Label(L("Donate"), systemImage: "heart")
+                    .font(Theme.font(Theme.sm, .medium))
+            }
+            .buttonStyle(SoftPillStyle())
+            .frame(maxWidth: .infinity)
         }
         .focusSection()
         .onChange(of: tab) { _, focused in if let focused { page = focused } }
@@ -960,6 +990,8 @@ struct SettingsView: View {
         rate.formatted(.number.precision(.fractionLength(0...1)).locale(AppLanguage.locale))
     }
 
+    private func nitsName(_ nits: Int) -> String { nits == 0 ? L("Off") : L("%@ nits", String(nits)) }
+
     private func boostName(_ db: Int) -> String { db == 0 ? L("Off") : L("+%@ dB", String(db)) }
 
     private func delayName(_ ms: Int) -> String {
@@ -1054,6 +1086,86 @@ private struct SettingsTabStyle: ButtonStyle {
                 )
                 .opacity(configuration.isPressed ? 0.8 : 1)
         }
+    }
+}
+
+/// A link as a code to scan with a phone, with its address beside it, since a TV opens no web pages.
+enum QRCode {
+    static func image(_ text: String) -> UIImage? {
+        let filter = CIFilter.qrCodeGenerator()
+        filter.message = Data(text.utf8)
+        filter.correctionLevel = "M"
+        guard let output = filter.outputImage?.transformed(by: CGAffineTransform(scaleX: 12, y: 12)),
+              let image = CIContext().createCGImage(output, from: output.extent) else { return nil }
+        return UIImage(cgImage: image)
+    }
+}
+
+struct QRCodeView: View {
+    let url: String
+    var size: CGFloat = Theme.px(112)
+
+    var body: some View {
+        Group {
+            if let image = QRCode.image(url) {
+                Image(uiImage: image).interpolation(.none).resizable().scaledToFit()
+            }
+        }
+        .frame(width: size, height: size)
+        .padding(Theme.px(8))
+        .background(RoundedRectangle(cornerRadius: Theme.px(10), style: .continuous).fill(.white))
+    }
+}
+
+/// One of About's links: its name, what it's for and its address, with a code to scan. It takes
+/// focus, so the page scrolls to it, though there's nothing to open.
+private struct LinkRow: View {
+    let name: String
+    let help: String
+    let url: String
+
+    var body: some View {
+        Button {} label: {
+            HStack(spacing: Theme.px(16)) {
+                VStack(alignment: .leading, spacing: Theme.px(4)) {
+                    Text(name).font(Theme.font(Theme.base, .semibold))
+                    Text(help).font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray400)
+                    Text(verbatim: url).font(Theme.font(Theme.xs)).foregroundStyle(Theme.gray500)
+                }
+                Spacer(minLength: Theme.px(16))
+                QRCodeView(url: url, size: Theme.px(88))
+            }
+            .padding(Theme.px(12))
+        }
+        .buttonStyle(RowStyle(radius: Theme.px(10)))
+    }
+}
+
+/// The web app's Donate, for AIOStreams' developer: GitHub Sponsors and Ko-fi as codes to scan.
+private struct DonatePanel: View {
+    let done: () -> Void
+    private static let links = [("GitHub Sponsors", "https://github.com/sponsors/Viren070"), ("Ko-fi", "https://ko-fi.com/Viren070")]
+
+    var body: some View {
+        ZStack {
+            Color.black.opacity(0.75).ignoresSafeArea()
+            VStack(spacing: Theme.px(24)) {
+                Text(L("Donate")).font(Theme.font(Theme.xl, .semibold))
+                HStack(spacing: Theme.px(48)) {
+                    ForEach(Self.links, id: \.0) { link in
+                        VStack(spacing: Theme.px(10)) {
+                            QRCodeView(url: link.1, size: Theme.px(160))
+                            Text(verbatim: link.0).font(Theme.font(Theme.base, .semibold))
+                            Text(verbatim: link.1).font(Theme.font(Theme.sm)).foregroundStyle(Theme.gray400)
+                        }
+                    }
+                }
+                Button(L("Close"), action: done).buttonStyle(SoftPillStyle())
+            }
+            .padding(Theme.px(40))
+            .background(SettingsCardShape())
+        }
+        .onExitCommand(perform: done)
     }
 }
 
