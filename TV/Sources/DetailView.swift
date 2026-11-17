@@ -379,8 +379,10 @@ struct ItemBackdrop: View {
             ZStack(alignment: .bottom) {
                 RemoteImage(url: session.client?.backdrop(item, height: 1080))
                     .frame(width: width, height: Self.height)
-                    .blur(radius: softened ? Theme.px(36) : 0, opaque: true)
-                    .brightness(softened ? -0.18 : 0)
+                    // As the background from artwork behind the sidebar is (WashBackground): the same
+                    // blur and the same darkening, so the two read as one.
+                    .blur(radius: softened ? Theme.px(40) : 0, opaque: true)
+                    .overlay(Color.black.opacity(softened ? 0.4 : 0))
                     .clipped()
                     .mask(
                         LinearGradient(
