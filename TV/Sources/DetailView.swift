@@ -21,6 +21,8 @@ struct DetailView: View {
     @State private var similar: [Item] = []
     @State private var choice: VersionChoice?
     @FocusState private var playFocused: Bool
+    /// Scrolled down past the header, to the cast and what follows: the backdrop blurs behind them.
+    @State private var scrolledDown = false
 
     private var shown: Item { full ?? item }
 
@@ -30,6 +32,11 @@ struct DetailView: View {
     var body: some View {
         ZStack(alignment: .topLeading) {
             ItemBackdrop(item: shown, overArtwork: prefs.artPages.contains("item"))
+                // Clear behind the title's own details; blurred and dimmed behind the rows below, so
+                // they read clearly over it.
+                .blur(radius: scrolledDown ? Theme.px(36) : 0)
+                .overlay(Color.black.opacity(scrolledDown ? 0.35 : 0).allowsHitTesting(false))
+                .animation(.easeOut(duration: 0.35), value: scrolledDown)
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.px(48)) {
                     header
@@ -42,6 +49,11 @@ struct DetailView: View {
                 // 26% down a 720-line screen.
                 .padding(.top, Theme.px(187))
                 .padding(.bottom, Theme.px(64))
+            }
+            .onScrollGeometryChange(for: Bool.self) { geometry in
+                geometry.contentOffset.y > Theme.px(120)
+            } action: { _, down in
+                scrolledDown = down
             }
             .edgeToEdge()
         }
