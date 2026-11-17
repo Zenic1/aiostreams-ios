@@ -46,6 +46,9 @@ final class PlayerChannel {
     /// Where each added subtitle came from, by its track id.
     private var subtitleURLs: [Int: String] = [:]
     private var subtitleFiles = 0
+    /// The languages a stream's own AVPlayer subtitles are picked from, once, as they arrive.
+    private var nativePickLanguages: [String] = []
+    private var nativePicked = false
     private var thumbnailBusy = false
     private var wantedThumbnail: (url: String, positionMs: Double)?
     private var thumbnailCount = 0
@@ -98,7 +101,14 @@ final class PlayerChannel {
             .store(in: &bag)
         Publishers.CombineLatest(engine.$audioTracks, engine.$subtitleTracks)
             .debounce(for: .milliseconds(50), scheduler: RunLoop.main)
-            .sink { [weak self] _, _ in self?.sendTracks() }
+            .sink { [weak self] _, _ in
+                self?.pickNativeSubtitle()
+                self?.sendTracks()
+            }
+            .store(in: &bag)
+        // A stream whose subtitles AVPlayer draws itself takes the page's style as text style rules.
+        engine.$currentAVPlayerItem
+            .sink { [weak self] _ in DispatchQueue.main.async { self?.applyNativeStyle() } }
             .store(in: &bag)
         engine.$activeAudioTrackIndex.removeDuplicates()
             .sink { [weak self] index in self?.state(["audio": JSON.id(index)]) }
@@ -196,6 +206,57 @@ final class PlayerChannel {
         if !track.codec.isEmpty { json["codec"] = track.codec }
         if let url = subtitleURLs[track.id] { json["url"] = url }
         return json
+    }
+
+    /// On a remote HLS stream the subtitles are AVPlayer's renditions, listed once its playlist is
+    /// read and left unpicked by the user's languages. With subtitles set to Always, the
+    /// first in the user's languages is picked as they arrive; a choice in the player replaces it.
+    private func pickNativeSubtitle() {
+        guard !nativePicked, !nativePickLanguages.isEmpty, engine.videoRoute == .remoteBypass,
+              !engine.subtitleTracks.isEmpty else { return }
+        nativePicked = true
+        guard engine.activeSubtitleTrackIndex == nil else { return }
+        for wanted in nativePickLanguages.map(Self.languageKey) {
+            if let track = engine.subtitleTracks.first(where: { $0.language.map(Self.languageKey) == wanted && !$0.isForced }) {
+                AppLog.info("subtitles", "picked the stream's \(track.language ?? "?") subtitles")
+                engine.selectSubtitleTrack(index: track.id)
+                return
+            }
+        }
+    }
+
+    /// A language tag or code as one key, so "en", "eng" and "en-US" match, as do the
+    /// bibliographic codes Jellyfin keeps ("ger") and the terminology ones ("deu").
+    static func languageKey(_ tag: String) -> String {
+        let base = tag.lowercased().split(whereSeparator: { $0 == "-" || $0 == "_" }).first.map(String.init) ?? ""
+        let bibliographic = ["ger": "de", "fre": "fr", "chi": "zh", "dut": "nl", "cze": "cs", "gre": "el", "per": "fa",
+                             "rum": "ro", "slo": "sk", "alb": "sq", "arm": "hy", "baq": "eu", "bur": "my", "geo": "ka",
+                             "ice": "is", "mac": "mk", "mao": "mi", "may": "ms", "tib": "bo", "wel": "cy"]
+        if let code = bibliographic[base] { return code }
+        return Locale.Language(identifier: base).languageCode?.identifier(.alpha2) ?? base
+    }
+
+    /// The page's subtitle style for subtitles AVPlayer draws itself (a remote HLS stream's), as
+    /// text style rules on its item, so they follow the app's style rather than the system's.
+    private func applyNativeStyle() {
+        guard let item = engine.currentAVPlayerItem else { return }
+        let look = overlay.look
+        func argb(_ color: UIColor) -> [Double] {
+            var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+            color.getRed(&r, green: &g, blue: &b, alpha: &a)
+            return [a, r, g, b].map(Double.init)
+        }
+        var attributes: [String: Any] = [
+            kCMTextMarkupAttribute_ForegroundColorARGB as String: argb(look.color),
+            kCMTextMarkupAttribute_RelativeFontSize as String: max(look.scale, 0.3) * 100,
+            kCMTextMarkupAttribute_BoldStyle as String: look.bold,
+            kCMTextMarkupAttribute_CharacterBackgroundARGB as String: argb(look.backColor),
+            kCMTextMarkupAttribute_CharacterEdgeStyle as String: look.shadowSize > 0
+                ? kCMTextMarkupCharacterEdgeStyle_DropShadow as String
+                : look.outlineSize > 0 ? kCMTextMarkupCharacterEdgeStyle_Uniform as String : kCMTextMarkupCharacterEdgeStyle_None as String,
+        ]
+        if let family = look.fontFamily { attributes[kCMTextMarkupAttribute_FontFamilyName as String] = family }
+        item.textStyleRules = AVTextStyleRule(textMarkupAttributes: attributes).map { [$0] }
     }
 
     private func sendTracks() {
@@ -327,6 +388,10 @@ final class PlayerChannel {
         if mode == "default" || mode == "always" || mode == "smart" {
             options.preferredSubtitleLanguages = JSON.strings(message["subtitleLanguages"])
         }
+        // A remote HLS stream's subtitles are AVPlayer's own, which arrive after the load and which
+        // the engine leaves unpicked: the first in the user's languages is picked once they do.
+        nativePickLanguages = mode == "always" ? JSON.strings(message["subtitleLanguages"]) : []
+        nativePicked = false
 
         generation += 1
         let current = generation
@@ -551,7 +616,11 @@ final class PlayerChannel {
             overlay.gravity = gravity
         }
         if let look = message["subtitles"] as? [String: Any] {
-            overlay.look = SubtitleLook(json: look)
+            let next = SubtitleLook(json: look)
+            if next != overlay.look {
+                overlay.look = next
+                applyNativeStyle()
+            }
         }
     }
 
