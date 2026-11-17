@@ -18,6 +18,7 @@
 "%@m" = "%@ Min.";
 "%@×" = "%@×";
 "+%@ dB" = "+%@ dB";
+"+%@ more" = "+%@ weitere";
 "+%@ ms" = "+%@ ms";
 "12-hour" = "12 Stunden";
 "24-hour" = "24 Stunden";
@@ -103,6 +104,7 @@
 "Connecting…" = "Verbinde…";
 "Continue watching" = "Weiterschauen";
 "Continuing" = "Laufend";
+"Could not load the calendar" = "Kalender konnte nicht geladen werden";
 "Couldn't open %@." = "\"%@\" konnte nicht geöffnet werden.";
 "Couldn't reach %@." = "Verbindung zu %@ fehlgeschlagen.";
 "Countdown" = "Countdown";
@@ -211,6 +213,7 @@
 "Next %@: %@" = "Danach %@: %@";
 "Next episode" = "Nächste Folge";
 "Next episode, controls and players" = "Nächste Folge, Steuerung und Player";
+"Next month" = "Nächster Monat";
 "Next up" = "Als Nächstes";
 "Next: %@" = "Danach: %@";
 "Night mode" = "Nachtmodus";
@@ -224,7 +227,7 @@
 "None" = "Keine";
 "Normal" = "Normal";
 "Not found on this server." = "Auf diesem Server nicht gefunden.";
-"Nothing airs in the next two weeks." = "In den nächsten zwei Wochen läuft nichts.";
+"Nothing airs this month from your shows or watchlist." = "Diesen Monat wird nichts aus deinen Serien oder deiner Merkliste ausgestrahlt.";
 "Nothing here yet. Add catalogs to your configuration." = "Hier ist noch nichts. Füge Kataloge zu deiner Konfiguration hinzu.";
 "Nothing in this library." = "Nichts in dieser Mediathek.";
 "Nothing in this playlist yet." = "Noch nichts in dieser Playlist.";
@@ -276,6 +279,7 @@
 "Press Back to pick another version." = "Drücke „Zurück“, um eine andere Version zu wählen.";
 "Prevent accidental exit" = "Versehentliches Beenden verhindern";
 "Previews" = "Vorschauen";
+"Previous month" = "Vorheriger Monat";
 "Quick Connect" = "Quick Connect";
 "Rail" = "Navigationsleiste";
 "Raised" = "Höher";

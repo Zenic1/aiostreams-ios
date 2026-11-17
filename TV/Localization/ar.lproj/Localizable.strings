@@ -18,6 +18,7 @@
 "%@m" = "%@ د";
 "%@×" = "%@×";
 "+%@ dB" = "+%@ ديسيبل";
+"+%@ more" = "+%@ أخرى";
 "+%@ ms" = "+%@ مللي ثانية";
 "12-hour" = "12 ساعة";
 "24-hour" = "24 ساعة";
@@ -103,6 +104,7 @@
 "Connecting…" = "جارٍ الاتصال…";
 "Continue watching" = "متابعة المشاهدة";
 "Continuing" = "مستمر";
+"Could not load the calendar" = "تعذّر تحميل التقويم";
 "Couldn't open %@." = "تعذّر فتح %@.";
 "Couldn't reach %@." = "تعذّر الوصول إلى %@.";
 "Countdown" = "العد التنازلي";
@@ -211,6 +213,7 @@
 "Next %@: %@" = "التالي %@: %@";
 "Next episode" = "الحلقة التالية";
 "Next episode, controls and players" = "الحلقة التالية وعناصر التحكم والمشغّلات";
+"Next month" = "الشهر التالي";
 "Next up" = "التالي";
 "Next: %@" = "التالي: %@";
 "Night mode" = "الوضع الليلي";
@@ -224,7 +227,7 @@
 "None" = "بلا";
 "Normal" = "عادي";
 "Not found on this server." = "غير موجود على هذا الخادم.";
-"Nothing airs in the next two weeks." = "لا يُعرض شيء في الأسبوعين القادمين.";
+"Nothing airs this month from your shows or watchlist." = "لا يُعرض شيء هذا الشهر من مسلسلاتك أو قائمة المشاهدة.";
 "Nothing here yet. Add catalogs to your configuration." = "لا شيء هنا بعد. أضف كتالوجات إلى إعداداتك.";
 "Nothing in this library." = "لا شيء في هذه المكتبة.";
 "Nothing in this playlist yet." = "لا شيء في قائمة التشغيل هذه بعد.";
@@ -276,6 +279,7 @@
 "Press Back to pick another version." = "اضغط رجوع لاختيار نسخة أخرى.";
 "Prevent accidental exit" = "منع الخروج غير المقصود";
 "Previews" = "المعاينات";
+"Previous month" = "الشهر السابق";
 "Quick Connect" = "الاتصال السريع";
 "Rail" = "شريط ضيق";
 "Raised" = "مرفوع";

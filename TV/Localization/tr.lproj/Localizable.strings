@@ -18,6 +18,7 @@
 "%@m" = "%@dk";
 "%@×" = "x%@";
 "+%@ dB" = "+%@ dB";
+"+%@ more" = "+%@ daha";
 "+%@ ms" = "+%@ ms";
 "12-hour" = "12 saat";
 "24-hour" = "24 saat";
@@ -103,6 +104,7 @@
 "Connecting…" = "Bağlanıyor…";
 "Continue watching" = "İzlemeye devam et";
 "Continuing" = "Devam ediyor";
+"Could not load the calendar" = "Takvim yüklenemedi";
 "Couldn't open %@." = "%@ açılamadı.";
 "Couldn't reach %@." = "%@ adresine ulaşılamadı.";
 "Countdown" = "Geri sayım";
@@ -211,6 +213,7 @@
 "Next %@: %@" = "Sonra %@: %@";
 "Next episode" = "Sonraki bölüm";
 "Next episode, controls and players" = "Sonraki bölüm, kontroller ve oynatıcılar";
+"Next month" = "Sonraki ay";
 "Next up" = "Sıradaki";
 "Next: %@" = "Sonra: %@";
 "Night mode" = "Gece modu";
@@ -224,7 +227,7 @@
 "None" = "Yok";
 "Normal" = "Normal";
 "Not found on this server." = "Bu sunucuda bulunamadı.";
-"Nothing airs in the next two weeks." = "Önümüzdeki iki haftada yayınlanacak bir şey yok.";
+"Nothing airs this month from your shows or watchlist." = "Takip ettiğin dizilerde veya izleme listende bu ay yayınlanacak içerik yok.";
 "Nothing here yet. Add catalogs to your configuration." = "Henüz burada bir şey yok. Yapılandırmana katalog ekle.";
 "Nothing in this library." = "Bu kütüphanede hiçbir şey yok.";
 "Nothing in this playlist yet." = "Bu oynatma listesinde henüz bir şey yok.";
@@ -276,6 +279,7 @@
 "Press Back to pick another version." = "Başka bir sürüm seçmek için Geri'ye bas.";
 "Prevent accidental exit" = "Yanlışlıkla çıkmayı önle";
 "Previews" = "Önizlemeler";
+"Previous month" = "Önceki ay";
 "Quick Connect" = "Hızlı bağlantı";
 "Rail" = "Yan menü";
 "Raised" = "Yukarıda";

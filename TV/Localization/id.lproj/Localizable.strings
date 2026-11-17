@@ -18,6 +18,7 @@
 "%@m" = "%@m";
 "%@×" = "%@×";
 "+%@ dB" = "+%@ dB";
+"+%@ more" = "+%@ lainnya";
 "+%@ ms" = "+%@ ms";
 "12-hour" = "12 jam";
 "24-hour" = "24 jam";
@@ -103,6 +104,7 @@
 "Connecting…" = "Menghubungkan…";
 "Continue watching" = "Lanjutkan menonton";
 "Continuing" = "Berlanjut";
+"Could not load the calendar" = "Tidak dapat memuat kalender";
 "Couldn't open %@." = "Tidak dapat membuka %@.";
 "Couldn't reach %@." = "Tidak dapat terhubung ke %@.";
 "Countdown" = "Hitung mundur";
@@ -211,6 +213,7 @@
 "Next %@: %@" = "Berikutnya %@: %@";
 "Next episode" = "Episode berikutnya";
 "Next episode, controls and players" = "Episode berikutnya, kontrol, dan pemutar";
+"Next month" = "Bulan berikutnya";
 "Next up" = "Berikutnya ditonton";
 "Next: %@" = "Berikutnya: %@";
 "Night mode" = "Mode malam";
@@ -224,7 +227,7 @@
 "None" = "Tidak ada";
 "Normal" = "Normal";
 "Not found on this server." = "Tidak ditemukan di server ini.";
-"Nothing airs in the next two weeks." = "Tidak ada yang tayang dalam dua minggu ke depan.";
+"Nothing airs this month from your shows or watchlist." = "Tidak ada tayangan bulan ini dari serial atau daftar tontonan Anda.";
 "Nothing here yet. Add catalogs to your configuration." = "Belum ada apa pun. Tambahkan katalog ke konfigurasimu.";
 "Nothing in this library." = "Tidak ada apa pun di pustaka ini.";
 "Nothing in this playlist yet." = "Belum ada apa pun di daftar putar ini.";
@@ -276,6 +279,7 @@
 "Press Back to pick another version." = "Tekan Kembali untuk memilih versi lain.";
 "Prevent accidental exit" = "Cegah keluar tanpa sengaja";
 "Previews" = "Pratinjau";
+"Previous month" = "Bulan sebelumnya";
 "Quick Connect" = "Koneksi Cepat";
 "Rail" = "Bilah samping";
 "Raised" = "Dinaikkan";

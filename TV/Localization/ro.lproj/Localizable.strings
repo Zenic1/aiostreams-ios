@@ -18,6 +18,7 @@
 "%@m" = "%@ minute";
 "%@×" = "%@×";
 "+%@ dB" = "+%@ dB";
+"+%@ more" = "+%@ în plus";
 "+%@ ms" = "+%@ ms";
 "12-hour" = "12 ore";
 "24-hour" = "24 de ore";
@@ -103,6 +104,7 @@
 "Connecting…" = "Se conectează…";
 "Continue watching" = "Continuă vizionarea";
 "Continuing" = "În desfășurare";
+"Could not load the calendar" = "Nu s-a putut încărca calendarul";
 "Couldn't open %@." = "Nu s-a putut deschide %@.";
 "Couldn't reach %@." = "Nu s-a putut conecta la %@.";
 "Countdown" = "Numărătoare inversă";
@@ -211,6 +213,7 @@
 "Next %@: %@" = "Urmează %@: %@";
 "Next episode" = "Episodul următor";
 "Next episode, controls and players" = "Episodul următor, comenzi și playere";
+"Next month" = "Luna viitoare";
 "Next up" = "Urmează";
 "Next: %@" = "Urmează: %@";
 "Night mode" = "Mod de noapte";
@@ -224,7 +227,7 @@
 "None" = "Niciunul";
 "Normal" = "Normal";
 "Not found on this server." = "Nu a fost găsit pe acest server.";
-"Nothing airs in the next two weeks." = "Nimic nu se difuzează în următoarele două săptămâni.";
+"Nothing airs this month from your shows or watchlist." = "Nimic din serialele sau lista ta de urmărire nu are difuzare luna aceasta.";
 "Nothing here yet. Add catalogs to your configuration." = "Încă nimic aici. Adaugă cataloage în configurația ta.";
 "Nothing in this library." = "Nimic în această bibliotecă.";
 "Nothing in this playlist yet." = "Încă nimic în acest playlist.";
@@ -276,6 +279,7 @@
 "Press Back to pick another version." = "Apasă Înapoi pentru a alege altă versiune.";
 "Prevent accidental exit" = "Previne ieșirea accidentală";
 "Previews" = "Previzualizări";
+"Previous month" = "Luna trecută";
 "Quick Connect" = "Conectare rapidă";
 "Rail" = "Bară laterală";
 "Raised" = "Mai sus";

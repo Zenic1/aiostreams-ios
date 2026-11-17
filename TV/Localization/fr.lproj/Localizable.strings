@@ -18,6 +18,7 @@
 "%@m" = "%@m";
 "%@×" = "%@×";
 "+%@ dB" = "+%@ dB";
+"+%@ more" = "+%@ de plus";
 "+%@ ms" = "+%@ ms";
 "12-hour" = "12 heures";
 "24-hour" = "24 heures";
@@ -103,6 +104,7 @@
 "Connecting…" = "Connexion…";
 "Continue watching" = "Reprendre la lecture";
 "Continuing" = "En cours";
+"Could not load the calendar" = "Impossible de charger le calendrier";
 "Couldn't open %@." = "Impossible d'ouvrir %@.";
 "Couldn't reach %@." = "Impossible de joindre %@.";
 "Countdown" = "Compte à rebours";
@@ -211,6 +213,7 @@
 "Next %@: %@" = "Ensuite %@ : %@";
 "Next episode" = "Épisode suivant";
 "Next episode, controls and players" = "Épisode suivant, contrôles et lecteurs";
+"Next month" = "Mois suivant";
 "Next up" = "À suivre";
 "Next: %@" = "Ensuite : %@";
 "Night mode" = "Mode nuit";
@@ -224,7 +227,7 @@
 "None" = "Aucun";
 "Normal" = "Normal";
 "Not found on this server." = "Introuvable sur ce serveur.";
-"Nothing airs in the next two weeks." = "Rien n'est diffusé dans les deux prochaines semaines.";
+"Nothing airs this month from your shows or watchlist." = "Rien n'est diffusé ce mois-ci parmi vos séries ou votre liste de suivi.";
 "Nothing here yet. Add catalogs to your configuration." = "Rien pour l'instant. Ajoutez des catalogues à votre configuration.";
 "Nothing in this library." = "Rien dans cette bibliothèque.";
 "Nothing in this playlist yet." = "Rien dans cette playlist pour l'instant.";
@@ -276,6 +279,7 @@
 "Press Back to pick another version." = "Appuyez sur Retour pour choisir une autre version.";
 "Prevent accidental exit" = "Éviter de quitter par accident";
 "Previews" = "Aperçus";
+"Previous month" = "Mois précédent";
 "Quick Connect" = "Connexion rapide";
 "Rail" = "Barre latérale";
 "Raised" = "Plus haut";

@@ -18,6 +18,7 @@
 "%@m" = "%@ 分钟";
 "%@×" = "%@×";
 "+%@ dB" = "+%@ dB";
+"+%@ more" = "另外 %@ 个";
 "+%@ ms" = "+%@ 毫秒";
 "12-hour" = "12 小时制";
 "24-hour" = "24 小时制";
@@ -103,6 +104,7 @@
 "Connecting…" = "正在连接…";
 "Continue watching" = "继续观看";
 "Continuing" = "连载中";
+"Could not load the calendar" = "无法加载日历";
 "Couldn't open %@." = "无法打开《%@》。";
 "Couldn't reach %@." = "无法连接到 %@。";
 "Countdown" = "倒计时";
@@ -211,6 +213,7 @@
 "Next %@: %@" = "接下来 %@：%@";
 "Next episode" = "下一集";
 "Next episode, controls and players" = "下一集、控制项和播放器";
+"Next month" = "下个月";
 "Next up" = "接下来播放";
 "Next: %@" = "接下来：%@";
 "Night mode" = "夜间模式";
@@ -224,7 +227,7 @@
 "None" = "无";
 "Normal" = "普通";
 "Not found on this server." = "在此服务器上未找到。";
-"Nothing airs in the next two weeks." = "接下来两周没有播出内容。";
+"Nothing airs this month from your shows or watchlist." = "本月你关注的剧集或追剧清单中没有内容播出。";
 "Nothing here yet. Add catalogs to your configuration." = "这里还没有内容。请在配置中添加目录。";
 "Nothing in this library." = "此媒体库中没有内容。";
 "Nothing in this playlist yet." = "此播放列表中还没有内容。";
@@ -276,6 +279,7 @@
 "Press Back to pick another version." = "按返回键选择其他版本。";
 "Prevent accidental exit" = "防止误退出";
 "Previews" = "预告";
+"Previous month" = "上个月";
 "Quick Connect" = "快速连接";
 "Rail" = "侧栏";
 "Raised" = "较高";

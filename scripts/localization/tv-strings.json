@@ -3024,6 +3024,22 @@
       "ro": "Pentru un televizor mai puțin luminos decât filmul: aplicația atenuează HDR10 peste vârful ales, astfel încât zonele luminoase își păstrează detaliile, iar televizorului i se cere să nu-l atenueze din nou. Alege luminozitatea maximă a televizorului. Necesită tvOS 26; Dolby Vision, HLG și SDR rămân neschimbate. Un titlu procesat astfel nu are Picture in Picture, iar Atmos în Dolby Digital Plus rulează fără canalele de înălțime.",
       "tr": "Filmden daha karanlık bir TV için: seçtiğin tepe parlaklığın üzerindeki HDR10 uygulama tarafından yumuşatılır, böylece parlak alanlar ayrıntısını korur ve TV’den onu yeniden karartmaması istenir. TV’nin tepe parlaklığını seç. tvOS 26 gerekir; Dolby Vision, HLG ve SDR olduğu gibi kalır. Bu şekilde işlenen bir içerikte Resim İçinde Resim olmaz ve Dolby Digital Plus’taki Atmos yükseklik kanalları olmadan çalar.",
       "zh-Hans": "适用于比影片暗的电视：超过所选峰值亮度的 HDR10 由应用柔和压低，让高光保留细节，并告知电视不要再次压暗。请选择电视的峰值亮度。需要 tvOS 26；杜比视界、HLG 和 SDR 保持不变。经此处理的影片不支持画中画，Dolby Digital Plus 中的全景声将不含顶部声道。"
+    },
+    "+%@ more": {
+      "ar": "+%@ أخرى",
+      "de": "+%@ weitere",
+      "el": "+%@ ακόμη",
+      "es": "+%@ más",
+      "fr": "+%@ de plus",
+      "id": "+%@ lainnya",
+      "it": "+%@ altri",
+      "ms": "+%@ lagi",
+      "pl": "+%@ więcej",
+      "pt-BR": "+%@ mais",
+      "pt": "+%@ mais",
+      "ro": "+%@ în plus",
+      "tr": "+%@ daha",
+      "zh-Hans": "另外 %@ 个"
     }
   },
   "plurals": {
