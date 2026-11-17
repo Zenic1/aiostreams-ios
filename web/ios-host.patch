@@ -116,10 +116,10 @@ index c7d13569..6b991f63 100644
          {
            id: download.id,
 diff --git a/packages/web/src/lib/hosts/shell/bridge.ts b/packages/web/src/lib/hosts/shell/bridge.ts
-index 39f60cb8..f18c1eb0 100644
+index e83de7ec..d0f732d7 100644
 --- a/packages/web/src/lib/hosts/shell/bridge.ts
 +++ b/packages/web/src/lib/hosts/shell/bridge.ts
-@@ -188,7 +188,7 @@ export type MediaKey =
+@@ -190,7 +190,7 @@ export type MediaKey =
  interface ShellBridge {
    protocol: number;
    version: string;
