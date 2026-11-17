@@ -31,11 +31,9 @@ struct DetailView: View {
 
     var body: some View {
         ZStack(alignment: .topLeading) {
-            ItemBackdrop(item: shown, overArtwork: prefs.artPages.contains("item"))
-                // Clear behind the title's own details; blurred and dimmed behind the rows below, so
-                // they read clearly over it.
-                .blur(radius: scrolledDown ? Theme.px(36) : 0)
-                .overlay(Color.black.opacity(scrolledDown ? 0.35 : 0).allowsHitTesting(false))
+            // Clear behind the title's own details; blurred and dimmed behind the rows below, so they
+            // read clearly over it.
+            ItemBackdrop(item: shown, overArtwork: prefs.artPages.contains("item"), softened: scrolledDown)
                 .animation(.easeOut(duration: 0.35), value: scrolledDown)
             ScrollView {
                 VStack(alignment: .leading, spacing: Theme.px(48)) {
@@ -369,6 +367,9 @@ struct ItemBackdrop: View {
     /// Over the background from artwork: the art fades out into it, rather than into the page's
     /// colour, which would cover the blurred art beneath (as the web app's `data-art-wash` does).
     var overArtwork = false
+    /// Blurred and dimmed, as behind the rows below the details. The picture alone is, before its
+    /// fades, so its edges fade as ever rather than showing the blur's halo or a dimmed box.
+    var softened = false
 
     private static var height: CGFloat { Theme.px(612) + Theme.topBarInset }
 
@@ -378,6 +379,9 @@ struct ItemBackdrop: View {
             ZStack(alignment: .bottom) {
                 RemoteImage(url: session.client?.backdrop(item, height: 1080))
                     .frame(width: width, height: Self.height)
+                    .blur(radius: softened ? Theme.px(36) : 0, opaque: true)
+                    .brightness(softened ? -0.18 : 0)
+                    .clipped()
                     .mask(
                         LinearGradient(
                             stops: [.init(color: .clear, location: 0), .init(color: .black, location: Theme.px(192) / width)],
