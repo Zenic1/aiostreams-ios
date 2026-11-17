@@ -267,6 +267,7 @@ private func calendarTitle(_ item: Item) -> String {
 }
 
 /// Its episode number and the time it airs, as "S02E05 · 8:00 PM".
+@MainActor
 private func calendarDetail(_ item: Item, prefs: Preferences) -> String {
     var parts: [String] = []
     if let episode = item.indexNumber {
