@@ -215,6 +215,27 @@ index 00000000..d54fa59b
 +      appBridge()?.send({ type: 'set-level', level: 'brightness', value: null }),
 +  },
 +};
+diff --git a/packages/web/src/lib/hosts/shell/player.ts b/packages/web/src/lib/hosts/shell/player.ts
+index ecb0ab11..ca487cfc 100644
+--- a/packages/web/src/lib/hosts/shell/player.ts
++++ b/packages/web/src/lib/hosts/shell/player.ts
+@@ -30,6 +30,7 @@ import type {
+   VideoFrame,
+ } from '@/lib/playback/engine';
+ import { audioCodes } from '@/lib/playback/track-picks';
++import { subtitleTypes } from '@/lib/subtitles/tracks';
+ import { currentHost } from '..';
+ import { appBridge, type AppTrack, type ShellMessage } from './bridge';
+ import { exoStats } from './exo-stats';
+@@ -130,6 +131,8 @@ export const appEngine: EngineFactory = (emit, { launched }) => {
+       append,
+       audioLanguages: audioCodes(prefs, played.source),
+       subtitleLanguages: subtitleLanguages(prefs),
++      // The user's subtitle types in order, for subtitles the app picks itself (iOS app).
++      subtitleTypes: subtitleTypes(prefs),
+       // eslint-disable-next-line lingui/no-unlocalized-strings -- Jellyfin's name
+       subtitleMode: SUBTITLE_MODES[prefs.SubtitleMode ?? 'Default'],
+     });
 diff --git a/packages/web/src/lib/jellyfin/client.ts b/packages/web/src/lib/jellyfin/client.ts
 index 03c7dded..030e75e5 100644
 --- a/packages/web/src/lib/jellyfin/client.ts

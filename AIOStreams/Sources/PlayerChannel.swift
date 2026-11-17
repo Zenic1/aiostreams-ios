@@ -48,7 +48,14 @@ final class PlayerChannel {
     private var subtitleFiles = 0
     /// The languages a stream's own AVPlayer subtitles are picked from, once, as they arrive.
     private var nativePickLanguages: [String] = []
+    /// The user's subtitle types, best first (normal, sdh, forced, signs).
+    private var nativePickTypes: [String] = []
     private var nativePicked = false
+    /// AVPlayer's own subtitle lines, read for the overlay.
+    private lazy var captions = NativeCaptions { [weak self] cues in
+        guard let self, self.engine.videoRoute == .remoteBypass else { return }
+        self.overlay.setCues(cues)
+    }
     private var thumbnailBusy = false
     private var wantedThumbnail: (url: String, positionMs: Double)?
     private var thumbnailCount = 0
@@ -106,9 +113,12 @@ final class PlayerChannel {
                 self?.sendTracks()
             }
             .store(in: &bag)
-        // A stream whose subtitles AVPlayer draws itself takes the page's style as text style rules.
-        engine.$currentAVPlayerItem
-            .sink { [weak self] _ in DispatchQueue.main.async { self?.applyNativeStyle() } }
+        // A stream whose subtitles AVPlayer would draw itself: its lines are read off the item and
+        // drawn in the overlay, in the page's style, AVPlayer's own rendering held back.
+        // Only there: elsewhere AVPlayer's rendering is what Picture in Picture shows.
+        Publishers.CombineLatest(engine.$currentAVPlayerItem, engine.$videoRoute)
+            .receive(on: RunLoop.main)
+            .sink { [weak self] item, route in self?.captions.attach(to: route == .remoteBypass ? item : nil) }
             .store(in: &bag)
         engine.$activeAudioTrackIndex.removeDuplicates()
             .sink { [weak self] index in self?.state(["audio": JSON.id(index)]) }
@@ -216,13 +226,30 @@ final class PlayerChannel {
               !engine.subtitleTracks.isEmpty else { return }
         nativePicked = true
         guard engine.activeSubtitleTrackIndex == nil else { return }
+        // The user's types, best first, as the web app ranks them; forced-only tracks never lead.
+        let order = nativePickTypes.isEmpty ? ["normal", "sdh", "forced", "signs"] : nativePickTypes
+        func rank(_ track: TrackInfo) -> Int {
+            let type = Self.subtitleType(track)
+            return type == "forced" ? order.count + 1 : (order.firstIndex(of: type) ?? order.count)
+        }
         for wanted in nativePickLanguages.map(Self.languageKey) {
-            if let track = engine.subtitleTracks.first(where: { $0.language.map(Self.languageKey) == wanted && !$0.isForced }) {
-                AppLog.info("subtitles", "picked the stream's \(track.language ?? "?") subtitles")
+            let matching = engine.subtitleTracks.filter { $0.language.map(Self.languageKey) == wanted }
+            if let track = matching.min(by: { rank($0) < rank($1) }), !track.isForced {
+                AppLog.info("subtitles", "picked the stream's \(track.language ?? "?") \(Self.subtitleType(track)) subtitles")
                 engine.selectSubtitleTrack(index: track.id)
                 return
             }
         }
+    }
+
+    /// A track's type as the web app tells them apart: forced, SDH (for the hard of hearing),
+    /// signs and songs, or normal.
+    static func subtitleType(_ track: TrackInfo) -> String {
+        let name = track.name.lowercased()
+        if track.isForced { return "forced" }
+        if track.isHearingImpaired || name.contains("sdh") || name.contains("hearing") || name.contains("cc") { return "sdh" }
+        if name.contains("sign") || name.contains("song") { return "signs" }
+        return "normal"
     }
 
     /// A language tag or code as one key, so "en", "eng" and "en-US" match, as do the
@@ -234,29 +261,6 @@ final class PlayerChannel {
                              "ice": "is", "mac": "mk", "mao": "mi", "may": "ms", "tib": "bo", "wel": "cy"]
         if let code = bibliographic[base] { return code }
         return Locale.Language(identifier: base).languageCode?.identifier(.alpha2) ?? base
-    }
-
-    /// The page's subtitle style for subtitles AVPlayer draws itself (a remote HLS stream's), as
-    /// text style rules on its item, so they follow the app's style rather than the system's.
-    private func applyNativeStyle() {
-        guard let item = engine.currentAVPlayerItem else { return }
-        let look = overlay.look
-        func argb(_ color: UIColor) -> [Double] {
-            var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
-            color.getRed(&r, green: &g, blue: &b, alpha: &a)
-            return [a, r, g, b].map(Double.init)
-        }
-        var attributes: [String: Any] = [
-            kCMTextMarkupAttribute_ForegroundColorARGB as String: argb(look.color),
-            kCMTextMarkupAttribute_RelativeFontSize as String: max(look.scale, 0.3) * 100,
-            kCMTextMarkupAttribute_BoldStyle as String: look.bold,
-            kCMTextMarkupAttribute_CharacterBackgroundColorARGB as String: argb(look.backColor),
-            kCMTextMarkupAttribute_CharacterEdgeStyle as String: look.shadowSize > 0
-                ? kCMTextMarkupCharacterEdgeStyle_DropShadow as String
-                : look.outlineSize > 0 ? kCMTextMarkupCharacterEdgeStyle_Uniform as String : kCMTextMarkupCharacterEdgeStyle_None as String,
-        ]
-        if let family = look.fontFamily { attributes[kCMTextMarkupAttribute_FontFamilyName as String] = family }
-        item.textStyleRules = AVTextStyleRule(textMarkupAttributes: attributes).map { [$0] }
     }
 
     private func sendTracks() {
@@ -391,6 +395,7 @@ final class PlayerChannel {
         // A remote HLS stream's subtitles are AVPlayer's own, which arrive after the load and which
         // the engine leaves unpicked: the first in the user's languages is picked once they do.
         nativePickLanguages = mode == "always" ? JSON.strings(message["subtitleLanguages"]) : []
+        nativePickTypes = JSON.strings(message["subtitleTypes"])
         nativePicked = false
 
         generation += 1
@@ -617,10 +622,7 @@ final class PlayerChannel {
         }
         if let look = message["subtitles"] as? [String: Any] {
             let next = SubtitleLook(json: look)
-            if next != overlay.look {
-                overlay.look = next
-                applyNativeStyle()
-            }
+            if next != overlay.look { overlay.look = next }
         }
     }
 
