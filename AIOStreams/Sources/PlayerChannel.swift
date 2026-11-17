@@ -250,7 +250,7 @@ final class PlayerChannel {
             kCMTextMarkupAttribute_ForegroundColorARGB as String: argb(look.color),
             kCMTextMarkupAttribute_RelativeFontSize as String: max(look.scale, 0.3) * 100,
             kCMTextMarkupAttribute_BoldStyle as String: look.bold,
-            kCMTextMarkupAttribute_CharacterBackgroundARGB as String: argb(look.backColor),
+            kCMTextMarkupAttribute_CharacterBackgroundColorARGB as String: argb(look.backColor),
             kCMTextMarkupAttribute_CharacterEdgeStyle as String: look.shadowSize > 0
                 ? kCMTextMarkupCharacterEdgeStyle_DropShadow as String
                 : look.outlineSize > 0 ? kCMTextMarkupCharacterEdgeStyle_Uniform as String : kCMTextMarkupCharacterEdgeStyle_None as String,
