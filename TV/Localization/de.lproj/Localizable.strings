@@ -339,7 +339,6 @@
 "Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration." = "Mit der Web-App geteilt. Intros, Rückblicke und Abspann kommen von deinem Server, wenn dort „Intro und Abspann überspringen“ in der Konfiguration aktiviert ist.";
 "Show a skip button" = "Schaltfläche zum Überspringen anzeigen";
 "Show the clock" = "Uhr anzeigen";
-"Show the controls on pause and skip" = "Bedienelemente beim Pausieren und Überspringen einblenden";
 "Show time left" = "Restzeit anzeigen";
 "Shows" = "Serien";
 "Shuffle" = "Zufallswiedergabe";

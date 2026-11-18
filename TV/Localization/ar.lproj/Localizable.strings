@@ -339,7 +339,6 @@
 "Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration." = "مشترك مع تطبيق الويب. تأتي المقدمات والملخصات وشارات النهاية من خادمك، مع تفعيل تخطي المقدمة وشارة النهاية في إعداداته.";
 "Show a skip button" = "إظهار زر التخطي";
 "Show the clock" = "إظهار الساعة";
-"Show the controls on pause and skip" = "إظهار عناصر التحكم عند الإيقاف المؤقت والتخطي";
 "Show time left" = "إظهار الوقت المتبقي";
 "Shows" = "المسلسلات";
 "Shuffle" = "تشغيل عشوائي";

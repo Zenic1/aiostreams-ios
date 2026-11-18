@@ -339,7 +339,6 @@
 "Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration." = "Condiviso con la web app. Sigle, riassunti e titoli di coda arrivano dal tuo server, con l'opzione per saltare sigla e titoli di coda attiva nella sua configurazione.";
 "Show a skip button" = "Mostra un pulsante salta";
 "Show the clock" = "Mostra l'orologio";
-"Show the controls on pause and skip" = "Mostra i controlli in pausa o durante i salti";
 "Show time left" = "Mostra il tempo rimanente";
 "Shows" = "Serie TV";
 "Shuffle" = "Casuale";

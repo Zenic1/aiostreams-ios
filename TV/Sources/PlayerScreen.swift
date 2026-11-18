@@ -194,6 +194,9 @@ private struct PlayerChrome: View {
     @State private var freshTask: Task<Void, Never>?
     /// "Skipped intro", after a skip the settings made.
     @State private var notice: String?
+    /// The brief icon a pause, play or skip shows while the controls stay hidden, as the web app's.
+    @State private var glance: String?
+    @State private var glanceTask: Task<Void, Never>?
     @State private var noticeTask: Task<Void, Never>?
     /// Back hid the up next offer; seeking back before it brings it back.
     @State private var upNextDismissed = false
@@ -317,8 +320,9 @@ private struct PlayerChrome: View {
                     switch direction {
                     // Live, there's nothing to skip through: a press only shows the controls.
                     case .left where model.isLive, .right where model.isLive: reveal(.play)
-                    case .left: if !moved(-1) { model.skip(-step) }; if prefs.showOnPauseAndSkip { reveal(.bar) }
-                    case .right: if !moved(1) { model.skip(step) }; if prefs.showOnPauseAndSkip { reveal(.bar) }
+                    // The controls stay hidden, as the web app now leaves them: a brief icon says what happened.
+                    case .left: if !moved(-1) { model.skip(-step); flash(Self.skipSymbol(back: true, seconds: Int(step))) }
+                    case .right: if !moved(1) { model.skip(step); flash(Self.skipSymbol(back: false, seconds: Int(step))) }
                     // On a channel, up and down change channel, as a TV's remote does.
                     case .up where model.request.item.isChannel: changeChannel(-1)
                     case .down where model.request.item.isChannel: changeChannel(1)
@@ -373,6 +377,16 @@ private struct PlayerChrome: View {
                     }) { closePanel() }
                 }
                 .transition(.move(edge: .trailing).combined(with: .opacity))
+            }
+
+            if let glance, !shown, panel == nil {
+                Image(systemName: glance)
+                    .font(.system(size: Theme.px(40), weight: .semibold))
+                    .frame(width: Theme.px(96), height: Theme.px(96))
+                    .background(Circle().fill(.black.opacity(0.55)))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .transition(.opacity.combined(with: .scale(scale: 0.9)))
+                    .allowsHitTesting(false)
             }
 
             if panel == nil && model.failure == nil {
@@ -466,7 +480,11 @@ private struct PlayerChrome: View {
             playOn(auto: true)
         }
         .onChange(of: model.paused) { _, paused in
-            if paused { if prefs.showOnPauseAndSkip || shown { reveal(nil) } } else { wake() }
+            if shown {
+                if paused { reveal(nil) } else { wake() }
+            } else {
+                flash(paused ? "pause.fill" : "play.fill")
+            }
         }
     }
 
@@ -769,6 +787,22 @@ private struct PlayerChrome: View {
         offer = nil
         model.seek(to: segment.end)
         wake()
+    }
+
+    /// Shows `symbol` for a moment over the video.
+    private func flash(_ symbol: String) {
+        withAnimation(.easeOut(duration: 0.15)) { glance = symbol }
+        glanceTask?.cancel()
+        glanceTask = Task {
+            try? await Task.sleep(for: .milliseconds(700))
+            if !Task.isCancelled { withAnimation(.easeOut(duration: 0.25)) { glance = nil } }
+        }
+    }
+
+    /// The back or forward symbol for a skip, with its seconds where the symbol has them.
+    static func skipSymbol(back: Bool, seconds: Int) -> String {
+        let name = back ? "gobackward" : "goforward"
+        return [5, 10, 15, 30, 45, 60, 75, 90].contains(seconds) ? "\(name).\(seconds)" : name
     }
 
     private func show(_ text: String) {

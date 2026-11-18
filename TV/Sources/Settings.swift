@@ -288,10 +288,6 @@ final class Preferences: ObservableObject {
     @Published var showClock: Bool = UserDefaults.standard.object(forKey: "controls.clock") as? Bool ?? true {
         didSet { UserDefaults.standard.set(showClock, forKey: "controls.clock") }
     }
-    /// Pausing and skipping bring the controls up.
-    @Published var showOnPauseAndSkip: Bool = UserDefaults.standard.object(forKey: "controls.showOnPauseAndSkip") as? Bool ?? true {
-        didSet { UserDefaults.standard.set(showOnPauseAndSkip, forKey: "controls.showOnPauseAndSkip") }
-    }
 
     /// What the player needs of these, read as it starts.
     var playerRules: PlayerRules {
@@ -551,9 +547,6 @@ struct SettingsView: View {
                 }
                 note(L("How fast playback runs while you hold Select on the video."))
                 row(L("Seek bar previews"), value: prefs.seekPreviews ? L("On") : L("Off")) { prefs.seekPreviews.toggle() }
-                row(L("Show the controls on pause and skip"), value: prefs.showOnPauseAndSkip ? L("On") : L("Off")) {
-                    prefs.showOnPauseAndSkip.toggle()
-                }
             }
             section(L("Live TV"), note: L("Kept on this Apple TV. Each works with the Apple TV's own Match Content setting on.")) {
                 row(L("Match frame rate"), value: prefs.liveMatchFrameRate ? L("On") : L("Off")) { prefs.liveMatchFrameRate.toggle() }

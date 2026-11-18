@@ -339,7 +339,6 @@
 "Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration." = "Dibagikan dengan aplikasi web. Pembuka, rekap, dan kredit berasal dari servermu, dengan opsi lewati pembuka dan kredit aktif di konfigurasinya.";
 "Show a skip button" = "Tampilkan tombol lewati";
 "Show the clock" = "Tampilkan jam";
-"Show the controls on pause and skip" = "Tampilkan kontrol saat menjeda dan melompat";
 "Show time left" = "Tampilkan waktu tersisa";
 "Shows" = "Serial";
 "Shuffle" = "Acak urutan";

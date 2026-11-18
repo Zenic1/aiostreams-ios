@@ -339,7 +339,6 @@
 "Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration." = "Web uygulamasıyla paylaşılır. Girişler, özetler ve jenerikler sunucundan gelir; bunun için yapılandırmasında giriş ve jenerik atlama açık olmalıdır.";
 "Show a skip button" = "Atlama düğmesi göster";
 "Show the clock" = "Saati göster";
-"Show the controls on pause and skip" = "Duraklatma ve atlamada kontrolleri göster";
 "Show time left" = "Kalan süreyi göster";
 "Shows" = "Diziler";
 "Shuffle" = "Karıştır";

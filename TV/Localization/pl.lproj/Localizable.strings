@@ -339,7 +339,6 @@
 "Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration." = "Wspólne z aplikacją webową. Czołówki, streszczenia i napisy końcowe pochodzą z Twojego serwera, gdy w jego konfiguracji włączone jest pomijanie czołówki i napisów końcowych.";
 "Show a skip button" = "Pokaż przycisk pomijania";
 "Show the clock" = "Pokazuj zegar";
-"Show the controls on pause and skip" = "Wyświetlaj elementy sterujące przy wstrzymaniu i przewinięciu";
 "Show time left" = "Pokazuj pozostały czas";
 "Shows" = "Seriale";
 "Shuffle" = "Odtwarzaj losowo";

@@ -339,7 +339,6 @@
 "Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration." = "与网页应用共享。片头、回顾和片尾来自你的服务器，需要在其配置中开启跳过片头和片尾。";
 "Show a skip button" = "显示跳过按钮";
 "Show the clock" = "显示时钟";
-"Show the controls on pause and skip" = "暂停和快进/快退时显示控制栏";
 "Show time left" = "显示剩余时间";
 "Shows" = "剧集";
 "Shuffle" = "随机播放";

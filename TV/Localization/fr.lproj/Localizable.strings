@@ -339,7 +339,6 @@
 "Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration." = "Partagé avec l'application web. Les intros, récapitulatifs et génériques viennent de votre serveur, avec l'option pour passer l'intro et le générique activée dans sa configuration.";
 "Show a skip button" = "Afficher un bouton Passer";
 "Show the clock" = "Afficher l'horloge";
-"Show the controls on pause and skip" = "Afficher les commandes à la pause et au saut";
 "Show time left" = "Afficher le temps restant";
 "Shows" = "Séries";
 "Shuffle" = "Lecture aléatoire";

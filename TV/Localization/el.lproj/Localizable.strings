@@ -339,7 +339,6 @@
 "Shared with the web app. Intros, recaps and credits come from your server, with Skip intro and credits on in its configuration." = "Κοινά με την εφαρμογή web. Οι εισαγωγές, οι ανακεφαλαιώσεις και οι τίτλοι τέλους έρχονται από τον διακομιστή σου, με ενεργή την παράλειψη εισαγωγής και τίτλων τέλους στη διαμόρφωσή του.";
 "Show a skip button" = "Εμφάνιση κουμπιού παράλειψης";
 "Show the clock" = "Εμφάνιση ρολογιού";
-"Show the controls on pause and skip" = "Εμφάνιση στοιχείων ελέγχου σε παύση και μετακίνηση";
 "Show time left" = "Εμφάνιση χρόνου που απομένει";
 "Shows" = "Σειρές";
 "Shuffle" = "Τυχαία σειρά";
