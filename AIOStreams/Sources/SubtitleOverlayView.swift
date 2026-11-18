@@ -129,9 +129,12 @@ final class SubtitleOverlayView: UIView {
             switch cue.body {
             case .image(let image):
                 drawImage(image, in: video, below: line, context: context)
-            case .text(let text):
+            case .text(let raw):
+                // A file's ASS tags in plain text are its instructions, not its words.
+                let (text, alignment) = SubtitleTags.clean(raw)
                 let string = attributed(runs: nil, text: text, height: shownVideo.height)
-                route(string, placement: cue.placement, bottom: &bottomStack, placed: &placed)
+                route(string, placement: cue.placement ?? alignment.map { SubtitleTextPlacement(alignment: $0, position: nil) },
+                      bottom: &bottomStack, placed: &placed)
             case .richText(let runs):
                 let string = attributed(runs: runs, text: nil, height: shownVideo.height)
                 route(string, placement: cue.placement, bottom: &bottomStack, placed: &placed)
@@ -230,7 +233,7 @@ final class SubtitleOverlayView: UIView {
                 attributes[.foregroundColor] = colour
                 if run.isUnderlined { attributes[.underlineStyle] = NSUnderlineStyle.single.rawValue }
                 if run.isStruckThrough { attributes[.strikethroughStyle] = NSUnderlineStyle.single.rawValue }
-                result.append(NSAttributedString(string: run.text, attributes: attributes))
+                result.append(NSAttributedString(string: SubtitleTags.clean(run.text).text, attributes: attributes))
             }
         } else if let text {
             var attributes = base
@@ -299,5 +302,30 @@ final class SubtitleOverlayView: UIView {
             frame.origin.y = max(min(frame.minY, video.minY), frame.minY - (frame.maxY - line))
         }
         UIImage(cgImage: image.cgImage).draw(in: frame)
+    }
+}
+
+/// ASS override tags left in a text subtitle, as an SRT made from an ASS file often keeps them:
+/// `{\an8}` and the like are its instructions, never its words. The blocks are taken out, a
+/// stray `\an8}` whose brace went missing too, and `\N` and `\h` become a line break and a space.
+/// The last `\anN` is where the line asks to sit (1 bottom left to 9 top right).
+enum SubtitleTags {
+    private static let block = try! NSRegularExpression(pattern: #"\{[^{}]*\\[^{}]*\}"#)
+    private static let stray = try! NSRegularExpression(pattern: #"\{?\\+(?:an?\d+|pos\([^)]*\)|[ibus][01])\}?"#)
+    private static let alignment = try! NSRegularExpression(pattern: #"\\+an(\d)"#)
+
+    static func clean(_ text: String) -> (text: String, alignment: Int?) {
+        guard text.contains("\\") || text.contains("{") else { return (text, nil) }
+        let range = NSRange(text.startIndex..., in: text)
+        var found: Int?
+        if let match = alignment.matches(in: text, range: range).last,
+           let digits = Range(match.range(at: 1), in: text), let value = Int(text[digits]), (1...9).contains(value) {
+            found = value
+        }
+        var cleaned = block.stringByReplacingMatches(in: text, range: range, withTemplate: "")
+        cleaned = stray.stringByReplacingMatches(in: cleaned, range: NSRange(cleaned.startIndex..., in: cleaned), withTemplate: "")
+        cleaned = cleaned.replacingOccurrences(of: "\\N", with: "\n").replacingOccurrences(of: "\\n", with: "\n")
+            .replacingOccurrences(of: "\\h", with: " ")
+        return (cleaned.trimmingCharacters(in: .whitespaces), found)
     }
 }
