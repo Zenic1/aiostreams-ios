@@ -1,5 +1,5 @@
 diff --git a/packages/web/src/app/settings/about.tsx b/packages/web/src/app/settings/about.tsx
-index e41938f9..d8ffaba2 100644
+index ec7c7539..9ae886ef 100644
 --- a/packages/web/src/app/settings/about.tsx
 +++ b/packages/web/src/app/settings/about.tsx
 @@ -59,7 +59,11 @@ export function AboutSection() {
@@ -225,18 +225,18 @@ index 00000000..2a6e02db
 +  },
 +};
 diff --git a/packages/web/src/lib/hosts/shell/player.ts b/packages/web/src/lib/hosts/shell/player.ts
-index ecb0ab11..ca487cfc 100644
+index 1447c0f5..bfde62b9 100644
 --- a/packages/web/src/lib/hosts/shell/player.ts
 +++ b/packages/web/src/lib/hosts/shell/player.ts
-@@ -30,6 +30,7 @@ import type {
-   VideoFrame,
+@@ -31,6 +31,7 @@ import {
+   type VideoFrame,
  } from '@/lib/playback/engine';
  import { audioCodes } from '@/lib/playback/track-picks';
 +import { subtitleTypes } from '@/lib/subtitles/tracks';
  import { currentHost } from '..';
  import { appBridge, type AppTrack, type ShellMessage } from './bridge';
  import { exoStats } from './exo-stats';
-@@ -130,6 +131,8 @@ export const appEngine: EngineFactory = (emit, { launched }) => {
+@@ -132,6 +133,8 @@ export const appEngine: EngineFactory = (emit, { launched }) => {
        append,
        audioLanguages: audioCodes(prefs, played.source),
        subtitleLanguages: subtitleLanguages(prefs),
