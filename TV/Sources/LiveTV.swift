@@ -35,6 +35,10 @@ struct LiveTVView: View {
     @State private var day = 0
     /// The days the server's guide covers (/LiveTv/GuideInfo), back as far as channels keep programmes.
     @State private var guideRange: (from: Date, to: Date)?
+    /// The earliest programme the server keeps for the listed channels, for catch-up: a server's
+    /// guide info can start today while its channels keep days of programmes behind.
+    @State private var pastFrom: Date?
+    @State private var lookedBack = false
     @State private var choice: VersionChoice?
 
     private static let page = 100
@@ -209,6 +213,10 @@ struct LiveTVView: View {
         guard asked == group else { return }
         channels += found
         loaded = true
+        if !lookedBack {
+            lookedBack = true
+            Task { await findPastRange(Array(found.prefix(20)).map(\.id)) }
+        }
         await loadSchedules(for: found.map(\.id))
     }
 
@@ -233,6 +241,7 @@ struct LiveTVView: View {
             if range.from < today { back = days(calendar.startOfDay(for: range.from), today) }
             if range.to > today { ahead = max(1, days(today, range.to)) }
         }
+        if let pastFrom, pastFrom < today { back = max(back, days(calendar.startOfDay(for: pastFrom), today)) }
         return Array(-back..<ahead)
     }
 
@@ -245,6 +254,23 @@ struct LiveTVView: View {
             let date = Calendar.current.date(byAdding: .day, value: offset, to: Calendar.current.startOfDay(for: now)) ?? now
             return date.formatted(.dateTime.weekday(.abbreviated).day().month(.abbreviated).locale(AppLanguage.locale))
         }
+    }
+
+    /// How far back the channels' programmes go, up to a month: the earliest the server returns
+    /// for the first channels listed, so catch-up reaches the days the provider keeps.
+    private func findPastRange(_ ids: [String]) async {
+        guard !ids.isEmpty, let client = session.client, let userId = session.userId else { return }
+        let iso = ISO8601DateFormatter()
+        let today = Calendar.current.startOfDay(for: Date())
+        let result: ItemsResult? = try? await client.post("/LiveTv/Programs", body: [
+            "UserId": userId,
+            "ChannelIds": ids,
+            "MinEndDate": iso.string(from: today.addingTimeInterval(-31 * 86_400)),
+            "MaxStartDate": iso.string(from: today),
+            "SortBy": ["StartDate"],
+            "Limit": 1,
+        ])
+        pastFrom = result?.items?.compactMap(\.starts).min()
     }
 
     private func loadGuideRange() async {
