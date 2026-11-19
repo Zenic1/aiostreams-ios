@@ -110,6 +110,13 @@ final class PlayerModel: ObservableObject {
     /// The server's segments, before the file's chapters are weighed against them.
     private var serverSegments: [MediaSegment] = []
     private let userId: String?
+    /// The audio's language the subtitles were picked against, for those that arrive later.
+    private var heardLanguage: String?
+    /// Addon subtitles asked for once the title plays, by the server's stream index, with their tracks.
+    private var laterStreams: [MediaStream] = []
+    private var laterTrackIDs: [Int: Int] = [:]
+    /// A subtitle chosen in the player or by a remote, which a later pick leaves alone.
+    private var subtitleChosen = false
 
     init(request: PlayRequest, client: JellyfinClient, tracks: TrackRules = TrackRules(), baseTracks: TrackRules = TrackRules(),
          remember: (audio: Bool, subtitles: Bool) = (true, true), audioShaping: AudioShaping = AudioShaping(),
@@ -217,6 +224,7 @@ final class PlayerModel: ObservableObject {
         audioStreamIndex = audio?.index.map(Int32.init)
         let heard = (audio ?? streams.first { $0.type == "Audio" && $0.isDefault == true }
                      ?? streams.first { $0.type == "Audio" })?.language
+        heardLanguage = heard
         if streams.contains(where: { $0.type == "Subtitle" }) {
             options.preferredSubtitleLanguages = []
             if let subtitle = tracks.subtitleStream(in: streams, audioLanguage: heard), let index = subtitle.index {
@@ -273,6 +281,8 @@ final class PlayerModel: ObservableObject {
                                                audioSourceStreamIndex: self.audioStreamIndex)
                 }
                 if self.isLive, self.liveDisplay.rate != self.liveDisplay.range { self.matchLiveDisplay() }
+                // The configuration's subtitle addons, asked for now the title plays rather than before.
+                if !self.isLive, !self.request.isTrailer { Task { [weak self] in await self?.addLaterSubtitles() } }
                 // A watch party's title waits for the group to start it; anything else plays.
                 if let entry = self.request.partyEntry {
                     self.party = PartyFollower(model: self, playlistItemId: entry)
@@ -427,6 +437,47 @@ final class PlayerModel: ObservableObject {
         (request.source.mediaStreams ?? []).filter { stream in
             stream.type == "Subtitle" && stream.isExternal == true
                 && stream.deliveryUrl.flatMap { client.absolute($0) } != nil
+        }
+    }
+
+    /// The configuration's subtitle addons' files for this version, asked for once it plays: each
+    /// one new to it becomes a track, and where the settings would pick one of them and nothing was
+    /// chosen meanwhile, it shows.
+    private func addLaterSubtitles() async {
+        guard let userId,
+              let named = try? await client.playbackInfo(userId: userId, itemId: request.item.id,
+                                                         sourceId: request.source.ownId, addonSubtitles: true),
+              let match = named.mediaSources?.first(where: { $0.ownId == request.source.ownId }) ?? named.mediaSources?.first,
+              !stopped else { return }
+        let known = Set(serverStreams().compactMap(\.deliveryUrl))
+        let fresh = (match.mediaStreams ?? []).filter { stream in
+            stream.type == "Subtitle" && stream.isExternal == true
+                && stream.deliveryUrl.map { !known.contains($0) && client.absolute($0) != nil } == true
+        }
+        guard !fresh.isEmpty else { return }
+        let shownBefore = engine.activeSubtitleTrackIndex
+        for stream in fresh {
+            guard let address = stream.deliveryUrl, let url = client.absolute(address) else { continue }
+            let track = engine.addExternalSubtitleTrack(ExternalSubtitleTrack(
+                url: url, name: stream.displayTitle ?? stream.title, language: stream.language,
+                isForced: stream.isForced ?? false, httpHeaders: [:]))
+            laterStreams.append(stream)
+            if let index = stream.index { laterTrackIDs[index] = track.id }
+        }
+        AppLog.info("player", "\(fresh.count) addon subtitles added")
+        // Adding a track can make the engine pick by language; the settings' own pick decides.
+        guard !subtitleChosen, !["None", "OnlyForced"].contains(tracks.subtitleMode) else {
+            if engine.activeSubtitleTrackIndex != shownBefore {
+                if let shownBefore { engine.selectSubtitleTrack(index: shownBefore) } else { engine.clearSubtitle() }
+            }
+            return
+        }
+        let all = (request.source.mediaStreams ?? []) + fresh
+        if let pick = tracks.subtitleStream(in: all, audioLanguage: heardLanguage),
+           let index = pick.index, fresh.contains(where: { $0.index == index }), let id = laterTrackIDs[index] {
+            engine.selectSubtitleTrack(index: id)
+        } else if engine.activeSubtitleTrackIndex != shownBefore {
+            if let shownBefore { engine.selectSubtitleTrack(index: shownBefore) } else { engine.clearSubtitle() }
         }
     }
 
@@ -713,12 +764,15 @@ final class PlayerModel: ObservableObject {
         let streams = request.source.mediaStreams ?? []
         if let stream = streams.first(where: { $0.index == index }), stream.isExternal == true {
             if let at = serverStreams().firstIndex(of: stream) { selectSubtitle(AetherEngine.externalSubtitleTrackIDBase + at) }
+        } else if let later = laterTrackIDs[index] {
+            selectSubtitle(later)
         } else if subtitleTracks.contains(where: { $0.id == index }) {
             selectSubtitle(index)
         }
     }
 
     func selectSubtitle(_ id: Int?) {
+        subtitleChosen = true
         if let id { engine.selectSubtitleTrack(index: id) } else { engine.clearSubtitle() }
         if remember.subtitles, let userId {
             let track = id.flatMap { id in subtitleTracks.first { $0.id == id } }

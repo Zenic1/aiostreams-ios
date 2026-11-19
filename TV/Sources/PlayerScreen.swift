@@ -146,7 +146,7 @@ struct PlayerScreen: View {
               var source = info.mediaSources?.first else { return }
         var playSession = info.playSessionId
         // Named, as when a channel is chosen from Live TV, for its stream in full.
-        if let named = try? await client.playbackInfo(userId: userId, itemId: next.id, sourceId: source.ownId),
+        if let named = try? await client.playbackInfo(userId: userId, itemId: next.id, sourceId: source.ownId, addonSubtitles: true),
            let match = named.mediaSources?.first(where: { $0.ownId == source.ownId }) ?? named.mediaSources?.first {
             source = match
             playSession = named.playSessionId ?? playSession
