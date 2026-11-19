@@ -157,6 +157,15 @@ final class PlayerModel: ObservableObject {
                 case .ended: self.finished = true
                 case .error(let message):
                     AppLog.warn("player", "error: \(message)")
+                    // An origin that answers byte ranges with other bytes, as IPTV catch-up archives
+                    // do: once more, read straight through from its start (AE#958).
+                    if self.engine.errorInfo?.kind == .sourceFabricatesRanges, !self.sequential, !self.stopped {
+                        AppLog.warn("player", "origin fabricates ranges; loading again as sequential")
+                        self.sequential = true
+                        self.loadTask = nil
+                        self.start()
+                        return
+                    }
                     self.failure = message
                 default: break
                 }
@@ -197,8 +206,25 @@ final class PlayerModel: ObservableObject {
             .store(in: &bag)
     }
 
+    /// Read straight through, from byte 0 only: a catch-up programme, whose archive answers byte
+    /// ranges with other bytes, or a source the engine found doing so. No seeking within it.
+    private var sequential = false
+
+    /// A programme a channel keeps, played from its start.
+    private var isCatchUp: Bool {
+        request.item.type == "Program" || (request.item.channelId != nil && !request.item.isChannel)
+    }
+
+    /// The title's length, which a sequential read can't measure by itself.
+    private var declaredDuration: Double? {
+        if let ticks = request.item.runTimeTicks, ticks > 0 { return Double(ticks) / 10_000_000 }
+        if let start = request.item.starts, let end = request.item.ends, end > start { return end.timeIntervalSince(start) }
+        return nil
+    }
+
     func start() {
         guard loadTask == nil else { return }
+        if isCatchUp, !isLive { sequential = true }
         guard let url = client.streamURL(itemId: request.item.id, source: request.source) else {
             failure = L("This version has no address to play.")
             return
@@ -244,6 +270,10 @@ final class PlayerModel: ObservableObject {
         // as Dolby MAT (tvOS 26 and later); off, they play as their 7.1 channels.
         options.objectAudioRendering = speakers.map { .render($0) } ?? .off
         options.isLive = isLive
+        if sequential, !isLive {
+            options.sequentialOrigin = true
+            options.declaredDurationSeconds = declaredDuration
+        }
         // HDR10 brighter than the TV is rolled off to its peak (the engine passes the rest by).
         if toneMapNits > 0, !request.isTrailer {
             options.videoProcessing = VideoProcessingOptions(targetPeakNits: Double(toneMapNits))
@@ -268,7 +298,7 @@ final class PlayerModel: ObservableObject {
                     loadOptions.upscaleScaler = .lineArt
                     AppLog.info("player", "anime upscaling on")
                 }
-                let start = self.isLive ? nil : self.request.startMs.map { $0 / 1000 }
+                let start = self.isLive || self.sequential ? nil : self.request.startMs.map { $0 / 1000 }
                 try await self.engine.load(url: url, startPosition: start, options: loadOptions,
                                            audioSourceStreamIndex: self.audioStreamIndex)
                 // A channel whose sound the engine's own reader identified none of plays silent there:
