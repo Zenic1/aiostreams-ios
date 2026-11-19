@@ -198,6 +198,11 @@ final class PlayerModel: ObservableObject {
         }
         var options = LoadOptions()
         options.httpHeaders = request.source.requiredHttpHeaders ?? [:]
+        // IPTV panels can refuse a player library's own user agent: a live stream that names none
+        // is sent VLC's, as the official apps' players send it (the web app's `liveHeaders`).
+        if isLive, !options.httpHeaders.keys.contains(where: { $0.caseInsensitiveCompare("User-Agent") == .orderedSame }) {
+            options.httpHeaders["User-Agent"] = "VLC/3.0.21 LibVLC/3.0.21"
+        }
         // The engine writes the display criteria itself, following the Apple TV's Match Content setting.
         options.matchContentEnabled = Self.window?.avDisplayManager.isDisplayCriteriaMatchingEnabled ?? true
         // Serves Dolby Vision profile 8 as profile 5 on a TV without Dolby Vision; ignored on one with it.
