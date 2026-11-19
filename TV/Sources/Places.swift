@@ -208,8 +208,8 @@ struct CalendarView: View {
         }
         .padding(Theme.px(8))
         .background(
-            RoundedRectangle(cornerRadius: Theme.px(14), style: .continuous)
-                .fill(Color(red: 3 / 255, green: 7 / 255, blue: 18 / 255).opacity(0.4))
+            GlassBackground(shape: RoundedRectangle(cornerRadius: Theme.px(14), style: .continuous),
+                            fill: Color(red: 3 / 255, green: 7 / 255, blue: 18 / 255).opacity(0.4), panel: true)
                 .overlay(RoundedRectangle(cornerRadius: Theme.px(14), style: .continuous)
                     .stroke(Color.white.opacity(0.1), lineWidth: Theme.px(1)))
         )
@@ -407,8 +407,8 @@ private struct CalendarDayPanel: View {
             .padding(Theme.px(28))
             .frame(width: Theme.px(620))
             .background(
-                RoundedRectangle(cornerRadius: Theme.px(18), style: .continuous)
-                    .fill(Color(red: 3 / 255, green: 7 / 255, blue: 18 / 255).opacity(0.95))
+                GlassBackground(shape: RoundedRectangle(cornerRadius: Theme.px(18), style: .continuous),
+                                fill: Color(red: 3 / 255, green: 7 / 255, blue: 18 / 255).opacity(0.95), panel: true)
                     .overlay(RoundedRectangle(cornerRadius: Theme.px(18), style: .continuous)
                         .stroke(Color.white.opacity(0.1), lineWidth: Theme.px(1)))
             )

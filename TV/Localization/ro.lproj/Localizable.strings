@@ -146,7 +146,11 @@
 "Forest" = "Verde pădure";
 "Format" = "Format";
 "From the start" = "De la început";
+"Frosted glass" = "Sticlă mată";
 "Full" = "Complet";
+"Glass" = "Sticlă";
+"Glass panels" = "Panouri de sticlă";
+"Glass surface" = "Suprafață de sticlă";
 "Go to show" = "Mergi la serial";
 "Green" = "Verde";
 "Guide" = "Ghid";
@@ -188,6 +192,7 @@
 "Leave the party" = "Părăsește sesiunea Watch party";
 "Library" = "Bibliotecă";
 "Light grey" = "Gri deschis";
+"Liquid glass" = "Sticlă lichidă";
 "List" = "Listă";
 "List only my languages" = "Afișează doar limbile mele";
 "Live" = "Direct";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "Potrivește gama dinamică";
 "Match frame rate" = "Potrivește rata de cadre";
 "Medium" = "Mediu";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "Meniurile, listele, câmpurile și cardurile sunt afișate peste ilustrație, pe suprafața transparentă, în loc să aibă un fundal colorat. Pe dispozitivele mai lente, acest efect poate încetini interfața.";
 "Merge continue watching and next up" = "Combină Continuă vizionarea cu Urmează";
 "Message" = "Mesaj";
 "Mono" = "Mono";
@@ -460,6 +466,7 @@
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Vizionează cu prietenii, fiecare pe dispozitivul lui: ce redă, pune pe pauză sau sare unul, se întâmplă la toți.";
 "Watched" = "Văzut";
 "Watching" = "Se vizionează";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "Pe ce stau navigarea și panourile de sticlă peste grafică: culoarea proprie a aplicației sau sticlă prin care se vede pagina. Sticla lichidă curbează și ce se află în spatele marginilor navigării, ceea ce consumă mai mult pe un dispozitiv lent.";
 "What you watch shows here." = "Ce vizionezi apare aici.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Ce acceptă boxele sau receiverul tău. Sunetul surround cu mai multe canale este redus, păstrând dialogul.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Când o versiune are mai multe tipuri de piste audio, se redă primul dintre acestea pe care îl are.";

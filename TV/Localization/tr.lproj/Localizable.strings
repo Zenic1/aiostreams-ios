@@ -146,7 +146,11 @@
 "Forest" = "Orman";
 "Format" = "Biçim";
 "From the start" = "Baştan";
+"Frosted glass" = "Buzlu cam";
 "Full" = "Tam";
+"Glass" = "Cam";
+"Glass panels" = "Cam paneller";
+"Glass surface" = "Cam yüzey";
 "Go to show" = "Diziye git";
 "Green" = "Yeşil";
 "Guide" = "Yayın akışı";
@@ -188,6 +192,7 @@
 "Leave the party" = "Birlikte izlemeden ayrıl";
 "Library" = "Kütüphane";
 "Light grey" = "Açık gri";
+"Liquid glass" = "Sıvı cam";
 "List" = "Liste";
 "List only my languages" = "Yalnızca dillerimi listele";
 "Live" = "Canlı";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "Dinamik aralığı eşleştir";
 "Match frame rate" = "Kare hızını eşleştir";
 "Medium" = "Orta";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "Görselin üzerindeki menüler, listeler, alanlar ve kartlar rengi yerine cam yüzeyin üzerinde durur. Yavaş cihazlar ek çizimi hissedebilir.";
 "Merge continue watching and next up" = "İzlemeye devam et ve Sıradaki listelerini birleştir";
 "Message" = "Mesaj";
 "Mono" = "Mono";
@@ -460,6 +466,7 @@
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Arkadaşlarınla, herkes kendi cihazında izle: biri neyi oynatır, duraklatır ya da atlarsa herkeste olur.";
 "Watched" = "İzlendi";
 "Watching" = "İzleniyor";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "Gezinme ve görselin üzerindeki cam panellerin neyin üzerinde durduğu: uygulamanın kendi rengi ya da sayfayı arkasından gösteren cam. Sıvı cam, gezinmenin kenarlarının arkasındakini de büker; bu da yavaş cihazları daha çok zorlar.";
 "What you watch shows here." = "İzlediklerin burada görünür.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Hoparlörlerinin veya alıcının desteklediği kanal sayısı. Daha fazla kanallı çevresel ses, diyaloglar korunarak bu sayıya indirilir.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Bir sürümde birden fazla ses parçası türü varsa bu listedeki ilk mevcut tür oynatılır.";

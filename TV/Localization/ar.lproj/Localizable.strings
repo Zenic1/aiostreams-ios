@@ -146,7 +146,11 @@
 "Forest" = "أخضر غابي";
 "Format" = "الصيغة";
 "From the start" = "من البداية";
+"Frosted glass" = "زجاج مصنفر";
 "Full" = "كامل";
+"Glass" = "زجاج";
+"Glass panels" = "ألواح زجاجية";
+"Glass surface" = "سطح زجاجي";
 "Go to show" = "الانتقال إلى المسلسل";
 "Green" = "أخضر";
 "Guide" = "الدليل";
@@ -188,6 +192,7 @@
 "Leave the party" = "مغادرة جلسة المشاهدة";
 "Library" = "المكتبة";
 "Light grey" = "رمادي فاتح";
+"Liquid glass" = "زجاج سائل";
 "List" = "قائمة";
 "List only my languages" = "عرض لغاتي فقط";
 "Live" = "مباشر";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "مطابقة النطاق الديناميكي";
 "Match frame rate" = "مطابقة معدل الإطارات";
 "Medium" = "متوسط";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "تستند القوائم المنسدلة والقوائم والحقول والبطاقات فوق الصورة الفنية إلى السطح الزجاجي بدلًا من لونه. وقد تشعر الأجهزة الأبطأ بعبء الرسم الإضافي.";
 "Merge continue watching and next up" = "دمج متابعة المشاهدة والتالي";
 "Message" = "الرسالة";
 "Mono" = "أحادي";
@@ -460,6 +466,7 @@
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "شاهد مع أصدقائك، كلٌّ على جهازه: ما يشغّله أحدكم أو يوقفه أو يتخطى إليه، يحدث عند الجميع.";
 "Watched" = "تمت مشاهدته";
 "Watching" = "يشاهد";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "ما تستند إليه عناصر التنقل والألواح الزجاجية فوق الصورة الفنية: لون التطبيق نفسه، أو زجاج تظهر الصفحة من خلاله. ويُحني الزجاج السائل أيضًا ما يقع خلف حواف التنقل، وهو ما يكلّف أكثر على الجهاز البطيء.";
 "What you watch shows here." = "يظهر هنا ما تشاهده.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "ما تستقبله مكبرات الصوت أو جهاز الاستقبال. أما الصوت المحيطي الأكثر قنوات فيُدمج في عدد أقل، مع الإبقاء على الحوار.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "عندما تحتوي النسخة على أكثر من نوع من المسارات الصوتية، يُشغَّل أول ما تملكه من هذه.";

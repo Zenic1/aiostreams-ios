@@ -146,7 +146,11 @@
 "Forest" = "Foresta";
 "Format" = "Formato";
 "From the start" = "Dall'inizio";
+"Frosted glass" = "Vetro satinato";
 "Full" = "Completo";
+"Glass" = "Effetto vetro";
+"Glass panels" = "Pannelli effetto vetro";
+"Glass surface" = "Superficie effetto vetro";
 "Go to show" = "Vai alla serie";
 "Green" = "Verde";
 "Guide" = "Guida";
@@ -173,7 +177,7 @@
 "Interface" = "Interfaccia";
 "Intros" = "Sigle";
 "Join" = "Unisciti";
-"Join a party" = "Unisciti ad un watch party";
+"Join a party" = "Unisciti a un watch party";
 "Joining…" = "Accesso…";
 "Keep watching" = "Continua a guardare";
 "Kept on this Apple TV." = "Salvato su questa Apple TV.";
@@ -188,6 +192,7 @@
 "Leave the party" = "Lascia il watch party";
 "Library" = "Libreria";
 "Light grey" = "Grigio chiaro";
+"Liquid glass" = "Liquid glass";
 "List" = "Elenco";
 "List only my languages" = "Elenca solo le mie lingue";
 "Live" = "In diretta";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "Adatta gamma dinamica";
 "Match frame rate" = "Adatta frequenza fotogrammi";
 "Medium" = "Medio";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "Menu, elenchi, campi e schede sopra la copertina poggiano su una superficie in vetro anziché sul suo colore. I dispositivi meno potenti potrebbero risentire dell'elaborazione grafica aggiuntiva.";
 "Merge continue watching and next up" = "Unisci continua a guardare con in arrivo";
 "Message" = "Messaggio";
 "Mono" = "Mono";
@@ -451,15 +457,16 @@
 "Version %@ is out. Install it the way you installed this copy." = "È uscita la versione %@. Installala come hai installato questa copia.";
 "Versions" = "Versioni";
 "Versions and links" = "Versioni e collegamenti";
-"Versions, next episode and skipping" = "Versioni, episodio successivo e salto";
+"Versions, next episode and skipping" = "Versioni, episodio successivo e opzioni di salto";
 "Video" = "Video";
 "Violet" = "Viola";
 "Wait for episodes to air" = "Aspetta che gli episodi vadano in onda";
 "Watch" = "Guarda";
-"Watch together" = "Visione condivisa";
+"Watch together" = "Guarda insieme";
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Guarda con gli amici, ognuno sul proprio dispositivo: ciò che uno avvia, mette in pausa o salta, lo fanno tutti.";
 "Watched" = "Visto";
 "Watching" = "In visione";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "Dove poggiano la navigazione e i pannelli effetto vetro sopra la copertina: il colore dell'app oppure un vetro che lascia intravedere la pagina. Liquid Glass distorce anche ciò che sta dietro i bordi della navigazione, con un costo maggiore sui dispositivi meno performanti.";
 "What you watch shows here." = "Ciò che guardi compare qui.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "I formati audio supportati dai tuoi altoparlanti. Il surround con più canali viene rimixato (downmix) mantenendo intatti i dialoghi.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Quando una versione dispone di più tipi di tracce audio, verrà riprodotta automaticamente la prima dell'elenco.";

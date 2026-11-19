@@ -146,7 +146,11 @@
 "Forest" = "Forêt";
 "Format" = "Format";
 "From the start" = "Depuis le début";
+"Frosted glass" = "Verre dépoli";
 "Full" = "Complet";
+"Glass" = "Verre";
+"Glass panels" = "Panneaux en verre";
+"Glass surface" = "Surface en verre";
 "Go to show" = "Aller à la série";
 "Green" = "Vert";
 "Guide" = "Guide";
@@ -188,6 +192,7 @@
 "Leave the party" = "Quitter la session";
 "Library" = "Bibliothèque";
 "Light grey" = "Gris clair";
+"Liquid glass" = "Verre liquide";
 "List" = "Liste";
 "List only my languages" = "Lister uniquement mes langues";
 "Live" = "En direct";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "Adapter la plage dynamique";
 "Match frame rate" = "Adapter la fréquence d’images";
 "Medium" = "Moyen";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "Menus, listes, champs et cartes au-dessus de l’illustration reposent sur la surface en verre plutôt que sur sa couleur. Les appareils plus lents peuvent ressentir le rendu supplémentaire.";
 "Merge continue watching and next up" = "Fusionner Reprendre la lecture et À suivre";
 "Message" = "Message";
 "Mono" = "Mono";
@@ -460,6 +466,7 @@
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Regardez avec des amis, chacun sur son appareil : ce que l'un lance, met en pause ou saute, tout le monde le fait.";
 "Watched" = "Vu";
 "Watching" = "Visionnage";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "Ce sur quoi reposent la navigation et les panneaux en verre au-dessus de l’illustration : la couleur de l’app, ou un verre qui laisse voir la page. Le verre liquide courbe aussi ce qui se trouve derrière les bords de la navigation, ce qui coûte plus sur un appareil lent.";
 "What you watch shows here." = "Ce que vous regardez s'affiche ici.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Ce que vos haut-parleurs ou votre ampli prennent en charge. Le son surround supérieur est mixé vers le bas tout en préservant les dialogues.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Lorsqu'une version dispose de plusieurs types de pistes audio, la première d'entre elles disponible est lue.";

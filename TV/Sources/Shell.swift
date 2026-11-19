@@ -123,8 +123,9 @@ struct MainView: View {
             // The rail's own column, which rows scrolled under it disappear beneath. Over the
             // artwork there's none, as in the web app: the icons sit on the art, and the page
             // fades out before reaching them instead (pageEdge).
-            if !top && !artShown {
-                Theme.background
+            // On glass, a column of it in place of the colour, the art included.
+            if !top && (!artShown || prefs.glassSurface != "solid") {
+                GlassBackground(shape: Rectangle(), fill: Theme.background)
                     .frame(width: Theme.px(80))
                     .ignoresSafeArea()
                     .allowsHitTesting(false)
@@ -376,7 +377,7 @@ struct MainView: View {
             ForEach(Place.main.filter { $0 != .live || liveShown }) { tab($0, named: named || $0 == place) }
         }
         .padding(Theme.px(4))
-        .background(Capsule().fill(Color(white: 17 / 255).opacity(0.85)))
+        .background(GlassBackground(shape: Capsule(), fill: Color(white: 17 / 255).opacity(0.85)))
         .fixedSize()
     }
 

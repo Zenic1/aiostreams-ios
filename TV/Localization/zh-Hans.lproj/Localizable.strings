@@ -146,7 +146,11 @@
 "Forest" = "森林绿";
 "Format" = "格式";
 "From the start" = "从头开始";
+"Frosted glass" = "磨砂玻璃";
 "Full" = "完整";
+"Glass" = "玻璃";
+"Glass panels" = "玻璃面板";
+"Glass surface" = "玻璃表面";
 "Go to show" = "前往剧集";
 "Green" = "绿色";
 "Guide" = "节目指南";
@@ -188,6 +192,7 @@
 "Leave the party" = "离开一起观看";
 "Library" = "媒体库";
 "Light grey" = "浅灰";
+"Liquid glass" = "液态玻璃";
 "List" = "列表";
 "List only my languages" = "仅列出我的语言";
 "Live" = "直播";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "匹配动态范围";
 "Match frame rate" = "匹配帧率";
 "Medium" = "中";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "图片上方的菜单、列表、输入框和卡片使用玻璃表面，而不是其颜色。较慢的设备可能会感到额外的绘制负担。";
 "Merge continue watching and next up" = "合并「继续观看」和「接下来播放」";
 "Message" = "消息";
 "Mono" = "单声道";
@@ -460,6 +466,7 @@
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "和朋友一起看，每人用自己的设备：一个人播放、暂停或跳转，所有人同步。";
 "Watched" = "已观看";
 "Watching" = "正在观看";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "导航以及图片上方的玻璃面板所使用的底面：应用自身的颜色，或可透出页面的玻璃。液态玻璃还会弯折导航边缘后方的内容，在较慢的设备上更耗性能。";
 "What you watch shows here." = "你观看的内容会显示在这里。";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "扬声器或接收器接收的音频格式。声道数更多的环绕声会混音降级，同时保留对白。";
 "When a version has more than one kind of audio track, the first of these it has plays." = "当某个版本包含多种音轨时，会播放列表中优先级最高且该版本具备的音轨。";

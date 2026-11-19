@@ -146,7 +146,11 @@
 "Forest" = "Hutan";
 "Format" = "Format";
 "From the start" = "Dari awal";
+"Frosted glass" = "Kaca buram";
 "Full" = "Penuh";
+"Glass" = "Kaca";
+"Glass panels" = "Panel kaca";
+"Glass surface" = "Permukaan kaca";
 "Go to show" = "Ke serial";
 "Green" = "Hijau";
 "Guide" = "Panduan";
@@ -188,6 +192,7 @@
 "Leave the party" = "Tinggalkan sesi nonton bersama";
 "Library" = "Pustaka";
 "Light grey" = "Abu-abu muda";
+"Liquid glass" = "Kaca cair";
 "List" = "Daftar";
 "List only my languages" = "Tampilkan hanya bahasa saya";
 "Live" = "Siaran langsung";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "Sesuaikan rentang dinamis";
 "Match frame rate" = "Sesuaikan frame rate";
 "Medium" = "Sedang";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "Menu, daftar, kolom, dan kartu di atas artwork memakai permukaan kaca, bukan warnanya. Perangkat yang lebih lambat bisa terasa berat.";
 "Merge continue watching and next up" = "Gabungkan Lanjutkan menonton dan Berikutnya ditonton";
 "Message" = "Pesan";
 "Mono" = "Mono";
@@ -460,6 +466,7 @@
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Nonton bareng teman, masing-masing di perangkatnya: apa yang diputar, dijeda, atau dilewati satu orang, terjadi untuk semua.";
 "Watched" = "Sudah ditonton";
 "Watching" = "Sedang menonton";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "Latar navigasi dan panel kaca di atas artwork: warna aplikasi sendiri, atau kaca yang memperlihatkan halaman di baliknya. Kaca cair juga membelokkan apa yang ada di balik tepi navigasi, yang lebih berat di perangkat lambat.";
 "What you watch shows here." = "Yang kamu tonton muncul di sini.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Format yang didukung speaker atau penerima audio Anda. Audio surround dengan lebih banyak saluran akan dicampur ke jumlah saluran yang didukung, dengan dialog tetap dipertahankan.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Jika suatu versi memiliki lebih dari satu jenis trek audio, jenis pertama dalam daftar ini yang tersedia akan diputar.";

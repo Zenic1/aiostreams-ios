@@ -199,6 +199,13 @@ final class Preferences: ObservableObject {
     @Published var toneMapNits: Int = UserDefaults.standard.integer(forKey: "video.toneMapNits") {
         didSet { UserDefaults.standard.set(toneMapNits, forKey: "video.toneMapNits") }
     }
+    /// The Glass settings (the web app's Theme > Glass), kept on this Apple TV.
+    @Published var glassSurface: String = UserDefaults.standard.string(forKey: GlassSetting.surfaceKey) ?? "solid" {
+        didSet { UserDefaults.standard.set(glassSurface, forKey: GlassSetting.surfaceKey) }
+    }
+    @Published var glassPanels: Bool = UserDefaults.standard.bool(forKey: GlassSetting.panelsKey) {
+        didSet { UserDefaults.standard.set(glassPanels, forKey: GlassSetting.panelsKey) }
+    }
     @Published var liveMatchDynamicRange: Bool = UserDefaults.standard.object(forKey: "live.matchDynamicRange") as? Bool ?? true {
         didSet { UserDefaults.standard.set(liveMatchDynamicRange, forKey: "live.matchDynamicRange") }
     }
@@ -745,6 +752,20 @@ struct SettingsView: View {
                        options: [(L("Default"), ""), (L("Black"), "#000000"), (L("Charcoal"), "#1c1c1f"), (L("Slate"), "#1e2836"),
                                  (L("Navy"), "#0a1846"), (L("Plum"), "#24102e"), (L("Forest"), "#0c2018"), (L("Maroon"), "#2a0c12")])
             }
+            section(L("Glass"), note: L("Kept on this Apple TV.")) {
+                row(L("Glass surface"), value: glassName(prefs.glassSurface == "liquid" && !GlassSetting.canRefract ? "frosted" : prefs.glassSurface)) {
+                    chooser = Chooser(
+                        title: L("Glass surface"),
+                        options: (["solid", "frosted"] + (GlassSetting.canRefract ? ["liquid"] : [])).map { (glassName($0), $0) },
+                        current: prefs.glassSurface
+                    ) { prefs.glassSurface = $0 }
+                }
+                note(L("What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device."))
+                if !prefs.artPages.isEmpty && prefs.glassSurface != "solid" {
+                    row(L("Glass panels"), value: prefs.glassPanels ? L("On") : L("Off")) { prefs.glassPanels.toggle() }
+                    note(L("Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing."))
+                }
+            }
         case .account:
             section(nil, note: nil) {
                 fact(L("Server"), session.serverName ?? session.client?.base.host ?? "")
@@ -1043,6 +1064,14 @@ struct SettingsView: View {
         return Self.artPageOptions.filter { pages.contains($0.value) }.map(\.label).joined(separator: ", ")
     }
 
+    private func glassName(_ value: String) -> String {
+        switch value {
+        case "frosted": return L("Frosted glass")
+        case "liquid": return L("Liquid glass")
+        default: return L("Solid")
+        }
+    }
+
     private func nitsName(_ nits: Int) -> String { nits == 0 ? L("Off") : L("%@ nits", String(nits)) }
 
     private func boostName(_ db: Int) -> String { db == 0 ? L("Off") : L("+%@ dB", String(db)) }
@@ -1131,8 +1160,8 @@ extension ContainerValues {
 /// The web app's settings card: nearly black, with a faint edge.
 private struct SettingsCardShape: View {
     var body: some View {
-        RoundedRectangle(cornerRadius: Theme.px(14), style: .continuous)
-            .fill(Color(red: 3 / 255, green: 7 / 255, blue: 18 / 255).opacity(0.7))
+        GlassBackground(shape: RoundedRectangle(cornerRadius: Theme.px(14), style: .continuous),
+                        fill: Color(red: 3 / 255, green: 7 / 255, blue: 18 / 255).opacity(0.7), panel: true)
             .overlay(RoundedRectangle(cornerRadius: Theme.px(14), style: .continuous)
                 .stroke(Color.white.opacity(0.1), lineWidth: Theme.px(1)))
     }
@@ -1317,7 +1346,8 @@ struct MultiChooserPanel: View {
             .padding(Theme.px(20))
             .frame(width: Theme.px(520))
             .frame(maxHeight: Theme.px(640))
-            .background(RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous).fill(Color(white: 17 / 255)))
+            .background(GlassBackground(shape: RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous),
+                                        fill: Color(white: 17 / 255), panel: true))
             .overlay(RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous).stroke(.white.opacity(0.1), lineWidth: Theme.px(1)))
         }
         .foregroundStyle(.white)
@@ -1368,7 +1398,8 @@ private struct ChooserPanel: View {
             .padding(Theme.px(20))
             .frame(width: Theme.px(480))
             .frame(maxHeight: Theme.px(600))
-            .background(RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous).fill(Color(white: 17 / 255)))
+            .background(GlassBackground(shape: RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous),
+                                        fill: Color(white: 17 / 255), panel: true))
             .overlay(RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous).stroke(.white.opacity(0.1), lineWidth: Theme.px(1)))
         }
         .foregroundStyle(.white)
@@ -1417,7 +1448,8 @@ private struct QuickConnectApproval: View {
             }
             .padding(Theme.px(24))
             .frame(width: Theme.px(520), alignment: .leading)
-            .background(RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous).fill(Color(white: 17 / 255)))
+            .background(GlassBackground(shape: RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous),
+                                        fill: Color(white: 17 / 255), panel: true))
             .overlay(RoundedRectangle(cornerRadius: Theme.px(16), style: .continuous).stroke(.white.opacity(0.1), lineWidth: Theme.px(1)))
         }
         .foregroundStyle(.white)

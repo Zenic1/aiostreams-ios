@@ -146,7 +146,11 @@
 "Forest" = "Leśny";
 "Format" = "Format";
 "From the start" = "Od początku";
+"Frosted glass" = "Matowe szkło";
 "Full" = "Pełne";
+"Glass" = "Szkło";
+"Glass panels" = "Szklane panele";
+"Glass surface" = "Szklana powierzchnia";
 "Go to show" = "Przejdź do serialu";
 "Green" = "Zielony";
 "Guide" = "Program TV";
@@ -188,6 +192,7 @@
 "Leave the party" = "Opuść wspólne oglądanie";
 "Library" = "Biblioteka";
 "Light grey" = "Jasnoszary";
+"Liquid glass" = "Płynne szkło";
 "List" = "Lista";
 "List only my languages" = "Pokazuj tylko moje języki";
 "Live" = "Na żywo";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "Dopasuj zakres dynamiki";
 "Match frame rate" = "Dopasuj liczbę klatek";
 "Medium" = "Średni";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "Menu, listy, pola i karty nad grafiką są umieszczone na szklanej powierzchni zamiast na jej kolorze. Wolniejsze urządzenia mogą odczuć dodatkowe obciążenie podczas rysowania interfejsu.";
 "Merge continue watching and next up" = "Połącz „Kontynuuj oglądanie” i „Następne”";
 "Message" = "Wiadomość";
 "Mono" = "Mono";
@@ -460,6 +466,7 @@
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Oglądaj ze znajomymi, każdy na swoim urządzeniu: co ktoś odtworzy, zatrzyma lub przewinie, dzieje się u wszystkich.";
 "Watched" = "Obejrzane";
 "Watching" = "Oglądanie";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "Tło dla nawigacji oraz szklanych paneli nad grafiką: jednolity kolor aplikacji lub szkło, przez które prześwituje strona. Płynne szkło dodatkowo załamuje obraz za krawędziami nawigacji, co bardziej obciąża wolniejsze urządzenia.";
 "What you watch shows here." = "Tu pojawi się to, co oglądasz.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Co biorą Twoje głośniki lub odbiornik. Dźwięk przestrzenny z większą liczbą kanałów jest miksowany w dół z zachowaniem dialogów.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Gdy wersja zawiera więcej niż jeden rodzaj ścieżki dźwiękowej, odtwarzana jest pierwsza pasująca z tej listy.";

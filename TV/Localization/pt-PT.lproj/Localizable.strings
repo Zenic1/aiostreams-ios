@@ -146,7 +146,11 @@
 "Forest" = "Floresta";
 "Format" = "Formato";
 "From the start" = "Desde o início";
+"Frosted glass" = "Vidro fosco";
 "Full" = "Completo";
+"Glass" = "Vidro";
+"Glass panels" = "Painéis de vidro";
+"Glass surface" = "Superfície de vidro";
 "Go to show" = "Ir para a série";
 "Green" = "Verde";
 "Guide" = "Guia";
@@ -188,6 +192,7 @@
 "Leave the party" = "Sair da sessão";
 "Library" = "Biblioteca";
 "Light grey" = "Cinzento-claro";
+"Liquid glass" = "Vidro líquido";
 "List" = "Lista";
 "List only my languages" = "Listar só os meus idiomas";
 "Live" = "Em direto";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "Ajustar gama dinâmica";
 "Match frame rate" = "Ajustar taxa de fotogramas";
 "Medium" = "Médio";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "Menus, listas, campos e cartões sobre a arte ficam na superfície de vidro em vez da sua cor. Dispositivos mais lentos podem sentir o desenho extra.";
 "Merge continue watching and next up" = "Juntar Continuar a ver e A seguir";
 "Message" = "Mensagem";
 "Mono" = "Mono";
@@ -460,6 +466,7 @@
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Veja com amigos, cada um no seu dispositivo: o que um reproduz, pausa ou salta, acontece para todos.";
 "Watched" = "Visto";
 "Watching" = "A ver";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "Sobre o que ficam a navegação e os painéis de vidro sobre a arte: a cor da própria app ou um vidro que deixa ver a página. O vidro líquido também curva o que está atrás das margens da navegação, o que pesa mais num dispositivo lento.";
 "What you watch shows here." = "O que vê aparece aqui.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "O que as suas colunas ou recetor aceitam. O som surround com mais canais é misturado para menos, mantendo os diálogos.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Quando uma versão tem mais do que um tipo de faixa de áudio, é reproduzida a primeira destas que tiver.";

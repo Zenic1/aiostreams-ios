@@ -146,7 +146,11 @@
 "Forest" = "Bosque";
 "Format" = "Formato";
 "From the start" = "Desde el principio";
+"Frosted glass" = "Vidrio esmerilado";
 "Full" = "Completos";
+"Glass" = "Cristal";
+"Glass panels" = "Paneles de cristal";
+"Glass surface" = "Superficie de cristal";
 "Go to show" = "Ir a la serie";
 "Green" = "Verde";
 "Guide" = "Guía";
@@ -188,6 +192,7 @@
 "Leave the party" = "Abandonar el grupo";
 "Library" = "Biblioteca";
 "Light grey" = "Gris claro";
+"Liquid glass" = "Liquid glass";
 "List" = "Lista";
 "List only my languages" = "Listar solo mis idiomas";
 "Live" = "En vivo";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "Ajustar rango dinámico";
 "Match frame rate" = "Ajustar frecuencia de imagen";
 "Medium" = "Mediano";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "Los menús, listas, campos y tarjetas sobre la imagen se apoyan en la superficie de cristal en vez de en su color. Los dispositivos más lentos pueden notar el dibujo adicional.";
 "Merge continue watching and next up" = "Combinar seguir viendo y a continuación";
 "Message" = "Mensaje";
 "Mono" = "Mono";
@@ -460,6 +466,7 @@
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Mira con amigos, cada uno en su dispositivo: lo que uno reproduce, pausa o salta, lo hacen todos.";
 "Watched" = "Visto";
 "Watching" = "Viendo";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "Sobre qué se apoyan la navegación y los paneles de cristal sobre la imagen: el color propio de la app o un cristal que deja ver la página. El cristal líquido además curva lo que hay tras los bordes de la navegación, lo que exige más a un dispositivo lento.";
 "What you watch shows here." = "Lo que veas aparece aquí.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Depende de lo que admitan tus altavoces o tu receptor. El sonido envolvente con más canales se reduce a una configuración menor, conservando los diálogos.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Cuando una versión cuenta con más de un tipo de pista de audio, se reproduce la primera de ellas.";

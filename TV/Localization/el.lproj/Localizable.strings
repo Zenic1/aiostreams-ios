@@ -146,7 +146,11 @@
 "Forest" = "Δάσος";
 "Format" = "Μορφή";
 "From the start" = "Από την αρχή";
+"Frosted glass" = "Θολό γυαλί";
 "Full" = "Πλήρεις";
+"Glass" = "Γυαλί";
+"Glass panels" = "Γυάλινα πλαίσια";
+"Glass surface" = "Γυάλινη επιφάνεια";
 "Go to show" = "Μετάβαση στη σειρά";
 "Green" = "Πράσινο";
 "Guide" = "Πρόγραμμα";
@@ -188,11 +192,12 @@
 "Leave the party" = "Αποχώρηση από την ομαδική προβολή";
 "Library" = "Βιβλιοθήκη";
 "Light grey" = "Ανοιχτό γκρι";
+"Liquid glass" = "Ρευστό γυαλί";
 "List" = "Λίστα";
 "List only my languages" = "Εμφάνιση μόνο των γλωσσών μου";
 "Live" = "Ζωντανά";
 "Live TV" = "Ζωντανή τηλεόραση";
-"Look and feel" = "Εμφάνιση";
+"Look and feel" = "Εμφάνιση και πλοήγηση";
 "Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it." = "Αναζητά εκδόσεις μόλις ανοίξει η σελίδα ενός τίτλου, ώστε η αναπαραγωγή και η λίστα εκδόσεων να είναι έτοιμες. Γίνεται αναζήτηση για κάθε τίτλο που ανοίγεις, ακόμη κι αν δεν τον αναπαράγεις.";
 "Lowest" = "Χαμηλότερα";
 "Main" = "Κύριο";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "Αντιστοίχιση δυναμικού εύρους";
 "Match frame rate" = "Αντιστοίχιση ρυθμού καρέ";
 "Medium" = "Μεσαίο";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "Τα μενού, οι λίστες, τα πεδία και οι κάρτες πάνω από την εικόνα χρησιμοποιούν τη γυάλινη επιφάνεια στη θέση του χρώματός τους. Η εμφάνιση μπορεί να επιβαρύνει πιο αργές συσκευές.";
 "Merge continue watching and next up" = "Ενοποίηση της συνέχειας παρακολούθησης με τα επόμενα επεισόδια";
 "Message" = "Μήνυμα";
 "Mono" = "Μονοφωνικό";
@@ -408,7 +414,7 @@
 "The party ended." = "Η ομαδική προβολή τελείωσε.";
 "The player's own" = "Του προγράμματος αναπαραγωγής";
 "The player's subtitle menu lists subtitles in your languages, ones without a language and the one on. The rest wait under More languages." = "Το μενού υποτίτλων του προγράμματος αναπαραγωγής εμφανίζει υπότιτλους στις γλώσσες σου, όσους δεν έχουν δηλωμένη γλώσσα και τον ενεργό υπότιτλο. Οι υπόλοιποι βρίσκονται στις «Περισσότερες γλώσσες».";
-"The player, its controls and video" = "Η αναπαραγωγή, τα χειριστήριά της και το βίντεο";
+"The player, its controls and video" = "Πρόγραμμα αναπαραγωγής, χειριστήρια και βίντεο";
 "The relay could not read that." = "Ο διακομιστής αναμετάδοσης δεν μπόρεσε να το διαβάσει.";
 "The same style as the web app's, on every device you sign in to." = "Το ίδιο στυλ με της εφαρμογής web, σε κάθε συσκευή όπου συνδέεσαι.";
 "The server refused this." = "Ο διακομιστής το απέρριψε.";
@@ -451,7 +457,7 @@
 "Version %@ is out. Install it the way you installed this copy." = "Κυκλοφόρησε η έκδοση %@. Εγκατέστησέ τη όπως εγκατέστησες αυτό το αντίγραφο.";
 "Versions" = "Εκδόσεις";
 "Versions and links" = "Εκδόσεις και σύνδεσμοι";
-"Versions, next episode and skipping" = "Εκδόσεις, επόμενο επεισόδιο και παράλειψη";
+"Versions, next episode and skipping" = "Εκδόσεις, επόμενο επεισόδιο και παραλείψεις";
 "Video" = "Βίντεο";
 "Violet" = "Βιολετί";
 "Wait for episodes to air" = "Αναμονή για την προβολή επεισοδίων";
@@ -460,6 +466,7 @@
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Δες με φίλους, ο καθένας στη συσκευή του: ό,τι βάζει, σταματά ή προσπερνά ένας, το κάνουν όλοι.";
 "Watched" = "Τα έχω δει";
 "Watching" = "Παρακολούθηση";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "Το φόντο της πλοήγησης και των γυάλινων πλαισίων πάνω από την εικόνα. Μπορείς να επιλέξεις το χρώμα της εφαρμογής ή γυαλί που αφήνει τη σελίδα να φαίνεται. Το ρευστό γυαλί παραμορφώνει και ό,τι βρίσκεται πίσω από τις άκρες της πλοήγησης, κάτι που επιβαρύνει πιο αργές συσκευές.";
 "What you watch shows here." = "Ό,τι παρακολουθείς εμφανίζεται εδώ.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Τι υποστηρίζουν τα ηχεία ή ο ενισχυτής σου. Ο περιβάλλων ήχος με περισσότερα κανάλια μετατρέπεται σε λιγότερα, διατηρώντας τους διαλόγους.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Όταν μια έκδοση διαθέτει περισσότερους από έναν τύπους κομματιού ήχου, αναπαράγεται ο πρώτος διαθέσιμος από αυτή τη λίστα.";

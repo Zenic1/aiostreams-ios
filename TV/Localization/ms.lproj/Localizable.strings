@@ -146,7 +146,11 @@
 "Forest" = "Hutan";
 "Format" = "Format";
 "From the start" = "Dari permulaan";
+"Frosted glass" = "Kaca pudar";
 "Full" = "Penuh";
+"Glass" = "Kaca";
+"Glass panels" = "Panel kaca";
+"Glass surface" = "Permukaan kaca";
 "Go to show" = "Pergi ke rancangan";
 "Green" = "Hijau";
 "Guide" = "Panduan";
@@ -157,7 +161,7 @@
 "Hero" = "Sepanduk utama";
 "Hero turns every" = "Sepanduk utama bertukar setiap";
 "Hidden" = "Tersembunyi";
-"Hidden, channels also leave search and favourites." = "Jika disembunyikan, saluran juga hilang daripada carian dan kegemaran.";
+"Hidden, channels also leave search and favourites." = "Tersembunyi, saluran juga dialih keluar daripada carian dan kegemaran.";
 "High" = "Tinggi";
 "Home" = "Laman utama";
 "Home, posters, trailers and episodes" = "Laman utama, poster, treler dan episod";
@@ -188,11 +192,12 @@
 "Leave the party" = "Tinggalkan sesi";
 "Library" = "Pustaka";
 "Light grey" = "Kelabu cerah";
+"Liquid glass" = "Kaca cecair";
 "List" = "Senarai";
 "List only my languages" = "Senaraikan bahasa saya sahaja";
 "Live" = "Langsung";
 "Live TV" = "TV Langsung";
-"Look and feel" = "Rupa dan gaya";
+"Look and feel" = "Rupa dan rasa";
 "Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it." = "Mencari versi sebaik sahaja halaman tajuk dibuka, supaya Main dan senarai versi tidak menunggu. Setiap tajuk yang anda buka dicari, walaupun anda tidak memainkannya.";
 "Lowest" = "Paling rendah";
 "Main" = "Utama";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "Padankan julat dinamik";
 "Match frame rate" = "Padankan kadar bingkai";
 "Medium" = "Sederhana";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "Menu, senarai, medan dan kad di atas karya seni terletak di atas permukaan kaca dan bukannya warna karya seni tersebut. Peranti yang lebih perlahan mungkin merasai beban lukisan tambahan ini.";
 "Merge continue watching and next up" = "Gabungkan 'Teruskan menonton' dan 'Seterusnya'";
 "Message" = "Mesej";
 "Mono" = "Mono";
@@ -451,7 +457,7 @@
 "Version %@ is out. Install it the way you installed this copy." = "Versi %@ telah keluar. Pasangnya seperti anda memasang salinan ini.";
 "Versions" = "Versi";
 "Versions and links" = "Versi dan pautan";
-"Versions, next episode and skipping" = "Versi, episod seterusnya dan langkau";
+"Versions, next episode and skipping" = "Versi, episod seterusnya dan melangkau";
 "Video" = "Video";
 "Violet" = "Ungu";
 "Wait for episodes to air" = "Tunggu episod disiarkan";
@@ -460,6 +466,7 @@
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Tonton dengan rakan, masing-masing pada peranti sendiri: apa yang seorang mainkan, jeda atau langkau, semua turut sama.";
 "Watched" = "Ditonton";
 "Watching" = "Menonton";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "Lapisan tempat navigasi dan panel kaca di atas karya seni diletakkan: warna apl itu sendiri, atau kaca yang memaparkan halaman di sebaliknya. Kaca cecair juga melencongkan objek di sebalik pinggir navigasi, yang memerlukan lebih banyak kos pemprosesan pada peranti perlahan.";
 "What you watch shows here." = "Apa yang anda tonton dipaparkan di sini.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Kapasiti pembesar suara atau penerima anda.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Apabila sesuatu versi mempunyai lebih daripada satu jenis trek audio, trek pertama yang sepadan akan dimainkan.";

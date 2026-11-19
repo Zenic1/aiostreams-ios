@@ -146,7 +146,11 @@
 "Forest" = "Waldgrün";
 "Format" = "Format";
 "From the start" = "Von Anfang an";
+"Frosted glass" = "Milchglas";
 "Full" = "Vollständig";
+"Glass" = "Glas";
+"Glass panels" = "Glasflächen";
+"Glass surface" = "Glasoberfläche";
 "Go to show" = "Serie anzeigen";
 "Green" = "Grün";
 "Guide" = "Programm";
@@ -157,7 +161,7 @@
 "Hero" = "Titelbanner";
 "Hero turns every" = "Titelbanner wechselt alle";
 "Hidden" = "Ausgeblendet";
-"Hidden, channels also leave search and favourites." = "Ausgeblendet verschwinden Sender auch aus Suche und Favoriten.";
+"Hidden, channels also leave search and favourites." = "Ausgeblendet - Kanäle werden auch aus Suche und Favoriten entfernt.";
 "High" = "Hoch";
 "Home" = "Startseite";
 "Home, posters, trailers and episodes" = "Startseite, Poster, Trailer und Episoden";
@@ -188,11 +192,12 @@
 "Leave the party" = "Watch-Party verlassen";
 "Library" = "Mediathek";
 "Light grey" = "Hellgrau";
+"Liquid glass" = "Flüssigglas";
 "List" = "Liste";
 "List only my languages" = "Nur meine Sprachen anzeigen";
 "Live" = "Live";
 "Live TV" = "Live-TV";
-"Look and feel" = "Aussehen";
+"Look and feel" = "Aussehen und Bedienung";
 "Looks for versions as soon as a title's page opens, so Play and the version list don't wait. Each title you open is looked up, even if you don't play it." = "Sucht bereits beim Aufrufen der Seite eines Titels nach Versionen, um Wartezeiten beim Abspielen oder in der Versionsliste zu vermeiden. Es wird jeder geöffnete Titel abgefragt, selbst wenn keine Wiedergabe erfolgt.";
 "Lowest" = "Ganz unten";
 "Main" = "Hauptspur";
@@ -203,6 +208,7 @@
 "Match dynamic range" = "Dynamikbereich anpassen";
 "Match frame rate" = "Bildrate anpassen";
 "Medium" = "Mittel";
+"Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "Menüs, Listen, Felder und Kacheln über dem Hintergrundbild liegen auf der Glasoberfläche statt auf dessen Farbe. Auf langsameren Geräten kann sich der zusätzliche Renderaufwand bemerkbar machen.";
 "Merge continue watching and next up" = "Weiterschauen und Als Nächstes zusammenführen";
 "Message" = "Nachricht";
 "Mono" = "Mono";
@@ -254,7 +260,7 @@
 "Open" = "Öffnen";
 "Orange" = "Orange";
 "Original language" = "Originalsprache";
-"Other pages, such as settings" = "Andere Seiten, etwa Einstellungen";
+"Other pages, such as settings" = "Weitere Seiten, wie etwa die Einstellungen";
 "Other user" = "Anderer Benutzer";
 "Others join with this code in Watch together, on %@." = "Andere treten mit diesem Code unter „Gemeinsam schauen“ bei, auf %@.";
 "Outline" = "Umriss";
@@ -399,7 +405,7 @@
 "That relay doesn't let you in." = "Dieses Relay lässt dich nicht beitreten.";
 "That relay is too busy for another party." = "Dieses Relay ist für eine weitere Watch-Party zu stark ausgelastet.";
 "That relay runs a different version of watch parties." = "Dieses Relay verwendet eine andere Version der Watch-Party-Funktion.";
-"The artwork of the title you're on, blurred and darkened, behind these pages. The version list shows it with title pages." = "Das Artwork des aktuellen Titels, verschwommen und abgedunkelt, hinter diesen Seiten. Die Versionsliste zeigt es zusammen mit den Titelseiten.";
+"The artwork of the title you're on, blurred and darkened, behind these pages. The version list shows it with title pages." = "Das weichgezeichnete und abgedunkelte Hintergrundbild des geöffneten Titels hinter diesen Seiten. Die Versionsliste zeigt es gemeinsam mit den Titelseiten.";
 "The code the party's host sees, like ABCDE-12345." = "Der Code, den der Gastgeber sieht, etwa ABCDE-12345.";
 "The file's default" = "Standard der Datei";
 "The host removed you from the party." = "Der Gastgeber hat dich aus der Watch-Party entfernt.";
@@ -460,6 +466,7 @@
 "Watch with friends, each on their own device: what one plays, pauses or skips to, everyone does." = "Schau mit Freunden, jeder auf seinem Gerät: Was einer abspielt, pausiert oder überspringt, passiert bei allen.";
 "Watched" = "Gesehen";
 "Watching" = "Wird geschaut";
+"What the navigation, and glass panels over the artwork, sit on: the app's own colour, or glass that shows the page through it. Liquid glass also bends what's behind the navigation's edges, which costs more on a slow device." = "Hintergrund der Navigation und der Glasflächen über dem Hintergrundbild: die App-Farbe oder Glas, durch das die Seite sichtbar bleibt. Flüssigglas verzerrt zusätzlich den Inhalt hinter den Rändern der Navigation und beansprucht langsame Geräte stärker.";
 "What you watch shows here." = "Was du schaust, erscheint hier.";
 "What your speakers or receiver take. Surround sound with more is mixed down, with its dialogue kept in." = "Kanalanzahl, die deine Lautsprecher oder dein Receiver unterstützen. Surround-Ton mit mehr Kanälen wird heruntergemischt, wobei Dialoge erhalten bleiben.";
 "When a version has more than one kind of audio track, the first of these it has plays." = "Enthält eine Version mehrere Tonspurtypen, wird der erste verfügbare Typ dieser Liste abgespielt.";
