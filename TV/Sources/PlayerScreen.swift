@@ -1079,6 +1079,9 @@ private struct PlayerPanelView: View {
     @EnvironmentObject private var prefs: Preferences
     /// Subtitles in other languages, which List only my languages keeps under More languages.
     @State private var allLanguages = false
+    /// Where focus lands as the panel opens: the row that's on. Pressing the button that opens it
+    /// leaves focus in the bar, from where a press right reaches the bar's next button instead.
+    @FocusState private var landing: Bool
 
     /// The subtitles listed: with List only my languages, those in the user's languages, without a
     /// language, and the one on; the rest wait under More languages.
@@ -1124,11 +1127,14 @@ private struct PlayerPanelView: View {
                     }
                 case .chapters:
                     group(L("Chapters")) {
+                        // The chapter playing takes focus as the panel opens.
+                        let playing = model.chapters.last { $0.start <= model.position }?.id ?? model.chapters.first?.id
                         ForEach(model.chapters, id: \.id) { chapter in
                             ChapterRow(model: model, chapter: chapter, time: clock(chapter.start)) {
                                 model.seek(to: chapter.start)
                                 done()
                             }
+                            .modifier(LandsFocus(on: chapter.id == playing, landing: $landing))
                         }
                     }
                 case .speed:
@@ -1141,7 +1147,7 @@ private struct PlayerPanelView: View {
                     }
                 case .sync:
                     group(L("Subtitles")) {
-                        stepper(model.subtitleDelay, step: 0.1) { model.setSubtitleDelay($0) }
+                        stepper(model.subtitleDelay, step: 0.1, lands: true) { model.setSubtitleDelay($0) }
                     }
                     group(L("Audio")) {
                         stepper(model.audioDelay, step: 0.05) { model.setAudioDelay($0) }
@@ -1169,7 +1175,16 @@ private struct PlayerPanelView: View {
         .background(Color(white: 11 / 255).opacity(0.95))
         .focusSection()
         .onExitCommand(perform: done)
-        .task(id: panel) { if panel == .episodes { await loadEpisodes() } }
+        .task(id: panel) {
+            // Once the rows are laid out, focus moves onto the one that's on.
+            try? await Task.sleep(for: .milliseconds(60))
+            landing = true
+            if panel == .episodes {
+                await loadEpisodes()
+                try? await Task.sleep(for: .milliseconds(60))
+                landing = true
+            }
+        }
     }
 
     /// The season playing, as its show lists it.
@@ -1182,10 +1197,11 @@ private struct PlayerPanelView: View {
     }
 
     /// Earlier, the value, later, and back to zero.
-    private func stepper(_ value: Double, step: Double, set: @escaping (Double) -> Void) -> some View {
+    private func stepper(_ value: Double, step: Double, lands: Bool = false, set: @escaping (Double) -> Void) -> some View {
         HStack(spacing: Theme.px(8)) {
             Button { set(value - step) } label: { Image(systemName: "minus") }
                 .buttonStyle(ControlIconStyle())
+                .modifier(LandsFocus(on: lands, landing: $landing))
             Text(value == 0 ? L("In sync") : String(format: "%+.2f s", value))
                 .font(Theme.font(Theme.base, .semibold))
                 .monospacedDigit()
@@ -1211,6 +1227,11 @@ private struct PlayerPanelView: View {
     }
 
     private func row(_ text: String, detail: String? = nil, on: Bool, action: @escaping () -> Void) -> some View {
+        rowButton(text, detail: detail, on: on, action: action)
+            .modifier(LandsFocus(on: on, landing: $landing))
+    }
+
+    private func rowButton(_ text: String, detail: String? = nil, on: Bool, action: @escaping () -> Void) -> some View {
         Button(action: action) {
             HStack(spacing: Theme.px(10)) {
                 Image(systemName: "checkmark")
@@ -1290,6 +1311,16 @@ private struct PanelRowStyle: ButtonStyle {
 }
 
 /// A chapter with its picture: the server's, else a frame or trickplay thumbnail the model makes.
+/// The panel row that's on takes focus as the panel opens.
+private struct LandsFocus: ViewModifier {
+    let on: Bool
+    var landing: FocusState<Bool>.Binding
+
+    func body(content: Content) -> some View {
+        if on { content.focused(landing) } else { content }
+    }
+}
+
 private struct ChapterRow: View {
     @ObservedObject var model: PlayerModel
     let chapter: PlayerChapter
