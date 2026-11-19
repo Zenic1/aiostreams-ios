@@ -15,6 +15,20 @@ index ec7c7539..9ae886ef 100644
              shell.app,
            ],
            ...(shell.player && !shell.mpv
+diff --git a/packages/web/src/app/settings/downloads.tsx b/packages/web/src/app/settings/downloads.tsx
+index 15b81ad2..78a73050 100644
+--- a/packages/web/src/app/settings/downloads.tsx
++++ b/packages/web/src/app/settings/downloads.tsx
+@@ -100,7 +100,8 @@ export function DownloadsSection() {
+           onValueChange={setSubtitles}
+         />
+       )}
+-      {currentHost().name === 'android-app' && (
++      {/* The iOS app's queue keeps to Wi-Fi as Android's does, so it offers the switch too. */}
++      {['android-app', 'ios-app'].includes(currentHost().name) && (
+         <Switch
+           side="right"
+           label={t`Only on Wi-Fi`}
 diff --git a/packages/web/src/features/trailers/preview.tsx b/packages/web/src/features/trailers/preview.tsx
 index a2c187d4..69f04e8b 100644
 --- a/packages/web/src/features/trailers/preview.tsx
