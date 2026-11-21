@@ -30,7 +30,7 @@ index 15b81ad2..78a73050 100644
            side="right"
            label={t`Only on Wi-Fi`}
 diff --git a/packages/web/src/features/trailers/preview.tsx b/packages/web/src/features/trailers/preview.tsx
-index a2c187d4..69f04e8b 100644
+index ce4f0344..0137b730 100644
 --- a/packages/web/src/features/trailers/preview.tsx
 +++ b/packages/web/src/features/trailers/preview.tsx
 @@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
@@ -41,7 +41,7 @@ index a2c187d4..69f04e8b 100644
  import { useItem } from '@/lib/jellyfin/queries';
  import { currentHost } from '@/lib/hosts';
  import { settings, useSetting, type TrailerSpot } from '@/lib/settings';
-@@ -441,12 +442,16 @@ function PlayedPreview({
+@@ -438,12 +439,16 @@ function PlayedPreview({
    const [fit] = useSetting(settings.video.fit);
    // Without it, the app's player keeps the last style it was sent.
    const [subtitleStyle] = useSetting(settings.subtitle.style);
@@ -199,10 +199,10 @@ index 0c2fe1b2..6de9d177 100644
  }
 diff --git a/packages/web/src/lib/hosts/shell/ios.ts b/packages/web/src/lib/hosts/shell/ios.ts
 new file mode 100644
-index 00000000..2bcc5bfa
+index 00000000..4ea8f42a
 --- /dev/null
 +++ b/packages/web/src/lib/hosts/shell/ios.ts
-@@ -0,0 +1,52 @@
+@@ -0,0 +1,53 @@
 +import type { Host } from '..';
 +import { appBridge, ask } from './bridge';
 +import { appEngine } from './player';
@@ -229,7 +229,8 @@ index 00000000..2bcc5bfa
 +  device: () => ({ id: appBridge()?.deviceId, name: appBridge()?.device }),
 +  player: appEngine,
 +  // The stats overlay is the app's own, drawn over the video (player-stats-overlay).
-+  playerFeatures: ['audio', 'chapters', 'headers', 'upscaling', 'stats'],
++  // Picture in Picture is the app's own (AVKit's, over AetherEngine), which the P shortcut toggles.
++  playerFeatures: ['audio', 'chapters', 'headers', 'upscaling', 'stats', 'pictureInPicture'],
 +  resolveYouTube,
 +  // The app's queue, which keeps going in the background and while the page reloads.
 +  downloads: shellDownloads,
@@ -256,10 +257,10 @@ index 00000000..2bcc5bfa
 +  },
 +};
 diff --git a/packages/web/src/lib/hosts/shell/player.ts b/packages/web/src/lib/hosts/shell/player.ts
-index b60589db..bf6594ab 100644
+index 3d7083d5..1dab3f63 100644
 --- a/packages/web/src/lib/hosts/shell/player.ts
 +++ b/packages/web/src/lib/hosts/shell/player.ts
-@@ -31,6 +31,7 @@ import {
+@@ -32,6 +32,7 @@ import {
    type VideoFrame,
  } from '@/lib/playback/engine';
  import { audioCodes } from '@/lib/playback/track-picks';
@@ -267,7 +268,7 @@ index b60589db..bf6594ab 100644
  import { currentHost } from '..';
  import { appBridge, type AppTrack, type ShellMessage } from './bridge';
  import { exoStats } from './exo-stats';
-@@ -133,6 +134,8 @@ export const appEngine: EngineFactory = (emit, { launched }) => {
+@@ -144,6 +145,8 @@ export const appEngine: EngineFactory = (emit, { launched }) => {
        append,
        audioLanguages: audioCodes(prefs, played.source),
        subtitleLanguages: subtitleLanguages(prefs),

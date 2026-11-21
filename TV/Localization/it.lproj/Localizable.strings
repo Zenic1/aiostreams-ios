@@ -209,7 +209,7 @@
 "Match frame rate" = "Adatta frequenza fotogrammi";
 "Medium" = "Medio";
 "Menus, lists, fields and cards over the artwork sit on the glass surface instead of its colour. Slower devices can feel the extra drawing." = "Menu, elenchi, campi e schede sopra la copertina poggiano su una superficie in vetro anziché sul suo colore. I dispositivi meno potenti potrebbero risentire dell'elaborazione grafica aggiuntiva.";
-"Merge continue watching and next up" = "Unisci continua a guardare con in arrivo";
+"Merge continue watching and next up" = "Unisci continua a guardare con a seguire";
 "Message" = "Messaggio";
 "Mono" = "Mono";
 "Monospace" = "Monospaziato";
@@ -227,7 +227,7 @@
 "Next %@: %@" = "Dopo %@: %@";
 "Next episode" = "Episodio successivo";
 "Next month" = "Mese successivo";
-"Next up" = "In arrivo";
+"Next up" = "A seguire";
 "Next: %@" = "Dopo: %@";
 "Night mode" = "Modalità notte";
 "No channels in this group." = "Nessun canale presente nel gruppo.";
