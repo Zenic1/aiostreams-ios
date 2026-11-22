@@ -82,6 +82,7 @@ final class SubtitleOverlayView: UIView {
     }
 
     private var cues: [SubtitleCue] = []
+    private var allCues: [SubtitleCue] = []
     private var time: Double = 0
     private var visible: [Int] = []
 
@@ -133,6 +134,10 @@ final class SubtitleOverlayView: UIView {
             guard assHeader != header else { return }
             assHeader = header
             ass?.prepare(header: header)
+            if !allCues.isEmpty {
+                let pending = allCues
+                setCues(pending)
+            }
             refresh(force: true)
             return
         }
@@ -144,6 +149,10 @@ final class SubtitleOverlayView: UIView {
         ass?.setLook(look)
         ass?.prepare(header: header)
         updateASSCanvas()
+        if !allCues.isEmpty {
+            let pending = allCues
+            setCues(pending)
+        }
         refresh(force: true)
     }
 
@@ -163,6 +172,7 @@ final class SubtitleOverlayView: UIView {
     }
 
     func setCues(_ cues: [SubtitleCue]) {
+        allCues = cues
         if let ass {
             // Raw event lines are instructions for libass, not words to draw as text. Anything else
             // in the same snapshot (a mixed session) stays on the plain path.
@@ -193,6 +203,7 @@ final class SubtitleOverlayView: UIView {
     }
 
     func clear() {
+        allCues = []
         cues = []
         ass?.free()
         ass = nil

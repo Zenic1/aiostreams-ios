@@ -8,6 +8,7 @@ import UIKit
 /// back together into a whole script, lets libass paint it, and hands the resulting bitmap to
 /// `SubtitleOverlayView`. Everything is used from the main actor; the renderer itself works on its
 /// own queue.
+@MainActor
 final class AssSubtitleRenderer {
     private static let fontFolder = "aeth-ass-fonts"
 
@@ -22,6 +23,8 @@ final class AssSubtitleRenderer {
     private var canvas: CGSize = .zero
     private var scale: CGFloat = 1
     private var lastTime = -Double.infinity
+    private var currentTime: Double = 0
+    private var isReloading = false
     private(set) var frame: ProcessedImage?
 
     init(fontAttachments: [FontAttachment], changed: @escaping () -> Void) {
@@ -40,6 +43,10 @@ final class AssSubtitleRenderer {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] image in
                 guard let self else { return }
+                if image == nil && self.isReloading {
+                    // Do not wipe the displayed subtitle while reloading a track
+                    return
+                }
                 self.frame = image
                 self.changed()
             }
@@ -59,13 +66,16 @@ final class AssSubtitleRenderer {
         renderer?.freeTrack()
         generation += 1
         reloadTask?.cancel()
+        lastTime = -Double.infinity
         changed()
     }
 
     /// True when a cue body is a raw libavcodec event line rather than ordinary text. Those cues
     /// belong to libass and must not also be drawn as text by the overlay.
     static func isEventLine(_ text: String) -> Bool {
-        let first = text.split(separator: ",", maxSplits: 1, omittingEmptySubsequences: false).first ?? ""
+        let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.hasPrefix("Dialogue:") { return true }
+        let first = trimmed.split(separator: ",", maxSplits: 1, omittingEmptySubsequences: false).first ?? ""
         return !first.isEmpty && first.allSatisfy(\.isNumber)
     }
 
@@ -97,6 +107,7 @@ final class AssSubtitleRenderer {
     /// fast clock does not queue a libass render for every tick when nothing changed on screen.
     func setTime(_ seconds: Double) {
         guard seconds.isFinite else { return }
+        currentTime = seconds
         if abs(seconds - lastTime) < 1.0 / 30, seconds >= lastTime { return }
         lastTime = seconds
         renderer?.setTimeOffset(seconds)
@@ -126,11 +137,18 @@ final class AssSubtitleRenderer {
         generation += 1
         let current = generation
         reloadTask?.cancel()
-        reloadTask = Task { [weak self] in
+        reloadTask = Task { @MainActor [weak self] in
             // A burst of cues arrives together; one rebuild after they settle is enough.
-            try? await Task.sleep(nanoseconds: 200_000_000)
+            try? await Task.sleep(nanoseconds: 50_000_000)
             guard !Task.isCancelled, current == self?.generation else { return }
-            self?.renderer?.reloadTrack(content: script)
+            guard let self else { return }
+            self.isReloading = true
+            self.renderer?.reloadTrack(content: script)
+            self.lastTime = -Double.infinity
+            if self.currentTime.isFinite {
+                self.renderer?.setTimeOffset(self.currentTime)
+            }
+            self.isReloading = false
         }
     }
 
