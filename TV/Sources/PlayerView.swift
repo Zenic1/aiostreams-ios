@@ -117,6 +117,8 @@ final class PlayerModel: ObservableObject {
     private var laterTrackIDs: [Int: Int] = [:]
     /// A subtitle chosen in the player or by a remote, which a later pick leaves alone.
     private var subtitleChosen = false
+    /// The picked track, including external sidecars the engine reports with no active index.
+    private var selectedSubtitleID: Int?
 
     init(request: PlayRequest, client: JellyfinClient, tracks: TrackRules = TrackRules(), baseTracks: TrackRules = TrackRules(),
          remember: (audio: Bool, subtitles: Bool) = (true, true), audioShaping: AudioShaping = AudioShaping(),
@@ -194,7 +196,13 @@ final class PlayerModel: ObservableObject {
         engine.$audioTracks.sink { [weak self] in self?.audioTracks = $0 }.store(in: &bag)
         engine.$subtitleTracks.sink { [weak self] in self?.subtitleTracks = $0 }.store(in: &bag)
         engine.$activeAudioTrackIndex.sink { [weak self] in self?.activeAudio = $0 }.store(in: &bag)
-        engine.$activeSubtitleTrackIndex.sink { [weak self] in self?.activeSubtitle = $0 }.store(in: &bag)
+        engine.$activeSubtitleTrackIndex.sink { [weak self] active in
+            self?.activeSubtitle = active
+            self?.syncASS(active: active)
+        }.store(in: &bag)
+        Publishers.CombineLatest(engine.$subtitleTracks, engine.$sidecarASSHeader)
+            .sink { [weak self] _, header in self?.syncASS(sidecar: header) }
+            .store(in: &bag)
         engine.$subtitleCues.sink { [weak self] in self?.overlay.setCues($0) }.store(in: &bag)
         engine.clock.$sourceTime.sink { [weak self] in self?.overlay.setTime($0) }.store(in: &bag)
         Publishers.CombineLatest(engine.$sourceVideoWidth, engine.$sourceVideoHeight)
@@ -204,6 +212,14 @@ final class PlayerModel: ObservableObject {
                 self.overlay.videoSize = CGSize(width: Double(width) * (aspect > 0 ? aspect : 1), height: Double(height))
             }
             .store(in: &bag)
+    }
+
+    /// Points the shared overlay at the active ASS/SSA track, if the title has one. Other formats
+    /// keep the overlay's UIKit text path, so nothing changes for ordinary subtitles.
+    private func syncASS(active: Int? = nil, sidecar: String? = nil) {
+        let id = active ?? selectedSubtitleID ?? engine.activeSubtitleTrackIndex
+        let track = engine.subtitleTracks.first { $0.id == id }
+        overlay.configureASS(track: track, sidecarHeader: sidecar ?? engine.sidecarASSHeader)
     }
 
     /// Read straight through, from byte 0 only: a catch-up programme, whose archive answers byte
@@ -231,6 +247,8 @@ final class PlayerModel: ObservableObject {
         }
         var options = LoadOptions()
         options.httpHeaders = request.source.requiredHttpHeaders ?? [:]
+        // Raw ASS events, their script header and the container's fonts go to libass in the overlay.
+        options.preserveASSMarkup = true
         // IPTV panels can refuse a player library's own user agent: a live stream that names none
         // is sent VLC's, as the official apps' players send it (the web app's `liveHeaders`).
         if isLive, !options.httpHeaders.keys.contains(where: { $0.caseInsensitiveCompare("User-Agent") == .orderedSame }) {
@@ -263,6 +281,7 @@ final class PlayerModel: ObservableObject {
         } else {
             options.preferredSubtitleLanguages = ["None", "OnlyForced"].contains(tracks.subtitleMode) ? [] : tracks.subtitleLanguages
         }
+        selectedSubtitleID = options.initialSubtitleTrackID
         // Sound shaped as the Apple TV's settings ask, and its usual delay.
         options.audioShaping = audioShaping
         options.audioDelaySeconds = defaultAudioDelay
@@ -301,6 +320,8 @@ final class PlayerModel: ObservableObject {
                 let start = self.isLive || self.sequential ? nil : self.request.startMs.map { $0 / 1000 }
                 try await self.engine.load(url: url, startPosition: start, options: loadOptions,
                                            audioSourceStreamIndex: self.audioStreamIndex)
+                self.overlay.setFontAttachments(self.engine.fontAttachments)
+                self.syncASS()
                 // A channel whose sound the engine's own reader identified none of plays silent there:
                 // once more on AVPlayer, which reads the live playlist itself.
                 if self.isLive, !loadOptions.nativeRemoteHLS, self.engine.videoRoute != .remoteBypass,
@@ -309,6 +330,8 @@ final class PlayerModel: ObservableObject {
                     loadOptions.nativeRemoteHLS = true
                     try await self.engine.load(url: url, startPosition: nil, options: loadOptions,
                                                audioSourceStreamIndex: self.audioStreamIndex)
+                    self.overlay.setFontAttachments(self.engine.fontAttachments)
+                    self.syncASS()
                 }
                 if self.isLive, self.liveDisplay.rate != self.liveDisplay.range { self.matchLiveDisplay() }
                 // The configuration's subtitle addons, asked for now the title plays rather than before.
@@ -498,7 +521,14 @@ final class PlayerModel: ObservableObject {
         // Adding a track can make the engine pick by language; the settings' own pick decides.
         guard !subtitleChosen, !["None", "OnlyForced"].contains(tracks.subtitleMode) else {
             if engine.activeSubtitleTrackIndex != shownBefore {
-                if let shownBefore { engine.selectSubtitleTrack(index: shownBefore) } else { engine.clearSubtitle() }
+                if let shownBefore {
+                    engine.selectSubtitleTrack(index: shownBefore)
+                    selectedSubtitleID = shownBefore
+                } else {
+                    engine.clearSubtitle()
+                    selectedSubtitleID = nil
+                }
+                syncASS(active: selectedSubtitleID)
             }
             return
         }
@@ -506,8 +536,17 @@ final class PlayerModel: ObservableObject {
         if let pick = tracks.subtitleStream(in: all, audioLanguage: heardLanguage),
            let index = pick.index, fresh.contains(where: { $0.index == index }), let id = laterTrackIDs[index] {
             engine.selectSubtitleTrack(index: id)
+            selectedSubtitleID = id
+            syncASS(active: id)
         } else if engine.activeSubtitleTrackIndex != shownBefore {
-            if let shownBefore { engine.selectSubtitleTrack(index: shownBefore) } else { engine.clearSubtitle() }
+            if let shownBefore {
+                engine.selectSubtitleTrack(index: shownBefore)
+                selectedSubtitleID = shownBefore
+            } else {
+                engine.clearSubtitle()
+                selectedSubtitleID = nil
+            }
+            syncASS(active: selectedSubtitleID)
         }
     }
 
@@ -803,7 +842,13 @@ final class PlayerModel: ObservableObject {
 
     func selectSubtitle(_ id: Int?) {
         subtitleChosen = true
-        if let id { engine.selectSubtitleTrack(index: id) } else { engine.clearSubtitle() }
+        if let id {
+            engine.selectSubtitleTrack(index: id)
+        } else {
+            engine.clearSubtitle()
+        }
+        selectedSubtitleID = id
+        syncASS(active: id)
         if remember.subtitles, let userId {
             let track = id.flatMap { id in subtitleTracks.first { $0.id == id } }
             let pick: String?
@@ -863,6 +908,7 @@ final class PlayerModel: ObservableObject {
         }
         stopped = true
         bag.removeAll()
+        selectedSubtitleID = nil
         overlay.clear()
         // The plain stop returns the TV to its default mode for the app's own screens.
         engine.stop()

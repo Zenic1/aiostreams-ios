@@ -16,6 +16,9 @@ packages:
   # AetherEngine 7.73.0 with TrueHD Atmos and DTS:X heights and Dolby Vision FEL turned on.
   AetherEngineFeatures:
     path: Packages/AetherEngineFeatures
+  # libass, for the authored styling of ASS/SSA subtitles.
+  AssRenderingFeatures:
+    path: Packages/AssRenderingFeatures
 targets:
   AIOStreams:
     type: application
@@ -32,6 +35,8 @@ targets:
     dependencies:
       - package: AetherEngineFeatures
         product: AetherEngineFeatures
+      - package: AssRenderingFeatures
+        product: AssRenderingFeatures
     info:
       path: AIOStreams/Info.plist
       properties:
@@ -102,11 +107,14 @@ targets:
       # Shared with the iOS app.
       - path: AIOStreams/Sources/Support.swift
       - path: AIOStreams/Sources/SubtitleOverlayView.swift
+      - path: AIOStreams/Sources/AssSubtitleRenderer.swift
       - path: AIOStreams/Sources/YouTube.swift
       - path: TV/Shared
     dependencies:
       - package: AetherEngineFeatures
         product: AetherEngineFeatures
+      - package: AssRenderingFeatures
+        product: AssRenderingFeatures
       # Continue watching and Next up on the Apple TV's home screen.
       - target: AIOStreamsTVTopShelf
         embed: true

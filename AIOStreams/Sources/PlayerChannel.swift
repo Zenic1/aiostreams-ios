@@ -46,6 +46,8 @@ final class PlayerChannel {
     /// Where each added subtitle came from, by its track id.
     private var subtitleURLs: [Int: String] = [:]
     private var subtitleFiles = 0
+    /// The picked subtitle, including external sidecars, for which the engine's own active index is nil.
+    private var selectedSubtitleTrackID: Int?
     /// The languages a stream's own AVPlayer subtitles are picked from, once, as they arrive.
     private var nativePickLanguages: [String] = []
     /// The user's subtitle types, best first (normal, sdh, forced, signs).
@@ -124,7 +126,16 @@ final class PlayerChannel {
             .sink { [weak self] index in self?.state(["audio": JSON.id(index)]) }
             .store(in: &bag)
         engine.$activeSubtitleTrackIndex.removeDuplicates()
-            .sink { [weak self] index in self?.state(["subtitle": JSON.id(index)]) }
+            .sink { [weak self] index in
+                guard let self else { return }
+                self.state(["subtitle": JSON.id(index)])
+                self.syncASS(active: index)
+            }
+            .store(in: &bag)
+        // A sidecar's header arrives after its cues, and external tracks have no engine-side active
+        // index, so both halves of the ASS hand-off have to be watched here.
+        Publishers.CombineLatest(engine.$subtitleTracks, engine.$sidecarASSHeader)
+            .sink { [weak self] _, header in self?.syncASS(sidecar: header) }
             .store(in: &bag)
         engine.$mediaChapters
             .sink { [weak self] _ in self?.sendChapters() }
@@ -237,6 +248,8 @@ final class PlayerChannel {
             if let track = matching.min(by: { rank($0) < rank($1) }), !track.isForced {
                 AppLog.info("subtitles", "picked the stream's \(track.language ?? "?") \(Self.subtitleType(track)) subtitles")
                 engine.selectSubtitleTrack(index: track.id)
+                selectedSubtitleTrackID = track.id
+                syncASS(active: track.id)
                 return
             }
         }
@@ -267,6 +280,14 @@ final class PlayerChannel {
         let tracks = engine.audioTracks.compactMap { trackJSON($0, type: "audio") }
             + engine.subtitleTracks.compactMap { trackJSON($0, type: "subtitle") }
         send(["type": "player-tracks", "tracks": tracks])
+    }
+
+    /// Points the overlay at the active ASS/SSA track, if there is one. The engine leaves its own
+    /// active index nil for external sidecars, so the pick made here is the authority in that case.
+    private func syncASS(active: Int? = nil, sidecar: String? = nil) {
+        let id = active ?? selectedSubtitleTrackID ?? engine.activeSubtitleTrackIndex
+        let track = engine.subtitleTracks.first { $0.id == id }
+        overlay.configureASS(track: track, sidecarHeader: sidecar ?? engine.sidecarASSHeader)
     }
 
     private func sendChapters() {
@@ -385,6 +406,9 @@ final class PlayerChannel {
         options.preferredAudioLanguages = JSON.strings(message["audioLanguages"])
         // TrueHD Atmos and DTS:X with their heights, which iOS plays as Spatial Audio (OS 26 and later).
         options.objectAudioRendering = .render(.l714)
+        // ASS/SSA cues arrive as raw event lines with their script header and attached fonts, so the
+        // overlay can let libass paint the authored styling instead of flattening it to plain text.
+        options.preserveASSMarkup = true
         // Anime upscaling: the page asks for it on a title it knows is anime, with its setting on.
         options.upscalesLowResolutionVideo = upscaling
         options.upscaleScaler = .lineArt
@@ -411,6 +435,7 @@ final class PlayerChannel {
         restarted = false
         lastStatus = nil
         subtitleURLs = [:]
+        selectedSubtitleTrackID = nil
         thumbnails.clear()
         wantedThumbnail = nil
         overlay.clear()
@@ -424,6 +449,8 @@ final class PlayerChannel {
             do {
                 try await self.engine.load(url: url, startPosition: startMs > 0 ? startMs / 1000 : nil, options: options)
                 guard current == self.generation else { return }
+                self.overlay.setFontAttachments(self.engine.fontAttachments)
+                self.syncASS()
                 self.applyTransport()
                 self.event("loaded")
                 self.playingUpscaled = options.upscalesLowResolutionVideo
@@ -498,6 +525,7 @@ final class PlayerChannel {
 
     private func stop() {
         playingUpscaled = nil
+        selectedSubtitleTrackID = nil
         loadedHeaders = [:]
         indexTask?.cancel()
         indexTask = nil
@@ -551,8 +579,12 @@ final class PlayerChannel {
         if let subtitle = message["subtitle"] {
             if subtitle is NSNull {
                 engine.clearSubtitle()
+                selectedSubtitleTrackID = nil
+                syncASS(active: nil)
             } else if let text = subtitle as? String, let id = Int(text) {
                 engine.selectSubtitleTrack(index: id)
+                selectedSubtitleTrackID = id
+                syncASS(active: id)
             }
         }
         if let delay = JSON.number(message["subtitleDelayMs"]) {
@@ -567,6 +599,7 @@ final class PlayerChannel {
         if let replace = JSON.number(message["replace"]) {
             engine.removeExternalSubtitleTrack(id: Int(replace))
             subtitleURLs[Int(replace)] = nil
+            if selectedSubtitleTrackID == Int(replace) { selectedSubtitleTrackID = nil }
         }
         let language = (message["language"] as? String).flatMap { $0.isEmpty ? nil : $0 }
         let track = engine.addExternalSubtitleTrack(ExternalSubtitleTrack(
@@ -578,6 +611,8 @@ final class PlayerChannel {
         ))
         subtitleURLs[track.id] = text
         engine.selectSubtitleTrack(index: track.id)
+        selectedSubtitleTrackID = track.id
+        syncASS(active: track.id)
         sendTracks()
     }
 
@@ -605,6 +640,8 @@ final class PlayerChannel {
             formatHint: ext
         ))
         engine.selectSubtitleTrack(index: track.id)
+        selectedSubtitleTrackID = track.id
+        syncASS(active: track.id)
         sendTracks()
     }
 

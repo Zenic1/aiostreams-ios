@@ -41,6 +41,7 @@ It follows the design of the official Android and desktop apps, which are a web 
 - The page talks to the app through `window.aiostreamsApp`, the same bridge (protocol 2) the Android and desktop apps use. The page itself is almost unchanged: `web/ios-host.patch` adds one small host (`platform: 'ios'`) so the page knows it's on iOS.
 - The video is drawn by AetherEngine beneath a transparent `WKWebView`. AetherEngine replaces mpv and ExoPlayer and brings FFmpeg demuxing, VideoToolbox and dav1d decoding, HDR10, HDR10+, Dolby Vision and HLG, and Atmos.
 - The engine leaves subtitle drawing to the app. A native layer between the video and the page draws them, in the style chosen in the page's subtitle settings.
+- Authored ASS/SSA styling is painted by libass (`swift-ass-renderer`): the engine hands over raw event lines, the script header and the container's embedded fonts, and libass draws the file's own styles, positions and effects. Other subtitle formats keep the UIKit overlay.
 
 ```
 ┌──────────────────────────────┐

@@ -51,17 +51,45 @@ struct SubtitleLook: Equatable {
 
 /// Draws the engine's subtitle cues over the video and beneath the page, against the source clock.
 final class SubtitleOverlayView: UIView {
-    var look = SubtitleLook() { didSet { if look != oldValue { setNeedsDisplay() } } }
+    var look = SubtitleLook() {
+        didSet {
+            guard look != oldValue else { return }
+            ass?.setLook(look)
+            setNeedsDisplay()
+        }
+    }
     /// Seconds the subtitles show later than the file says.
-    var delay: Double = 0 { didSet { refresh() } }
+    var delay: Double = 0 {
+        didSet {
+            ass?.setTime(time - delay)
+            refresh()
+        }
+    }
     /// Off while the page's mini player or a menu covers the picture.
     var shown = true { didSet { isHidden = !shown } }
-    var videoSize: CGSize = .zero { didSet { if videoSize != oldValue { setNeedsDisplay() } } }
-    var gravity: AVLayerVideoGravity = .resizeAspect { didSet { setNeedsDisplay() } }
+    var videoSize: CGSize = .zero {
+        didSet {
+            guard videoSize != oldValue else { return }
+            updateASSCanvas()
+            setNeedsDisplay()
+        }
+    }
+    var gravity: AVLayerVideoGravity = .resizeAspect {
+        didSet {
+            updateASSCanvas()
+            setNeedsDisplay()
+        }
+    }
 
     private var cues: [SubtitleCue] = []
     private var time: Double = 0
     private var visible: [Int] = []
+
+    /// Authored ASS/SSA styling, drawn by libass instead of the UIKit text path below.
+    private var ass: AssSubtitleRenderer?
+    private var assTrackID: Int?
+    private var assHeader: String?
+    private var fontAttachments: [FontAttachment] = []
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,19 +101,109 @@ final class SubtitleOverlayView: UIView {
 
     required init?(coder: NSCoder) { fatalError("not used") }
 
+    /// Fonts from the container's attachments, read once the load finishes. Changing them (a new
+    /// title) needs a new renderer, since libass configures its font stack when it starts.
+    func setFontAttachments(_ attachments: [FontAttachment]) {
+        guard attachments != fontAttachments else { return }
+        fontAttachments = attachments
+        if let id = assTrackID {
+            ass = nil
+            configureASS(trackID: id, header: assHeader)
+        }
+    }
+
+    /// Whichever subtitle track the player selected. Only ASS/SSA tracks use libass; SRT, VTT,
+    /// teletext and bitmaps keep the path below, so a session can mix them without a reload.
+    func configureASS(track: TrackInfo?, sidecarHeader: String?) {
+        let codec = track?.codec.lowercased() ?? ""
+        guard let track, (codec == "ass" || codec == "ssa") else {
+            assTrackID = nil
+            assHeader = nil
+            if ass != nil {
+                ass = nil
+                refresh(force: true)
+            }
+            return
+        }
+        configureASS(trackID: track.id, header: track.assHeader ?? sidecarHeader)
+    }
+
+    private func configureASS(trackID: Int, header: String?) {
+        if assTrackID == trackID, ass != nil {
+            guard assHeader != header else { return }
+            assHeader = header
+            ass?.prepare(header: header)
+            refresh(force: true)
+            return
+        }
+        assTrackID = trackID
+        assHeader = header
+        ass = AssSubtitleRenderer(fontAttachments: fontAttachments) { [weak self] in
+            self?.setNeedsDisplay()
+        }
+        ass?.setLook(look)
+        ass?.prepare(header: header)
+        updateASSCanvas()
+        refresh(force: true)
+    }
+
+    private func updateASSCanvas() {
+        guard let ass else { return }
+        let canvas = videoRect.intersection(bounds).size
+        let scale = window?.windowScene?.screen.scale ?? UIScreen.main.scale
+        ass.setCanvas(canvas, scale: scale)
+    }
+
+    private static func rawText(of cue: SubtitleCue) -> String? {
+        switch cue.body {
+        case .text(let text): return text
+        case .richText(let runs): return runs.map(\.text).joined()
+        default: return nil
+        }
+    }
+
     func setCues(_ cues: [SubtitleCue]) {
-        self.cues = cues
+        if let ass {
+            // Raw event lines are instructions for libass, not words to draw as text. Anything else
+            // in the same snapshot (a mixed session) stays on the plain path.
+            var plain: [SubtitleCue] = []
+            for cue in cues {
+                if let raw = Self.rawText(of: cue),
+                   ass.add(rawEvent: raw, start: cue.startTime, end: cue.endTime) {
+                    continue
+                }
+                plain.append(cue)
+            }
+            self.cues = plain
+        } else {
+            // A track switch can publish a cue snapshot before its track info; don't flash a raw
+            // event line on screen in that gap.
+            self.cues = cues.filter { cue in
+                guard let raw = Self.rawText(of: cue) else { return true }
+                return !AssSubtitleRenderer.isEventLine(raw)
+            }
+        }
         refresh(force: true)
     }
 
     func setTime(_ seconds: Double) {
         time = seconds
+        ass?.setTime(seconds - delay)
         refresh()
     }
 
     func clear() {
         cues = []
+        ass?.free()
+        ass = nil
+        assTrackID = nil
+        assHeader = nil
         refresh(force: true)
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateASSCanvas()
     }
 
     private var showing: [SubtitleCue] {
@@ -117,7 +235,8 @@ final class SubtitleOverlayView: UIView {
 
     override func draw(_ rect: CGRect) {
         let cues = showing
-        guard !cues.isEmpty, let context = UIGraphicsGetCurrentContext() else { return }
+        let assFrame = ass?.frame
+        guard !cues.isEmpty || assFrame != nil, let context = UIGraphicsGetCurrentContext() else { return }
         let video = videoRect.intersection(bounds).isNull ? bounds : videoRect
         // Text is sized to what shows of the picture, so a cropped fill doesn't push lines off screen.
         let shownVideo = video.intersection(bounds)
@@ -170,6 +289,18 @@ final class SubtitleOverlayView: UIView {
             let x = [point.x, point.x - size.width / 2, point.x - size.width][column]
             let y = [point.y - size.height, point.y - size.height / 2, point.y][row]
             drawText(string, at: CGRect(x: x, y: y, width: size.width, height: size.height), context: context)
+        }
+
+        // libass paints authored styling into its own bitmap, positioned against the video canvas.
+        if let frame = assFrame {
+            var rect = frame.imageRect
+            // The controls lift the bottom line; lift authored subtitles in the lower half with it,
+            // leaving those the author put at the top where they are.
+            let rest = shownVideo.maxY - shownVideo.height * 0.03
+            let lift = max(0, rest - line)
+            if rect.midY > shownVideo.height / 2 { rect.origin.y -= lift }
+            let origin = CGPoint(x: video.minX + rect.minX, y: video.minY + rect.minY)
+            UIImage(cgImage: frame.image).draw(in: CGRect(origin: origin, size: rect.size))
         }
     }
 
