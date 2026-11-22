@@ -33,12 +33,21 @@ if [ -z "${APP_VERSION:-}" ]; then
     || git describe --tags --abbrev=0 --match 'v[0-9]*' 2>/dev/null || true)
   APP_VERSION="${tag#v}"
 fi
+if [ -z "${APP_VERSION:-}" ]; then
+  APP_VERSION=$(sed -n -E 's/^[[:space:]]*MARKETING_VERSION:[[:space:]]*"?([^"]+)"?/\1/p' project.yml 2>/dev/null | head -n 1)
+  APP_VERSION="${APP_VERSION:-0.1.0}"
+fi
 if [ -z "${BUILD_NUMBER:-}" ]; then
-  if [ "$(git rev-parse --is-shallow-repository)" = true ]; then
-    echo "a shallow clone can't count its commits: fetch the full history or set BUILD_NUMBER" >&2
-    exit 1
+  if [ "$(git rev-parse --is-shallow-repository 2>/dev/null || echo false)" = true ]; then
+    BUILD_NUMBER=$(sed -n -E 's/^[[:space:]]*CURRENT_PROJECT_VERSION:[[:space:]]*"?([^"]+)"?/\1/p' project.yml 2>/dev/null | head -n 1)
+    BUILD_NUMBER="${BUILD_NUMBER:-1}"
+  else
+    BUILD_NUMBER=$(git rev-list --count HEAD 2>/dev/null || true)
+    if [ -z "$BUILD_NUMBER" ]; then
+      BUILD_NUMBER=$(sed -n -E 's/^[[:space:]]*CURRENT_PROJECT_VERSION:[[:space:]]*"?([^"]+)"?/\1/p' project.yml 2>/dev/null | head -n 1)
+      BUILD_NUMBER="${BUILD_NUMBER:-1}"
+    fi
   fi
-  BUILD_NUMBER=$(git rev-list --count HEAD)
 fi
 # What CFBundleShortVersionString and CFBundleVersion take: up to three numbers with dots.
 for value in "$APP_VERSION" "$BUILD_NUMBER"; do
